@@ -1,6 +1,6 @@
 ﻿namespace W3DT
 {
-    partial class MainWindow
+    partial class Temp3DWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Temp3DWindow));
             this.openGLControl = new SharpGL.OpenGLControl();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.SuspendLayout();
@@ -52,8 +53,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(969, 672);
             this.Controls.Add(this.openGLControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
-            this.Text = "SharpGL Form";
+            this.Text = "Warcraft 3D Toolkit";
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).EndInit();
             this.ResumeLayout(false);
 

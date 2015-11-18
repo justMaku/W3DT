@@ -14,12 +14,12 @@ namespace W3DT
     /// <summary>
     /// The main form class.
     /// </summary>
-    public partial class MainWindow : Form
+    public partial class Temp3DWindow : Form
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// Initializes a new instance of the <see cref="Temp3DWindow"/> class.
         /// </summary>
-        public MainWindow()
+        public Temp3DWindow()
         {
             InitializeComponent();
         }
