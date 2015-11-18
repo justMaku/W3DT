@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.UI_SplashImage = new System.Windows.Forms.PictureBox();
+            this.Timer_SplashClose = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.UI_SplashImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,6 +43,12 @@
             this.UI_SplashImage.Size = new System.Drawing.Size(1035, 691);
             this.UI_SplashImage.TabIndex = 0;
             this.UI_SplashImage.TabStop = false;
+            // 
+            // Timer_SplashClose
+            // 
+            this.Timer_SplashClose.Enabled = true;
+            this.Timer_SplashClose.Interval = 4000;
+            this.Timer_SplashClose.Tick += new System.EventHandler(this.Timer_SplashClose_Tick);
             // 
             // SplashScreen
             // 
@@ -66,5 +74,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox UI_SplashImage;
+        private System.Windows.Forms.Timer Timer_SplashClose;
     }
 }

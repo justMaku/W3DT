@@ -15,5 +15,13 @@ namespace W3DT
         {
             InitializeComponent();
         }
+
+        private void Timer_SplashClose_Tick(object sender, EventArgs e)
+        {
+            // ToDo: Hold up closing for actual resource loading.
+
+            Timer_SplashClose.Enabled = false; // Disable timer.
+            this.Close(); // Close the splash screen.
+        }
     }
 }
