@@ -118,7 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="UI_SecText_Players.Text" xml:space="preserve">
-    <value>Import players from the armory, load and customize blank player models, extract custom creature models from in-game and more, outfitting them with custom items, appearances for exporting to multiple formats.</value>
+    <value>Import players from the armory, load and customize blank player models, extract custom creature models from in-game and more, outfitting them with custom items/appearances for exporting to multiple formats.
+</value>
   </data>
   <data name="UI_SecText_WMO.Text" xml:space="preserve">
     <value>WMO objects are pre-set collections of geometry and doodads grouped up for use in World of Warcraft maps, primarily consisting of large buildings and structures. This tool allows browsing and exporting of these objects.</value>
