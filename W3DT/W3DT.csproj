@@ -63,9 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3D\Cube.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="JSONContainers\LatestReleaseData.cs" />
+    <Compile Include="JSONContainers\ReleaseAsset.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +75,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Runners\RunnerBase.cs" />
+    <Compile Include="Runners\RunnerDownloadUpdate.cs" />
     <Compile Include="Runners\RunnerUpdateCheck.cs" />
     <Compile Include="Temp3DWindow.cs">
       <SubType>Form</SubType>

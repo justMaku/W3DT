@@ -9,6 +9,6 @@ namespace W3DT.JSONContainers
     {
         public string message { get; set; }
         public string tag_name { get; set; }
-        public string zipball_url { get; set; }
+        public ReleaseAsset[] assets { get; set; }
     }
 }

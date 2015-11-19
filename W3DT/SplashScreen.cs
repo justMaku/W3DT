@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using W3DT.Events;
 using W3DT.Runners;
 using W3DT.JSONContainers;
@@ -17,18 +18,22 @@ namespace W3DT
     public partial class SplashScreen : Form
     {
         private bool isDoneLoading = false;
-        public static string UPDATE_PACKAGE_NAME = "update.zip";
+        private string currentVersion = "1.0.0.0";
 
         public SplashScreen()
         {
             InitializeComponent();
             EventManager.H_UpdateCheckComplete += OnUpdateCheckComplete;
+            EventManager.H_UpdateDownloadComplete += OnUpdateDownloadComplete;
+
+            currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Debug.WriteLine("Current build: " + currentVersion);
 
             // Check for and remove leftover update package.
             try
             {
-                if (File.Exists(UPDATE_PACKAGE_NAME))
-                    File.Delete(UPDATE_PACKAGE_NAME);
+                if (File.Exists(Constants.UPDATE_PACKAGE_FILE))
+                    File.Delete(Constants.UPDATE_PACKAGE_FILE);
             }
             catch (Exception ex)
             {
@@ -37,11 +42,16 @@ namespace W3DT
                 Debug.WriteLine("Exception info: " + ex.Message);
             }
 
-            new RunnerUpdateCheck().Begin();
+            if (Program.DO_UPDATE)
+                new RunnerUpdateCheck().Begin();
+            else
+                isDoneLoading = true;
         }
 
         public void OnUpdateCheckComplete(LatestReleaseData data)
         {
+            bool isUpdating = false;
+
             // Check our update data.
             if (data.message != null)
             {
@@ -50,17 +60,66 @@ namespace W3DT
             }
             else
             {
-                Debug.WriteLine("Remote latest version: " + data.tag_name);
-                
-                // ToDo:
-                // - Compare data.tag_name with current version (define this somewhere).
-                // - If remote version is newer, download package async.
-                // - Once download complete event procs, abort app load and launch updater.
-                // - Updater will wait (and try to engage) the closing of this app before unpacking.
+                // Ensure our remote version number is not malformed.
+                data.tag_name = data.tag_name.Trim(); // Trim any whitespace that might have slipped in.
+                Regex versionCheck = new Regex(@"^\d+\.\d+\.\d+\.\d+$", RegexOptions.IgnoreCase);
+                if (versionCheck.Match(data.tag_name).Success)
+                {
+                    Debug.WriteLine("Remote latest version: " + data.tag_name);
+
+                    Version localVersion = new Version(currentVersion);
+                    Version remoteVersion = new Version(data.tag_name);
+
+                    if (remoteVersion.CompareTo(localVersion) > 0)
+                    {
+                        if (data.assets.Length > 0)
+                        {
+                            // Local version is out-of-date, lets fix that.
+                            isUpdating = true;
+                            new RunnerDownloadUpdate(data.assets[0].browser_download_url).Begin();
+                        }
+                        else
+                        {
+                            // Missing assets. Human error (most likely).
+                            Debug.WriteLine("Not updating, remote version has no assets attached!");
+                        }
+                    }
+                    else
+                    {
+                        // Local version is equal to remote (or somehow newer).
+                        Debug.WriteLine("Not updating, local version is newer or equal to remote version.");
+                    }
+                }
+                else
+                {
+                    // Version number is not valid, generally caused by human error.
+                    Debug.WriteLine("Not updating, remote version number is malformed: " + data.tag_name);
+                }
             }
 
-            EventManager.H_UpdateCheckComplete -= OnUpdateCheckComplete; // Unregister event.
-            isDoneLoading = true;
+            // There shouldn't be more than one event fired, but unregister anyway.
+            EventManager.H_UpdateCheckComplete -= OnUpdateCheckComplete;
+
+            if (!isUpdating)
+                isDoneLoading = true;
+        }
+
+        public void OnUpdateDownloadComplete(bool success)
+        {
+            if (success)
+            {
+                Process.Start("W3DT_Updater.exe");
+                Program.STOP_LOAD = true;
+                Close();
+            }
+            else
+            {
+                // Mark loading as done to continue with app launch.
+                isDoneLoading = true;
+            }
+
+            // There shouldn't be more than one event fired, but unregister anyway.
+            EventManager.H_UpdateDownloadComplete -= OnUpdateDownloadComplete;
         }
 
         private void Timer_SplashClose_Tick(object sender, EventArgs e)
