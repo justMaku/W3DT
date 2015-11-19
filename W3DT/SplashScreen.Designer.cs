@@ -66,7 +66,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Warcraft 3D Toolkit - Loading";
-            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.UI_SplashImage)).EndInit();
             this.ResumeLayout(false);
 
