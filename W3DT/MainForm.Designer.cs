@@ -45,6 +45,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.UI_SponserBlock2 = new System.Windows.Forms.PictureBox();
             this.UI_SponserBlock1 = new System.Windows.Forms.PictureBox();
+            this.UI_SecBtn_Settings = new System.Windows.Forms.Button();
+            this.UI_SecText_Settings = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SponserBlock2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SponserBlock1)).BeginInit();
             this.SuspendLayout();
@@ -216,10 +218,11 @@
             // 
             // UI_SponserBlock2
             // 
+            this.UI_SponserBlock2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SponserBlock2.BackgroundImage = global::W3DT.Properties.Resources.w3dt_ad_2;
             this.UI_SponserBlock2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.UI_SponserBlock2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.UI_SponserBlock2.Location = new System.Drawing.Point(413, 385);
+            this.UI_SponserBlock2.Location = new System.Drawing.Point(413, 430);
             this.UI_SponserBlock2.Name = "UI_SponserBlock2";
             this.UI_SponserBlock2.Size = new System.Drawing.Size(389, 80);
             this.UI_SponserBlock2.TabIndex = 3;
@@ -227,24 +230,50 @@
             // 
             // UI_SponserBlock1
             // 
+            this.UI_SponserBlock1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.UI_SponserBlock1.BackgroundImage = global::W3DT.Properties.Resources.w3dt_ad_1;
             this.UI_SponserBlock1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.UI_SponserBlock1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.UI_SponserBlock1.Location = new System.Drawing.Point(12, 385);
+            this.UI_SponserBlock1.Location = new System.Drawing.Point(12, 430);
             this.UI_SponserBlock1.Name = "UI_SponserBlock1";
             this.UI_SponserBlock1.Size = new System.Drawing.Size(389, 80);
             this.UI_SponserBlock1.TabIndex = 3;
             this.UI_SponserBlock1.TabStop = false;
             // 
+            // UI_SecBtn_Settings
+            // 
+            this.UI_SecBtn_Settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_SecBtn_Settings.Location = new System.Drawing.Point(12, 362);
+            this.UI_SecBtn_Settings.Name = "UI_SecBtn_Settings";
+            this.UI_SecBtn_Settings.Size = new System.Drawing.Size(257, 44);
+            this.UI_SecBtn_Settings.TabIndex = 0;
+            this.UI_SecBtn_Settings.Text = "Application Settings";
+            this.UI_SecBtn_Settings.UseVisualStyleBackColor = true;
+            this.UI_SecBtn_Settings.Click += new System.EventHandler(this.UI_SecBtn_Settings_Click);
+            // 
+            // UI_SecText_Settings
+            // 
+            this.UI_SecText_Settings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_SecText_Settings.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_Settings.Location = new System.Drawing.Point(275, 378);
+            this.UI_SecText_Settings.Multiline = true;
+            this.UI_SecText_Settings.Name = "UI_SecText_Settings";
+            this.UI_SecText_Settings.ReadOnly = true;
+            this.UI_SecText_Settings.Size = new System.Drawing.Size(527, 22);
+            this.UI_SecText_Settings.TabIndex = 2;
+            this.UI_SecText_Settings.Text = "Configure W3DT to your liking!";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(814, 477);
+            this.ClientSize = new System.Drawing.Size(814, 521);
             this.Controls.Add(this.UI_SponserBlock2);
             this.Controls.Add(this.UI_SponserBlock1);
             this.Controls.Add(this.UI_SecText_Sound);
             this.Controls.Add(this.UI_SecText_Maps);
+            this.Controls.Add(this.UI_SecText_Settings);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.UI_SecText_Spellbook);
             this.Controls.Add(this.UI_SecText_Doodads);
@@ -252,6 +281,7 @@
             this.Controls.Add(this.UI_SecText_Players);
             this.Controls.Add(this.UI_SecBtn_Sound);
             this.Controls.Add(this.UI_SecBtn_Maps);
+            this.Controls.Add(this.UI_SecBtn_Settings);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.UI_SecBtn_SpellBook);
             this.Controls.Add(this.UI_SecBtn_Doodads);
@@ -285,5 +315,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.PictureBox UI_SponserBlock1;
         private System.Windows.Forms.PictureBox UI_SponserBlock2;
+        private System.Windows.Forms.Button UI_SecBtn_Settings;
+        private System.Windows.Forms.TextBox UI_SecText_Settings;
     }
 }
