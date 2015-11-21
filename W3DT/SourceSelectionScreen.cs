@@ -25,6 +25,7 @@ namespace W3DT
             selectionDone = true;
 
             Program.Settings.UseRemote = UI_SourceOption_Remote.Checked;
+            Program.Settings.ShowSourceSelector = false;
             Program.Settings.Persist(Constants.SETTINGS_FILE);
 
             splash.OnSourceSelectionDone();

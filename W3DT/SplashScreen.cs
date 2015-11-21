@@ -118,9 +118,6 @@ namespace W3DT
 
         private void ShowSourceSelectionScreen()
         {
-            Program.Settings.ShowSourceSelector = false;
-            Program.Settings.Persist(Constants.SETTINGS_FILE);
-
             SourceSelectionScreen sourceScreen = new SourceSelectionScreen(this);
             sourceScreen.Show();
             sourceScreen.Focus();
