@@ -18,6 +18,8 @@ namespace W3DT
         {
             InitializeComponent();
             this.splash = splash;
+
+            UI_DirectoryField.Text = Constants.DIRECTORY_PLACEHOLDER;
         }
 
         private void UI_SourceOptions_Done_Click(object sender, EventArgs e)
@@ -37,6 +39,11 @@ namespace W3DT
             // If this window is closed without a selection, just terminate.
             if (!selectionDone)
                 Application.Exit();
+        }
+
+        private void OnSourceOptionRadioChanged(object sender, EventArgs e)
+        {
+            UI_DirectoryField.Enabled = UI_SourceOption_Local.Checked;
         }
     }
 }

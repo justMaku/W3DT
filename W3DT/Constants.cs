@@ -14,5 +14,7 @@ namespace W3DT
 
         // Settings //
         public static readonly string SETTINGS_FILE = "settings.json";
+
+        public static readonly string DIRECTORY_PLACEHOLDER = "<Select World of Warcraft installation directory>";
     }
 }
