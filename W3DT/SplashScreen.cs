@@ -18,6 +18,8 @@ namespace W3DT
     public partial class SplashScreen : Form
     {
         private bool isDoneLoading = false;
+        private bool isUpdateCheckDone = false;
+        private bool hasShownSourceScreen = false;
         private string currentVersion = "1.0.0.0";
 
         public SplashScreen()
@@ -43,9 +45,14 @@ namespace W3DT
             }
 
             if (Program.DO_UPDATE)
+            {
                 new RunnerUpdateCheck().Begin();
-            else
+            }
+            else if (!Program.Settings.ShowSourceSelector)
+            {
                 isDoneLoading = true;
+                isUpdateCheckDone = true;
+            }
         }
 
         public void OnUpdateCheckComplete(LatestReleaseData data)
@@ -102,20 +109,21 @@ namespace W3DT
 
             if (!isUpdating)
             {
-                if (Program.Settings.ShowSourceSelector)
-                {
-                    Program.Settings.ShowSourceSelector = false;
-                    Program.Settings.Persist(Constants.SETTINGS_FILE);
-
-                    SourceSelectionScreen sourceScreen = new SourceSelectionScreen(this);
-                    sourceScreen.Show();
-                    sourceScreen.Focus();
-                }
-                else
-                {
+                if (!Program.Settings.ShowSourceSelector)
                     isDoneLoading = true;
-                }
+
+                isUpdateCheckDone = true;
             }
+        }
+
+        private void ShowSourceSelectionScreen()
+        {
+            Program.Settings.ShowSourceSelector = false;
+            Program.Settings.Persist(Constants.SETTINGS_FILE);
+
+            SourceSelectionScreen sourceScreen = new SourceSelectionScreen(this);
+            sourceScreen.Show();
+            sourceScreen.Focus();
         }
 
         public void OnSourceSelectionDone()
@@ -134,6 +142,7 @@ namespace W3DT
             else
             {
                 // Mark loading as done to continue with app launch.
+                isUpdateCheckDone = true;
                 isDoneLoading = true;
             }
 
@@ -146,6 +155,12 @@ namespace W3DT
             // Speed up the timer after the first pass.
             if (Timer_SplashClose.Interval == 4000)
                 Timer_SplashClose.Interval = 100;
+
+            if (!hasShownSourceScreen && Program.Settings.ShowSourceSelector)
+            {
+                hasShownSourceScreen = true;
+                ShowSourceSelectionScreen();
+            }
 
             // Check if we're done loading.
             if (isDoneLoading)
