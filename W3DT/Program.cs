@@ -34,10 +34,9 @@ namespace W3DT
 
             // Revert to default settings.
             if (Settings == null)
-            {
                 Settings = new Settings();
-                Settings.Persist(Constants.SETTINGS_FILE);
-            }
+
+            Settings.Persist(Constants.SETTINGS_FILE);
 
             if (!Settings.AutomaticUpdates)
                 DO_UPDATE = false;
