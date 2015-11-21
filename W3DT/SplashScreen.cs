@@ -101,7 +101,26 @@ namespace W3DT
             EventManager.H_UpdateCheckComplete -= OnUpdateCheckComplete;
 
             if (!isUpdating)
-                isDoneLoading = true;
+            {
+                if (Program.Settings.ShowSourceSelector)
+                {
+                    Program.Settings.ShowSourceSelector = false;
+                    Program.Settings.Persist(Constants.SETTINGS_FILE);
+
+                    SourceSelectionScreen sourceScreen = new SourceSelectionScreen(this);
+                    sourceScreen.Show();
+                    sourceScreen.Focus();
+                }
+                else
+                {
+                    isDoneLoading = true;
+                }
+            }
+        }
+
+        public void OnSourceSelectionDone()
+        {
+            isDoneLoading = true;
         }
 
         public void OnUpdateDownloadComplete(bool success)
