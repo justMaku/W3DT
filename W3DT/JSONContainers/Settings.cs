@@ -26,5 +26,10 @@ namespace W3DT.JSONContainers
         {
             File.WriteAllText(file, JsonConvert.SerializeObject(this));
         }
+
+        public void Persist()
+        {
+            Persist(Constants.SETTINGS_FILE);
+        }
     }
 }

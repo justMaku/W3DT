@@ -25,7 +25,7 @@ namespace W3DT
         private void UI_SaveButton_Click(object sender, EventArgs e)
         {
             Program.Settings.AutomaticUpdates = UI_AutomaticUpdates.Checked;
-            Program.Settings.Persist(Constants.SETTINGS_FILE);
+            Program.Settings.Persist();
             Close();
         }
 

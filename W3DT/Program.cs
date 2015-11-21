@@ -36,7 +36,7 @@ namespace W3DT
             if (Settings == null)
                 Settings = new Settings();
 
-            Settings.Persist(Constants.SETTINGS_FILE);
+            Settings.Persist();
 
             if (!Settings.AutomaticUpdates)
                 DO_UPDATE = false;
