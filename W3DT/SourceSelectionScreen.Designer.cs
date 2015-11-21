@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SourceSelectionScreen));
             this.UI_DataSourceTitle = new System.Windows.Forms.Label();
-            this.UI_DataSourceInfo = new System.Windows.Forms.TextBox();
+            this.UI_DataSourceInfo = new W3DT.Controls.StaticTextBox();
             this.UI_SourceOption_Local = new System.Windows.Forms.RadioButton();
             this.UI_SourceOptions = new System.Windows.Forms.Panel();
             this.UI_SourceOption_Remote = new System.Windows.Forms.RadioButton();
@@ -320,7 +320,7 @@
         #endregion
 
         private System.Windows.Forms.Label UI_DataSourceTitle;
-        private System.Windows.Forms.TextBox UI_DataSourceInfo;
+        private W3DT.Controls.StaticTextBox UI_DataSourceInfo;
         private System.Windows.Forms.RadioButton UI_SourceOption_Local;
         private System.Windows.Forms.Panel UI_SourceOptions;
         private System.Windows.Forms.Label label4;

@@ -30,23 +30,23 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.UI_SecBtn_Models = new System.Windows.Forms.Button();
-            this.UI_SecText_Players = new System.Windows.Forms.TextBox();
+            this.UI_SecText_Players = new W3DT.Controls.StaticTextBox();
             this.UI_SecBtn_WMO = new System.Windows.Forms.Button();
-            this.UI_SecText_WMO = new System.Windows.Forms.TextBox();
+            this.UI_SecText_WMO = new W3DT.Controls.StaticTextBox();
             this.UI_SecBtn_Doodads = new System.Windows.Forms.Button();
-            this.UI_SecText_Doodads = new System.Windows.Forms.TextBox();
+            this.UI_SecText_Doodads = new W3DT.Controls.StaticTextBox();
             this.UI_SecBtn_SpellBook = new System.Windows.Forms.Button();
-            this.UI_SecText_Spellbook = new System.Windows.Forms.TextBox();
+            this.UI_SecText_Spellbook = new W3DT.Controls.StaticTextBox();
             this.UI_SecBtn_Maps = new System.Windows.Forms.Button();
-            this.UI_SecText_Maps = new System.Windows.Forms.TextBox();
+            this.UI_SecText_Maps = new W3DT.Controls.StaticTextBox();
             this.UI_SecBtn_Sound = new System.Windows.Forms.Button();
-            this.UI_SecText_Sound = new System.Windows.Forms.TextBox();
+            this.UI_SecText_Sound = new W3DT.Controls.StaticTextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new W3DT.Controls.StaticTextBox();
             this.UI_SponserBlock2 = new System.Windows.Forms.PictureBox();
             this.UI_SponserBlock1 = new System.Windows.Forms.PictureBox();
             this.UI_SecBtn_Settings = new System.Windows.Forms.Button();
-            this.UI_SecText_Settings = new System.Windows.Forms.TextBox();
+            this.UI_SecText_Settings = new W3DT.Controls.StaticTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SponserBlock2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SponserBlock1)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +63,7 @@
             // 
             // UI_SecText_Players
             // 
-            this.UI_SecText_Players.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.UI_SecText_Players.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Players.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UI_SecText_Players.Location = new System.Drawing.Point(275, 21);
@@ -86,7 +86,7 @@
             // 
             // UI_SecText_WMO
             // 
-            this.UI_SecText_WMO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.UI_SecText_WMO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_WMO.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UI_SecText_WMO.Location = new System.Drawing.Point(275, 71);
@@ -109,7 +109,7 @@
             // 
             // UI_SecText_Doodads
             // 
-            this.UI_SecText_Doodads.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.UI_SecText_Doodads.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Doodads.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UI_SecText_Doodads.Location = new System.Drawing.Point(275, 121);
@@ -132,7 +132,7 @@
             // 
             // UI_SecText_Spellbook
             // 
-            this.UI_SecText_Spellbook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.UI_SecText_Spellbook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Spellbook.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UI_SecText_Spellbook.Location = new System.Drawing.Point(275, 277);
@@ -155,7 +155,7 @@
             // 
             // UI_SecText_Maps
             // 
-            this.UI_SecText_Maps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.UI_SecText_Maps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Maps.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UI_SecText_Maps.Location = new System.Drawing.Point(275, 171);
@@ -180,7 +180,7 @@
             // 
             // UI_SecText_Sound
             // 
-            this.UI_SecText_Sound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.UI_SecText_Sound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Sound.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UI_SecText_Sound.Location = new System.Drawing.Point(275, 227);
@@ -204,7 +204,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Location = new System.Drawing.Point(275, 321);
@@ -253,7 +253,7 @@
             // 
             // UI_SecText_Settings
             // 
-            this.UI_SecText_Settings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.UI_SecText_Settings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Settings.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UI_SecText_Settings.Location = new System.Drawing.Point(275, 378);
@@ -300,22 +300,22 @@
         #endregion
 
         private System.Windows.Forms.Button UI_SecBtn_Models;
-        private System.Windows.Forms.TextBox UI_SecText_Players;
+        private W3DT.Controls.StaticTextBox UI_SecText_Players;
         private System.Windows.Forms.Button UI_SecBtn_WMO;
-        private System.Windows.Forms.TextBox UI_SecText_WMO;
+        private W3DT.Controls.StaticTextBox UI_SecText_WMO;
         private System.Windows.Forms.Button UI_SecBtn_Doodads;
-        private System.Windows.Forms.TextBox UI_SecText_Doodads;
+        private W3DT.Controls.StaticTextBox UI_SecText_Doodads;
         private System.Windows.Forms.Button UI_SecBtn_SpellBook;
-        private System.Windows.Forms.TextBox UI_SecText_Spellbook;
+        private W3DT.Controls.StaticTextBox UI_SecText_Spellbook;
         private System.Windows.Forms.Button UI_SecBtn_Maps;
-        private System.Windows.Forms.TextBox UI_SecText_Maps;
+        private W3DT.Controls.StaticTextBox UI_SecText_Maps;
         private System.Windows.Forms.Button UI_SecBtn_Sound;
-        private System.Windows.Forms.TextBox UI_SecText_Sound;
+        private W3DT.Controls.StaticTextBox UI_SecText_Sound;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
+        private W3DT.Controls.StaticTextBox textBox1;
         private System.Windows.Forms.PictureBox UI_SponserBlock1;
         private System.Windows.Forms.PictureBox UI_SponserBlock2;
         private System.Windows.Forms.Button UI_SecBtn_Settings;
-        private System.Windows.Forms.TextBox UI_SecText_Settings;
+        private W3DT.Controls.StaticTextBox UI_SecText_Settings;
     }
 }

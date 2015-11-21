@@ -64,6 +64,12 @@
   <ItemGroup>
     <Compile Include="3D\Cube.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controls\StaticTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\StaticTextBox.Designer.cs">
+      <DependentUpon>StaticTextBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="JSONContainers\LatestReleaseData.cs" />
