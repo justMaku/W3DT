@@ -33,6 +33,7 @@
             this.UI_DataSourceTitle = new System.Windows.Forms.Label();
             this.UI_SourceOption_Local = new System.Windows.Forms.RadioButton();
             this.UI_SourceOptions = new System.Windows.Forms.Panel();
+            this.UI_DirectorySelectButton = new System.Windows.Forms.Button();
             this.UI_DirectoryField = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -51,7 +52,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.UI_SourceOption_Remote = new System.Windows.Forms.RadioButton();
             this.UI_SourceOptions_Done = new System.Windows.Forms.Button();
-            this.UI_DirectorySelectButton = new System.Windows.Forms.Button();
             this.FileBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.FileErrorTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.UI_DataSourceInfo = new W3DT.Controls.StaticTextBox();
@@ -110,6 +110,16 @@
             this.UI_SourceOptions.Name = "UI_SourceOptions";
             this.UI_SourceOptions.Size = new System.Drawing.Size(574, 269);
             this.UI_SourceOptions.TabIndex = 3;
+            // 
+            // UI_DirectorySelectButton
+            // 
+            this.UI_DirectorySelectButton.Location = new System.Drawing.Point(516, 84);
+            this.UI_DirectorySelectButton.Name = "UI_DirectorySelectButton";
+            this.UI_DirectorySelectButton.Size = new System.Drawing.Size(41, 23);
+            this.UI_DirectorySelectButton.TabIndex = 6;
+            this.UI_DirectorySelectButton.Text = "...";
+            this.UI_DirectorySelectButton.UseVisualStyleBackColor = true;
+            this.UI_DirectorySelectButton.Click += new System.EventHandler(this.UI_DirectorySelectButton_Click);
             // 
             // UI_DirectoryField
             // 
@@ -301,16 +311,6 @@
             this.UI_SourceOptions_Done.UseVisualStyleBackColor = true;
             this.UI_SourceOptions_Done.Click += new System.EventHandler(this.UI_SourceOptions_Done_Click);
             // 
-            // UI_DirectorySelectButton
-            // 
-            this.UI_DirectorySelectButton.Location = new System.Drawing.Point(516, 84);
-            this.UI_DirectorySelectButton.Name = "UI_DirectorySelectButton";
-            this.UI_DirectorySelectButton.Size = new System.Drawing.Size(41, 23);
-            this.UI_DirectorySelectButton.TabIndex = 6;
-            this.UI_DirectorySelectButton.Text = "...";
-            this.UI_DirectorySelectButton.UseVisualStyleBackColor = true;
-            this.UI_DirectorySelectButton.Click += new System.EventHandler(this.UI_DirectorySelectButton_Click);
-            // 
             // FileBrowserDialog
             // 
             this.FileBrowserDialog.ShowNewFolderButton = false;
@@ -345,6 +345,7 @@
             this.Controls.Add(this.UI_DataSourceTitle);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SourceSelectionScreen";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select Data Source...";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SourceSelectionScreen_FormClosed);
             this.UI_SourceOptions.ResumeLayout(false);
