@@ -12,6 +12,7 @@ namespace W3DT.JSONContainers
         public bool AutomaticUpdates { get; set; }
         public bool ShowSourceSelector { get; set; }
         public bool UseRemote { get; set; }
+        public string WoWDirectory { get; set; }
 
         public Settings()
         {
@@ -19,7 +20,7 @@ namespace W3DT.JSONContainers
             AutomaticUpdates = true;
             UseRemote = false;
             ShowSourceSelector = true;
-
+            WoWDirectory = "";
         }
 
         public void Persist(string file)
