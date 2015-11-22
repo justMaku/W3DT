@@ -24,8 +24,7 @@ namespace W3DT
             if (W_Settings == null || W_Settings.IsDisposed)
                 W_Settings = new SettingsForm();
 
-            W_Settings.Show();
-            W_Settings.Focus();
+            W_Settings.ShowDialog();
         }
     }
 }

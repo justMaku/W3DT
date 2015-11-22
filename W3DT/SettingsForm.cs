@@ -41,10 +41,7 @@ namespace W3DT
             if (sourceScreen == null || sourceScreen.IsDisposed)
                 sourceScreen = new SourceSelectionScreen(this);
 
-            if (!sourceScreen.Visible)
-                sourceScreen.Show();
-
-            sourceScreen.Focus();
+            sourceScreen.ShowDialog();
         }
 
         public void OnSourceSelectionDone()
