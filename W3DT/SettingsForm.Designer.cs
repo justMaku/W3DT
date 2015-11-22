@@ -32,6 +32,7 @@
             this.UI_DiscardButton = new System.Windows.Forms.Button();
             this.UI_SaveButton = new System.Windows.Forms.Button();
             this.UI_AutomaticUpdates = new System.Windows.Forms.CheckBox();
+            this.UI_DataSourceButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // UI_DiscardButton
@@ -59,18 +60,29 @@
             // UI_AutomaticUpdates
             // 
             this.UI_AutomaticUpdates.AutoSize = true;
-            this.UI_AutomaticUpdates.Location = new System.Drawing.Point(12, 12);
+            this.UI_AutomaticUpdates.Location = new System.Drawing.Point(12, 49);
             this.UI_AutomaticUpdates.Name = "UI_AutomaticUpdates";
             this.UI_AutomaticUpdates.Size = new System.Drawing.Size(411, 17);
             this.UI_AutomaticUpdates.TabIndex = 1;
             this.UI_AutomaticUpdates.Text = "Automatically check for and install updates for W3DT on launch. (Recommended)";
             this.UI_AutomaticUpdates.UseVisualStyleBackColor = true;
             // 
+            // UI_DataSourceButton
+            // 
+            this.UI_DataSourceButton.Location = new System.Drawing.Point(12, 13);
+            this.UI_DataSourceButton.Name = "UI_DataSourceButton";
+            this.UI_DataSourceButton.Size = new System.Drawing.Size(161, 23);
+            this.UI_DataSourceButton.TabIndex = 2;
+            this.UI_DataSourceButton.Text = "Change Data Source";
+            this.UI_DataSourceButton.UseVisualStyleBackColor = true;
+            this.UI_DataSourceButton.Click += new System.EventHandler(this.UI_DataSourceButton_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 370);
+            this.Controls.Add(this.UI_DataSourceButton);
             this.Controls.Add(this.UI_AutomaticUpdates);
             this.Controls.Add(this.UI_SaveButton);
             this.Controls.Add(this.UI_DiscardButton);
@@ -87,5 +99,6 @@
         private System.Windows.Forms.Button UI_DiscardButton;
         private System.Windows.Forms.Button UI_SaveButton;
         private System.Windows.Forms.CheckBox UI_AutomaticUpdates;
+        private System.Windows.Forms.Button UI_DataSourceButton;
     }
 }

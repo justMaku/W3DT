@@ -15,7 +15,7 @@ using W3DT.JSONContainers;
 
 namespace W3DT
 {
-    public partial class SplashScreen : Form
+    public partial class SplashScreen : Form, ISourceSelectionParent
     {
         private bool isDoneLoading = false;
         private bool isUpdateCheckDone = false;

@@ -13,14 +13,14 @@ namespace W3DT
     public partial class SourceSelectionScreen : Form
     {
         private bool selectionDone = false;
-        private SplashScreen splash;
+        private ISourceSelectionParent parent;
 
-        public SourceSelectionScreen(SplashScreen splash)
+        public SourceSelectionScreen(ISourceSelectionParent parent)
         {
             InitializeComponent();
-            this.splash = splash;
+            this.parent = parent;
 
-            UI_DirectoryField.Text = Constants.DIRECTORY_PLACEHOLDER;
+            UI_DirectoryField.Text = Program.Settings.WoWDirectory == string.Empty ? Constants.DIRECTORY_PLACEHOLDER : Program.Settings.WoWDirectory;
         }
 
         private void UI_SourceOptions_Done_Click(object sender, EventArgs e)
@@ -56,7 +56,7 @@ namespace W3DT
             Program.Settings.WoWDirectory = selectedDirectory;
             Program.Settings.Persist();
 
-            splash.OnSourceSelectionDone();
+            parent.OnSourceSelectionDone();
             Close();
         }
 

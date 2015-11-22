@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\IEvent.cs" />
+    <Compile Include="ISourceSelectionParent.cs" />
     <Compile Include="JSONContainers\LatestReleaseData.cs" />
     <Compile Include="JSONContainers\ReleaseAsset.cs" />
     <Compile Include="JSONContainers\Settings.cs" />

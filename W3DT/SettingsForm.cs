@@ -9,8 +9,10 @@ using System.Windows.Forms;
 
 namespace W3DT
 {
-    public partial class SettingsForm : Form
+    public partial class SettingsForm : Form, ISourceSelectionParent
     {
+        private SourceSelectionScreen sourceScreen;
+
         public SettingsForm()
         {
             InitializeComponent();
@@ -32,6 +34,22 @@ namespace W3DT
         private void UI_DiscardButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void UI_DataSourceButton_Click(object sender, EventArgs e)
+        {
+            if (sourceScreen == null || sourceScreen.IsDisposed)
+                sourceScreen = new SourceSelectionScreen(this);
+
+            if (!sourceScreen.Visible)
+                sourceScreen.Show();
+
+            sourceScreen.Focus();
+        }
+
+        public void OnSourceSelectionDone()
+        {
+            // stub
         }
     }
 }
