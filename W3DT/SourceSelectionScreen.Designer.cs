@@ -108,7 +108,7 @@
             this.UI_SourceOptions.Controls.Add(this.UI_SourceOption_Local);
             this.UI_SourceOptions.Location = new System.Drawing.Point(27, 80);
             this.UI_SourceOptions.Name = "UI_SourceOptions";
-            this.UI_SourceOptions.Size = new System.Drawing.Size(574, 269);
+            this.UI_SourceOptions.Size = new System.Drawing.Size(574, 257);
             this.UI_SourceOptions.TabIndex = 3;
             // 
             // UI_DirectorySelectButton
@@ -303,7 +303,8 @@
             // 
             // UI_SourceOptions_Done
             // 
-            this.UI_SourceOptions_Done.Location = new System.Drawing.Point(494, 359);
+            this.UI_SourceOptions_Done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_SourceOptions_Done.Location = new System.Drawing.Point(494, 347);
             this.UI_SourceOptions_Done.Name = "UI_SourceOptions_Done";
             this.UI_SourceOptions_Done.Size = new System.Drawing.Size(130, 23);
             this.UI_SourceOptions_Done.TabIndex = 4;
@@ -338,7 +339,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(636, 394);
+            this.ClientSize = new System.Drawing.Size(636, 382);
             this.Controls.Add(this.UI_SourceOptions_Done);
             this.Controls.Add(this.UI_SourceOptions);
             this.Controls.Add(this.UI_DataSourceInfo);
