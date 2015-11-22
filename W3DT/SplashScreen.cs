@@ -153,7 +153,7 @@ namespace W3DT
             if (Timer_SplashClose.Interval == 4000)
                 Timer_SplashClose.Interval = 100;
 
-            if (!hasShownSourceScreen && Program.Settings.ShowSourceSelector)
+            if (!hasShownSourceScreen && Program.Settings.ShowSourceSelector && isUpdateCheckDone)
             {
                 hasShownSourceScreen = true;
                 ShowSourceSelectionScreen();
