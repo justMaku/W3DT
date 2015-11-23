@@ -44,8 +44,6 @@ namespace W3DT
                 Log.Write("Exception info: " + ex.Message);
             }
 
-            throw new Exception("THIS IS A TEST!");
-
             if (Program.DO_UPDATE)
             {
                 new RunnerUpdateCheck().Begin();
