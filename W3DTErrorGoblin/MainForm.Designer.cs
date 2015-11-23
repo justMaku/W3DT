@@ -79,6 +79,7 @@
             this.UI_LogBox.ReadOnly = true;
             this.UI_LogBox.Size = new System.Drawing.Size(629, 436);
             this.UI_LogBox.TabIndex = 3;
+            this.UI_LogBox.TabStop = false;
             this.UI_LogBox.Text = resources.GetString("UI_LogBox.Text");
             // 
             // label3
