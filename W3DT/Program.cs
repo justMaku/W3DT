@@ -25,6 +25,8 @@ namespace W3DT
         [STAThread]
         static void Main(string[] args)
         {
+            Log.Initialize(Constants.LOG_FILE);
+
             // Allow updating to be disabled via parameters.
             if (Array.Exists(args, input => input.ToLower().Equals("--noupdate")))
                 DO_UPDATE = false;
@@ -34,12 +36,21 @@ namespace W3DT
 
             // Revert to default settings.
             if (Settings == null)
+            {
+                Log.Write("No settings file found, reverting to defaults.");
                 Settings = new Settings();
+            }
 
             Settings.Persist();
 
+            // Dump settings to log.
+            Log.Write(JsonConvert.SerializeObject(Settings, Formatting.Indented));
+
             if (!Settings.AutomaticUpdates)
+            {
+                Log.Write("NOT UPDATING: Automatic updating disabled in settings.");
                 DO_UPDATE = false;
+            }
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

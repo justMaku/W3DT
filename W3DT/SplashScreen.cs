@@ -29,7 +29,7 @@ namespace W3DT
             EventManager.H_UpdateDownloadComplete += OnUpdateDownloadComplete;
 
             currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Debug.WriteLine("Current build: " + currentVersion);
+            Log.Write("Current build: " + currentVersion);
 
             // Check for and remove leftover update package.
             try
@@ -40,8 +40,8 @@ namespace W3DT
             catch (Exception ex)
             {
                 // File locked, or something. Brazenly continue onwards.
-                Debug.WriteLine("Unable to delete leftover package file (" + ex.GetType().Name + ")");
-                Debug.WriteLine("Exception info: " + ex.Message);
+                Log.Write("Unable to delete leftover package file (" + ex.GetType().Name + ")");
+                Log.Write("Exception info: " + ex.Message);
             }
 
             if (Program.DO_UPDATE)
@@ -63,7 +63,7 @@ namespace W3DT
             if (data.message != null)
             {
                 // If a message is set, it was some kind of error.
-                Debug.WriteLine("Not updating, GitHub gave us an error: " + data.message);
+                Log.Write("NOT UPDATING: GitHub gave us an error -> " + data.message);
             }
             else
             {
@@ -72,7 +72,7 @@ namespace W3DT
                 Regex versionCheck = new Regex(@"^\d+\.\d+\.\d+\.\d+$", RegexOptions.IgnoreCase);
                 if (versionCheck.Match(data.tag_name).Success)
                 {
-                    Debug.WriteLine("Remote latest version: " + data.tag_name);
+                    Log.Write("Remote latest version: " + data.tag_name);
 
                     Version localVersion = new Version(currentVersion);
                     Version remoteVersion = new Version(data.tag_name);
@@ -88,19 +88,19 @@ namespace W3DT
                         else
                         {
                             // Missing assets. Human error (most likely).
-                            Debug.WriteLine("Not updating, remote version has no assets attached!");
+                            Log.Write("NOT UPDATING: Remote version has no assets attached!");
                         }
                     }
                     else
                     {
                         // Local version is equal to remote (or somehow newer).
-                        Debug.WriteLine("Not updating, local version is newer or equal to remote version.");
+                        Log.Write("NOT UPDATING: Local version is newer or equal to remote version.");
                     }
                 }
                 else
                 {
                     // Version number is not valid, generally caused by human error.
-                    Debug.WriteLine("Not updating, remote version number is malformed: " + data.tag_name);
+                    Log.Write("NOT UPDATING: Remote version number is malformed -> " + data.tag_name);
                 }
             }
 

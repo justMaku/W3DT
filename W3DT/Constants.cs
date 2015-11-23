@@ -12,8 +12,9 @@ namespace W3DT
         public static readonly string UPDATE_REPO_URL = @"https://api.github.com/repos/Kruithne/W3DT/releases/latest";
         public static readonly string UPDATE_PACKAGE_FILE = "update.zip";
 
-        // Settings //
+        // Base Stuff //
         public static readonly string SETTINGS_FILE = "settings.json";
+        public static readonly string LOG_FILE = "session.log";
 
         public static readonly string DIRECTORY_PLACEHOLDER = "<Select World of Warcraft installation directory>";
         public static readonly string WOW_BUILD_FILE = ".build.info";
