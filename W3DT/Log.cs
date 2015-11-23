@@ -49,9 +49,9 @@ namespace W3DT
             if (IsValid())
             {
                 if (timestamp)
-                    writer.WriteLine(String.Format("[{0}] {1}\r\n", GetTimestamp(), message));
+                    writer.WriteLine(String.Format("[{0}] {1}", GetTimestamp(), message));
                 else
-                    writer.WriteLine(message + "\r\n");
+                    writer.WriteLine(message);
             }
 
             Debug.WriteLine(message);
