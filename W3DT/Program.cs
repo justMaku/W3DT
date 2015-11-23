@@ -58,6 +58,8 @@ namespace W3DT
 
             if (!STOP_LOAD)
                 Application.Run(new MainForm());
+
+            Log.Dispose();
         }
     }
 }

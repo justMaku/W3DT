@@ -16,13 +16,17 @@ namespace W3DT
             if (File.Exists(file))
                 File.Delete(file);
 
-            File.Create(file);
-            writer = File.AppendText(file);
+            writer = new StreamWriter(file, true);
 
             string year = DateTime.Now.ToString("yyyy");
             string monthDay = DateTime.Now.ToString("MMdd");
 
             Write(String.Format("Captain's log, USS Enterprise (NCC-{0}-D), {1}", year, monthDay), false);
+        }
+
+        public static void Dispose()
+        {
+            writer.Close();
         }
 
         private static bool IsValid()

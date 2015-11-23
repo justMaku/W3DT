@@ -76,6 +76,7 @@
     <Compile Include="JSONContainers\LatestReleaseData.cs" />
     <Compile Include="JSONContainers\ReleaseAsset.cs" />
     <Compile Include="JSONContainers\Settings.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
