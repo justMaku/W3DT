@@ -54,6 +54,7 @@ namespace W3DT
                     writer.WriteLine(message);
             }
 
+            writer.Flush();
             Debug.WriteLine(message);
         }
     }

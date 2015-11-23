@@ -26,10 +26,14 @@ namespace W3DT
         static void Main(string[] args)
         {
             Log.Initialize(Constants.LOG_FILE);
+            Log.Write(AppDomain.CurrentDomain.FriendlyName + " " + String.Join(" ", args));
 
             // Allow updating to be disabled via parameters.
             if (Array.Exists(args, input => input.ToLower().Equals("--noupdate")))
+            {
+                Log.Write("NOT UPDATING: Disabled via arguments.");
                 DO_UPDATE = false;
+            }
 
             if (File.Exists(Constants.SETTINGS_FILE))
                 Settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(Constants.SETTINGS_FILE));
