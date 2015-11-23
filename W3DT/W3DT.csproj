@@ -83,6 +83,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Runners\RunnerBase.cs" />
+    <Compile Include="Runners\RunnerCDNCheck.cs" />
     <Compile Include="Runners\RunnerDownloadUpdate.cs" />
     <Compile Include="Runners\RunnerUpdateCheck.cs" />
     <Compile Include="SettingsForm.cs">
