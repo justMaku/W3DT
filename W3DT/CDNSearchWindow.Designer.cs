@@ -29,18 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CDNSearchWindow));
-            this.LoadingEye = new W3DT.Controls.LoadingEye();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.LoadingEye = new W3DT.Controls.LoadingEye();
             this.SuspendLayout();
-            // 
-            // LoadingEye
-            // 
-            this.LoadingEye.Location = new System.Drawing.Point(12, 12);
-            this.LoadingEye.Name = "LoadingEye";
-            this.LoadingEye.Size = new System.Drawing.Size(64, 64);
-            this.LoadingEye.TabIndex = 0;
             // 
             // label1
             // 
@@ -72,6 +65,13 @@
             this.label3.TabIndex = 1;
             this.label3.Text = "Did you know: Poking an Old God with a stick will result in rapid death.";
             // 
+            // LoadingEye
+            // 
+            this.LoadingEye.Location = new System.Drawing.Point(12, 12);
+            this.LoadingEye.Name = "LoadingEye";
+            this.LoadingEye.Size = new System.Drawing.Size(64, 64);
+            this.LoadingEye.TabIndex = 0;
+            // 
             // CDNSearchWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -82,6 +82,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LoadingEye);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(468, 127);
+            this.MinimumSize = new System.Drawing.Size(468, 127);
             this.Name = "CDNSearchWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CDN scanning, powered by Old Gods...";
