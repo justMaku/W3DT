@@ -37,13 +37,6 @@ namespace W3DT
 
         private void UI_SaveButton_Click(object sender, EventArgs e)
         {
-            Program.Settings.AutomaticUpdates = UI_AutomaticUpdates.Checked;
-            Program.Settings.Persist();
-            Close();
-        }
-
-        private void UI_DiscardButton_Click(object sender, EventArgs e)
-        {
             Close();
         }
 
@@ -58,6 +51,12 @@ namespace W3DT
         public void OnSourceSelectionDone()
         {
             UpdateInfo();
+        }
+
+        private void UI_AutomaticUpdates_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.AutomaticUpdates = UI_AutomaticUpdates.Checked;
+            Program.Settings.Persist();
         }
     }
 }
