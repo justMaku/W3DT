@@ -33,6 +33,8 @@
             this.UI_SaveButton = new System.Windows.Forms.Button();
             this.UI_AutomaticUpdates = new System.Windows.Forms.CheckBox();
             this.UI_DataSourceButton = new System.Windows.Forms.Button();
+            this.UI_Info_CurrVersion = new System.Windows.Forms.Label();
+            this.UI_Info_RemoteHost = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UI_DiscardButton
@@ -60,7 +62,7 @@
             // UI_AutomaticUpdates
             // 
             this.UI_AutomaticUpdates.AutoSize = true;
-            this.UI_AutomaticUpdates.Location = new System.Drawing.Point(12, 49);
+            this.UI_AutomaticUpdates.Location = new System.Drawing.Point(12, 91);
             this.UI_AutomaticUpdates.Name = "UI_AutomaticUpdates";
             this.UI_AutomaticUpdates.Size = new System.Drawing.Size(411, 17);
             this.UI_AutomaticUpdates.TabIndex = 1;
@@ -77,11 +79,31 @@
             this.UI_DataSourceButton.UseVisualStyleBackColor = true;
             this.UI_DataSourceButton.Click += new System.EventHandler(this.UI_DataSourceButton_Click);
             // 
+            // UI_Info_CurrVersion
+            // 
+            this.UI_Info_CurrVersion.AutoSize = true;
+            this.UI_Info_CurrVersion.Location = new System.Drawing.Point(12, 49);
+            this.UI_Info_CurrVersion.Name = "UI_Info_CurrVersion";
+            this.UI_Info_CurrVersion.Size = new System.Drawing.Size(164, 13);
+            this.UI_Info_CurrVersion.TabIndex = 3;
+            this.UI_Info_CurrVersion.Text = "Current Version: PLACEHOLDER";
+            // 
+            // UI_Info_RemoteHost
+            // 
+            this.UI_Info_RemoteHost.AutoSize = true;
+            this.UI_Info_RemoteHost.Location = new System.Drawing.Point(12, 65);
+            this.UI_Info_RemoteHost.Name = "UI_Info_RemoteHost";
+            this.UI_Info_RemoteHost.Size = new System.Drawing.Size(180, 13);
+            this.UI_Info_RemoteHost.TabIndex = 3;
+            this.UI_Info_RemoteHost.Text = "Remote CDN Host: PLACEHOLDER";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 370);
+            this.Controls.Add(this.UI_Info_RemoteHost);
+            this.Controls.Add(this.UI_Info_CurrVersion);
             this.Controls.Add(this.UI_DataSourceButton);
             this.Controls.Add(this.UI_AutomaticUpdates);
             this.Controls.Add(this.UI_SaveButton);
@@ -100,5 +122,7 @@
         private System.Windows.Forms.Button UI_SaveButton;
         private System.Windows.Forms.CheckBox UI_AutomaticUpdates;
         private System.Windows.Forms.Button UI_DataSourceButton;
+        private System.Windows.Forms.Label UI_Info_CurrVersion;
+        private System.Windows.Forms.Label UI_Info_RemoteHost;
     }
 }

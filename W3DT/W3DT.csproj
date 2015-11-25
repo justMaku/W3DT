@@ -84,7 +84,6 @@
     </Compile>
     <Compile Include="Events\CDNScanDoneArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
-    <Compile Include="Events\IEvent.cs" />
     <Compile Include="Events\UpdateCheckDoneArgs.cs" />
     <Compile Include="Events\UpdateDownloadDoneArgs.cs" />
     <Compile Include="ISourceSelectionParent.cs" />

@@ -12,6 +12,7 @@ namespace W3DT
 {
     static class Program
     {
+        public static string Version = "0.0.0.0";
         public static Settings Settings;
         public static bool STOP_LOAD = false;
 
@@ -38,6 +39,9 @@ namespace W3DT
 
             Log.Initialize(Constants.LOG_FILE);
             Log.Write(AppDomain.CurrentDomain.FriendlyName + " " + String.Join(" ", args));
+
+            Version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Log.Write("Current build: " + Version);
 
             if (IS_DEBUG)
                 Log.Write("DEBUG VERSION - Updating and error catching disabled.");

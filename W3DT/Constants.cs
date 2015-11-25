@@ -18,5 +18,9 @@ namespace W3DT
 
         public static readonly string DIRECTORY_PLACEHOLDER = "<Select World of Warcraft installation directory>";
         public static readonly string WOW_BUILD_FILE = ".build.info";
+
+        // Settings labels //
+        public static readonly string CURRENT_VERSION_STRING = "Current Version: {0}";
+        public static readonly string CDN_HOST_STRING = "Remote CDN Host: {0}";
     }
 }

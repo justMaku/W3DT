@@ -17,6 +17,15 @@ namespace W3DT
         {
             InitializeComponent();
             LoadSettings();
+            UpdateInfo();
+        }
+
+        private void UpdateInfo()
+        {
+            UI_Info_CurrVersion.Text = string.Format(Constants.CURRENT_VERSION_STRING, Program.Version);
+
+            string host = Program.Settings.UseRemote ? Program.Settings.RemoteHost : "N/A";
+            UI_Info_RemoteHost.Text = string.Format(Constants.CDN_HOST_STRING, host);
         }
 
         private void LoadSettings()
@@ -46,7 +55,7 @@ namespace W3DT
 
         public void OnSourceSelectionDone()
         {
-            // stub
+            UpdateInfo();
         }
     }
 }

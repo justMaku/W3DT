@@ -20,16 +20,12 @@ namespace W3DT
         private bool isDoneLoading = false;
         private bool isUpdateCheckDone = false;
         private bool hasShownSourceScreen = false;
-        private string currentVersion = "1.0.0.0";
 
         public SplashScreen()
         {
             InitializeComponent();
             EventManager.UpdateCheckDone += OnUpdateCheckComplete;
             EventManager.UpdateDownloadDone += OnUpdateDownloadComplete;
-
-            currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Log.Write("Current build: " + currentVersion);
 
             // Check for and remove leftover update package.
             try
@@ -75,7 +71,7 @@ namespace W3DT
                 {
                     Log.Write("Remote latest version: " + data.tag_name);
 
-                    Version localVersion = new Version(currentVersion);
+                    Version localVersion = new Version(Program.Version);
                     Version remoteVersion = new Version(data.tag_name);
 
                     if (remoteVersion.CompareTo(localVersion) > 0)
