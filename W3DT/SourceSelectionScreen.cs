@@ -86,6 +86,7 @@ namespace W3DT
             if (bestHost != null)
             {
                 Program.Settings.RemoteHost = bestHost;
+                Program.Settings.WoWDirectory = null;
                 Program.Settings.Persist();
 
                 DeferToParent();
