@@ -25,7 +25,7 @@ namespace W3DT
             UI_SourceOption_Local.Checked = !Program.Settings.UseRemote;
             UI_SourceOption_Remote.Checked = Program.Settings.UseRemote;
 
-            UI_DirectoryField.Text = Program.Settings.WoWDirectory == string.Empty ? Constants.DIRECTORY_PLACEHOLDER : Program.Settings.WoWDirectory;
+            UI_DirectoryField.Text = Program.Settings.WoWDirectory == null ? Constants.DIRECTORY_PLACEHOLDER : Program.Settings.WoWDirectory;
         }
 
         private void UI_SourceOptions_Done_Click(object sender, EventArgs e)

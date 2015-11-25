@@ -21,8 +21,8 @@ namespace W3DT.JSONContainers
             AutomaticUpdates = true;
             UseRemote = false;
             ShowSourceSelector = true;
-            WoWDirectory = string.Empty;
-            RemoteHost = string.Empty;
+            WoWDirectory = null;
+            RemoteHost = null;
         }
 
         public void Persist(string file)
