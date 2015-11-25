@@ -344,6 +344,8 @@
             this.Controls.Add(this.UI_DataSourceInfo);
             this.Controls.Add(this.UI_DataSourceTitle);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(652, 382);
+            this.MinimumSize = new System.Drawing.Size(652, 382);
             this.Name = "SourceSelectionScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select Data Source...";
