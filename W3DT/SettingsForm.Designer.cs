@@ -39,7 +39,7 @@
             // UI_SaveButton
             // 
             this.UI_SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_SaveButton.Location = new System.Drawing.Point(468, 335);
+            this.UI_SaveButton.Location = new System.Drawing.Point(360, 125);
             this.UI_SaveButton.Name = "UI_SaveButton";
             this.UI_SaveButton.Size = new System.Drawing.Size(84, 23);
             this.UI_SaveButton.TabIndex = 0;
@@ -90,13 +90,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 370);
+            this.ClientSize = new System.Drawing.Size(456, 160);
             this.Controls.Add(this.UI_Info_DataSource);
             this.Controls.Add(this.UI_Info_CurrVersion);
             this.Controls.Add(this.UI_DataSourceButton);
             this.Controls.Add(this.UI_AutomaticUpdates);
             this.Controls.Add(this.UI_SaveButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(472, 198);
             this.Name = "SettingsForm";
             this.Text = "Settings";
             this.ResumeLayout(false);
