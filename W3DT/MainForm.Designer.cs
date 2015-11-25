@@ -57,7 +57,7 @@
             this.UI_SecBtn_Models.Location = new System.Drawing.Point(12, 12);
             this.UI_SecBtn_Models.Name = "UI_SecBtn_Models";
             this.UI_SecBtn_Models.Size = new System.Drawing.Size(257, 44);
-            this.UI_SecBtn_Models.TabIndex = 0;
+            this.UI_SecBtn_Models.TabIndex = 1;
             this.UI_SecBtn_Models.Text = "Entity Model Manager";
             this.UI_SecBtn_Models.UseVisualStyleBackColor = true;
             // 
@@ -67,7 +67,7 @@
             this.UI_SecBtn_WMO.Location = new System.Drawing.Point(12, 62);
             this.UI_SecBtn_WMO.Name = "UI_SecBtn_WMO";
             this.UI_SecBtn_WMO.Size = new System.Drawing.Size(257, 44);
-            this.UI_SecBtn_WMO.TabIndex = 0;
+            this.UI_SecBtn_WMO.TabIndex = 2;
             this.UI_SecBtn_WMO.Text = "WMO Exporter";
             this.UI_SecBtn_WMO.UseVisualStyleBackColor = true;
             // 
@@ -77,7 +77,7 @@
             this.UI_SecBtn_Doodads.Location = new System.Drawing.Point(12, 112);
             this.UI_SecBtn_Doodads.Name = "UI_SecBtn_Doodads";
             this.UI_SecBtn_Doodads.Size = new System.Drawing.Size(257, 44);
-            this.UI_SecBtn_Doodads.TabIndex = 0;
+            this.UI_SecBtn_Doodads.TabIndex = 3;
             this.UI_SecBtn_Doodads.Text = "Doodad Dealer";
             this.UI_SecBtn_Doodads.UseVisualStyleBackColor = true;
             // 
@@ -87,7 +87,7 @@
             this.UI_SecBtn_SpellBook.Location = new System.Drawing.Point(12, 262);
             this.UI_SecBtn_SpellBook.Name = "UI_SecBtn_SpellBook";
             this.UI_SecBtn_SpellBook.Size = new System.Drawing.Size(257, 44);
-            this.UI_SecBtn_SpellBook.TabIndex = 0;
+            this.UI_SecBtn_SpellBook.TabIndex = 6;
             this.UI_SecBtn_SpellBook.Text = "Spellbook";
             this.UI_SecBtn_SpellBook.UseVisualStyleBackColor = true;
             // 
@@ -97,7 +97,7 @@
             this.UI_SecBtn_Maps.Location = new System.Drawing.Point(12, 162);
             this.UI_SecBtn_Maps.Name = "UI_SecBtn_Maps";
             this.UI_SecBtn_Maps.Size = new System.Drawing.Size(257, 44);
-            this.UI_SecBtn_Maps.TabIndex = 0;
+            this.UI_SecBtn_Maps.TabIndex = 4;
             this.UI_SecBtn_Maps.Text = "Maps";
             this.UI_SecBtn_Maps.UseVisualStyleBackColor = true;
             // 
@@ -107,7 +107,7 @@
             this.UI_SecBtn_Sound.Location = new System.Drawing.Point(12, 212);
             this.UI_SecBtn_Sound.Name = "UI_SecBtn_Sound";
             this.UI_SecBtn_Sound.Size = new System.Drawing.Size(257, 44);
-            this.UI_SecBtn_Sound.TabIndex = 0;
+            this.UI_SecBtn_Sound.TabIndex = 5;
             this.UI_SecBtn_Sound.Text = "The Sound of Music";
             this.UI_SecBtn_Sound.UseVisualStyleBackColor = true;
             // 
@@ -117,7 +117,7 @@
             this.button1.Location = new System.Drawing.Point(12, 312);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(257, 44);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 7;
             this.button1.Text = "Artwerker";
             this.button1.UseVisualStyleBackColor = true;
             // 
@@ -127,7 +127,7 @@
             this.UI_SecBtn_Settings.Location = new System.Drawing.Point(12, 362);
             this.UI_SecBtn_Settings.Name = "UI_SecBtn_Settings";
             this.UI_SecBtn_Settings.Size = new System.Drawing.Size(257, 44);
-            this.UI_SecBtn_Settings.TabIndex = 0;
+            this.UI_SecBtn_Settings.TabIndex = 8;
             this.UI_SecBtn_Settings.Text = "Application Settings";
             this.UI_SecBtn_Settings.UseVisualStyleBackColor = true;
             this.UI_SecBtn_Settings.Click += new System.EventHandler(this.UI_SecBtn_Settings_Click);
