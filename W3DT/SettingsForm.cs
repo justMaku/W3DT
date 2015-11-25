@@ -24,8 +24,10 @@ namespace W3DT
         {
             UI_Info_CurrVersion.Text = string.Format(Constants.CURRENT_VERSION_STRING, Program.Version);
 
-            string host = Program.Settings.UseRemote ? Program.Settings.RemoteHost : "N/A";
-            UI_Info_RemoteHost.Text = string.Format(Constants.CDN_HOST_STRING, host);
+            if (Program.Settings.UseRemote)
+                UI_Info_DataSource.Text = string.Format(Constants.CDN_HOST_STRING, Program.Settings.RemoteHost);
+            else
+                UI_Info_DataSource.Text = string.Format(Constants.WOW_DIRECTORY_STRING, Program.Settings.WoWDirectory);
         }
 
         private void LoadSettings()

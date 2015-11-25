@@ -22,5 +22,6 @@ namespace W3DT
         // Settings labels //
         public static readonly string CURRENT_VERSION_STRING = "Current Version: {0}";
         public static readonly string CDN_HOST_STRING = "Remote CDN Host: {0}";
+        public static readonly string WOW_DIRECTORY_STRING = "Local Directory: {0}";
     }
 }

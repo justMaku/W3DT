@@ -34,7 +34,7 @@
             this.UI_AutomaticUpdates = new System.Windows.Forms.CheckBox();
             this.UI_DataSourceButton = new System.Windows.Forms.Button();
             this.UI_Info_CurrVersion = new System.Windows.Forms.Label();
-            this.UI_Info_RemoteHost = new System.Windows.Forms.Label();
+            this.UI_Info_DataSource = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UI_DiscardButton
@@ -88,21 +88,21 @@
             this.UI_Info_CurrVersion.TabIndex = 3;
             this.UI_Info_CurrVersion.Text = "Current Version: PLACEHOLDER";
             // 
-            // UI_Info_RemoteHost
+            // UI_Info_DataSource
             // 
-            this.UI_Info_RemoteHost.AutoSize = true;
-            this.UI_Info_RemoteHost.Location = new System.Drawing.Point(12, 65);
-            this.UI_Info_RemoteHost.Name = "UI_Info_RemoteHost";
-            this.UI_Info_RemoteHost.Size = new System.Drawing.Size(180, 13);
-            this.UI_Info_RemoteHost.TabIndex = 3;
-            this.UI_Info_RemoteHost.Text = "Remote CDN Host: PLACEHOLDER";
+            this.UI_Info_DataSource.AutoSize = true;
+            this.UI_Info_DataSource.Location = new System.Drawing.Point(12, 65);
+            this.UI_Info_DataSource.Name = "UI_Info_DataSource";
+            this.UI_Info_DataSource.Size = new System.Drawing.Size(152, 13);
+            this.UI_Info_DataSource.TabIndex = 3;
+            this.UI_Info_DataSource.Text = "Data Source: PLACEHOLDER";
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 370);
-            this.Controls.Add(this.UI_Info_RemoteHost);
+            this.Controls.Add(this.UI_Info_DataSource);
             this.Controls.Add(this.UI_Info_CurrVersion);
             this.Controls.Add(this.UI_DataSourceButton);
             this.Controls.Add(this.UI_AutomaticUpdates);
@@ -123,6 +123,6 @@
         private System.Windows.Forms.CheckBox UI_AutomaticUpdates;
         private System.Windows.Forms.Button UI_DataSourceButton;
         private System.Windows.Forms.Label UI_Info_CurrVersion;
-        private System.Windows.Forms.Label UI_Info_RemoteHost;
+        private System.Windows.Forms.Label UI_Info_DataSource;
     }
 }
