@@ -53,7 +53,7 @@ namespace W3DT.Runners
             }
 
             if (bestHost != null)
-                Log.Write(string.Format("{0} was found to be the fastest host with a delay of {1}ms.", bestHost, bestPing));
+                Log.Write("{0} was found to be the fastest host with a delay of {1}ms.", bestHost, bestPing);
             else
                 Log.Write("Failed to find a CDN server. Looks like the Legion will prevail after all.");
 
@@ -75,19 +75,19 @@ namespace W3DT.Runners
                     PingReply reply = pingSender.Send(host, 120);
                     if (reply.Status == IPStatus.Success)
                     {
-                        Log.Write(string.Format("Ping response from {0} ({1}) of {2}ms", host, reply.Address.ToString(), reply.RoundtripTime));
+                        Log.Write("Ping response from {0} ({1}) of {2}ms", host, reply.Address.ToString(), reply.RoundtripTime);
                         totalTime += reply.RoundtripTime;
                     }
                 }
 
                 double totalTimeRounded = totalTime / 4;
-                Log.Write(string.Format("Average ping delay for {0}: {1}", host, totalTimeRounded));
+                Log.Write("Average ping delay for {0}: {1}", host, totalTimeRounded);
 
                 return totalTimeRounded;
             }
             catch (PingException ex)
             {
-                Log.Write(string.Format("Attempted ping to {0} FAILED; {1}", host, ex.Message));
+                Log.Write("Attempted ping to {0} FAILED; {1}", host, ex.Message);
                 return -1D;
             }
         }

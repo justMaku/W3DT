@@ -44,6 +44,11 @@ namespace W3DT
             Write(message, true);
         }
 
+        public static void Write(string message, params object[] args)
+        {
+            Write(string.Format(message, args));
+        }
+
         public static void Write(string message, bool timestamp)
         {
             if (IsValid())
