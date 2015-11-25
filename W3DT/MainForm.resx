@@ -117,15 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UI_SecText_Players.Text" xml:space="preserve">
-    <value>Import players from the armory, load and customize blank player models, extract custom creature models from in-game and more, outfitting them with custom items/appearances for exporting to multiple formats.
-</value>
+  <data name="UI_SecText_Doodads.Text" xml:space="preserve">
+    <value>Doodads are (generally) small objects such as furniture and foliage used to provide clutter to 3D environments within World of Warcraft. This tool allows you to browse and export these objects to various formats.</value>
   </data>
   <data name="UI_SecText_WMO.Text" xml:space="preserve">
     <value>WMO objects are pre-set collections of geometry and doodads grouped up for use in World of Warcraft maps, primarily consisting of large buildings and structures. This tool allows browsing and exporting of these objects.</value>
   </data>
-  <data name="UI_SecText_Doodads.Text" xml:space="preserve">
-    <value>Doodads are (generally) small objects such as furniture and foliage used to provide clutter to 3D environments within World of Warcraft. This tool allows you to browse and export these objects to various formats.</value>
+  <data name="UI_SecText_Players.Text" xml:space="preserve">
+    <value>Import players from the armory, load and customize blank player models, extract custom creature models from in-game and more, outfitting them with custom items/appearances for exporting to multiple formats.
+</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
