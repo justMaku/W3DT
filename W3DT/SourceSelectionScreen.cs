@@ -67,6 +67,7 @@ namespace W3DT
                 }
 
                 Program.Settings.UseRemote = false;
+                Program.Settings.RemoteHost = null;
                 Program.Settings.ShowSourceSelector = false;
                 Program.Settings.WoWDirectory = selectedDirectory;
                 Program.Settings.Persist();
