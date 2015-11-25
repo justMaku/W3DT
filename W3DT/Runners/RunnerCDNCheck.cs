@@ -67,6 +67,7 @@ namespace W3DT.Runners
 
             try
             {
+                bool success = false;
                 long totalTime = 0;
                 Ping pingSender = new Ping();
 
@@ -76,14 +77,25 @@ namespace W3DT.Runners
                     if (reply.Status == IPStatus.Success)
                     {
                         Log.Write("Ping response from {0} ({1}) of {2}ms", host, reply.Address.ToString(), reply.RoundtripTime);
+                        success = true;
                         totalTime += reply.RoundtripTime;
+                    }
+                    else
+                    {
+                        Log.Write("No response from {0} ({1})", host, i);
                     }
                 }
 
-                double totalTimeRounded = totalTime / 4;
-                Log.Write("Average ping delay for {0}: {1}", host, totalTimeRounded);
+                if (success)
+                {
+                    double totalTimeRounded = totalTime / 4;
+                    Log.Write("Average ping delay for {0}: {1}", host, totalTimeRounded);
 
-                return totalTimeRounded;
+                    return totalTimeRounded;
+                }
+
+                Log.Write("All attempts to ping {0} failed, ignoring host.", host);
+                return -1D;
             }
             catch (PingException ex)
             {
