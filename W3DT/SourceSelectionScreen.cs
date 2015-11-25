@@ -22,6 +22,9 @@ namespace W3DT
             InitializeComponent();
             this.parent = parent;
 
+            UI_SourceOption_Local.Checked = !Program.Settings.UseRemote;
+            UI_SourceOption_Remote.Checked = Program.Settings.UseRemote;
+
             UI_DirectoryField.Text = Program.Settings.WoWDirectory == string.Empty ? Constants.DIRECTORY_PLACEHOLDER : Program.Settings.WoWDirectory;
         }
 
