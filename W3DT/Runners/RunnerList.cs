@@ -21,6 +21,10 @@ namespace W3DT.Runners
             while (runners.Length > currentRunner)
             {
                 RunnerBase runner = runners[currentRunner];
+
+                if (currentRunner > 0)
+                    runner.previousRunner = runners[currentRunner - 1];
+
                 runner.Begin();
 
                 while (runner.thread.IsAlive)

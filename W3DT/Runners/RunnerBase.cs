@@ -9,6 +9,8 @@ namespace W3DT.Runners
     public abstract class RunnerBase
     {
         public Thread thread { get; private set; }
+        public int state { get; protected set; }
+        public RunnerBase previousRunner { get; set; }
 
         public void Begin()
         {
