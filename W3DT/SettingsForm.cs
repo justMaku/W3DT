@@ -48,7 +48,7 @@ namespace W3DT
         private void UI_DataSourceButton_Click(object sender, EventArgs e)
         {
             if (sourceScreen == null || sourceScreen.IsDisposed)
-                sourceScreen = new SourceSelectionScreen(this);
+                sourceScreen = new SourceSelectionScreen(this, false);
 
             sourceScreen.ShowDialog();
         }

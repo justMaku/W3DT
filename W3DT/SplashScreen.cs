@@ -115,7 +115,7 @@ namespace W3DT
 
         private void ShowSourceSelectionScreen()
         {
-            SourceSelectionScreen sourceScreen = new SourceSelectionScreen(this);
+            SourceSelectionScreen sourceScreen = new SourceSelectionScreen(this, true);
             sourceScreen.Show();
             sourceScreen.Focus();
         }

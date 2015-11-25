@@ -17,10 +17,12 @@ namespace W3DT
         private ISourceSelectionParent parent;
         private CDNSearchWindow cdnWindow;
 
-        public SourceSelectionScreen(ISourceSelectionParent parent)
+        public SourceSelectionScreen(ISourceSelectionParent parent, bool selectionRequired)
         {
             InitializeComponent();
             this.parent = parent;
+
+            selectionDone = !selectionRequired;
 
             UI_SourceOption_Local.Checked = !Program.Settings.UseRemote;
             UI_SourceOption_Remote.Checked = Program.Settings.UseRemote;
