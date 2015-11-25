@@ -13,7 +13,7 @@ namespace W3DT.JSONContainers
         public bool ShowSourceSelector { get; set; }
         public bool UseRemote { get; set; }
         public string WoWDirectory { get; set; }
-        public string RemoteLocale { get; set; }
+        public string RemoteHost { get; set; }
 
         public Settings()
         {
@@ -22,7 +22,7 @@ namespace W3DT.JSONContainers
             UseRemote = false;
             ShowSourceSelector = true;
             WoWDirectory = string.Empty;
-            RemoteLocale = string.Empty;
+            RemoteHost = string.Empty;
         }
 
         public void Persist(string file)

@@ -36,7 +36,7 @@ namespace W3DT.Runners
                     Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
                 }
 
-                EventManager.T_UpdateDownloadComplete(success);
+                EventManager.Trigger_UpdateDownloadDone(new UpdateDownloadDoneArgs(success));
             }
         }
     }

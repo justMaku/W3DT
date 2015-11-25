@@ -25,8 +25,8 @@ namespace W3DT
         public SplashScreen()
         {
             InitializeComponent();
-            EventManager.H_UpdateCheckComplete += OnUpdateCheckComplete;
-            EventManager.H_UpdateDownloadComplete += OnUpdateDownloadComplete;
+            EventManager.UpdateCheckDone += OnUpdateCheckComplete;
+            EventManager.UpdateDownloadDone += OnUpdateDownloadComplete;
 
             currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             Log.Write("Current build: " + currentVersion);
@@ -55,8 +55,9 @@ namespace W3DT
             }
         }
 
-        public void OnUpdateCheckComplete(LatestReleaseData data)
+        public void OnUpdateCheckComplete(object sender, EventArgs args)
         {
+            LatestReleaseData data = ((UpdateCheckDoneArgs)args).Data;
             bool isUpdating = false;
 
             // Check our update data.
@@ -105,7 +106,7 @@ namespace W3DT
             }
 
             // There shouldn't be more than one event fired, but unregister anyway.
-            EventManager.H_UpdateCheckComplete -= OnUpdateCheckComplete;
+            EventManager.UpdateCheckDone -= OnUpdateCheckComplete;
 
             if (!isUpdating)
             {
@@ -128,8 +129,9 @@ namespace W3DT
             isDoneLoading = true;
         }
 
-        public void OnUpdateDownloadComplete(bool success)
+        public void OnUpdateDownloadComplete(object sender, EventArgs args)
         {
+            bool success = ((UpdateDownloadDoneArgs)args).Success;
             if (success)
             {
                 Process.Start("W3DT_Updater.exe");
@@ -144,7 +146,7 @@ namespace W3DT
             }
 
             // There shouldn't be more than one event fired, but unregister anyway.
-            EventManager.H_UpdateDownloadComplete -= OnUpdateDownloadComplete;
+            EventManager.UpdateDownloadDone -= OnUpdateDownloadComplete;
         }
 
         private void Timer_SplashClose_Tick(object sender, EventArgs e)

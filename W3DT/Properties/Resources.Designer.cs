@@ -73,6 +73,16 @@ namespace W3DT.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap green_eye {
+            get {
+                object obj = ResourceManager.GetObject("green_eye", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap w3dt_ad_1 {
             get {
                 object obj = ResourceManager.GetObject("w3dt_ad_1", resourceCulture);

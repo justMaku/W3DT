@@ -2,28 +2,92 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 using W3DT.JSONContainers;
 
 namespace W3DT.Events
 {
     static class EventManager
     {
-        public delegate void E_UpdateCheckComplete(LatestReleaseData data);
-        public static event E_UpdateCheckComplete H_UpdateCheckComplete;
+        private static EventHandler _CDNScanDone;
+        private static EventHandler _UpdateDownloadDone;
+        private static EventHandler _UpdateCheckDone;
 
-        public delegate void E_UpdateDownloadComplete(bool success);
-        public static event E_UpdateDownloadComplete H_UpdateDownloadComplete;
-
-        public static void T_UpdateCheckComplete(LatestReleaseData data)
+        public static event EventHandler CDNScanDone
         {
-            if (H_UpdateCheckComplete != null)
-                H_UpdateCheckComplete(data);
+            add
+            {
+                TargetCheck(value.Target);
+                _CDNScanDone = (EventHandler)Delegate.Combine(_CDNScanDone, value);
+            }
+
+            remove
+            {
+                _CDNScanDone = (EventHandler)Delegate.Remove(_CDNScanDone, value);
+            }
         }
 
-        public static void T_UpdateDownloadComplete(bool success)
+        public static event EventHandler UpdateDownloadDone
         {
-            if (H_UpdateDownloadComplete != null)
-                H_UpdateDownloadComplete(success);
+            add
+            {
+                TargetCheck(value.Target);
+                _UpdateDownloadDone = (EventHandler)Delegate.Combine(_UpdateDownloadDone, value);
+            }
+
+            remove
+            {
+                _UpdateDownloadDone = (EventHandler)Delegate.Remove(_UpdateDownloadDone, value);
+            }
+        }
+
+        public static event EventHandler UpdateCheckDone
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _UpdateCheckDone = (EventHandler)Delegate.Combine(_UpdateCheckDone, value);
+            }
+
+            remove
+            {
+                _UpdateCheckDone = (EventHandler)Delegate.Remove(_UpdateCheckDone, value);
+            }
+        }
+
+        public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
+        {
+            TriggerEvent(_CDNScanDone.GetInvocationList(), args);
+        }
+
+        public static void Trigger_UpdateDownloadDone(UpdateDownloadDoneArgs args)
+        {
+            TriggerEvent(_UpdateDownloadDone.GetInvocationList(), args);
+        }
+
+        public static void Trigger_UpdateCheckDone(UpdateCheckDoneArgs args)
+        {
+            TriggerEvent(_UpdateCheckDone.GetInvocationList(), args);
+        }
+
+        private static void TriggerEvent(Delegate[] handlers, EventArgs args)
+        {
+            foreach (EventHandler handler in handlers)
+            {
+                var capture = handler;
+                var syncObject = (ISynchronizeInvoke)handler.Target;
+                syncObject.Invoke(
+                    (Action)(() =>
+                        {
+                            capture(null, args);
+                        }), null);
+            }
+        }
+
+        private static void TargetCheck(object target)
+        {
+            if (!(target is ISynchronizeInvoke))
+                throw new ArgumentException();
         }
     }
 }

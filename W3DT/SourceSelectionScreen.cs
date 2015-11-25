@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using W3DT.Events;
 
 namespace W3DT
 {
@@ -14,6 +15,7 @@ namespace W3DT
     {
         private bool selectionDone = false;
         private ISourceSelectionParent parent;
+        private CDNSearchWindow cdnWindow;
 
         public SourceSelectionScreen(ISourceSelectionParent parent)
         {
@@ -56,6 +58,43 @@ namespace W3DT
             Program.Settings.WoWDirectory = selectedDirectory;
             Program.Settings.Persist();
 
+            if (Program.Settings.UseRemote)
+            {
+                EventManager.CDNScanDone += OnCDNSearchDone;
+                cdnWindow = new CDNSearchWindow(this);
+                cdnWindow.ShowDialog();
+            }
+            else
+            {
+                DeferToParent();
+            }
+        }
+
+        public void OnCDNSearchDone(object sender, EventArgs args)
+        {
+            string bestHost = ((CDNScanDoneArgs)args).BestHost;
+
+            if (cdnWindow != null)
+            {
+                EventManager.CDNScanDone -= OnCDNSearchDone;
+                cdnWindow = null;
+            }
+
+            if (bestHost != null)
+            {
+                Program.Settings.RemoteHost = bestHost;
+                Program.Settings.Persist();
+
+                DeferToParent();
+            }
+            else
+            {
+                MessageBox.Show("Unable to locate a responsive CDN server. Ensure you are connected to the internet and that the Blizzard servers are not under maintenance, then try again. Otherwise, use a different data source method.", "CDN Scan Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DeferToParent()
+        {
             parent.OnSourceSelectionDone();
             Close();
         }

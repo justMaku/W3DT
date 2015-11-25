@@ -63,15 +63,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3D\Cube.cs" />
+    <Compile Include="CDNSearchWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CDNSearchWindow.Designer.cs">
+      <DependentUpon>CDNSearchWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controls\LoadingEye.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\LoadingEye.Designer.cs">
+      <DependentUpon>LoadingEye.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StaticTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\StaticTextBox.Designer.cs">
       <DependentUpon>StaticTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CDNScanDoneArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\IEvent.cs" />
+    <Compile Include="Events\UpdateCheckDoneArgs.cs" />
+    <Compile Include="Events\UpdateDownloadDoneArgs.cs" />
     <Compile Include="ISourceSelectionParent.cs" />
     <Compile Include="JSONContainers\LatestReleaseData.cs" />
     <Compile Include="JSONContainers\ReleaseAsset.cs" />
@@ -87,7 +102,6 @@
     <Compile Include="Runners\RunnerCDNCheck.cs" />
     <Compile Include="Runners\RunnerDownloadUpdate.cs" />
     <Compile Include="Runners\RunnerList.cs" />
-    <Compile Include="Runners\RunnerTest1.cs" />
     <Compile Include="Runners\RunnerUpdateCheck.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
@@ -115,6 +129,9 @@
     <Compile Include="SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CDNSearchWindow.resx">
+      <DependentUpon>CDNSearchWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -157,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="inv_hammer_20.ico" />
+    <None Include="Resources\green_eye.png" />
     <None Include="Resources\w3dt_ad_2.png" />
     <None Include="Resources\w3dt_ad_1.png" />
   </ItemGroup>
