@@ -8,9 +8,11 @@ namespace W3DT.Runners
 {
     public abstract class RunnerBase
     {
+        public Thread thread { get; private set; }
+
         public void Begin()
         {
-            Thread thread = new Thread(new ThreadStart(Work));
+            thread = new Thread(new ThreadStart(Work));
             thread.Start();
         }
 
