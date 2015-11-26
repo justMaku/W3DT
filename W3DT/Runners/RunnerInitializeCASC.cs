@@ -13,7 +13,7 @@ namespace W3DT.Runners
             CASCConfig.Load();
             CDNHandler.Initialize();
 
-            CASCFolder root = new CASCFolder(CDNHandler.Hasher.ComputeHash("root"));
+            CASCFolder root = new CASCFolder(CASCEngine.Hasher.ComputeHash("root"));
             Program.CASCEngine = new CASCEngine(root);
         }
     }

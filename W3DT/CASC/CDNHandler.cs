@@ -14,8 +14,6 @@ namespace W3DT.CASC
         private static readonly ByteArrayComparer comparer = new ByteArrayComparer();
         private static Dictionary<byte[], IndexEntry> CDNIndexData = new Dictionary<byte[], IndexEntry>(comparer);
 
-        public static Jenkins96 Hasher = new Jenkins96();
-
         public static void Initialize()
         {
             for (int i = 0; i < CASCConfig.CDNConfig["archives"].Count; ++i)

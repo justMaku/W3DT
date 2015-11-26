@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using W3DT.Events;
+using W3DT.Hashing;
 
 namespace W3DT.CASC
 {
@@ -81,6 +82,7 @@ namespace W3DT.CASC
         private readonly Dictionary<byte[], IndexEntry> LocalIndexData = new Dictionary<byte[], IndexEntry>(comparer);
 
         public readonly Dictionary<int, FileStream> DataStreams = new Dictionary<int, FileStream>();
+        public static Jenkins96 Hasher = new Jenkins96();
 
         public CASCFolder Root { get; private set; }
 
@@ -193,11 +195,115 @@ namespace W3DT.CASC
                 }
             }
 
-            // ToDo: Root
-            EventManager.Trigger_LoadStepDone();
+            using (var stream = OpenRootFile())
+            {
+                using (var reader = new BinaryReader(stream))
+                {
+                    while (stream.Position < stream.Length)
+                    {
+                        int count = reader.ReadInt32();
 
-            // ToDo: Files
-            EventManager.Trigger_LoadStepDone();
+                        RootBlock block = new RootBlock();
+                        block.Unk1 = reader.ReadUInt32();
+                        block.Flags = (LocaleFlags)reader.ReadUInt32();
+
+                        if (block.Flags == LocaleFlags.None)
+                            throw new Exception("block.Flags == LocaleFlags.None");
+
+                        RootEntry[] entries = new RootEntry[count];
+
+                        for (var i = 0; i < count; ++i)
+                        {
+                            entries[i] = new RootEntry();
+                            entries[i].Block = block;
+                            entries[i].Unk1 = reader.ReadInt32();
+                        }
+
+                        for (var i = 0; i < count; ++i)
+                        {
+                            entries[i].MD5 = reader.ReadBytes(16);
+
+                            ulong hash = reader.ReadUInt64();
+                            entries[i].Hash = hash;
+
+                            if (!RootData.ContainsKey(hash))
+                            {
+                                RootData[hash] = new List<RootEntry>();
+                                RootData[hash].Add(entries[i]);
+                            }
+                            else
+                                RootData[hash].Add(entries[i]);
+                        }
+                    }
+
+                    Log.Write("CASC: Loaded {0} root entries", RootData.Count);
+                    EventManager.Trigger_LoadStepDone();
+                }
+            }
+
+            if (File.Exists(Constants.LIST_FILE))
+            {
+                FolderNames[Hasher.ComputeHash("root")] = "root";
+
+                using (StreamReader reader = new StreamReader(Constants.LIST_FILE))
+                {
+                    string file;
+                    CASCFolder folder = Root;
+
+                    while ((file = reader.ReadLine()) != null)
+                    {
+                        ulong fileHash = Hasher.ComputeHash(file);
+
+                        if (!RootData.ContainsKey(fileHash))
+                        {
+                            Log.Write("Skipping invalid file name: {0}", file);
+                            continue;
+                        }
+
+                        string[] parts = file.Split('\\');
+
+                        for (int i = 0; i < parts.Length; ++i)
+                        {
+                            bool isFile = (i == parts.Length - 1);
+
+                            ulong hash = isFile ? fileHash : Hasher.ComputeHash(parts[i]);
+
+                            ICASCEntry entry = folder.GetEntry(hash);
+
+                            if (entry == null)
+                            {
+                                if (isFile)
+                                {
+                                    entry = new CASCFile(hash);
+                                    FileNames[hash] = file;
+                                }
+                                else
+                                {
+                                    entry = new CASCFolder(hash);
+                                    FolderNames[hash] = parts[i];
+                                }
+
+                                folder.SubEntries[hash] = entry;
+
+                                if (isFile)
+                                {
+                                    folder = Root;
+                                    break;
+                                }
+                            }
+
+                            folder = entry as CASCFolder;
+                        }
+                    }
+
+                    Log.Write("CASC: Loaded {0} hashes", FileNames.Count);
+                    EventManager.Trigger_LoadStepDone();
+                }
+            }
+            else
+            {
+                throw new FileNotFoundException("List file went walkies.");
+            }
 
             // Jobs done, trigger event to let splash know.
             EventManager.Trigger_CASCLoadDone();
@@ -206,6 +312,19 @@ namespace W3DT.CASC
         private Stream OpenEncodingFile()
         {
             return OpenFile(CASCConfig.EncodingKey);
+        }
+
+        private Stream OpenRootFile()
+        {
+            var encoding = GetEncodingInfo(CASCConfig.RootMD5);
+
+            if (encoding == null)
+                throw new FileNotFoundException("Root encoding missing.");
+
+            if (encoding.Keys.Count > 1)
+                throw new FileNotFoundException("Multiple root encoding info missing.");
+
+            return OpenFile(encoding.Keys[0]);
         }
 
         private Stream OpenFile(byte[] key)

@@ -21,6 +21,7 @@ namespace W3DT
 
         public static readonly string SETTINGS_FILE = "settings.json";
         public static readonly string LOG_FILE = "session.log";
+        public static readonly string LIST_FILE = "listfile";
 
         public static readonly string DIRECTORY_PLACEHOLDER = "<Select World of Warcraft installation directory>";
         public static readonly string WOW_BUILD_FILE = ".build.info";
