@@ -62,6 +62,7 @@ namespace W3DT.CASC
         {
             try
             {
+                Log.Write("CASC: Processing remote index file " + index);
                 var url = CASCConfig.CDNUrl + "/data/" + index.Substring(0, 2) + "/" + index.Substring(2, 2) + "/" + index + ".index";
 
                 using (WebClient client = new WebClient())
