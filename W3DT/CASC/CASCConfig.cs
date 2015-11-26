@@ -46,7 +46,7 @@ namespace W3DT.CASC
 
                 // Load CDN config file.
                 string cdnKey = BuildInfo["CDN Key"];
-                string cdnConfigFile = Path.Combine(Program.Settings.WoWDirectory, @"Data\config", cdnKey.Substring(0, 2), buildKey.Substring(2, 2), cdnKey);
+                string cdnConfigFile = Path.Combine(Program.Settings.WoWDirectory, @"Data\config", cdnKey.Substring(0, 2), cdnKey.Substring(2, 2), cdnKey);
                 using (Stream stream = new FileStream(cdnConfigFile, FileMode.Open))
                     CDNConfig = new KeyValueConfig(stream);
             }
