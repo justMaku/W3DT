@@ -98,6 +98,8 @@ namespace W3DT
                 Program.Settings.UseRemote = true;
                 Program.Settings.Persist();
 
+                selectionDone = true;
+
                 DeferToParent();
             }
             else
