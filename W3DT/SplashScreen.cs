@@ -163,7 +163,7 @@ namespace W3DT
         private void Timer_SplashClose_Tick(object sender, EventArgs e)
         {
             // Speed up the timer after the first pass.
-            if (Timer_SplashClose.Interval == 4000)
+            if (Timer_SplashClose.Interval > 100)
             {
                 OnLoadBarStepDone(null, null);
                 Timer_SplashClose.Interval = 100;
