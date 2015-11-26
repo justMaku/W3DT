@@ -60,6 +60,7 @@
             this.loadBar.Name = "loadBar";
             this.loadBar.Size = new System.Drawing.Size(361, 31);
             this.loadBar.TabIndex = 1;
+            this.loadBar.Tag = "This is a test";
             // 
             // SplashScreen
             // 
