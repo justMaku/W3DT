@@ -83,6 +83,9 @@
       <DependentUpon>CDNSearchWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controls\LoadBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\LoadingEye.cs">
       <SubType>Component</SubType>
     </Compile>

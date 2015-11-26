@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using W3DT.Events;
 
 namespace W3DT.CASC
 {
@@ -134,6 +135,7 @@ namespace W3DT.CASC
                 }
 
                 Log.Write("CASC: {0} index files processed.", LocalIndexData.Count);
+                EventManager.Trigger_LoadStepDone();
             }
 
             Log.Write("CASC: Loading encoding data...");
@@ -182,8 +184,15 @@ namespace W3DT.CASC
                     }
 
                     Log.Write("CASC: {0} encoding entries loaded.", EncodingData.Count);
+                    EventManager.Trigger_LoadStepDone();
                 }
             }
+
+            // ToDo: Root
+            EventManager.Trigger_LoadStepDone();
+
+            // ToDo: Files
+            EventManager.Trigger_LoadStepDone();
         }
 
         private Stream OpenEncodingFile()

@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashScreen));
             this.UI_SplashImage = new System.Windows.Forms.PictureBox();
             this.Timer_SplashClose = new System.Windows.Forms.Timer(this.components);
+            this.loadBar = new W3DT.Controls.LoadBar();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SplashImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,12 +52,22 @@
             this.Timer_SplashClose.Interval = 4000;
             this.Timer_SplashClose.Tick += new System.EventHandler(this.Timer_SplashClose_Tick);
             // 
+            // loadBar
+            // 
+            this.loadBar.BackColor = System.Drawing.Color.LightGray;
+            this.loadBar.Location = new System.Drawing.Point(662, 648);
+            this.loadBar.Maximum = 80;
+            this.loadBar.Name = "loadBar";
+            this.loadBar.Size = new System.Drawing.Size(361, 31);
+            this.loadBar.TabIndex = 1;
+            // 
             // SplashScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1035, 691);
             this.ControlBox = false;
+            this.Controls.Add(this.loadBar);
             this.Controls.Add(this.UI_SplashImage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -75,5 +86,6 @@
 
         private System.Windows.Forms.PictureBox UI_SplashImage;
         private System.Windows.Forms.Timer Timer_SplashClose;
+        private W3DT.Controls.LoadBar loadBar;
     }
 }

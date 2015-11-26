@@ -25,6 +25,7 @@ namespace W3DT
         public SplashScreen()
         {
             InitializeComponent();
+            EventManager.LoadStepDone += OnLoadBarStepDone;
             EventManager.UpdateCheckDone += OnUpdateCheckComplete;
             EventManager.UpdateDownloadDone += OnUpdateDownloadComplete;
 
@@ -41,17 +42,26 @@ namespace W3DT
                 Log.Write("Exception info: " + ex.Message);
             }
 
+            OnLoadBarStepDone(null, null);
+
             if (Program.DO_UPDATE)
             {
                 new RunnerUpdateCheck().Begin();
             }
             else
             {
+                OnLoadBarStepDone(null, null);
+
                 if (!Program.Settings.ShowSourceSelector)
                     isDoneLoading = true;
 
                 isUpdateCheckDone = true;
             }
+        }
+
+        public void OnLoadBarStepDone(object sender, EventArgs args)
+        {
+            loadBar.PerformStep();
         }
 
         public void OnUpdateCheckComplete(object sender, EventArgs args)
@@ -109,6 +119,8 @@ namespace W3DT
 
             if (!isUpdating)
             {
+                EventManager.Trigger_LoadStepDone();
+
                 if (!Program.Settings.ShowSourceSelector)
                     isDoneLoading = true;
 
@@ -130,6 +142,8 @@ namespace W3DT
 
         public void OnUpdateDownloadComplete(object sender, EventArgs args)
         {
+            EventManager.Trigger_LoadStepDone();
+
             bool success = ((UpdateDownloadDoneArgs)args).Success;
             if (success)
             {
@@ -163,6 +177,7 @@ namespace W3DT
             // Check if we're done loading.
             if (isDoneLoading)
             {
+                EventManager.Trigger_LoadStepDone();
                 Timer_SplashClose.Enabled = false; // Disable timer.
                 this.Close(); // Close the splash screen.
 

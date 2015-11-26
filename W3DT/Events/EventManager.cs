@@ -12,6 +12,7 @@ namespace W3DT.Events
         private static EventHandler _CDNScanDone;
         private static EventHandler _UpdateDownloadDone;
         private static EventHandler _UpdateCheckDone;
+        private static EventHandler _LoadStepDone;
 
         public static event EventHandler CDNScanDone
         {
@@ -55,6 +56,20 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler LoadStepDone
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _LoadStepDone = (EventHandler)Delegate.Combine(_LoadStepDone, value);
+            }
+
+            remove
+            {
+                _LoadStepDone = (EventHandler)Delegate.Remove(_LoadStepDone, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
         {
             TriggerEvent(_CDNScanDone.GetInvocationList(), args);
@@ -68,6 +83,11 @@ namespace W3DT.Events
         public static void Trigger_UpdateCheckDone(UpdateCheckDoneArgs args)
         {
             TriggerEvent(_UpdateCheckDone.GetInvocationList(), args);
+        }
+
+        public static void Trigger_LoadStepDone()
+        {
+            TriggerEvent(_LoadStepDone.GetInvocationList(), new EventArgs());
         }
 
         private static void TriggerEvent(Delegate[] handlers, EventArgs args)
