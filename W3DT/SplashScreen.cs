@@ -205,7 +205,6 @@ namespace W3DT
             if (isDoneLoading && !isCASCStarted)
             {
                 isCASCStarted = true;
-                EventManager.Trigger_LoadStepDone();
                 EventManager.CASCLoadDone += OnCASCLoadDone;
                 new RunnerInitializeCASC().Begin();
             }

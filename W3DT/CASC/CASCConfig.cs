@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using W3DT.Events;
 
 namespace W3DT.CASC
 {
@@ -50,6 +51,8 @@ namespace W3DT.CASC
                 using (Stream stream = new FileStream(cdnConfigFile, FileMode.Open))
                     CDNConfig = new KeyValueConfig(stream);
             }
+
+            EventManager.Trigger_LoadStepDone();
         }
 
         public static byte[] EncodingKey
