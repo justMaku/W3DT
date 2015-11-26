@@ -82,9 +82,14 @@ namespace W3DT.CASC
 
         public readonly Dictionary<int, FileStream> DataStreams = new Dictionary<int, FileStream>();
 
+        public CASCFolder Root { get; private set; }
+
         public CASCEngine(CASCFolder rootFolder)
         {
             Log.Write("Initializing CASC data storage...");
+
+            Root = rootFolder;
+
             if (!Program.Settings.UseRemote)
             {
                 Log.Write("CASC: Processing index files.");
@@ -193,6 +198,9 @@ namespace W3DT.CASC
 
             // ToDo: Files
             EventManager.Trigger_LoadStepDone();
+
+            // Jobs done, trigger event to let splash know.
+            EventManager.Trigger_CASCLoadDone();
         }
 
         private Stream OpenEncodingFile()

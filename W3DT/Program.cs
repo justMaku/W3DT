@@ -7,14 +7,17 @@ using System.Threading;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using W3DT.JSONContainers;
+using W3DT.CASC;
 
 namespace W3DT
 {
     static class Program
     {
         public static string Version = "0.0.0.0";
-        public static Settings Settings;
         public static bool STOP_LOAD = false;
+
+        public static Settings Settings;
+        public static CASCEngine CASCEngine;
 
         #if DEBUG
             public static bool IS_DEBUG = true;

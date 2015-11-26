@@ -117,6 +117,7 @@
     <Compile Include="Runners\RunnerBase.cs" />
     <Compile Include="Runners\RunnerCDNCheck.cs" />
     <Compile Include="Runners\RunnerDownloadUpdate.cs" />
+    <Compile Include="Runners\RunnerInitializeCASC.cs" />
     <Compile Include="Runners\RunnerList.cs" />
     <Compile Include="Runners\RunnerUpdateCheck.cs" />
     <Compile Include="SettingsForm.cs">

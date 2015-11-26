@@ -19,6 +19,7 @@ namespace W3DT
     public partial class SplashScreen : Form, ISourceSelectionParent
     {
         private bool isDoneLoading = false;
+        private bool isCASCDone = false;
         private bool isUpdateCheckDone = false;
         private bool hasShownSourceScreen = false;
         private string[] loadFlavor;
@@ -176,6 +177,12 @@ namespace W3DT
             EventManager.UpdateDownloadDone -= OnUpdateDownloadComplete;
         }
 
+        private void OnCASCLoadDone(object sender, EventArgs args)
+        {
+            EventManager.CASCLoadDone -= OnCASCLoadDone;
+            isCASCDone = true;
+        }
+
         private void Timer_SplashClose_Tick(object sender, EventArgs e)
         {
             // Speed up the timer after the first pass.
@@ -195,14 +202,15 @@ namespace W3DT
             if (isDoneLoading)
             {
                 EventManager.Trigger_LoadStepDone();
+                EventManager.CASCLoadDone += OnCASCLoadDone;
+                new RunnerInitializeCASC().Begin();
+            }
+
+            // Check if we're really done loading.
+            if (isCASCDone)
+            {
                 Timer_SplashClose.Enabled = false; // Disable timer.
                 this.Close(); // Close the splash screen.
-
-                //CASCConfig.Load();
-                //CDNHandler.Initialize();
-
-                //CASCFolder root = new CASCFolder(CDNHandler.Hasher.ComputeHash("root"));
-                //CASCEngine engine = new CASCEngine(root);
             }
         }
     }
