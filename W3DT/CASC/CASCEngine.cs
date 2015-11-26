@@ -129,9 +129,6 @@ namespace W3DT.CASC
                             padPos = (dataLen + 0x0FFF) & 0xFFFFF000;
                             fileStream.Position = padPos;
                             fileStream.Position += numBlocks * 18;
-
-                            if (fileStream.Position != fileStream.Length)
-                                throw new CASCException("Unable to fully read index file: " + indexFile);
                         }
                     }
                 }
