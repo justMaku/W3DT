@@ -164,13 +164,13 @@ namespace W3DT
             if (isDoneLoading)
             {
                 Timer_SplashClose.Enabled = false; // Disable timer.
-                //this.Close(); // Close the splash screen.
+                this.Close(); // Close the splash screen.
 
-                CASCConfig.Load();
-                CDNHandler.Initialize();
+                //CASCConfig.Load();
+                //CDNHandler.Initialize();
 
-                CASCFolder root = new CASCFolder(CDNHandler.Hasher.ComputeHash("root"));
-                CASCEngine engine = new CASCEngine(root);
+                //CASCFolder root = new CASCFolder(CDNHandler.Hasher.ComputeHash("root"));
+                //CASCEngine engine = new CASCEngine(root);
             }
         }
     }
