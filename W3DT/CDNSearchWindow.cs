@@ -13,13 +13,9 @@ namespace W3DT
 {
     public partial class CDNSearchWindow : Form
     {
-        private SourceSelectionScreen parent;
-
-        public CDNSearchWindow(SourceSelectionScreen parent)
+        public CDNSearchWindow()
         {
             InitializeComponent();
-            this.parent = parent;
-
             new RunnerCDNCheck().Begin();
         }
     }

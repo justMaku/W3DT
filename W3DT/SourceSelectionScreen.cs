@@ -37,7 +37,7 @@ namespace W3DT
             if (useRemote)
             {
                 EventManager.CDNScanDone += OnCDNSearchDone;
-                cdnWindow = new CDNSearchWindow(this);
+                cdnWindow = new CDNSearchWindow();
                 cdnWindow.ShowDialog();
             }
             else
