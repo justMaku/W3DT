@@ -19,9 +19,12 @@ namespace W3DT
     public partial class SplashScreen : Form, ISourceSelectionParent
     {
         private bool isDoneLoading = false;
-        private bool isCASCDone = false;
         private bool isUpdateCheckDone = false;
         private bool hasShownSourceScreen = false;
+
+        private bool isCASCDone = false;
+        private bool isCASCStarted = false;
+
         private string[] loadFlavor;
         private Random random = new Random();
 
@@ -199,8 +202,9 @@ namespace W3DT
             }
 
             // Check if we're done loading.
-            if (isDoneLoading)
+            if (isDoneLoading && !isCASCStarted)
             {
+                isCASCStarted = true;
                 EventManager.Trigger_LoadStepDone();
                 EventManager.CASCLoadDone += OnCASCLoadDone;
                 new RunnerInitializeCASC().Begin();

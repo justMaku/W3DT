@@ -5,6 +5,7 @@ using System.Text;
 using System.Net;
 using System.IO;
 using W3DT.Hashing;
+using W3DT.Events;
 
 namespace W3DT.CASC
 {
@@ -27,6 +28,7 @@ namespace W3DT.CASC
                     OpenFile(index, i);
             }
 
+            EventManager.Trigger_LoadStepDone();
             Log.Write("CASC: CDN loaded {0} indexes", CDNIndexData.Count);
         }
 
