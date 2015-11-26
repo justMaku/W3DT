@@ -20,14 +20,7 @@ namespace W3DT
             InitializeComponent();
             this.parent = parent;
 
-            EventManager.CDNScanDone += OnCDNScanDone;
             new RunnerCDNCheck().Begin();
-        }
-
-        private void OnCDNScanDone(object sender, EventArgs args)
-        {
-            EventManager.CDNScanDone -= OnCDNScanDone;
-            Close();
         }
     }
 }

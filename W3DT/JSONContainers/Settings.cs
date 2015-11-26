@@ -14,6 +14,7 @@ namespace W3DT.JSONContainers
         public bool UseRemote { get; set; }
         public string WoWDirectory { get; set; }
         public string RemoteHost { get; set; }
+        public string RemoteHostPath { get; set; }
 
         public Settings()
         {
@@ -23,6 +24,7 @@ namespace W3DT.JSONContainers
             ShowSourceSelector = true;
             WoWDirectory = null;
             RemoteHost = null;
+            RemoteHostPath = null;
         }
 
         public void Persist(string file)

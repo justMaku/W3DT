@@ -21,7 +21,7 @@ namespace W3DT.Runners
             if (rawData == null || rawData == string.Empty)
                 throw new Exception("Malformed CDN data from US server.");
 
-            List<string> knownHosts = new List<string>();
+            Dictionary<string, string> knownHosts = new Dictionary<string, string>();
             string[] dataLines = rawData.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
 
             for (int i = 0; i < dataLines.Length; i++)
@@ -34,20 +34,22 @@ namespace W3DT.Runners
                 string[] hosts = parts[2].Split(null);
 
                 foreach (string host in hosts)
-                    if (!knownHosts.Contains(host))
-                        knownHosts.Add(host);
+                    if (!knownHosts.ContainsKey(host))
+                        knownHosts.Add(host, parts[1]);
             }
 
             string bestHost = null;
+            string hostPath = null;
             double bestPing = -1D;
 
             Log.Write("CDN ping routine time...");
-            foreach (string host in knownHosts)
+            foreach (KeyValuePair<string, string> node in knownHosts)
             {
-                double ping = HostPingAverage(host);
+                double ping = HostPingAverage(node.Key);
                 if (ping >= 0 && (bestHost == null || ping < bestPing))
                 {
-                    bestHost = host;
+                    bestHost = node.Key;
+                    hostPath = node.Value;
                     bestPing = ping;
                 }
             }
@@ -57,7 +59,7 @@ namespace W3DT.Runners
             else
                 Log.Write("Failed to find a CDN server. Looks like the Legion will prevail after all.");
 
-            EventManager.Trigger_CDNScanDone(new CDNScanDoneArgs(bestHost));
+            EventManager.Trigger_CDNScanDone(new CDNScanDoneArgs(bestHost, hostPath));
             Log.Write("CDN scan has finished without error!");
         }
 

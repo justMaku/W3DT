@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -63,6 +64,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3D\Cube.cs" />
+    <Compile Include="CASC\BLTEHandler.cs" />
+    <Compile Include="CASC\VersionInfo.cs" />
+    <Compile Include="CASC\ByteArrayComparer.cs" />
+    <Compile Include="CASC\CASCEngine.cs" />
+    <Compile Include="CASC\CASCConfig.cs" />
+    <Compile Include="CASC\CASCException.cs" />
+    <Compile Include="CASC\CASCFile.cs" />
+    <Compile Include="CASC\CASCFolder.cs" />
+    <Compile Include="CASC\CDNHandler.cs" />
+    <Compile Include="CASC\Extensions.cs" />
+    <Compile Include="CASC\ICASCEntry.cs" />
+    <Compile Include="CASC\KeyValueConfig.cs" />
     <Compile Include="CDNSearchWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +99,7 @@
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\UpdateCheckDoneArgs.cs" />
     <Compile Include="Events\UpdateDownloadDoneArgs.cs" />
+    <Compile Include="Hashing\Jenkins96.cs" />
     <Compile Include="ISourceSelectionParent.cs" />
     <Compile Include="JSONContainers\LatestReleaseData.cs" />
     <Compile Include="JSONContainers\ReleaseAsset.cs" />

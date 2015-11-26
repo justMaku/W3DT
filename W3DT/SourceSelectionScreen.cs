@@ -68,6 +68,7 @@ namespace W3DT
 
                 Program.Settings.UseRemote = false;
                 Program.Settings.RemoteHost = null;
+                Program.Settings.RemoteHostPath = null;
                 Program.Settings.ShowSourceSelector = false;
                 Program.Settings.WoWDirectory = selectedDirectory;
                 Program.Settings.Persist();
@@ -79,17 +80,19 @@ namespace W3DT
 
         public void OnCDNSearchDone(object sender, EventArgs args)
         {
-            string bestHost = ((CDNScanDoneArgs)args).BestHost;
+            CDNScanDoneArgs scanResult = (CDNScanDoneArgs)args;
 
             if (cdnWindow != null)
             {
                 EventManager.CDNScanDone -= OnCDNSearchDone;
+                cdnWindow.Close();
                 cdnWindow = null;
             }
 
-            if (bestHost != null)
+            if (scanResult.BestHost != null)
             {
-                Program.Settings.RemoteHost = bestHost;
+                Program.Settings.RemoteHost = scanResult.BestHost;
+                Program.Settings.RemoteHostPath = scanResult.HostPath;
                 Program.Settings.WoWDirectory = null;
                 Program.Settings.ShowSourceSelector = false;
                 Program.Settings.UseRemote = true;

@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace W3DT
+namespace W3DT.Hashing
 {
     public class Jenkins96 : HashAlgorithm
     {

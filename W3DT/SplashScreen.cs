@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using W3DT.Events;
 using W3DT.Runners;
 using W3DT.JSONContainers;
+using W3DT.CASC;
 
 namespace W3DT
 {
@@ -44,9 +45,11 @@ namespace W3DT
             {
                 new RunnerUpdateCheck().Begin();
             }
-            else if (!Program.Settings.ShowSourceSelector)
+            else
             {
-                isDoneLoading = true;
+                if (!Program.Settings.ShowSourceSelector)
+                    isDoneLoading = true;
+
                 isUpdateCheckDone = true;
             }
         }
@@ -161,7 +164,13 @@ namespace W3DT
             if (isDoneLoading)
             {
                 Timer_SplashClose.Enabled = false; // Disable timer.
-                this.Close(); // Close the splash screen.
+                //this.Close(); // Close the splash screen.
+
+                CASCConfig.Load();
+                CDNHandler.Initialize();
+
+                CASCFolder root = new CASCFolder(CDNHandler.Hasher.ComputeHash("root"));
+                CASCEngine engine = new CASCEngine(root);
             }
         }
     }
