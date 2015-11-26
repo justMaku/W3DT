@@ -42,8 +42,6 @@ namespace W3DT
                 Log.Write("Exception info: " + ex.Message);
             }
 
-            OnLoadBarStepDone(null, null);
-
             if (Program.DO_UPDATE)
             {
                 new RunnerUpdateCheck().Begin();
@@ -166,7 +164,10 @@ namespace W3DT
         {
             // Speed up the timer after the first pass.
             if (Timer_SplashClose.Interval == 4000)
+            {
+                OnLoadBarStepDone(null, null);
                 Timer_SplashClose.Interval = 100;
+            }
 
             if (!hasShownSourceScreen && Program.Settings.ShowSourceSelector && isUpdateCheckDone)
             {
