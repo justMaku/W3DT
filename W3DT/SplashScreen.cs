@@ -21,6 +21,8 @@ namespace W3DT
         private bool isDoneLoading = false;
         private bool isUpdateCheckDone = false;
         private bool hasShownSourceScreen = false;
+        private string[] loadFlavor;
+        private Random random = new Random();
 
         public SplashScreen()
         {
@@ -28,6 +30,17 @@ namespace W3DT
             EventManager.LoadStepDone += OnLoadBarStepDone;
             EventManager.UpdateCheckDone += OnUpdateCheckComplete;
             EventManager.UpdateDownloadDone += OnUpdateDownloadComplete;
+
+            try
+            {
+                loadFlavor = File.ReadAllLines(Constants.LOAD_FLAVOR_FILE);
+                loadBar.Tag = loadFlavor[random.Next(loadFlavor.Length)];
+            }
+            catch
+            {
+                loadFlavor = null;
+                loadBar.Tag = Constants.LOADING_DEFAULT;
+            }
 
             // Check for and remove leftover update package.
             try
@@ -60,6 +73,9 @@ namespace W3DT
         public void OnLoadBarStepDone(object sender, EventArgs args)
         {
             loadBar.PerformStep();
+
+            if (loadFlavor != null)
+                loadBar.Tag = loadFlavor[random.Next(loadFlavor.Length)];
         }
 
         public void OnUpdateCheckComplete(object sender, EventArgs args)

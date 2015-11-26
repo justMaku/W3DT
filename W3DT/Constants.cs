@@ -16,6 +16,9 @@ namespace W3DT
         public static readonly string CDN_VERSION_URL = @"http://us.patch.battle.net/wow_beta/versions";
 
         // Base Stuff //
+        public static readonly string LOAD_FLAVOR_FILE = "load_flavor";
+        public static readonly string LOADING_DEFAULT = "Loading...";
+
         public static readonly string SETTINGS_FILE = "settings.json";
         public static readonly string LOG_FILE = "session.log";
 
