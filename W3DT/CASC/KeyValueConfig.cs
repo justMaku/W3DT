@@ -12,6 +12,7 @@ namespace W3DT.CASC
 
         public KeyValueConfig(Stream stream)
         {
+            Log.Write("KeyValueConfig {");
             using (var reader = new StreamReader(stream))
             {
                 string line;
@@ -29,9 +30,14 @@ namespace W3DT.CASC
                     var values = tokens[1].Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     var valuesList = new List<string>();
                     valuesList.AddRange(values);
-                    Data.Add(tokens[0].Trim(), valuesList);
+
+                    string token = tokens[0].Trim();
+                    Data.Add(token, valuesList);
+
+                    Log.Write("    {0} -> {1}", token, string.Join(",", valuesList));
                 }
             }
+            Log.Write("} KeyValueConfig");
         }
 
         public List<string> this[string key]
