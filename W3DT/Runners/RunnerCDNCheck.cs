@@ -16,7 +16,7 @@ namespace W3DT.Runners
 
             string rawData;
             using (WebClient client = new WebClient())
-                rawData = client.DownloadString("http://us.patch.battle.net/wow_beta/cdns");
+                rawData = client.DownloadString("http://us.patch.battle.net/wow/cdns");
 
             if (rawData == null || rawData == string.Empty)
                 throw new Exception("Malformed CDN data from US server.");

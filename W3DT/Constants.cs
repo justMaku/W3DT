@@ -13,7 +13,7 @@ namespace W3DT
         public static readonly string UPDATE_PACKAGE_FILE = "update.zip";
 
         // CDN // 
-        public static readonly string CDN_VERSION_URL = @"http://us.patch.battle.net/wow_beta/versions";
+        public static readonly string CDN_VERSION_URL = @"http://us.patch.battle.net/wow/versions";
 
         // Base Stuff //
         public static readonly string LOAD_FLAVOR_FILE = "load_flavor";
