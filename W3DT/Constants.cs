@@ -14,6 +14,7 @@ namespace W3DT
 
         // CDN // 
         public static readonly string CDN_VERSION_URL = @"http://us.patch.battle.net/wow/versions";
+        public static readonly string CDN_CONFIG_URL = @"http://us.patch.battle.net/wow/cdns";
 
         // Base Stuff //
         public static readonly string LOAD_FLAVOR_FILE = "load_flavor";
