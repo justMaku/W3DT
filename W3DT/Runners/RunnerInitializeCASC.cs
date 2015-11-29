@@ -18,6 +18,8 @@ namespace W3DT.Runners
             else
                 engine = CASCEngine.OpenLocalStorage();
 
+            engine.RootHandler.LoadListFile(Constants.LIST_FILE);
+            EventManager.Trigger_LoadStepDone();
             EventManager.Trigger_CASCLoadDone();
         }
     }
