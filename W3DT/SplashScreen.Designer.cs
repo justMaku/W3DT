@@ -56,7 +56,7 @@
             // 
             this.loadBar.BackColor = System.Drawing.Color.LightGray;
             this.loadBar.Location = new System.Drawing.Point(662, 648);
-            this.loadBar.Maximum = 80;
+            this.loadBar.Maximum = 50;
             this.loadBar.Name = "loadBar";
             this.loadBar.Size = new System.Drawing.Size(361, 31);
             this.loadBar.TabIndex = 1;
