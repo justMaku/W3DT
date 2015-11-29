@@ -6,7 +6,7 @@ using System.IO;
 
 namespace W3DT.CASC
 {
-    class KeyValueConfig
+    public class KeyValueConfig
     {
         Dictionary<string, List<string>> Data = new Dictionary<string, List<string>>();
 

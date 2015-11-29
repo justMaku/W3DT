@@ -10,11 +10,17 @@ namespace W3DT.Runners
     {
         public override void Work()
         {
-            CASCConfig.Load();
-            CDNHandler.Initialize();
+            CASCEngine engine;
 
-            CASCFolder root = new CASCFolder(CASCEngine.Hasher.ComputeHash("root"));
-            Program.CASCEngine = new CASCEngine(root);
+            if (Program.Settings.UseRemote)
+                engine = CASCEngine.OpenOnlineStorage();
+            else
+                engine = CASCEngine.OpenLocalStorage();
+            //CASCConfig.Load();
+            //CDNHandler.Initialize();
+
+            //CASCFolder root = new CASCFolder(CASCEngine.Hasher.ComputeHash("root"));
+            //Program.CASCEngine = new CASCEngine(root);
         }
     }
 }

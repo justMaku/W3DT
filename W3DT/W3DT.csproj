@@ -65,14 +65,25 @@
   <ItemGroup>
     <Compile Include="3D\Cube.cs" />
     <Compile Include="CASC\BLTEHandler.cs" />
-    <Compile Include="CASC\VersionInfo.cs" />
+    <Compile Include="CASC\CDNCache.cs" />
+    <Compile Include="CASC\CDNIndexHandler.cs" />
+    <Compile Include="CASC\DownloadHandler.cs" />
+    <Compile Include="CASC\EncodingHandler.cs" />
+    <Compile Include="CASC\InstallHandler.cs" />
+    <Compile Include="CASC\KeyService.cs" />
+    <Compile Include="CASC\LocalIndexHandler.cs" />
+    <Compile Include="CASC\MultiDictionary.cs" />
+    <Compile Include="CASC\RootHandler.cs" />
+    <Compile Include="CASC\RootHandlerBase.cs" />
+    <Compile Include="CASC\Salsa20.cs" />
+    <Compile Include="CASC\SyncDownloader.cs" />
+    <Compile Include="CASC\VerBarConfig.cs" />
     <Compile Include="CASC\ByteArrayComparer.cs" />
     <Compile Include="CASC\CASCEngine.cs" />
     <Compile Include="CASC\CASCConfig.cs" />
     <Compile Include="CASC\CASCException.cs" />
     <Compile Include="CASC\CASCFile.cs" />
     <Compile Include="CASC\CASCFolder.cs" />
-    <Compile Include="CASC\CDNHandler.cs" />
     <Compile Include="CASC\Extensions.cs" />
     <Compile Include="CASC\ICASCEntry.cs" />
     <Compile Include="CASC\KeyValueConfig.cs" />

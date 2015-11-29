@@ -1,84 +1,204 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using W3DT.Events;
+using System.Linq;
 
 namespace W3DT.CASC
 {
-    class CASCConfig
+    [Flags]
+    public enum LoadFlags
     {
-        public static KeyValueConfig CDNConfig { get; private set; }
-        public static KeyValueConfig BuildConfig { get; private set; }
+        All = -1,
+        Download = 1,
+        Install = 2,
+    }
 
-        private static VersionInfo BuildInfo;
-        private static VersionInfo VersionInfo;
+    public class CASCConfig
+    {
+        public KeyValueConfig CDNConfig { get; private set; }
+        public List<KeyValueConfig> Builds { get; private set; }
 
-        public static void Load()
+        public VerBarConfig BuildInfo { get; private set; }
+        public VerBarConfig CDNData { get; private set; }
+        public VerBarConfig VersionsData { get; private set; }
+
+        public string Region { get; private set; }
+        public static bool ValidateData { get; set; }
+        public static bool ThrowOnFileNotFound { get; set; }
+        public static LoadFlags LoadFlags { get; set; }
+
+        public CASCConfig()
         {
-            if (Program.Settings.UseRemote)
+            ValidateData = true;
+            ThrowOnFileNotFound = true;
+            LoadFlags = LoadFlags.All;
+        }
+
+        public static CASCConfig LoadOnlineStorageConfig()
+        {
+            var config = new CASCConfig();
+
+            using (var stream = CDNIndexHandler.OpenFileDirect(Constants.CDN_CONFIG_URL))
+                config.CDNData = VerBarConfig.ReadVerBarConfig(stream);
+
+            using (Stream stream = CDNIndexHandler.OpenFileDirect(Constants.CDN_VERSION_URL))
+                config.VersionsData = VerBarConfig.ReadVerBarConfig(stream);
+
+            string cdnKey = config.VersionsData[0]["CDNConfig"];
+            using (Stream stream = CDNIndexHandler.OpenConfigFileDirect(config, cdnKey))
+                config.CDNConfig = new KeyValueConfig(stream);
+
+            config.ActiveBuild = 0;
+            config.Builds = new List<KeyValueConfig>();
+
+            for (int i = 0; i < config.CDNConfig["builds"].Count; i++)
             {
-                // Load version info from default CDN.
-                using (Stream stream = CDNHandler.OpenFileDirect(Constants.CDN_VERSION_URL))
-                    VersionInfo = new VersionInfo(stream);
+                try
+                {
+                    using (Stream stream = CDNIndexHandler.OpenConfigFileDirect(config, config.CDNConfig["builds"][i]))
+                    {
+                        var cfg = new KeyValueConfig(stream);
+                        config.Builds.Add(cfg);
+                    }
+                }
+                catch
+                {
 
-                // Load build config from selected CDN.
-                using (Stream stream = CDNHandler.OpenConfigFileDirect(VersionInfo["BuildConfig"]))
-                    BuildConfig = new KeyValueConfig(stream);
-
-                // Load CDN config from selected CDN.
-                using (Stream stream = CDNHandler.OpenConfigFileDirect(VersionInfo["CDNConfig"]))
-                    CDNConfig = new KeyValueConfig(stream);
+                }
             }
-            else
+
+            return config;
+        }
+
+        public static CASCConfig LoadLocalStorageConfig()
+        {
+            var config = new CASCConfig();
+            string buildInfoPath = Path.Combine(Program.Settings.WoWDirectory, Constants.WOW_BUILD_FILE);
+
+            using (Stream buildInfoStream = new FileStream(buildInfoPath, FileMode.Open))
+                config.BuildInfo = VerBarConfig.ReadVerBarConfig(buildInfoStream);
+
+            Dictionary<string, string> buildInfo = null;
+
+            for (int i = 0; i < config.BuildInfo.Count; ++i)
             {
-                string buildFile = Path.Combine(Program.Settings.WoWDirectory, Constants.WOW_BUILD_FILE);
-
-                // Load build info file.
-                using (Stream stream = new FileStream(buildFile, FileMode.Open))
-                    BuildInfo = new VersionInfo(stream);
-
-                // Load build config file.
-                string buildKey = BuildInfo["Build Key"];
-                string buildConfigFile = Path.Combine(Program.Settings.WoWDirectory, @"Data\config", buildKey.Substring(0, 2), buildKey.Substring(2, 2), buildKey);
-                using (Stream stream = new FileStream(buildConfigFile, FileMode.Open))
-                    BuildConfig = new KeyValueConfig(stream);
-
-                // Load CDN config file.
-                string cdnKey = BuildInfo["CDN Key"];
-                string cdnConfigFile = Path.Combine(Program.Settings.WoWDirectory, @"Data\config", cdnKey.Substring(0, 2), cdnKey.Substring(2, 2), cdnKey);
-                using (Stream stream = new FileStream(cdnConfigFile, FileMode.Open))
-                    CDNConfig = new KeyValueConfig(stream);
+                if (config.BuildInfo[i]["Active"] == "1")
+                {
+                    buildInfo = config.BuildInfo[i];
+                    break;
+                }
             }
 
-            EventManager.Trigger_LoadStepDone();
+            if (buildInfo == null)
+                throw new Exception("Can't find active BuildInfoEntry");
+
+            //string dataFolder = CASCGame.GetDataFolder(config.GameType);
+            string configFolder = Path.Combine(Program.Settings.WoWDirectory, @"Data\config");
+
+            config.ActiveBuild = 0;
+
+            config.Builds = new List<KeyValueConfig>();
+
+            string buildKey = buildInfo["BuildKey"];
+            string buildCfgPath = Path.Combine(configFolder, buildKey.Substring(0, 2), buildKey.Substring(2, 2), buildKey);
+            using (Stream stream = new FileStream(buildCfgPath, FileMode.Open))
+                config.Builds.Add(new KeyValueConfig(stream));
+
+            string cdnKey = buildInfo["CDNKey"];
+            string cdnCfgPath = Path.Combine(configFolder, cdnKey.Substring(0, 2), cdnKey.Substring(2, 2), cdnKey);
+            using (Stream stream = new FileStream(cdnCfgPath, FileMode.Open))
+                config.CDNConfig = new KeyValueConfig(stream);
+
+            return config;
         }
 
-        public static byte[] EncodingKey
+        public int ActiveBuild { get; set; }
+
+        public string BuildName { get { return Builds[ActiveBuild]["build-name"][0]; } }
+
+        public string Product { get; private set; }
+
+        public byte[] RootMD5
         {
-            get { return BuildConfig["encoding"][1].ToByteArray(); }
+            get { return Builds[ActiveBuild]["root"][0].ToByteArray(); }
         }
 
-        public static byte[] RootMD5
+        public byte[] DownloadMD5
         {
-            get { return BuildConfig["root"][0].ToByteArray(); }
+            get { return Builds[ActiveBuild]["download"][0].ToByteArray(); }
         }
 
-        public static string CDNUrl
+        public byte[] InstallMD5
+        {
+            get { return Builds[ActiveBuild]["install"][0].ToByteArray(); }
+        }
+
+        public byte[] EncodingMD5
+        {
+            get { return Builds[ActiveBuild]["encoding"][0].ToByteArray(); }
+        }
+
+        public byte[] EncodingKey
+        {
+            get { return Builds[ActiveBuild]["encoding"][1].ToByteArray(); }
+        }
+
+        public string BuildUID
+        {
+            get { return Builds[ActiveBuild]["build-uid"][0]; }
+        }
+
+        public string CDNHost
         {
             get
             {
                 if (Program.Settings.UseRemote)
-                {
-                    return String.Format("http://{0}/{1}", Program.Settings.RemoteHost, Program.Settings.RemoteHostPath);
-                }
+                    return CDNData[0]["Hosts"].Split(null)[0];
                 else
-                {
-                    string[] hosts = BuildInfo["CDN Hosts"].Split(null);
-                    return String.Format("http://{0}{1}", hosts[0], BuildInfo["CDN Path"]);
-                }
+                    return BuildInfo[0]["CDNHosts"].Split(null)[0];
             }
+        }
+
+        public string CDNPath
+        {
+            get
+            {
+                if (Program.Settings.UseRemote)
+                    return CDNData[0]["Path"]; // use first
+                else
+                    return BuildInfo[0]["CDNPath"];
+            }
+        }
+
+        public string CDNUrl
+        {
+            get
+            {
+                if (Program.Settings.UseRemote)
+                    return string.Format("http://{0}/{1}", Program.Settings.RemoteHost, Program.Settings.RemoteHostPath);
+                else
+                    return string.Format("http://{0}{1}", BuildInfo[0]["CDNHosts"].Split(' ')[0], BuildInfo[0]["CDNPath"]);
+            }
+        }
+
+        public List<string> Archives
+        {
+            get { return CDNConfig["archives"]; }
+        }
+
+        public string ArchiveGroup
+        {
+            get { return CDNConfig["archive-group"][0]; }
+        }
+
+        public List<string> PatchArchives
+        {
+            get { return CDNConfig["patch-archives"]; }
+        }
+
+        public string PatchArchiveGroup
+        {
+            get { return CDNConfig["patch-archive-group"][0]; }
         }
     }
 }
