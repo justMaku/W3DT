@@ -54,6 +54,7 @@ namespace W3DT.CASC
 
                 Log.Write("CASC: Loaded {0} indexes from local storage", LocalIndex.Count);
             }
+            EventManager.Trigger_LoadStepDone();
 
             Log.Write("CASC: Loading encoding data...");
             using (var stream = OpenEncodingFile())
@@ -70,6 +71,7 @@ namespace W3DT.CASC
 
                 Log.Write("CASC: Loaded {0} download data entries", EncodingHandler.Count);
             }
+            EventManager.Trigger_LoadStepDone();
 
             Log.Write("CASC: Loading root data...");
 
@@ -87,6 +89,7 @@ namespace W3DT.CASC
 
                 Log.Write("CASC: Loaded {0} install data entries", InstallHandler.Count);
             }
+            EventManager.Trigger_LoadStepDone();
         }
 
         private BinaryReader OpenInstallFile()

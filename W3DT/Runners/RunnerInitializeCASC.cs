@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using W3DT.CASC;
+using W3DT.Events;
 
 namespace W3DT.Runners
 {
@@ -16,11 +17,8 @@ namespace W3DT.Runners
                 engine = CASCEngine.OpenOnlineStorage();
             else
                 engine = CASCEngine.OpenLocalStorage();
-            //CASCConfig.Load();
-            //CDNHandler.Initialize();
 
-            //CASCFolder root = new CASCFolder(CASCEngine.Hasher.ComputeHash("root"));
-            //Program.CASCEngine = new CASCEngine(root);
+            EventManager.Trigger_CASCLoadDone();
         }
     }
 }
