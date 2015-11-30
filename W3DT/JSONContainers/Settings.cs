@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Newtonsoft.Json;
+using W3DT.CASC;
 
 namespace W3DT.JSONContainers
 {
@@ -15,6 +16,7 @@ namespace W3DT.JSONContainers
         public string WoWDirectory { get; set; }
         public string RemoteHost { get; set; }
         public string RemoteHostPath { get; set; }
+        public WoWVersion RemoteClientVersion { get; set; }
 
         public Settings()
         {
@@ -25,6 +27,7 @@ namespace W3DT.JSONContainers
             WoWDirectory = null;
             RemoteHost = null;
             RemoteHostPath = null;
+            RemoteClientVersion = Constants.DEFAULT_VERSION;
         }
 
         public void Persist(string file)

@@ -34,12 +34,14 @@
             this.UI_DataSourceButton = new System.Windows.Forms.Button();
             this.UI_Info_CurrVersion = new System.Windows.Forms.Label();
             this.UI_Info_DataSource = new System.Windows.Forms.Label();
+            this.UI_RemoteVersion_Field = new System.Windows.Forms.ComboBox();
+            this.UI_RemoteVersion_Label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UI_SaveButton
             // 
             this.UI_SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_SaveButton.Location = new System.Drawing.Point(360, 125);
+            this.UI_SaveButton.Location = new System.Drawing.Point(360, 155);
             this.UI_SaveButton.Name = "UI_SaveButton";
             this.UI_SaveButton.Size = new System.Drawing.Size(84, 23);
             this.UI_SaveButton.TabIndex = 0;
@@ -86,11 +88,31 @@
             this.UI_Info_DataSource.TabIndex = 3;
             this.UI_Info_DataSource.Text = "Data Source: PLACEHOLDER";
             // 
+            // UI_RemoteVersion_Field
+            // 
+            this.UI_RemoteVersion_Field.FormattingEnabled = true;
+            this.UI_RemoteVersion_Field.Location = new System.Drawing.Point(98, 114);
+            this.UI_RemoteVersion_Field.Name = "UI_RemoteVersion_Field";
+            this.UI_RemoteVersion_Field.Size = new System.Drawing.Size(154, 21);
+            this.UI_RemoteVersion_Field.TabIndex = 4;
+            this.UI_RemoteVersion_Field.SelectedIndexChanged += new System.EventHandler(this.UI_RemoteVersion_Field_SelectedIndexChanged);
+            // 
+            // UI_RemoteVersion_Label
+            // 
+            this.UI_RemoteVersion_Label.AutoSize = true;
+            this.UI_RemoteVersion_Label.Location = new System.Drawing.Point(10, 117);
+            this.UI_RemoteVersion_Label.Name = "UI_RemoteVersion_Label";
+            this.UI_RemoteVersion_Label.Size = new System.Drawing.Size(85, 13);
+            this.UI_RemoteVersion_Label.TabIndex = 5;
+            this.UI_RemoteVersion_Label.Text = "Remote Version:";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(456, 160);
+            this.ClientSize = new System.Drawing.Size(456, 190);
+            this.Controls.Add(this.UI_RemoteVersion_Label);
+            this.Controls.Add(this.UI_RemoteVersion_Field);
             this.Controls.Add(this.UI_Info_DataSource);
             this.Controls.Add(this.UI_Info_CurrVersion);
             this.Controls.Add(this.UI_DataSourceButton);
@@ -112,5 +134,7 @@
         private System.Windows.Forms.Button UI_DataSourceButton;
         private System.Windows.Forms.Label UI_Info_CurrVersion;
         private System.Windows.Forms.Label UI_Info_DataSource;
+        private System.Windows.Forms.ComboBox UI_RemoteVersion_Field;
+        private System.Windows.Forms.Label UI_RemoteVersion_Label;
     }
 }

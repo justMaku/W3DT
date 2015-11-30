@@ -86,6 +86,7 @@
     <Compile Include="CASC\Extensions.cs" />
     <Compile Include="CASC\ICASCEntry.cs" />
     <Compile Include="CASC\KeyValueConfig.cs" />
+    <Compile Include="CASC\WoWVersion.cs" />
     <Compile Include="CDNSearchWindow.cs">
       <SubType>Form</SubType>
     </Compile>

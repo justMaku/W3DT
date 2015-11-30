@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using W3DT.CASC;
 
 namespace W3DT
 {
@@ -13,8 +14,16 @@ namespace W3DT
         public static readonly string UPDATE_PACKAGE_FILE = "update.zip";
 
         // CDN // 
-        public static readonly string CDN_VERSION_URL = @"http://us.patch.battle.net/wow/versions";
-        public static readonly string CDN_CONFIG_URL = @"http://us.patch.battle.net/wow/cdns";
+        public static string CDN_VERSION_URL { get { return string.Format(@"http://us.patch.battle.net/{0}/versions", Program.Settings.RemoteClientVersion.UrlTag); } }
+        public static string CDN_CONFIG_URL { get { return string.Format(@"http://us.patch.battle.net/{0}/cdns", Program.Settings.RemoteClientVersion.UrlTag); } }
+
+        // CDN Versions //
+        public static readonly WoWVersion[] WOW_VERSIONS = new WoWVersion[] {
+            new WoWVersion("wow", "Live (Retail)"),
+            new WoWVersion("wow_beta", "Beta (In Development)")
+        };
+
+        public static readonly WoWVersion DEFAULT_VERSION = WOW_VERSIONS[0];
 
         // Base Stuff //
         public static readonly string LOAD_FLAVOR_FILE = "load_flavor";
