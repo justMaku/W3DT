@@ -13,14 +13,29 @@ namespace W3DT.Runners
         {
             CASCEngine engine;
 
-            if (Program.Settings.UseRemote)
-                engine = CASCEngine.OpenOnlineStorage();
-            else
-                engine = CASCEngine.OpenLocalStorage();
+            try
+            {
+                if (Program.Settings.UseRemote)
+                    engine = CASCEngine.OpenOnlineStorage();
+                else
+                    engine = CASCEngine.OpenLocalStorage();
 
-            engine.RootHandler.LoadListFile(Constants.LIST_FILE);
-            EventManager.Trigger_LoadStepDone();
-            EventManager.Trigger_CASCLoadDone();
+                engine.RootHandler.LoadListFile(Constants.LIST_FILE);
+                EventManager.Trigger_LoadStepDone();
+                Done(true);
+            }
+            catch (Exception ex)
+            {
+                Log.Write("Error prevented CASC engine loading: " + ex.Message);
+                Log.Write(ex.StackTrace);
+
+                Done(false);
+            }
+        }
+
+        private void Done(bool success)
+        {
+            EventManager.Trigger_CASCLoadDone(new CASCLoadDoneArgs(success));
         }
     }
 }

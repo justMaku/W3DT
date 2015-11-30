@@ -182,8 +182,22 @@ namespace W3DT
 
         private void OnCASCLoadDone(object sender, EventArgs args)
         {
+            bool success = ((CASCLoadDoneArgs)args).Success;
             EventManager.CASCLoadDone -= OnCASCLoadDone;
-            isCASCDone = true;
+
+            if (success)
+            {
+                isCASCDone = true;
+            }
+            else
+            {
+                MessageBox.Show("Unable to intialize CASC; something blew up!", "Dammit, Allan...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                isCASCStarted = false;
+                isDoneLoading = false;
+                ShowSourceSelectionScreen();
+            }
+
         }
 
         private void Timer_SplashClose_Tick(object sender, EventArgs e)

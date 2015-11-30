@@ -105,9 +105,9 @@ namespace W3DT.Events
             TriggerEvent(_LoadStepDone.GetInvocationList(), new EventArgs());
         }
 
-        public static void Trigger_CASCLoadDone()
+        public static void Trigger_CASCLoadDone(CASCLoadDoneArgs args)
         {
-            TriggerEvent(_CASCLoadDone.GetInvocationList(), new EventArgs());
+            TriggerEvent(_CASCLoadDone.GetInvocationList(), args);
         }
 
         private static void TriggerEvent(Delegate[] handlers, EventArgs args)

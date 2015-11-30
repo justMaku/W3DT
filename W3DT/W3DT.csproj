@@ -108,6 +108,7 @@
     <Compile Include="Controls\StaticTextBox.Designer.cs">
       <DependentUpon>StaticTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CASCLoadDoneArgs.cs" />
     <Compile Include="Events\CDNScanDoneArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\UpdateCheckDoneArgs.cs" />
