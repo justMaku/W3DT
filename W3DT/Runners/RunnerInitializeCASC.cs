@@ -13,6 +13,9 @@ namespace W3DT.Runners
         {
             EventManager.Trigger_CASCLoadStart();
 
+            if (Program.CASCEngine != null)
+                Program.CASCEngine.Clear();
+
             try
             {
                 Program.CASCEngine = Program.Settings.UseRemote ? CASCEngine.OpenOnlineStorage() : CASCEngine.OpenLocalStorage();
