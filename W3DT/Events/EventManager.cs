@@ -14,6 +14,7 @@ namespace W3DT.Events
         private static EventHandler _UpdateCheckDone;
         private static EventHandler _LoadStepDone;
         private static EventHandler _CASCLoadDone;
+        private static EventHandler _CASCLoadStart;
 
         public static event EventHandler CDNScanDone
         {
@@ -85,6 +86,20 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler CASCLoadStart
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _CASCLoadStart = (EventHandler)Delegate.Combine(_CASCLoadStart, value);
+            }
+
+            remove
+            {
+                _CASCLoadStart = (EventHandler)Delegate.Remove(_CASCLoadStart, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
         {
             TriggerEvent(_CDNScanDone.GetInvocationList(), args);
@@ -108,6 +123,11 @@ namespace W3DT.Events
         public static void Trigger_CASCLoadDone(CASCLoadDoneArgs args)
         {
             TriggerEvent(_CASCLoadDone.GetInvocationList(), args);
+        }
+
+        public static void Trigger_CASCLoadStart()
+        {
+            TriggerEvent(_CASCLoadStart.GetInvocationList(), new EventArgs());
         }
 
         private static void TriggerEvent(Delegate[] handlers, EventArgs args)

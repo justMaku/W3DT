@@ -11,16 +11,12 @@ namespace W3DT.Runners
     {
         public override void Work()
         {
-            CASCEngine engine;
+            EventManager.Trigger_CASCLoadStart();
 
             try
             {
-                if (Program.Settings.UseRemote)
-                    engine = CASCEngine.OpenOnlineStorage();
-                else
-                    engine = CASCEngine.OpenLocalStorage();
-
-                engine.RootHandler.LoadListFile(Constants.LIST_FILE);
+                Program.CASCEngine = Program.Settings.UseRemote ? CASCEngine.OpenOnlineStorage() : CASCEngine.OpenLocalStorage();
+                Program.CASCEngine.RootHandler.LoadListFile(Constants.LIST_FILE);
                 EventManager.Trigger_LoadStepDone();
                 Done(true);
             }
