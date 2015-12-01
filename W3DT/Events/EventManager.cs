@@ -102,40 +102,43 @@ namespace W3DT.Events
 
         public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
         {
-            TriggerEvent(_CDNScanDone.GetInvocationList(), args);
+                TriggerEvent(_CDNScanDone, args);
         }
 
         public static void Trigger_UpdateDownloadDone(UpdateDownloadDoneArgs args)
         {
-            TriggerEvent(_UpdateDownloadDone.GetInvocationList(), args);
+            TriggerEvent(_UpdateDownloadDone, args);
         }
 
         public static void Trigger_UpdateCheckDone(UpdateCheckDoneArgs args)
         {
-            TriggerEvent(_UpdateCheckDone.GetInvocationList(), args);
+            TriggerEvent(_UpdateCheckDone, args);
         }
 
         public static void Trigger_LoadStepDone()
         {
-            TriggerEvent(_LoadStepDone.GetInvocationList(), new EventArgs());
+            TriggerEvent(_LoadStepDone, new EventArgs());
         }
 
         public static void Trigger_CASCLoadDone(CASCLoadDoneArgs args)
         {
-            TriggerEvent(_CASCLoadDone.GetInvocationList(), args);
+            TriggerEvent(_CASCLoadDone, args);
         }
 
         public static void Trigger_CASCLoadStart()
         {
-            TriggerEvent(_CASCLoadStart.GetInvocationList(), new EventArgs());
+            TriggerEvent(_CASCLoadStart, new EventArgs());
         }
 
-        private static void TriggerEvent(Delegate[] handlers, EventArgs args)
+        private static void TriggerEvent(EventHandler handler, EventArgs args)
         {
-            foreach (EventHandler handler in handlers)
+            if (handler == null)
+                return;
+
+            foreach (EventHandler listener in handler.GetInvocationList())
             {
-                var capture = handler;
-                var syncObject = (ISynchronizeInvoke)handler.Target;
+                var capture = listener;
+                var syncObject = (ISynchronizeInvoke)listener.Target;
                 syncObject.Invoke(
                     (Action)(() =>
                         {
