@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using W3DT.Events;
+using W3DT.Runners;
 
 namespace W3DT
 {
@@ -15,7 +16,7 @@ namespace W3DT
     {
         private bool selectionDone = false;
         private ISourceSelectionParent parent;
-        private CDNSearchWindow cdnWindow;
+        private LoadingWindow cdnWindow;
 
         public SourceSelectionScreen(ISourceSelectionParent parent, bool selectionRequired)
         {
@@ -37,7 +38,8 @@ namespace W3DT
             if (useRemote)
             {
                 EventManager.CDNScanDone += OnCDNSearchDone;
-                cdnWindow = new CDNSearchWindow();
+                new RunnerCDNCheck().Begin();
+                cdnWindow = new LoadingWindow("C'Thun is searching for the closest Blizzard server to you!", "Did you know: Poking an Old God with a stick will result in rapid death.");
                 cdnWindow.ShowDialog();
             }
             else

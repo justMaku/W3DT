@@ -87,11 +87,11 @@
     <Compile Include="CASC\ICASCEntry.cs" />
     <Compile Include="CASC\KeyValueConfig.cs" />
     <Compile Include="CASC\WoWVersion.cs" />
-    <Compile Include="Windows\CDNSearchWindow.cs">
+    <Compile Include="Windows\LoadingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\CDNSearchWindow.Designer.cs">
-      <DependentUpon>CDNSearchWindow.cs</DependentUpon>
+    <Compile Include="Windows\LoadingWindow.Designer.cs">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\LoadBar.cs">
@@ -115,7 +115,7 @@
     <Compile Include="Events\UpdateCheckDoneArgs.cs" />
     <Compile Include="Events\UpdateDownloadDoneArgs.cs" />
     <Compile Include="Hashing\Jenkins96.cs" />
-    <Compile Include="ISourceSelectionParent.cs" />
+    <Compile Include="Windows\ISourceSelectionParent.cs" />
     <Compile Include="JSONContainers\LatestReleaseData.cs" />
     <Compile Include="JSONContainers\ReleaseAsset.cs" />
     <Compile Include="JSONContainers\Settings.cs" />
@@ -158,8 +158,8 @@
     <Compile Include="Windows\SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Windows\CDNSearchWindow.resx">
-      <DependentUpon>CDNSearchWindow.cs</DependentUpon>
+    <EmbeddedResource Include="Windows\LoadingWindow.resx">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

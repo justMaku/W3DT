@@ -1,6 +1,6 @@
 ﻿namespace W3DT
 {
-    partial class CDNSearchWindow
+    partial class LoadingWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CDNSearchWindow));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoadingWindow));
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.UI_TextLine1 = new System.Windows.Forms.Label();
+            this.UI_TextLine2 = new System.Windows.Forms.Label();
             this.LoadingEye = new W3DT.Controls.LoadingEye();
             this.SuspendLayout();
             // 
@@ -45,25 +45,25 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Please Wait...";
             // 
-            // label2
+            // UI_TextLine1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label2.Location = new System.Drawing.Point(91, 37);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(275, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "C\'Thun is searching for the closest Blizzard server to you!";
+            this.UI_TextLine1.AutoSize = true;
+            this.UI_TextLine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.UI_TextLine1.Location = new System.Drawing.Point(91, 37);
+            this.UI_TextLine1.Name = "UI_TextLine1";
+            this.UI_TextLine1.Size = new System.Drawing.Size(54, 13);
+            this.UI_TextLine1.TabIndex = 1;
+            this.UI_TextLine1.Text = "TextLine1";
             // 
-            // label3
+            // UI_TextLine2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(89, 53);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(339, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Did you know: Poking an Old God with a stick will result in rapid death.";
+            this.UI_TextLine2.AutoSize = true;
+            this.UI_TextLine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_TextLine2.Location = new System.Drawing.Point(89, 53);
+            this.UI_TextLine2.Name = "UI_TextLine2";
+            this.UI_TextLine2.Size = new System.Drawing.Size(54, 13);
+            this.UI_TextLine2.TabIndex = 1;
+            this.UI_TextLine2.Text = "TextLine2";
             // 
             // LoadingEye
             // 
@@ -72,21 +72,21 @@
             this.LoadingEye.Size = new System.Drawing.Size(64, 64);
             this.LoadingEye.TabIndex = 0;
             // 
-            // CDNSearchWindow
+            // LoadingWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 89);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.UI_TextLine2);
+            this.Controls.Add(this.UI_TextLine1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LoadingEye);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(468, 127);
             this.MinimumSize = new System.Drawing.Size(468, 127);
-            this.Name = "CDNSearchWindow";
+            this.Name = "LoadingWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CDN scanning, powered by Old Gods...";
+            this.Text = "Important stuff is being done, hold on...";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,8 +96,8 @@
 
         private W3DT.Controls.LoadingEye LoadingEye;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label UI_TextLine1;
+        private System.Windows.Forms.Label UI_TextLine2;
 
     }
 }

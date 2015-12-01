@@ -6,17 +6,16 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using W3DT.Runners;
-using W3DT.Events;
 
 namespace W3DT
 {
-    public partial class CDNSearchWindow : Form
+    public partial class LoadingWindow : Form
     {
-        public CDNSearchWindow()
+        public LoadingWindow(string firstLine, string secondLine)
         {
             InitializeComponent();
-            new RunnerCDNCheck().Begin();
+            UI_TextLine1.Text = firstLine;
+            UI_TextLine2.Text = secondLine;
         }
     }
 }
