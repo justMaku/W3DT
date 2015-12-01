@@ -14,7 +14,10 @@ namespace W3DT.Runners
             EventManager.Trigger_CASCLoadStart();
 
             if (Program.CASCEngine != null)
+            {
                 Program.CASCEngine.Clear();
+                Program.CASCEngine = null;
+            }
 
             try
             {
