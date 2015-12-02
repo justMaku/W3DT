@@ -96,15 +96,15 @@ namespace W3DT
 
         private void OnCASCLoadDone(object sender, EventArgs e)
         {
-            if (((CASCLoadDoneArgs)e).Success)
+            EventManager.CASCLoadDone -= OnCASCLoadDone;
+            if (loadingWindow != null)
             {
-                EventManager.CASCLoadDone -= OnCASCLoadDone;
-                if (loadingWindow != null)
-                {
-                    loadingWindow.Close();
-                    loadingWindow = null;
-                }
+                loadingWindow.Close();
+                loadingWindow = null;
             }
+
+            if (!((CASCLoadDoneArgs)e).Success)
+                throw new Exception("CASC engine blew up.");
         }
 
         private void UI_AutomaticUpdates_CheckedChanged(object sender, EventArgs e)
