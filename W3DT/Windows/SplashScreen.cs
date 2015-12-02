@@ -227,6 +227,7 @@ namespace W3DT
             if (isCASCDone)
             {
                 Timer_SplashClose.Enabled = false; // Disable timer.
+                EventManager.LoadStepDone -= OnLoadBarStepDone;
                 this.Close(); // Close the splash screen.
             }
         }
