@@ -411,7 +411,10 @@ namespace W3DT.CASC
             FileDataStore.Clear();
             FileDataStoreReverse.Clear();
             UnknownFiles.Clear();
-            Root.Entries.Clear();
+
+            if (Root != null)
+                Root.Entries.Clear();
+
             CASCFile.FileNames.Clear();
         }
 

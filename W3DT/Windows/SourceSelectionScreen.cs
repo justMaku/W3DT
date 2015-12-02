@@ -112,6 +112,9 @@ namespace W3DT
 
         private void DeferToParent()
         {
+            if (parent is SettingsForm)
+                ((SettingsForm)parent).ShouldRebootCASC = true;
+
             parent.OnSourceSelectionDone();
             Close();
         }

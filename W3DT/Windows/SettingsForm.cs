@@ -7,18 +7,24 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using W3DT.CASC;
+using W3DT.Events;
+using W3DT.Runners;
 
 namespace W3DT
 {
     public partial class SettingsForm : Form, ISourceSelectionParent
     {
         private SourceSelectionScreen sourceScreen;
+        private LoadingWindow loadingWindow;
+        public bool ShouldRebootCASC = false;
+        private bool loaded = false;
 
         public SettingsForm()
         {
             InitializeComponent();
             LoadSettings();
             UpdateInfo();
+            loaded = true;
         }
 
         private void UpdateInfo()
@@ -64,6 +70,7 @@ namespace W3DT
 
         private void UI_DataSourceButton_Click(object sender, EventArgs e)
         {
+            ShouldRebootCASC = false;
             if (sourceScreen == null || sourceScreen.IsDisposed)
                 sourceScreen = new SourceSelectionScreen(this, false);
 
@@ -73,6 +80,31 @@ namespace W3DT
         public void OnSourceSelectionDone()
         {
             UpdateInfo();
+
+            if (ShouldRebootCASC)
+                RebootCASC();
+        }
+
+        private void RebootCASC()
+        {
+            ShouldRebootCASC = false;
+            EventManager.CASCLoadDone += OnCASCLoadDone;
+            new RunnerInitializeCASC().Begin();
+            loadingWindow = new LoadingWindow("Reinitializing CASC file engine...", "Non-interesting fact: C'Thun does not like cherry ice cream.");
+            loadingWindow.ShowDialog();
+        }
+
+        private void OnCASCLoadDone(object sender, EventArgs e)
+        {
+            if (((CASCLoadDoneArgs)e).Success)
+            {
+                EventManager.CASCLoadDone -= OnCASCLoadDone;
+                if (loadingWindow != null)
+                {
+                    loadingWindow.Close();
+                    loadingWindow = null;
+                }
+            }
         }
 
         private void UI_AutomaticUpdates_CheckedChanged(object sender, EventArgs e)
@@ -89,6 +121,9 @@ namespace W3DT
             {
                 Program.Settings.RemoteClientVersion = (WoWVersion)selected;
                 Program.Settings.Persist();
+
+                if (loaded)
+                    RebootCASC();
             }
         }
     }
