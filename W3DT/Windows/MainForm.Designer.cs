@@ -108,8 +108,9 @@
             this.UI_SecBtn_Sound.Name = "UI_SecBtn_Sound";
             this.UI_SecBtn_Sound.Size = new System.Drawing.Size(257, 44);
             this.UI_SecBtn_Sound.TabIndex = 5;
-            this.UI_SecBtn_Sound.Text = "The Sound of Music";
+            this.UI_SecBtn_Sound.Text = "Music/Sound Explorer";
             this.UI_SecBtn_Sound.UseVisualStyleBackColor = true;
+            this.UI_SecBtn_Sound.Click += new System.EventHandler(this.UI_SecBtn_Sound_Click);
             // 
             // button1
             // 
