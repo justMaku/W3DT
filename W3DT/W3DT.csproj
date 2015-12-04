@@ -88,6 +88,12 @@
     <Compile Include="CASC\ICASCEntry.cs" />
     <Compile Include="CASC\KeyValueConfig.cs" />
     <Compile Include="CASC\WoWVersion.cs" />
+    <Compile Include="Controls\DoubleBufferedListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DoubleBufferedListBox.Designer.cs">
+      <DependentUpon>DoubleBufferedListBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoadingWindow.cs">
       <SubType>Form</SubType>
     </Compile>

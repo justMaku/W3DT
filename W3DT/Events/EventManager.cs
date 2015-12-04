@@ -122,11 +122,13 @@ namespace W3DT.Events
 
         public static void Trigger_CASCLoadDone(CASCLoadDoneArgs args)
         {
+            Program.CASC_LOADING = false;
             TriggerEvent(_CASCLoadDone, args);
         }
 
         public static void Trigger_CASCLoadStart()
         {
+            Program.CASC_LOADING = true;
             TriggerEvent(_CASCLoadStart, new EventArgs());
         }
 

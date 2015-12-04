@@ -28,6 +28,7 @@ namespace W3DT.Runners
             }
             catch (Exception ex)
             {
+                Program.CASCEngine = null;
                 Log.Write("Error prevented CASC engine loading: " + ex.Message);
                 Log.Write(ex.StackTrace);
 

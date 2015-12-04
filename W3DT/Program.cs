@@ -15,6 +15,7 @@ namespace W3DT
     {
         public static string Version = "0.0.0.0";
         public static bool STOP_LOAD = false;
+        public static bool CASC_LOADING = false;
 
         public static Settings Settings;
         public static CASCEngine CASCEngine;
@@ -85,6 +86,14 @@ namespace W3DT
                 Application.Run(new MainForm());
 
             Log.Dispose();
+        }
+
+        public static bool IsCASCReady()
+        {
+            if (CASCEngine == null)
+                return false;
+
+            return !CASC_LOADING;
         }
 
         private static void OnThreadException(object sender, EventArgs e)
