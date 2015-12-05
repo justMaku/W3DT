@@ -59,7 +59,8 @@ namespace W3DT
             if (fileArgs.ID.Equals(currentID))
             {
                 currentHit++;
-                UI_FileList.Items.Add(fileArgs.File);
+                //UI_FileList.Items.Add(fileArgs.File);
+                UI_FileList.Items.Add(fileArgs.Entry.Name);
 
                 decimal pct = ((decimal) currentHit / maxHit) * 100;
                 UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_PROGRESS, UI_FileList.Items.Count, (int) pct);

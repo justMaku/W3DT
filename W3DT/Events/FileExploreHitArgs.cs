@@ -9,12 +9,15 @@ namespace W3DT.Events
     class FileExploreHitArgs : EventArgs
     {
         public string ID { get; private set; }
-        public StringHashPair File { get; private set; }
+        //public StringHashPair File { get; private set; }
+        public ICASCEntry Entry { get; private set; }
 
-        public FileExploreHitArgs(string identifier, StringHashPair file)
+        //public FileExploreHitArgs(string identifier, StringHashPair file)
+        public FileExploreHitArgs(string identifier, ICASCEntry entry)
         {
             ID = identifier;
-            File = file;
+            //File = file;
+            Entry = entry;
         }
     }
 }

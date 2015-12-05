@@ -21,8 +21,15 @@ namespace W3DT.Runners
 
             try
             {
-                Program.CASCEngine = Program.Settings.UseRemote ? CASCEngine.OpenOnlineStorage() : CASCEngine.OpenLocalStorage();
-                Program.CASCEngine.RootHandler.LoadListFile(Constants.LIST_FILE);
+                CASCEngine engine = Program.Settings.UseRemote ? CASCEngine.OpenOnlineStorage() : CASCEngine.OpenLocalStorage();
+                RootHandler handler = engine.RootHandler;
+
+                handler.LoadListFile(Constants.LIST_FILE);
+                Program.Root = handler.SetFlags(LocaleFlags.All_WoW, ContentFlags.None);
+                handler.MergeInstall(engine.Install);
+
+                Program.CASCEngine = engine;
+
                 EventManager.Trigger_LoadStepDone();
                 Done(true);
             }

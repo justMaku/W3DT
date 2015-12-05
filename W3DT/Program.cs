@@ -19,6 +19,7 @@ namespace W3DT
 
         public static Settings Settings;
         public static CASCEngine CASCEngine;
+        public static CASCFolder Root;
 
         #if DEBUG
             public static bool IS_DEBUG = true;

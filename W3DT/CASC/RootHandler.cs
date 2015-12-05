@@ -243,7 +243,7 @@ namespace W3DT.CASC
                         }
 
                         CASCFile.FileNames[fileHash] = fileNameFull;
-                        FileNameCache.StoreFileName(new StringHashPair(fileHash, fileNameFull));
+                        //FileNameCache.StoreFileName(new StringHashPair(fileHash, fileNameFull));
                     }
                 }
 
@@ -284,7 +284,7 @@ namespace W3DT.CASC
                     }
 
                     CASCFile.FileNames[fileHash] = file;
-                    FileNameCache.StoreFileName(new StringHashPair(fileHash, file));
+                    //FileNameCache.StoreFileName(new StringHashPair(fileHash, file));
                     int dirSepIndex = file.LastIndexOf('\\');
 
                     if (dirSepIndex >= 0)
@@ -400,6 +400,26 @@ namespace W3DT.CASC
 
                 folder = entry as CASCFolder;
             }
+        }
+
+        public void MergeInstall(InstallHandler install)
+        {
+            foreach (var entry in install.GetEntries())
+                CreateSubTree(Root, Hasher.ComputeHash(entry.Name), entry.Name);
+        }
+
+        public CASCFolder SetFlags(LocaleFlags locale, ContentFlags content, bool createTree = true)
+        {
+            if (Locale != locale || Content != content)
+            {
+                Locale = locale;
+                Content = content;
+
+                if (createTree)
+                    Root = CreateStorageTree();
+            }
+
+            return Root;
         }
 
         public bool IsUnknownFile(ulong hash)
