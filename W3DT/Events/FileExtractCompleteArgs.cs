@@ -8,11 +8,9 @@ namespace W3DT.Events
 {
     class FileExtractCompleteArgs : EventArgs
     {
-        //public string GamePath { get; private set; }
-        //public string LocalPath { get; private set; }
-        public StringHashPair File { get; private set; }
+        public CASCFile File { get; private set; }
 
-        public FileExtractCompleteArgs(StringHashPair file)
+        public FileExtractCompleteArgs(CASCFile file)
         {
             File = file;
         }

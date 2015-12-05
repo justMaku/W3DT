@@ -36,6 +36,11 @@ namespace W3DT.CASC
             return entry;
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         public IEnumerable<CASCFile> GetFiles(IEnumerable<int> selection = null, bool recursive = true)
         {
             if (selection != null)

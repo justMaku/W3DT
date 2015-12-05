@@ -44,7 +44,6 @@ namespace W3DT
         public static readonly string WOW_DIRECTORY_STRING = "Local Directory: {0}";
 
         // Music Window //
-        public static readonly string MUSIC_WINDOW_SEARCH_PROGRESS = "{0} Files Found (Searching {1}%)";
-        public static readonly string MUSIC_WINDOW_SEARCH_DONE = "{0} Files Found (Done)";
+        public static readonly string MUSIC_WINDOW_SEARCH_STATE = "{0} Files Found ({1})";
     }
 }

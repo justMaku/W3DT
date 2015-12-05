@@ -41,6 +41,11 @@ namespace W3DT.CASC
             return 0;
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         public int CompareTo(ICASCEntry other, int col, CASCEngine casc)
         {
             int result = 0;

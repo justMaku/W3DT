@@ -15,12 +15,11 @@ namespace W3DT
     public partial class MusicExplorerWindow : Form
     {
         private static readonly string RUNNER_ID = "MEW_N_{0}";
+        private static readonly string[] extensions = new string[] { "ogg", "mp3" };
         private int currentScan = 0;
         private string currentID = null;
 
         private RunnerBase runner;
-        private int maxHit;
-        private int currentHit;
         private bool filterHasChanged = false;
 
         public MusicExplorerWindow()
@@ -39,16 +38,12 @@ namespace W3DT
             EventManager.FileExploreHit += OnFileExploreHit;
             EventManager.FileExploreDone += OnFileExploreDone;
 
-            List<StringHashPair> data = FileNameCache.GetFilesWithExtension(new string[] { "ogg", "mp3" });
-            maxHit = data.Count;
-            currentHit = 0;
-
-            UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_PROGRESS, 0, 0);
+            UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_STATE, 0, "Preparing...");
 
             currentScan++;
             currentID = string.Format(RUNNER_ID, currentScan);
 
-            runner = new RunnerFileExplore(currentID, data, GetFilter());
+            runner = new RunnerFileExplore(currentID, extensions, GetFilter());
             runner.Begin();
         }
 
@@ -58,12 +53,9 @@ namespace W3DT
 
             if (fileArgs.ID.Equals(currentID))
             {
-                currentHit++;
-                //UI_FileList.Items.Add(fileArgs.File);
-                UI_FileList.Items.Add(fileArgs.Entry.Name);
+                UI_FileList.Items.Add(fileArgs.Entry);
 
-                decimal pct = maxHit > 0 ? ((decimal)currentHit / maxHit) * 100 : 100;
-                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_PROGRESS, UI_FileList.Items.Count, (int) pct);
+                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_STATE, UI_FileList.Items.Count, "Searching...");
             }
         }
 
@@ -75,7 +67,7 @@ namespace W3DT
                 EventManager.FileExploreHit -= OnFileExploreHit;
                 runner = null;
 
-                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_DONE, UI_FileList.Items.Count);
+                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_STATE, UI_FileList.Items.Count, "Done");
             }
         }
 
@@ -126,7 +118,7 @@ namespace W3DT
         private void UI_FileList_DoubleClick(object sender, EventArgs e)
         {
             if (UI_FileList.SelectedItem != null)
-                new RunnerExtractItem((StringHashPair)UI_FileList.SelectedItem).Begin();
+                new RunnerExtractItem((CASCFile)UI_FileList.SelectedItem).Begin();
         }
     }
 }
