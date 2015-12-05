@@ -60,6 +60,7 @@
             this.UI_PlayButton.Size = new System.Drawing.Size(44, 44);
             this.UI_PlayButton.TabIndex = 1;
             this.UI_PlayButton.UseVisualStyleBackColor = true;
+            this.UI_PlayButton.Click += new System.EventHandler(this.UI_PlayButton_Click);
             // 
             // UI_PauseButton
             // 
@@ -70,6 +71,7 @@
             this.UI_PauseButton.Size = new System.Drawing.Size(44, 44);
             this.UI_PauseButton.TabIndex = 2;
             this.UI_PauseButton.UseVisualStyleBackColor = true;
+            this.UI_PauseButton.Click += new System.EventHandler(this.UI_PauseButton_Click);
             // 
             // UI_StopButton
             // 
@@ -80,6 +82,7 @@
             this.UI_StopButton.Size = new System.Drawing.Size(44, 44);
             this.UI_StopButton.TabIndex = 3;
             this.UI_StopButton.UseVisualStyleBackColor = true;
+            this.UI_StopButton.Click += new System.EventHandler(this.UI_StopButton_Click);
             // 
             // UI_FastButton
             // 

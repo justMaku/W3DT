@@ -33,6 +33,7 @@ namespace W3DT
             {
                 EventManager.FileExtractComplete += OnFileExtractComplete;
                 new RunnerExtractItem(file).Begin();
+                SetState("Extracting file...");
             }
             else
             {
@@ -86,6 +87,24 @@ namespace W3DT
         {
             player.StopPlayback();
             player.Close();
+        }
+
+        private void UI_PlayButton_Click(object sender, EventArgs e)
+        {
+            if (ready)
+                player.ResumePlayback();
+        }
+
+        private void UI_PauseButton_Click(object sender, EventArgs e)
+        {
+            if (ready)
+                player.PausePlayback();
+        }
+
+        private void UI_StopButton_Click(object sender, EventArgs e)
+        {
+            if (ready)
+                player.StopPlayback();
         }
     }
 }
