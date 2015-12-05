@@ -94,6 +94,9 @@
     <Compile Include="Controls\DoubleBufferedListBox.Designer.cs">
       <DependentUpon>DoubleBufferedListBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\FileExploreDoneArgs.cs" />
+    <Compile Include="Events\FileExploreHitArgs.cs" />
+    <Compile Include="Runners\RunnerFileExplore.cs" />
     <Compile Include="Windows\LoadingWindow.cs">
       <SubType>Form</SubType>
     </Compile>

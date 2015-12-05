@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using W3DT.CASC;
+using W3DT.Events;
+using W3DT.Runners;
 
 namespace W3DT
 {
     public partial class MusicExplorerWindow : Form
     {
+        private static readonly string RUNNER_ID = "MEW_N";
+        private RunnerBase runner;
+
         public MusicExplorerWindow()
         {
             InitializeComponent();
@@ -25,10 +30,38 @@ namespace W3DT
             if (!Program.IsCASCReady())
                 return;
 
-            foreach (string file in FileNameCache.GetFilesWithExtension("ogg"))
+            EventManager.FileExploreHit += OnFileExploreHit;
+            EventManager.FileExploreDone += OnFileExploreDone;
+
+            runner = new RunnerFileExplore(RUNNER_ID, FileNameCache.GetFilesWithExtension("ogg"));
+            runner.Begin();
+        }
+
+        private void OnFileExploreHit(object sender, EventArgs args)
+        {
+            FileExploreHitArgs fileArgs = (FileExploreHitArgs)args;
+
+            if (fileArgs.ID.Equals(RUNNER_ID))
             {
-                UI_FileList.Items.Add(file);
+                UI_FileList.Items.Add(fileArgs.File);
+                UI_FileCount_Label.Text = UI_FileList.Items.Count + " Files Found";
             }
+        }
+
+        private void OnFileExploreDone(object sender, EventArgs args)
+        {
+            if (((FileExploreDoneArgs)args).ID.Equals(RUNNER_ID))
+            {
+                EventManager.FileExploreDone -= OnFileExploreDone;
+                EventManager.FileExploreHit -= OnFileExploreHit;
+                runner = null;
+            }
+        }
+
+        private void MusicExplorerWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (runner != null)
+                runner.Kill();
         }
     }
 }

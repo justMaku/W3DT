@@ -19,5 +19,11 @@ namespace W3DT.Runners
         }
 
         public abstract void Work();
+
+        public void Kill()
+        {
+            if (thread != null && thread.IsAlive)
+                thread.Abort();
+        }
     }
 }

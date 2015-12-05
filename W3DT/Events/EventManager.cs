@@ -15,6 +15,8 @@ namespace W3DT.Events
         private static EventHandler _LoadStepDone;
         private static EventHandler _CASCLoadDone;
         private static EventHandler _CASCLoadStart;
+        private static EventHandler _FileExploreHit;
+        private static EventHandler _FileExploreDone;
 
         public static event EventHandler CDNScanDone
         {
@@ -100,6 +102,34 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler FileExploreHit
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _FileExploreHit = (EventHandler)Delegate.Combine(_FileExploreHit, value);
+            }
+
+            remove
+            {
+                _FileExploreHit = (EventHandler)Delegate.Remove(_FileExploreHit, value);
+            }
+        }
+
+        public static event EventHandler FileExploreDone
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _FileExploreDone = (EventHandler)Delegate.Combine(_FileExploreDone, value);
+            }
+
+            remove
+            {
+                _FileExploreDone = (EventHandler)Delegate.Remove(_FileExploreDone, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
         {
                 TriggerEvent(_CDNScanDone, args);
@@ -130,6 +160,16 @@ namespace W3DT.Events
         {
             Program.CASC_LOADING = true;
             TriggerEvent(_CASCLoadStart, new EventArgs());
+        }
+
+        public static void Trigger_FileExploreHit(FileExploreHitArgs args)
+        {
+            TriggerEvent(_FileExploreHit, args);
+        }
+
+        public static void Trigger_FileExploreDone(FileExploreDoneArgs args)
+        {
+            TriggerEvent(_FileExploreDone, args);
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)
