@@ -39,7 +39,7 @@ namespace W3DT
             EventManager.FileExploreHit += OnFileExploreHit;
             EventManager.FileExploreDone += OnFileExploreDone;
 
-            List<string> data = FileNameCache.GetFilesWithExtension("ogg");
+            List<string> data = FileNameCache.GetFilesWithExtension(new string[] { "ogg", "mp3" });
             maxHit = data.Count;
             currentHit = 0;
 
