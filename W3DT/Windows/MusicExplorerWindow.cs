@@ -87,7 +87,7 @@ namespace W3DT
         private string GetFilter()
         {
             string value = UI_FilterField.Text.Trim();
-            if (value.Length == 0 || value.Equals(Constants.FILTER_DEFAULT))
+            if (value.Length == 0)
                 return null;
 
             return value;
@@ -114,6 +114,12 @@ namespace W3DT
             filterHasChanged = true;
             UI_FilterCheckTimer.Enabled = false;
             UI_FilterCheckTimer.Enabled = true;
+            UI_FilterOverlay.Visible = UI_FilterField.Text.Length == 0;
+        }
+
+        private void UI_FilterOverlay_MouseUp(object sender, MouseEventArgs e)
+        {
+            UI_FilterField.Focus();
         }
     }
 }
