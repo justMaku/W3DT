@@ -22,7 +22,9 @@ namespace W3DT.Runners
             if (!Program.IsCASCReady())
                 return;
 
-            Program.CASCEngine.SaveFileTo(file.Hash, Constants.TEMP_DIRECTORY, file.Value);
+            RootEntry entry = Program.CASCEngine.RootHandler.RootData[file.Hash].FirstOrDefault();
+            //Program.CASCEngine.SaveFileTo(file.Hash, Constants.TEMP_DIRECTORY, file.Value);
+            Program.CASCEngine.ExtractFile(entry.MD5, Constants.TEMP_DIRECTORY, file.Value);
             EventManager.Trigger_FileExtractComplete(new FileExtractCompleteArgs(file));
         }
     }

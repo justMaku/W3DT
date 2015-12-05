@@ -62,7 +62,7 @@ namespace W3DT.CASC
 
     public class RootHandler
     {
-        private readonly MultiDictionary<ulong, RootEntry> RootData = new MultiDictionary<ulong, RootEntry>();
+        public readonly MultiDictionary<ulong, RootEntry> RootData = new MultiDictionary<ulong, RootEntry>();
         private readonly Dictionary<int, ulong> FileDataStore = new Dictionary<int, ulong>();
         private readonly Dictionary<ulong, int> FileDataStoreReverse = new Dictionary<ulong, int>();
         private readonly HashSet<ulong> UnknownFiles = new HashSet<ulong>();

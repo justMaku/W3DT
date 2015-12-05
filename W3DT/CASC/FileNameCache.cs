@@ -41,20 +41,23 @@ namespace W3DT.CASC
 
         public static void StoreFileName(StringHashPair file)
         {
-            string extension = Path.GetExtension(file.Value);
-
-            if (extension == null || extension == string.Empty)
-                return;
-
-            extension = extension.Substring(1).ToLower();
-
-            if (!Cache.ContainsKey(extension))
+            if (Program.CASCEngine.FileExists(file.Hash))
             {
-                Cache.Add(extension, new List<StringHashPair>());
-                Log.Write("FileNameCache: Registered new extension {0}.", extension);
-            }
+                string extension = Path.GetExtension(file.Value);
 
-            Cache[extension].Add(file);
+                if (extension == null || extension == string.Empty)
+                    return;
+
+                extension = extension.Substring(1).ToLower();
+
+                if (!Cache.ContainsKey(extension))
+                {
+                    Cache.Add(extension, new List<StringHashPair>());
+                    Log.Write("FileNameCache: Registered new extension {0}.", extension);
+                }
+
+                Cache[extension].Add(file);
+            }
         }
     }
 }
