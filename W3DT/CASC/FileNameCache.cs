@@ -8,14 +8,14 @@ namespace W3DT.CASC
 {
     class FileNameCache
     {
-        private static Dictionary<string, List<string>> Cache = new Dictionary<string, List<string>>();
+        private static Dictionary<string, List<StringHashPair>> Cache = new Dictionary<string, List<StringHashPair>>();
 
-        public static List<string> GetFilesWithExtension(string ext)
+        public static List<StringHashPair> GetFilesWithExtension(string ext)
         {
             return GetFilesWithExtension(new string[] { ext });
         }
 
-        public static List<string> GetFilesWithExtension(string[] exts)
+        public static List<StringHashPair> GetFilesWithExtension(string[] exts)
         {
             List<string> extList = new List<string>(exts.Length);
             int size = 0;
@@ -31,7 +31,7 @@ namespace W3DT.CASC
                 }
             }
 
-            List<string> result = new List<string>(size);
+            List<StringHashPair> result = new List<StringHashPair>(size);
 
             foreach (string ext in extList)
                 result.AddRange(Cache[ext]);
@@ -39,9 +39,9 @@ namespace W3DT.CASC
             return result;
         }
 
-        public static void StoreFileName(string fileName)
+        public static void StoreFileName(StringHashPair file)
         {
-            string extension = Path.GetExtension(fileName);
+            string extension = Path.GetExtension(file.Value);
 
             if (extension == null || extension == string.Empty)
                 return;
@@ -50,11 +50,11 @@ namespace W3DT.CASC
 
             if (!Cache.ContainsKey(extension))
             {
-                Cache.Add(extension, new List<string>());
+                Cache.Add(extension, new List<StringHashPair>());
                 Log.Write("FileNameCache: Registered new extension {0}.", extension);
             }
 
-            Cache[extension].Add(fileName);
+            Cache[extension].Add(file);
         }
     }
 }

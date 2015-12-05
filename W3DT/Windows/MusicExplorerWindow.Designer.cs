@@ -89,6 +89,7 @@
             this.UI_FileList.Name = "UI_FileList";
             this.UI_FileList.Size = new System.Drawing.Size(934, 628);
             this.UI_FileList.TabIndex = 0;
+            this.UI_FileList.DoubleClick += new System.EventHandler(this.UI_FileList_DoubleClick);
             // 
             // MusicExplorerWindow
             // 

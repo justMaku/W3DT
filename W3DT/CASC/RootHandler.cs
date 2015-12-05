@@ -243,7 +243,7 @@ namespace W3DT.CASC
                         }
 
                         CASCFile.FileNames[fileHash] = fileNameFull;
-                        FileNameCache.StoreFileName(fileNameFull);
+                        FileNameCache.StoreFileName(new StringHashPair(fileHash, fileNameFull));
                     }
                 }
 
@@ -284,7 +284,7 @@ namespace W3DT.CASC
                     }
 
                     CASCFile.FileNames[fileHash] = file;
-                    FileNameCache.StoreFileName(file);
+                    FileNameCache.StoreFileName(new StringHashPair(fileHash, file));
                     int dirSepIndex = file.LastIndexOf('\\');
 
                     if (dirSepIndex >= 0)

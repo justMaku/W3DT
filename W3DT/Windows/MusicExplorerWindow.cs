@@ -39,7 +39,7 @@ namespace W3DT
             EventManager.FileExploreHit += OnFileExploreHit;
             EventManager.FileExploreDone += OnFileExploreDone;
 
-            List<string> data = FileNameCache.GetFilesWithExtension(new string[] { "ogg", "mp3" });
+            List<StringHashPair> data = FileNameCache.GetFilesWithExtension(new string[] { "ogg", "mp3" });
             maxHit = data.Count;
             currentHit = 0;
 
@@ -120,6 +120,12 @@ namespace W3DT
         private void UI_FilterOverlay_MouseUp(object sender, MouseEventArgs e)
         {
             UI_FilterField.Focus();
+        }
+
+        private void UI_FileList_DoubleClick(object sender, EventArgs e)
+        {
+            if (UI_FileList.SelectedItem != null)
+                new RunnerExtractItem((StringHashPair)UI_FileList.SelectedItem).Begin();
         }
     }
 }

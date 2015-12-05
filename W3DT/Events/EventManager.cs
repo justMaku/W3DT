@@ -17,6 +17,7 @@ namespace W3DT.Events
         private static EventHandler _CASCLoadStart;
         private static EventHandler _FileExploreHit;
         private static EventHandler _FileExploreDone;
+        private static EventHandler _FileExtractComplete;
 
         public static event EventHandler CDNScanDone
         {
@@ -130,6 +131,20 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler FileExtractComplete
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _FileExtractComplete = (EventHandler)Delegate.Combine(_FileExtractComplete, value);
+            }
+
+            remove
+            {
+                _FileExtractComplete = (EventHandler)Delegate.Remove(_FileExtractComplete, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
         {
                 TriggerEvent(_CDNScanDone, args);
@@ -170,6 +185,11 @@ namespace W3DT.Events
         public static void Trigger_FileExploreDone(FileExploreDoneArgs args)
         {
             TriggerEvent(_FileExploreDone, args);
+        }
+
+        public static void Trigger_FileExtractComplete(FileExtractCompleteArgs args)
+        {
+            TriggerEvent(_FileExtractComplete, args);
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)

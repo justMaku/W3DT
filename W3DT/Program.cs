@@ -78,6 +78,10 @@ namespace W3DT
                 DO_UPDATE = false;
             }
 
+            // Create temp folder.
+            if (!Directory.Exists(Constants.TEMP_DIRECTORY))
+                Directory.CreateDirectory(Constants.TEMP_DIRECTORY);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SplashScreen());

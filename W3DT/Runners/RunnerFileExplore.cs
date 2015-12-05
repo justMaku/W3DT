@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using W3DT.Events;
+using W3DT.CASC;
 
 namespace W3DT.Runners
 {
@@ -11,12 +12,12 @@ namespace W3DT.Runners
     {
         private string id;
         private string filter;
-        private string[] files;
+        private StringHashPair[] files;
 
-        public RunnerFileExplore(string id, List<string> files, string filter = null)
+        public RunnerFileExplore(string id, List<StringHashPair> files, string filter = null)
         {
             this.id = id;
-            this.files = new string[files.Count];
+            this.files = new StringHashPair[files.Count];
             this.filter = filter;
 
             files.CopyTo(this.files);
@@ -26,9 +27,9 @@ namespace W3DT.Runners
         {
             Thread.Sleep(500);
 
-            foreach (string file in files)
+            foreach (StringHashPair file in files)
             {
-                if (filter == null || file.Contains(filter))
+                if (filter == null || file.Value.Contains(filter))
                     EventManager.Trigger_FileExploreHit(new FileExploreHitArgs(id, file));
             }
 

@@ -6,14 +6,14 @@ using W3DT.CASC;
 
 namespace W3DT.Events
 {
-    class FileExploreHitArgs : EventArgs
+    class FileExtractCompleteArgs : EventArgs
     {
-        public string ID { get; private set; }
+        //public string GamePath { get; private set; }
+        //public string LocalPath { get; private set; }
         public StringHashPair File { get; private set; }
 
-        public FileExploreHitArgs(string identifier, StringHashPair file)
+        public FileExtractCompleteArgs(StringHashPair file)
         {
-            ID = identifier;
             File = file;
         }
     }

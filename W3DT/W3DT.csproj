@@ -76,6 +76,7 @@
     <Compile Include="CASC\MultiDictionary.cs" />
     <Compile Include="CASC\RootHandler.cs" />
     <Compile Include="CASC\Salsa20.cs" />
+    <Compile Include="CASC\StringHashPair.cs" />
     <Compile Include="CASC\SyncDownloader.cs" />
     <Compile Include="CASC\VerBarConfig.cs" />
     <Compile Include="CASC\ByteArrayComparer.cs" />
@@ -96,7 +97,10 @@
     </Compile>
     <Compile Include="Events\FileExploreDoneArgs.cs" />
     <Compile Include="Events\FileExploreHitArgs.cs" />
+    <Compile Include="Events\FileExtractCompleteArgs.cs" />
+    <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerFileExplore.cs" />
+    <Compile Include="Sound\libZPlay.cs" />
     <Compile Include="Windows\LoadingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +158,12 @@
     <Compile Include="Windows\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\SoundPlayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\SoundPlayer.Designer.cs">
+      <DependentUpon>SoundPlayer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\SourceSelectionScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +206,9 @@
     <EmbeddedResource Include="Windows\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\SoundPlayer.resx">
+      <DependentUpon>SoundPlayer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\SourceSelectionScreen.resx">
       <DependentUpon>SourceSelectionScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -222,6 +235,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="inv_hammer_20.ico" />
+    <None Include="Resources\stop.png" />
+    <None Include="Resources\pause44.png" />
+    <None Include="Resources\rewind45.png" />
+    <None Include="Resources\fast46.png" />
+    <None Include="Resources\play106.png" />
     <None Include="Resources\green_eye.png" />
     <None Include="Resources\w3dt_ad_2.png" />
     <None Include="Resources\w3dt_ad_1.png" />
