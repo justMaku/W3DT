@@ -8,35 +8,39 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using W3DT.CASC;
-using W3DT.Runners;
 using W3DT.Events;
+using W3DT.Runners;
 using libZPlay;
 
-namespace W3DT.Windows
+namespace W3DT
 {
     public partial class SoundPlayer : Form
     {
         private ZPlay player;
-        private TStreamTime position = new TStreamTime();
         private bool ready = false;
         private CASCFile file;
         private string localPath;
 
         public SoundPlayer(CASCFile file)
         {
+            InitializeComponent();
+
             this.file = file;
             localPath = Path.Combine(Constants.TEMP_DIRECTORY, file.FullName);
 
+            player = new ZPlay();
             if (!File.Exists(localPath))
             {
                 EventManager.FileExtractComplete += OnFileExtractComplete;
                 new RunnerExtractItem(file).Begin();
             }
+            else
+            {
+                Play();
+            }
 
-            InitializeComponent();
             UI_TrackTitle.Text = file.Name;
             Text = file.Name + " - W3DT";
-            player = new ZPlay();
         }
 
         private void OnFileExtractComplete(object sender, EventArgs args)
@@ -48,14 +52,28 @@ namespace W3DT.Windows
                 if (extractArgs.Success)
                 {
                     ready = true;
-                    SetState("Playing...");
-                    player.OpenFile(localPath, TStreamFormat.sfAutodetect);
-                    player.StartPlayback();
+                    Play();
                 }
                 else
                 {
+                    Log.Write("File extract failed for {0}!", localPath);
                     SetState("Unable to load file!");
                 }
+            }
+        }
+
+        private void Play()
+        {
+            if (File.Exists(localPath))
+            {
+                SetState("Playing...");
+                player.OpenFile(localPath, TStreamFormat.sfAutodetect);
+                player.StartPlayback();
+            }
+            else
+            {
+                Log.Write("Unable to play {0}, local file does not exist?", localPath);
+                SetState("Error!");
             }
         }
 

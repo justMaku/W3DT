@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using W3DT.CASC;
 using W3DT.Events;
 using W3DT.Runners;
-using W3DT.Windows;
 
 namespace W3DT
 {
