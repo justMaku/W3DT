@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using W3DT.CASC;
+using W3DT.Runners;
+using W3DT.Events;
 using libZPlay;
 
 namespace W3DT.Windows
@@ -15,16 +18,45 @@ namespace W3DT.Windows
     {
         private ZPlay player;
         private TStreamTime position = new TStreamTime();
-        private string gameFilePath;
         private bool ready = false;
+        private CASCFile file;
+        private string localPath;
 
-        public SoundPlayer(string file)
+        public SoundPlayer(CASCFile file)
         {
-            gameFilePath = file;
+            this.file = file;
+            localPath = Path.Combine(Constants.TEMP_DIRECTORY, file.FullName);
+
+            if (!File.Exists(localPath))
+            {
+                EventManager.FileExtractComplete += OnFileExtractComplete;
+                new RunnerExtractItem(file).Begin();
+            }
 
             InitializeComponent();
+            UI_TrackTitle.Text = file.Name;
+            Text = file.Name + " - W3DT";
+            player = new ZPlay();
+        }
 
-            UI_TrackTitle.Text = Path.GetFileName(gameFilePath);
+        private void OnFileExtractComplete(object sender, EventArgs args)
+        {
+            FileExtractCompleteArgs extractArgs = (FileExtractCompleteArgs)args;
+            if (extractArgs.File.Equals(file))
+            {
+                EventManager.FileExtractComplete -= OnFileExtractComplete;
+                if (extractArgs.Success)
+                {
+                    ready = true;
+                    SetState("Playing...");
+                    player.OpenFile(localPath, TStreamFormat.sfAutodetect);
+                    player.StartPlayback();
+                }
+                else
+                {
+                    SetState("Unable to load file!");
+                }
+            }
         }
 
         private void SetState(string state)

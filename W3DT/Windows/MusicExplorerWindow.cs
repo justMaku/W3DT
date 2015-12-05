@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using W3DT.CASC;
 using W3DT.Events;
 using W3DT.Runners;
+using W3DT.Windows;
 
 namespace W3DT
 {
@@ -118,7 +119,7 @@ namespace W3DT
         private void UI_FileList_DoubleClick(object sender, EventArgs e)
         {
             if (UI_FileList.SelectedItem != null)
-                new RunnerExtractItem((CASCFile)UI_FileList.SelectedItem).Begin();
+                new SoundPlayer((CASCFile)UI_FileList.SelectedItem).Show();
         }
     }
 }

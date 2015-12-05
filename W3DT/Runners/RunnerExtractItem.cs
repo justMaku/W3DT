@@ -18,17 +18,24 @@ namespace W3DT.Runners
 
         public override void Work()
         {
+            bool success = false;
             Log.Write("Extracting CASC item: " + file.FullName);
-            if (!Program.IsCASCReady())
-                return;
 
-            Program.CASCEngine.SaveFileTo(file.FullName, Constants.TEMP_DIRECTORY);
+            if (Program.IsCASCReady())
+            {
 
-            //RootEntry entry = Program.CASCEngine.RootHandler.RootData[file.Hash].FirstOrDefault();
-            //Program.CASCEngine.SaveFileTo(file.Hash, Constants.TEMP_DIRECTORY, file.Value);
-            //Program.CASCEngine.ExtractFile(entry.MD5, Constants.TEMP_DIRECTORY, file.Value);
+                try
+                {
+                    Program.CASCEngine.SaveFileTo(file.FullName, Constants.TEMP_DIRECTORY);
+                    success = true;
+                }
+                catch
+                {
+                    Log.Write("Unable to extract item: " + file.FullName);
+                }
+            }
 
-            EventManager.Trigger_FileExtractComplete(new FileExtractCompleteArgs(file));
+            EventManager.Trigger_FileExtractComplete(new FileExtractCompleteArgs(file, success));
         }
     }
 }
