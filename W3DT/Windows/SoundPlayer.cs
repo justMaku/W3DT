@@ -81,5 +81,11 @@ namespace W3DT
         {
             UI_StateLabel.Text = string.Format("Currently: {0}", state);
         }
+
+        private void SoundPlayer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            player.StopPlayback();
+            player.Close();
+        }
     }
 }

@@ -151,6 +151,7 @@
             this.MinimumSize = new System.Drawing.Size(439, 197);
             this.Name = "SoundPlayer";
             this.Text = "No File Loaded - W3DT";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SoundPlayer_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.UI_SeekBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
