@@ -17,15 +17,24 @@ namespace W3DT.CASC
 
         public static List<string> GetFilesWithExtension(string[] exts)
         {
-            List<string> result = new List<string>();
+            List<string> extList = new List<string>(exts.Length);
+            int size = 0;
 
-            foreach (string extRaw in exts)
+            foreach (string ext in exts)
             {
-                string ext = extRaw.ToLower();
+                string extLower = ext.ToLower();
 
-                if (Cache.ContainsKey(ext))
-                    result.Concat(Cache[ext]);
+                if (Cache.ContainsKey(extLower))
+                {
+                    extList.Add(extLower);
+                    size += Cache[extLower].Count;
+                }
             }
+
+            List<string> result = new List<string>(size);
+
+            foreach (string ext in extList)
+                result.AddRange(Cache[ext]);
 
             return result;
         }
