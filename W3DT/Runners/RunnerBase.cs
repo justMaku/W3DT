@@ -15,6 +15,7 @@ namespace W3DT.Runners
         public void Begin()
         {
             thread = new Thread(new ThreadStart(Work));
+            thread.Name = GetType().Name;
             thread.Start();
         }
 
