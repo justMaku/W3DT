@@ -18,6 +18,7 @@ namespace W3DT
     {
         private ZPlay player;
         private bool ready = false;
+        private bool paused = false;
         private CASCFile file;
         private string localPath;
 
@@ -92,19 +93,35 @@ namespace W3DT
         private void UI_PlayButton_Click(object sender, EventArgs e)
         {
             if (ready)
-                player.ResumePlayback();
+            {
+                if (paused)
+                {
+                    player.ResumePlayback();
+                    paused = false;
+                }
+                else
+                {
+                    player.StartPlayback();
+                }
+            }
         }
 
         private void UI_PauseButton_Click(object sender, EventArgs e)
         {
             if (ready)
+            {
                 player.PausePlayback();
+                paused = true;
+            }
         }
 
         private void UI_StopButton_Click(object sender, EventArgs e)
         {
             if (ready)
+            {
                 player.StopPlayback();
+                paused = false;
+            }
         }
     }
 }
