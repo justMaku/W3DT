@@ -12,12 +12,22 @@ namespace W3DT.CASC
 
         public static List<string> GetFilesWithExtension(string ext)
         {
-            ext = ext.ToLower();
+            return GetFilesWithExtension(new string[] { ext });
+        }
 
-            if (Cache.ContainsKey(ext))
-                return Cache[ext];
+        public static List<string> GetFilesWithExtension(string[] exts)
+        {
+            List<string> result = new List<string>();
 
-            return (List<string>) Enumerable.Empty<string>();
+            foreach (string extRaw in exts)
+            {
+                string ext = extRaw.ToLower();
+
+                if (Cache.ContainsKey(ext))
+                    result.Concat(Cache[ext]);
+            }
+
+            return result;
         }
 
         public static void StoreFileName(string fileName)
