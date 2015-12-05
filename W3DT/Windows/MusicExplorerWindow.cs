@@ -14,8 +14,14 @@ namespace W3DT
 {
     public partial class MusicExplorerWindow : Form
     {
-        private static readonly string RUNNER_ID = "MEW_N";
+        private static readonly string RUNNER_ID = "MEW_N_{0}";
+        private int currentScan = 0;
+        private string currentID = null;
+
         private RunnerBase runner;
+        private int maxHit;
+        private int currentHit;
+        private bool filterHasChanged = false;
 
         public MusicExplorerWindow()
         {
@@ -33,7 +39,16 @@ namespace W3DT
             EventManager.FileExploreHit += OnFileExploreHit;
             EventManager.FileExploreDone += OnFileExploreDone;
 
-            runner = new RunnerFileExplore(RUNNER_ID, FileNameCache.GetFilesWithExtension("ogg"));
+            List<string> data = FileNameCache.GetFilesWithExtension("ogg");
+            maxHit = data.Count;
+            currentHit = 0;
+
+            UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_PROGRESS, 0, 0);
+
+            currentScan++;
+            currentID = string.Format(RUNNER_ID, currentScan);
+
+            runner = new RunnerFileExplore(currentID, data, GetFilter());
             runner.Begin();
         }
 
@@ -41,20 +56,25 @@ namespace W3DT
         {
             FileExploreHitArgs fileArgs = (FileExploreHitArgs)args;
 
-            if (fileArgs.ID.Equals(RUNNER_ID))
+            if (fileArgs.ID.Equals(currentID))
             {
+                currentHit++;
                 UI_FileList.Items.Add(fileArgs.File);
-                UI_FileCount_Label.Text = UI_FileList.Items.Count + " Files Found";
+
+                decimal pct = ((decimal) currentHit / maxHit) * 100;
+                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_PROGRESS, UI_FileList.Items.Count, (int) pct);
             }
         }
 
         private void OnFileExploreDone(object sender, EventArgs args)
         {
-            if (((FileExploreDoneArgs)args).ID.Equals(RUNNER_ID))
+            if (((FileExploreDoneArgs)args).ID.Equals(currentID))
             {
                 EventManager.FileExploreDone -= OnFileExploreDone;
                 EventManager.FileExploreHit -= OnFileExploreHit;
                 runner = null;
+
+                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_DONE, UI_FileList.Items.Count);
             }
         }
 
@@ -62,6 +82,38 @@ namespace W3DT
         {
             if (runner != null)
                 runner.Kill();
+        }
+
+        private string GetFilter()
+        {
+            string value = UI_FilterField.Text.Trim();
+            if (value.Length == 0 || value.Equals(Constants.FILTER_DEFAULT))
+                return null;
+
+            return value;
+        }
+
+        private void UI_FilterCheckTimer_Tick(object sender, EventArgs e)
+        {
+            if (filterHasChanged)
+            {
+                if (runner != null)
+                    runner.Kill();
+
+                EventManager.FileExploreDone -= OnFileExploreDone;
+                EventManager.FileExploreHit -= OnFileExploreHit;
+
+                filterHasChanged = false;
+                UI_FilterCheckTimer.Enabled = false;
+                InitializeMusicList();
+            }
+        }
+
+        private void UI_FilterField_TextChanged(object sender, EventArgs e)
+        {
+            filterHasChanged = true;
+            UI_FilterCheckTimer.Enabled = false;
+            UI_FilterCheckTimer.Enabled = true;
         }
     }
 }

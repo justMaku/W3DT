@@ -28,20 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MusicExplorerWindow));
             this.UI_FileCount_Label = new System.Windows.Forms.Label();
             this.UI_FileList = new W3DT.Controls.DoubleBufferedListBox();
+            this.UI_FilterField = new System.Windows.Forms.TextBox();
+            this.UI_FilterCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // UI_FileCount_Label
             // 
             this.UI_FileCount_Label.AutoSize = true;
             this.UI_FileCount_Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UI_FileCount_Label.Location = new System.Drawing.Point(12, 651);
+            this.UI_FileCount_Label.Location = new System.Drawing.Point(256, 650);
             this.UI_FileCount_Label.Name = "UI_FileCount_Label";
-            this.UI_FileCount_Label.Size = new System.Drawing.Size(143, 25);
+            this.UI_FileCount_Label.Size = new System.Drawing.Size(327, 25);
             this.UI_FileCount_Label.TabIndex = 1;
-            this.UI_FileCount_Label.Text = "0 Files Found";
+            this.UI_FileCount_Label.Text = "0 Files Found (Searching: 100%)";
             // 
             // UI_FileList
             // 
@@ -54,11 +57,28 @@
             this.UI_FileList.Size = new System.Drawing.Size(934, 628);
             this.UI_FileList.TabIndex = 0;
             // 
+            // UI_FilterField
+            // 
+            this.UI_FilterField.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_FilterField.Location = new System.Drawing.Point(12, 647);
+            this.UI_FilterField.Name = "UI_FilterField";
+            this.UI_FilterField.Size = new System.Drawing.Size(238, 31);
+            this.UI_FilterField.TabIndex = 2;
+            this.UI_FilterField.Text = "Enter filter...";
+            this.UI_FilterField.TextChanged += new System.EventHandler(this.UI_FilterField_TextChanged);
+            // 
+            // UI_FilterCheckTimer
+            // 
+            this.UI_FilterCheckTimer.Enabled = true;
+            this.UI_FilterCheckTimer.Interval = 1000;
+            this.UI_FilterCheckTimer.Tick += new System.EventHandler(this.UI_FilterCheckTimer_Tick);
+            // 
             // MusicExplorerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(958, 688);
+            this.Controls.Add(this.UI_FilterField);
             this.Controls.Add(this.UI_FileCount_Label);
             this.Controls.Add(this.UI_FileList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -74,5 +94,7 @@
 
         private W3DT.Controls.DoubleBufferedListBox UI_FileList;
         private System.Windows.Forms.Label UI_FileCount_Label;
+        private System.Windows.Forms.TextBox UI_FilterField;
+        private System.Windows.Forms.Timer UI_FilterCheckTimer;
     }
 }

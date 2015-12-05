@@ -24,12 +24,12 @@ namespace W3DT.Runners
 
         public override void Work()
         {
+            Thread.Sleep(500);
+
             foreach (string file in files)
             {
                 if (filter == null || file.Contains(filter))
                     EventManager.Trigger_FileExploreHit(new FileExploreHitArgs(id, file));
-
-                Thread.Sleep(5);
             }
 
             EventManager.Trigger_FileExploreDone(new FileExploreDoneArgs(id));

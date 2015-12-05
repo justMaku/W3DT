@@ -28,6 +28,7 @@ namespace W3DT
         // Base Stuff //
         public static readonly string LOAD_FLAVOR_FILE = "load_flavor";
         public static readonly string LOADING_DEFAULT = "Loading...";
+        public static readonly string FILTER_DEFAULT = "Enter filter...";
 
         public static readonly string SETTINGS_FILE = "settings.json";
         public static readonly string LOG_FILE = "session.log";
@@ -40,5 +41,9 @@ namespace W3DT
         public static readonly string CURRENT_VERSION_STRING = "Current Version: {0}";
         public static readonly string CDN_HOST_STRING = "Remote CDN Host: {0}";
         public static readonly string WOW_DIRECTORY_STRING = "Local Directory: {0}";
+
+        // Music Window //
+        public static readonly string MUSIC_WINDOW_SEARCH_PROGRESS = "{0} Files Found (Searching {1}%)";
+        public static readonly string MUSIC_WINDOW_SEARCH_DONE = "{0} Files Found (Done)";
     }
 }
