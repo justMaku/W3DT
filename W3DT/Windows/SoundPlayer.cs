@@ -44,6 +44,9 @@ namespace W3DT
 
             UI_TrackTitle.Text = file.Name;
             Text = file.Name + " - W3DT";
+
+            UI_VolumeBar.Value = Program.Settings.SoundPlayerVolume;
+            player.SetPlayerVolume(UI_VolumeBar.Value, UI_VolumeBar.Value);
         }
 
         private void OnFileExtractComplete(object sender, EventArgs args)
@@ -128,6 +131,8 @@ namespace W3DT
         private void UI_VolumeBar_Scroll(object sender, EventArgs e)
         {
             player.SetPlayerVolume(UI_VolumeBar.Value, UI_VolumeBar.Value);
+            Program.Settings.SoundPlayerVolume = UI_VolumeBar.Value;
+            Program.Settings.Persist();
         }
     }
 }
