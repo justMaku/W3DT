@@ -20,7 +20,8 @@ namespace W3DT
         // CDN Versions //
         public static readonly WoWVersion[] WOW_VERSIONS = new WoWVersion[] {
             new WoWVersion("wow", "Live (Retail)"),
-            new WoWVersion("wow_beta", "Beta (In Development)")
+            new WoWVersion("wow_beta", "Beta (In Development)"),
+            new WoWVersion("wowt", "PTR (In Development)")
         };
 
         public static readonly WoWVersion DEFAULT_VERSION = WOW_VERSIONS[0];
