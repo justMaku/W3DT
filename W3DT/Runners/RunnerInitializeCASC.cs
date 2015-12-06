@@ -25,7 +25,7 @@ namespace W3DT.Runners
                 RootHandler handler = engine.RootHandler;
 
                 handler.LoadListFile(Constants.LIST_FILE);
-                Program.Root = handler.SetFlags(LocaleFlags.All_WoW, ContentFlags.None);
+                Program.Root = handler.SetFlags(Locale.GetUserLocale().Flags, ContentFlags.None);
                 handler.MergeInstall(engine.Install);
 
                 Program.CASCEngine = engine;

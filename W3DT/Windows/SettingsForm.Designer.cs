@@ -36,6 +36,8 @@
             this.UI_Info_DataSource = new System.Windows.Forms.Label();
             this.UI_RemoteVersion_Field = new System.Windows.Forms.ComboBox();
             this.UI_RemoteVersion_Label = new System.Windows.Forms.Label();
+            this.UI_FileLocale_Field = new System.Windows.Forms.ComboBox();
+            this.UI_FileLocale_Label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UI_SaveButton
@@ -106,12 +108,32 @@
             this.UI_RemoteVersion_Label.TabIndex = 5;
             this.UI_RemoteVersion_Label.Text = "Remote Version:";
             // 
+            // UI_FileLocale_Field
+            // 
+            this.UI_FileLocale_Field.FormattingEnabled = true;
+            this.UI_FileLocale_Field.Location = new System.Drawing.Point(98, 141);
+            this.UI_FileLocale_Field.Name = "UI_FileLocale_Field";
+            this.UI_FileLocale_Field.Size = new System.Drawing.Size(154, 21);
+            this.UI_FileLocale_Field.TabIndex = 4;
+            this.UI_FileLocale_Field.SelectedIndexChanged += new System.EventHandler(this.UI_FileLocale_Field_SelectedIndexChanged);
+            // 
+            // UI_FileLocale_Label
+            // 
+            this.UI_FileLocale_Label.AutoSize = true;
+            this.UI_FileLocale_Label.Location = new System.Drawing.Point(34, 144);
+            this.UI_FileLocale_Label.Name = "UI_FileLocale_Label";
+            this.UI_FileLocale_Label.Size = new System.Drawing.Size(61, 13);
+            this.UI_FileLocale_Label.TabIndex = 5;
+            this.UI_FileLocale_Label.Text = "File Locale:";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(456, 190);
+            this.Controls.Add(this.UI_FileLocale_Label);
             this.Controls.Add(this.UI_RemoteVersion_Label);
+            this.Controls.Add(this.UI_FileLocale_Field);
             this.Controls.Add(this.UI_RemoteVersion_Field);
             this.Controls.Add(this.UI_Info_DataSource);
             this.Controls.Add(this.UI_Info_CurrVersion);
@@ -136,5 +158,7 @@
         private System.Windows.Forms.Label UI_Info_DataSource;
         private System.Windows.Forms.ComboBox UI_RemoteVersion_Field;
         private System.Windows.Forms.Label UI_RemoteVersion_Label;
+        private System.Windows.Forms.ComboBox UI_FileLocale_Field;
+        private System.Windows.Forms.Label UI_FileLocale_Label;
     }
 }

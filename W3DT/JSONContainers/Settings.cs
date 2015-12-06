@@ -18,6 +18,7 @@ namespace W3DT.JSONContainers
         public string RemoteHostPath { get; set; }
         public WoWVersion RemoteClientVersion { get; set; }
         public int SoundPlayerVolume { get; set; }
+        public string FileLocale { get; set; }
 
         public Settings()
         {
@@ -30,6 +31,7 @@ namespace W3DT.JSONContainers
             RemoteHostPath = null;
             RemoteClientVersion = Constants.DEFAULT_VERSION;
             SoundPlayerVolume = 100;
+            FileLocale = Locale.Default.ID;
         }
 
         public void Persist(string file)

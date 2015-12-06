@@ -72,6 +72,7 @@
     <Compile Include="CASC\FileNameCache.cs" />
     <Compile Include="CASC\InstallHandler.cs" />
     <Compile Include="CASC\KeyService.cs" />
+    <Compile Include="CASC\Locale.cs" />
     <Compile Include="CASC\LocalIndexHandler.cs" />
     <Compile Include="CASC\MultiDictionary.cs" />
     <Compile Include="CASC\RootHandler.cs" />

@@ -24,6 +24,8 @@ namespace W3DT
             InitializeComponent();
             LoadSettings();
             UpdateInfo();
+            PopulateLocaleList();
+
             loaded = true;
         }
 
@@ -35,6 +37,17 @@ namespace W3DT
                 UI_Info_DataSource.Text = string.Format(Constants.CDN_HOST_STRING, Program.Settings.RemoteHost);
             else
                 UI_Info_DataSource.Text = string.Format(Constants.WOW_DIRECTORY_STRING, Program.Settings.WoWDirectory);
+        }
+
+        private void PopulateLocaleList()
+        {
+            Locale userLocale = Locale.GetUserLocale();
+            foreach (Locale locale in Locale.Values)
+            {
+                UI_FileLocale_Field.Items.Add(locale);
+                if (locale.ID.Equals(userLocale.ID))
+                    UI_FileLocale_Field.SelectedItem = locale;
+            }
         }
 
         private void LoadSettings()
@@ -54,8 +67,7 @@ namespace W3DT
 
                     if (defaultVersion != null && defaultVersion.Equals(version))
                         field.SelectedItem = version;
-                }
-                
+                }                
             }
             else
             {
@@ -120,6 +132,20 @@ namespace W3DT
             if (selected != null && selected is WoWVersion)
             {
                 Program.Settings.RemoteClientVersion = (WoWVersion)selected;
+                Program.Settings.Persist();
+
+                if (loaded)
+                    RebootCASC();
+            }
+        }
+
+        private void UI_FileLocale_Field_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            object selected = UI_FileLocale_Field.SelectedItem;
+
+            if (selected != null && selected is Locale)
+            {
+                Program.Settings.FileLocale = ((Locale)selected).ID;
                 Program.Settings.Persist();
 
                 if (loaded)
