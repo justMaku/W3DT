@@ -36,6 +36,7 @@
             this.UI_TrackTitle = new System.Windows.Forms.Label();
             this.UI_StateLabel = new System.Windows.Forms.Label();
             this.UI_VolumeBar = new System.Windows.Forms.TrackBar();
+            this.UI_VolumeLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.UI_VolumeBar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -105,7 +106,7 @@
             // UI_VolumeBar
             // 
             this.UI_VolumeBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_VolumeBar.Location = new System.Drawing.Point(317, 75);
+            this.UI_VolumeBar.Location = new System.Drawing.Point(317, 85);
             this.UI_VolumeBar.Maximum = 100;
             this.UI_VolumeBar.Name = "UI_VolumeBar";
             this.UI_VolumeBar.Size = new System.Drawing.Size(94, 45);
@@ -114,11 +115,21 @@
             this.UI_VolumeBar.Value = 100;
             this.UI_VolumeBar.Scroll += new System.EventHandler(this.UI_VolumeBar_Scroll);
             // 
+            // UI_VolumeLabel
+            // 
+            this.UI_VolumeLabel.AutoSize = true;
+            this.UI_VolumeLabel.Location = new System.Drawing.Point(322, 71);
+            this.UI_VolumeLabel.Name = "UI_VolumeLabel";
+            this.UI_VolumeLabel.Size = new System.Drawing.Size(45, 13);
+            this.UI_VolumeLabel.TabIndex = 9;
+            this.UI_VolumeLabel.Text = "Volume:";
+            // 
             // SoundPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(423, 120);
+            this.Controls.Add(this.UI_VolumeLabel);
             this.Controls.Add(this.UI_VolumeBar);
             this.Controls.Add(this.UI_StateLabel);
             this.Controls.Add(this.UI_TrackTitle);
@@ -147,5 +158,6 @@
         private System.Windows.Forms.Label UI_TrackTitle;
         private System.Windows.Forms.Label UI_StateLabel;
         private System.Windows.Forms.TrackBar UI_VolumeBar;
+        private System.Windows.Forms.Label UI_VolumeLabel;
     }
 }
