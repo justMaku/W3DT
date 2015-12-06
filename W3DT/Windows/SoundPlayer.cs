@@ -124,5 +124,10 @@ namespace W3DT
                 paused = false;
             }
         }
+
+        private void UI_VolumeBar_Scroll(object sender, EventArgs e)
+        {
+            player.SetPlayerVolume(UI_VolumeBar.Value, UI_VolumeBar.Value);
+        }
     }
 }
