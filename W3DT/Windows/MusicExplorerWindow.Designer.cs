@@ -35,6 +35,7 @@
             this.UI_FilterCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_FilterOverlay = new System.Windows.Forms.Label();
             this.UI_FileList = new W3DT.Controls.DoubleBufferedListBox();
+            this.UI_MultiWindows_Field = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // UI_FileCount_Label
@@ -91,11 +92,23 @@
             this.UI_FileList.TabIndex = 0;
             this.UI_FileList.DoubleClick += new System.EventHandler(this.UI_FileList_DoubleClick);
             // 
+            // UI_MultiWindows_Field
+            // 
+            this.UI_MultiWindows_Field.AutoSize = true;
+            this.UI_MultiWindows_Field.Location = new System.Drawing.Point(723, 661);
+            this.UI_MultiWindows_Field.Name = "UI_MultiWindows_Field";
+            this.UI_MultiWindows_Field.Size = new System.Drawing.Size(223, 17);
+            this.UI_MultiWindows_Field.TabIndex = 4;
+            this.UI_MultiWindows_Field.Text = "Allow multiple sound players open at once";
+            this.UI_MultiWindows_Field.UseVisualStyleBackColor = true;
+            this.UI_MultiWindows_Field.CheckedChanged += new System.EventHandler(this.UI_MultiWindows_Field_CheckedChanged);
+            // 
             // MusicExplorerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(958, 688);
+            this.Controls.Add(this.UI_MultiWindows_Field);
             this.Controls.Add(this.UI_FilterOverlay);
             this.Controls.Add(this.UI_FilterField);
             this.Controls.Add(this.UI_FileCount_Label);
@@ -116,5 +129,6 @@
         private System.Windows.Forms.TextBox UI_FilterField;
         private System.Windows.Forms.Timer UI_FilterCheckTimer;
         private System.Windows.Forms.Label UI_FilterOverlay;
+        private System.Windows.Forms.CheckBox UI_MultiWindows_Field;
     }
 }

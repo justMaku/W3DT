@@ -19,6 +19,7 @@ namespace W3DT.JSONContainers
         public WoWVersion RemoteClientVersion { get; set; }
         public int SoundPlayerVolume { get; set; }
         public string FileLocale { get; set; }
+        public bool AllowMultipleSoundPlayers { get; set; }
 
         public Settings()
         {
@@ -32,6 +33,7 @@ namespace W3DT.JSONContainers
             RemoteClientVersion = Constants.DEFAULT_VERSION;
             SoundPlayerVolume = 100;
             FileLocale = Locale.Default.ID;
+            AllowMultipleSoundPlayers = false;
         }
 
         public void Persist(string file)

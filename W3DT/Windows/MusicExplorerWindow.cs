@@ -22,10 +22,14 @@ namespace W3DT
         private RunnerBase runner;
         private bool filterHasChanged = false;
 
+        private List<SoundPlayer> players = new List<SoundPlayer>();
+
         public MusicExplorerWindow()
         {
             InitializeComponent();
             InitializeMusicList();
+
+            UI_MultiWindows_Field.Checked = Program.Settings.AllowMultipleSoundPlayers;
         }
 
         private void InitializeMusicList()
@@ -118,7 +122,25 @@ namespace W3DT
         private void UI_FileList_DoubleClick(object sender, EventArgs e)
         {
             if (UI_FileList.SelectedItem != null)
-                new SoundPlayer((CASCFile)UI_FileList.SelectedItem).Show();
+            {
+                if (!Program.Settings.AllowMultipleSoundPlayers)
+                {
+                    foreach (SoundPlayer player in players)
+                        player.Close();
+
+                    players.Clear();
+                }
+
+                SoundPlayer newPlayer = new SoundPlayer((CASCFile)UI_FileList.SelectedItem);
+                newPlayer.Show();
+                players.Add(newPlayer);
+            }
+        }
+
+        private void UI_MultiWindows_Field_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.AllowMultipleSoundPlayers = UI_MultiWindows_Field.Checked;
+            Program.Settings.Persist();
         }
     }
 }
