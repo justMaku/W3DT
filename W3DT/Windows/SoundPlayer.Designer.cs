@@ -111,6 +111,7 @@
             this.UI_VolumeBar.Size = new System.Drawing.Size(94, 45);
             this.UI_VolumeBar.TabIndex = 8;
             this.UI_VolumeBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.UI_VolumeBar.Value = 100;
             this.UI_VolumeBar.Scroll += new System.EventHandler(this.UI_VolumeBar_Scroll);
             // 
             // SoundPlayer
