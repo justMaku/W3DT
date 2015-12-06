@@ -38,6 +38,7 @@ namespace W3DT
             }
             else
             {
+                ready = true;
                 Play();
             }
 
