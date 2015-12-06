@@ -37,6 +37,7 @@
             this.UI_StateLabel = new System.Windows.Forms.Label();
             this.UI_VolumeBar = new System.Windows.Forms.TrackBar();
             this.UI_VolumeLabel = new System.Windows.Forms.Label();
+            this.Dialog_Save = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.UI_VolumeBar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,6 +83,7 @@
             this.UI_SaveButton.TabIndex = 5;
             this.UI_SaveButton.Text = "Save File As...";
             this.UI_SaveButton.UseVisualStyleBackColor = true;
+            this.UI_SaveButton.Click += new System.EventHandler(this.UI_SaveButton_Click);
             // 
             // UI_TrackTitle
             // 
@@ -159,5 +161,6 @@
         private System.Windows.Forms.Label UI_StateLabel;
         private System.Windows.Forms.TrackBar UI_VolumeBar;
         private System.Windows.Forms.Label UI_VolumeLabel;
+        private System.Windows.Forms.SaveFileDialog Dialog_Save;
     }
 }

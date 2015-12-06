@@ -134,5 +134,14 @@ namespace W3DT
             Program.Settings.SoundPlayerVolume = UI_VolumeBar.Value;
             Program.Settings.Persist();
         }
+
+        private void UI_SaveButton_Click(object sender, EventArgs e)
+        {
+            Dialog_Save.Filter = string.Format("{0} file|*{0}", Path.GetExtension(file.Name));
+            Dialog_Save.FileName = file.Name;
+
+            if (Dialog_Save.ShowDialog() == DialogResult.OK)
+                File.Copy(localPath, Dialog_Save.FileName);
+        }
     }
 }
