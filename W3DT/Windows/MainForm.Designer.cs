@@ -139,11 +139,13 @@
             this.UI_SponserBlock2.BackgroundImage = global::W3DT.Properties.Resources.w3dt_ad_2;
             this.UI_SponserBlock2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.UI_SponserBlock2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UI_SponserBlock2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.UI_SponserBlock2.Location = new System.Drawing.Point(413, 430);
             this.UI_SponserBlock2.Name = "UI_SponserBlock2";
             this.UI_SponserBlock2.Size = new System.Drawing.Size(389, 80);
             this.UI_SponserBlock2.TabIndex = 3;
             this.UI_SponserBlock2.TabStop = false;
+            this.UI_SponserBlock2.Click += new System.EventHandler(this.UI_SponserBlock2_Click);
             // 
             // UI_SponserBlock1
             // 
@@ -151,11 +153,13 @@
             this.UI_SponserBlock1.BackgroundImage = global::W3DT.Properties.Resources.w3dt_ad_1;
             this.UI_SponserBlock1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.UI_SponserBlock1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UI_SponserBlock1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.UI_SponserBlock1.Location = new System.Drawing.Point(12, 430);
             this.UI_SponserBlock1.Name = "UI_SponserBlock1";
             this.UI_SponserBlock1.Size = new System.Drawing.Size(389, 80);
             this.UI_SponserBlock1.TabIndex = 3;
             this.UI_SponserBlock1.TabStop = false;
+            this.UI_SponserBlock1.Click += new System.EventHandler(this.UI_SponserBlock1_Click);
             // 
             // UI_SecText_Sound
             // 

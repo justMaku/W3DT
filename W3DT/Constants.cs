@@ -46,5 +46,9 @@ namespace W3DT
 
         // Music Window //
         public static readonly string MUSIC_WINDOW_SEARCH_STATE = "{0} Files Found ({1})";
+        
+        // External //
+        public static readonly string FINAL_BOSS_URL = "http://finalboss.tv/";
+        public static readonly string KRUITHNE_URL = "http://www.kruithne.net/";
     }
 }

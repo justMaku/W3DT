@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace W3DT
 {
@@ -55,6 +56,16 @@ namespace W3DT
         private void UI_SecBtn_Sound_Click(object sender, EventArgs e)
         {
             ShowWindow(typeof(MusicExplorerWindow));
+        }
+
+        private void UI_SponserBlock2_Click(object sender, EventArgs e)
+        {
+            Process.Start(Constants.FINAL_BOSS_URL);
+        }
+
+        private void UI_SponserBlock1_Click(object sender, EventArgs e)
+        {
+            Process.Start(Constants.KRUITHNE_URL);
         }
     }
 }
