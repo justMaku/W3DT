@@ -58,14 +58,10 @@ namespace W3DT
             ShowWindow(typeof(MusicExplorerWindow));
         }
 
-        private void UI_SponserBlock2_Click(object sender, EventArgs e)
+        private void UI_SponserBlock_Click(object sender, EventArgs e)
         {
-            Process.Start(Constants.FINAL_BOSS_URL);
-        }
-
-        private void UI_SponserBlock1_Click(object sender, EventArgs e)
-        {
-            Process.Start(Constants.KRUITHNE_URL);
+            if (sender is PictureBox)
+                Process.Start((string)((PictureBox)sender).Tag);
         }
     }
 }

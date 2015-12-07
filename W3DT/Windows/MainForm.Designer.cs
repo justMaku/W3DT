@@ -145,7 +145,8 @@
             this.UI_SponserBlock2.Size = new System.Drawing.Size(389, 80);
             this.UI_SponserBlock2.TabIndex = 3;
             this.UI_SponserBlock2.TabStop = false;
-            this.UI_SponserBlock2.Click += new System.EventHandler(this.UI_SponserBlock2_Click);
+            this.UI_SponserBlock2.Tag = "http://finalboss.tv/";
+            this.UI_SponserBlock2.Click += new System.EventHandler(this.UI_SponserBlock_Click);
             // 
             // UI_SponserBlock1
             // 
@@ -159,7 +160,8 @@
             this.UI_SponserBlock1.Size = new System.Drawing.Size(389, 80);
             this.UI_SponserBlock1.TabIndex = 3;
             this.UI_SponserBlock1.TabStop = false;
-            this.UI_SponserBlock1.Click += new System.EventHandler(this.UI_SponserBlock1_Click);
+            this.UI_SponserBlock1.Tag = "http://www.kruithne.net/";
+            this.UI_SponserBlock1.Click += new System.EventHandler(this.UI_SponserBlock_Click);
             // 
             // UI_SecText_Sound
             // 
