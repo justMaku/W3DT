@@ -104,6 +104,12 @@
     <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerFileExplore.cs" />
     <Compile Include="Sound\libZPlay.cs" />
+    <Compile Include="Windows\ArtExplorerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ArtExplorerWindow.Designer.cs">
+      <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoadingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +193,9 @@
     <Compile Include="Windows\SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Windows\ArtExplorerWindow.resx">
+      <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\LoadingWindow.resx">
       <DependentUpon>LoadingWindow.cs</DependentUpon>
     </EmbeddedResource>

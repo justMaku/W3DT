@@ -35,7 +35,7 @@
             this.UI_SecBtn_SpellBook = new System.Windows.Forms.Button();
             this.UI_SecBtn_Maps = new System.Windows.Forms.Button();
             this.UI_SecBtn_Sound = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.UI_SecBtn_Artwork = new System.Windows.Forms.Button();
             this.UI_SecBtn_Settings = new System.Windows.Forms.Button();
             this.UI_SponserBlock2 = new System.Windows.Forms.PictureBox();
             this.UI_SponserBlock1 = new System.Windows.Forms.PictureBox();
@@ -112,15 +112,16 @@
             this.UI_SecBtn_Sound.UseVisualStyleBackColor = true;
             this.UI_SecBtn_Sound.Click += new System.EventHandler(this.UI_SecBtn_Sound_Click);
             // 
-            // button1
+            // UI_SecBtn_Artwork
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(12, 312);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(257, 44);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Artwerker";
-            this.button1.UseVisualStyleBackColor = true;
+            this.UI_SecBtn_Artwork.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_SecBtn_Artwork.Location = new System.Drawing.Point(12, 312);
+            this.UI_SecBtn_Artwork.Name = "UI_SecBtn_Artwork";
+            this.UI_SecBtn_Artwork.Size = new System.Drawing.Size(257, 44);
+            this.UI_SecBtn_Artwork.TabIndex = 7;
+            this.UI_SecBtn_Artwork.Text = "Artwork Explorer";
+            this.UI_SecBtn_Artwork.UseVisualStyleBackColor = true;
+            this.UI_SecBtn_Artwork.Click += new System.EventHandler(this.UI_SecBtn_Artwork_Click);
             // 
             // UI_SecBtn_Settings
             // 
@@ -297,7 +298,7 @@
             this.Controls.Add(this.UI_SecBtn_Sound);
             this.Controls.Add(this.UI_SecBtn_Maps);
             this.Controls.Add(this.UI_SecBtn_Settings);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.UI_SecBtn_Artwork);
             this.Controls.Add(this.UI_SecBtn_SpellBook);
             this.Controls.Add(this.UI_SecBtn_Doodads);
             this.Controls.Add(this.UI_SecBtn_WMO);
@@ -328,7 +329,7 @@
         private W3DT.Controls.StaticTextBox UI_SecText_Maps;
         private System.Windows.Forms.Button UI_SecBtn_Sound;
         private W3DT.Controls.StaticTextBox UI_SecText_Sound;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button UI_SecBtn_Artwork;
         private W3DT.Controls.StaticTextBox textBox1;
         private System.Windows.Forms.PictureBox UI_SponserBlock1;
         private System.Windows.Forms.PictureBox UI_SponserBlock2;

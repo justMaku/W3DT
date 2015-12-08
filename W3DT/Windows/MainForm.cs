@@ -58,6 +58,11 @@ namespace W3DT
             ShowWindow(typeof(MusicExplorerWindow));
         }
 
+        private void UI_SecBtn_Artwork_Click(object sender, EventArgs e)
+        {
+            ShowWindow(typeof(ArtExplorerWindow));
+        }
+
         private void UI_SponserBlock_Click(object sender, EventArgs e)
         {
             if (sender is PictureBox)

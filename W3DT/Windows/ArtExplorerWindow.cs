@@ -12,10 +12,10 @@ using W3DT.Runners;
 
 namespace W3DT
 {
-    public partial class MusicExplorerWindow : Form
+    public partial class ArtExplorerWindow : Form
     {
-        private static readonly string RUNNER_ID = "MEW_N_{0}";
-        private static readonly string[] extensions = new string[] { "ogg", "mp3" };
+        private static readonly string RUNNER_ID = "AEW_N_{0}";
+        private static readonly string[] extensions = new string[] { "blp" };
         private int currentScan = 0;
         private string currentID = null;
         private int found = 0;
@@ -23,17 +23,13 @@ namespace W3DT
         private RunnerBase runner;
         private bool filterHasChanged = false;
 
-        private List<SoundPlayer> players = new List<SoundPlayer>();
-
-        public MusicExplorerWindow()
+        public ArtExplorerWindow()
         {
             InitializeComponent();
-            InitializeMusicList();
-
-            UI_MultiWindows_Field.Checked = Program.Settings.AllowMultipleSoundPlayers;
+            InitializeArtList();
         }
 
-        private void InitializeMusicList()
+        private void InitializeArtList()
         {
             UI_FileList.Nodes.Clear();
 
@@ -97,7 +93,7 @@ namespace W3DT
             }
         }
 
-        private void MusicExplorerWindow_FormClosing(object sender, FormClosingEventArgs e)
+        private void ArtExplorerWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (runner != null)
                 runner.Kill();
@@ -124,7 +120,7 @@ namespace W3DT
 
                 filterHasChanged = false;
                 UI_FilterCheckTimer.Enabled = false;
-                InitializeMusicList();
+                InitializeArtList();
             }
         }
 
@@ -139,30 +135,6 @@ namespace W3DT
         private void UI_FilterOverlay_MouseUp(object sender, MouseEventArgs e)
         {
             UI_FilterField.Focus();
-        }
-
-        private void UI_FileList_DoubleClick(object sender, EventArgs e)
-        {
-            if (UI_FileList.SelectedNode != null && UI_FileList.SelectedNode.Tag != null)
-            {
-                if (!Program.Settings.AllowMultipleSoundPlayers)
-                {
-                    foreach (SoundPlayer player in players)
-                        player.Close();
-
-                    players.Clear();
-                }
-
-                SoundPlayer newPlayer = new SoundPlayer((CASCFile)UI_FileList.SelectedNode.Tag);
-                newPlayer.Show();
-                players.Add(newPlayer);
-            }
-        }
-
-        private void UI_MultiWindows_Field_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.Settings.AllowMultipleSoundPlayers = UI_MultiWindows_Field.Checked;
-            Program.Settings.Persist();
         }
     }
 }

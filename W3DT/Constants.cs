@@ -45,7 +45,7 @@ namespace W3DT
         public static readonly string WOW_DIRECTORY_STRING = "Local Directory: {0}";
 
         // Music Window //
-        public static readonly string MUSIC_WINDOW_SEARCH_STATE = "{0} Files Found ({1})";
+        public static readonly string GENERIC_WINDOW_SEARCH_STATE = "{0} Files Found ({1})";
         
         // External //
         public static readonly string FINAL_BOSS_URL = "http://finalboss.tv/";
