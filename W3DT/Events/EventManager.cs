@@ -199,13 +199,21 @@ namespace W3DT.Events
 
             foreach (EventHandler listener in handler.GetInvocationList())
             {
-                var capture = listener;
-                var syncObject = (ISynchronizeInvoke)listener.Target;
-                syncObject.Invoke(
-                    (Action)(() =>
-                        {
-                            capture(null, args);
-                        }), null);
+                try
+                {
+                    var capture = listener;
+                    var syncObject = (ISynchronizeInvoke)listener.Target;
+                    syncObject.Invoke(
+                        (Action)(() =>
+                            {
+                                capture(null, args);
+                            }), null);
+                }
+                catch (InvalidOperationException)
+                {
+                    // Most likely caused by a hooked window being closed
+                    // before a linked task was completed; ignore gracefully.
+                }
             }
         }
 
