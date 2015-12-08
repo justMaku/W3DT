@@ -133,6 +133,7 @@
             this.UI_AutoLoadPreview_Field.TabIndex = 8;
             this.UI_AutoLoadPreview_Field.Text = "Automatically load image previews";
             this.UI_AutoLoadPreview_Field.UseVisualStyleBackColor = true;
+            this.UI_AutoLoadPreview_Field.CheckedChanged += new System.EventHandler(this.UI_AutoLoadPreview_Field_CheckedChanged);
             // 
             // ArtExplorerWindow
             // 

@@ -27,6 +27,8 @@ namespace W3DT
         {
             InitializeComponent();
             InitializeArtList();
+
+            UI_AutoLoadPreview_Field.Checked = Program.Settings.AutoShowArtworkPreview;
         }
 
         private void InitializeArtList()
@@ -138,6 +140,12 @@ namespace W3DT
         private void UI_FilterOverlay_MouseUp(object sender, MouseEventArgs e)
         {
             UI_FilterField.Focus();
+        }
+
+        private void UI_AutoLoadPreview_Field_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.AutoShowArtworkPreview = UI_AutoLoadPreview_Field.Checked;
+            Program.Settings.Persist();
         }
     }
 }
