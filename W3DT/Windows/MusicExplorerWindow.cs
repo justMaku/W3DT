@@ -18,6 +18,7 @@ namespace W3DT
         private static readonly string[] extensions = new string[] { "ogg", "mp3" };
         private int currentScan = 0;
         private string currentID = null;
+        private int found = 0;
 
         private RunnerBase runner;
         private bool filterHasChanged = false;
@@ -34,10 +35,12 @@ namespace W3DT
 
         private void InitializeMusicList()
         {
-            UI_FileList.Items.Clear();
+            UI_FileList.Nodes.Clear();
 
             if (!Program.IsCASCReady())
                 return;
+
+            found = 0;
 
             EventManager.FileExploreHit += OnFileExploreHit;
             EventManager.FileExploreDone += OnFileExploreDone;
@@ -57,9 +60,28 @@ namespace W3DT
 
             if (fileArgs.ID.Equals(currentID))
             {
-                UI_FileList.Items.Add(fileArgs.Entry);
+                found++;
+                List<string> pathParts = fileArgs.Entry.FullName.Split('\\').ToList();
 
-                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_STATE, UI_FileList.Items.Count, "Searching...");
+                int index = 1;
+                TreeNode currentNode = null;
+                foreach (string pathPart in pathParts)
+                {
+                    if (currentNode != null)
+                    {
+                        currentNode = TreeNodeHelper.FindOrCreateSubNode(currentNode, pathPart);
+
+                        if (index == pathParts.Count)
+                            currentNode.Tag = fileArgs.Entry;
+                    }
+                    else
+                    {
+                        currentNode = TreeNodeHelper.FindOrCreateSubNode(UI_FileList, pathPart);
+                    }
+                    index++;
+                }
+
+                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_STATE, found, "Searching...");
             }
         }
 
@@ -71,7 +93,7 @@ namespace W3DT
                 EventManager.FileExploreHit -= OnFileExploreHit;
                 runner = null;
 
-                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_STATE, UI_FileList.Items.Count, "Done");
+                UI_FileCount_Label.Text = string.Format(Constants.MUSIC_WINDOW_SEARCH_STATE, found, "Done");
             }
         }
 
@@ -121,7 +143,7 @@ namespace W3DT
 
         private void UI_FileList_DoubleClick(object sender, EventArgs e)
         {
-            if (UI_FileList.SelectedItem != null)
+            if (UI_FileList.SelectedNode != null && UI_FileList.SelectedNode.Tag != null)
             {
                 if (!Program.Settings.AllowMultipleSoundPlayers)
                 {
@@ -131,7 +153,7 @@ namespace W3DT
                     players.Clear();
                 }
 
-                SoundPlayer newPlayer = new SoundPlayer((CASCFile)UI_FileList.SelectedItem);
+                SoundPlayer newPlayer = new SoundPlayer((CASCFile)UI_FileList.SelectedNode.Tag);
                 newPlayer.Show();
                 players.Add(newPlayer);
             }

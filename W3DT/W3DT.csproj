@@ -100,6 +100,7 @@
     <Compile Include="Events\FileExploreDoneArgs.cs" />
     <Compile Include="Events\FileExploreHitArgs.cs" />
     <Compile Include="Events\FileExtractCompleteArgs.cs" />
+    <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerFileExplore.cs" />
     <Compile Include="Sound\libZPlay.cs" />

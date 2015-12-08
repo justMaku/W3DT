@@ -10,10 +10,10 @@ namespace W3DT.Events
     {
         public string ID { get; private set; }
         //public StringHashPair File { get; private set; }
-        public ICASCEntry Entry { get; private set; }
+        public CASCFile Entry { get; private set; }
 
         //public FileExploreHitArgs(string identifier, StringHashPair file)
-        public FileExploreHitArgs(string identifier, ICASCEntry entry)
+        public FileExploreHitArgs(string identifier, CASCFile entry)
         {
             ID = identifier;
             //File = file;

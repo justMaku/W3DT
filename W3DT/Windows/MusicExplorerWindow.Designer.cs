@@ -34,8 +34,8 @@
             this.UI_FilterField = new System.Windows.Forms.TextBox();
             this.UI_FilterCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_FilterOverlay = new System.Windows.Forms.Label();
-            this.UI_FileList = new W3DT.Controls.DoubleBufferedListBox();
             this.UI_MultiWindows_Field = new System.Windows.Forms.CheckBox();
+            this.UI_FileList = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // UI_FileCount_Label
@@ -80,18 +80,6 @@
             this.UI_FilterOverlay.Text = "Enter Filter...";
             this.UI_FilterOverlay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_FilterOverlay_MouseUp);
             // 
-            // UI_FileList
-            // 
-            this.UI_FileList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_FileList.FormattingEnabled = true;
-            this.UI_FileList.Location = new System.Drawing.Point(12, 12);
-            this.UI_FileList.Name = "UI_FileList";
-            this.UI_FileList.Size = new System.Drawing.Size(934, 628);
-            this.UI_FileList.TabIndex = 0;
-            this.UI_FileList.DoubleClick += new System.EventHandler(this.UI_FileList_DoubleClick);
-            // 
             // UI_MultiWindows_Field
             // 
             this.UI_MultiWindows_Field.AutoSize = true;
@@ -103,16 +91,27 @@
             this.UI_MultiWindows_Field.UseVisualStyleBackColor = true;
             this.UI_MultiWindows_Field.CheckedChanged += new System.EventHandler(this.UI_MultiWindows_Field_CheckedChanged);
             // 
+            // UI_FileList
+            // 
+            this.UI_FileList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_FileList.Location = new System.Drawing.Point(12, 12);
+            this.UI_FileList.Name = "UI_FileList";
+            this.UI_FileList.Size = new System.Drawing.Size(934, 629);
+            this.UI_FileList.TabIndex = 5;
+            this.UI_FileList.DoubleClick += new System.EventHandler(this.UI_FileList_DoubleClick);
+            // 
             // MusicExplorerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(958, 688);
+            this.Controls.Add(this.UI_FileList);
             this.Controls.Add(this.UI_MultiWindows_Field);
             this.Controls.Add(this.UI_FilterOverlay);
             this.Controls.Add(this.UI_FilterField);
             this.Controls.Add(this.UI_FileCount_Label);
-            this.Controls.Add(this.UI_FileList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MusicExplorerWindow";
             this.Text = "Music/Sound Explorer - W3DT";
@@ -124,11 +123,11 @@
 
         #endregion
 
-        private W3DT.Controls.DoubleBufferedListBox UI_FileList;
         private System.Windows.Forms.Label UI_FileCount_Label;
         private System.Windows.Forms.TextBox UI_FilterField;
         private System.Windows.Forms.Timer UI_FilterCheckTimer;
         private System.Windows.Forms.Label UI_FilterOverlay;
         private System.Windows.Forms.CheckBox UI_MultiWindows_Field;
+        private System.Windows.Forms.TreeView UI_FileList;
     }
 }
