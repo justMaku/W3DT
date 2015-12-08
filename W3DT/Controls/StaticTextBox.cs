@@ -14,6 +14,7 @@ namespace W3DT.Controls
         public StaticTextBox()
         {
             InitializeComponent();
+            Cursor = Cursors.Default;
         }
     }
 }
