@@ -99,6 +99,9 @@ namespace W3DT
 
         private void MusicExplorerWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
+            EventManager.FileExploreDone -= OnFileExploreDone;
+            EventManager.FileExploreHit -= OnFileExploreHit;
+
             if (runner != null)
                 runner.Kill();
         }
