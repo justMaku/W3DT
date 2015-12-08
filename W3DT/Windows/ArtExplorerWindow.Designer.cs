@@ -35,6 +35,10 @@
             this.UI_FilterCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_FilterOverlay = new System.Windows.Forms.Label();
             this.UI_FileList = new System.Windows.Forms.TreeView();
+            this.UI_ImagePreview = new System.Windows.Forms.PictureBox();
+            this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
+            this.UI_AutoLoadPreview_Field = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.UI_ImagePreview)).BeginInit();
             this.SuspendLayout();
             // 
             // UI_FileCount_Label
@@ -81,27 +85,73 @@
             // 
             // UI_FileList
             // 
-            this.UI_FileList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_FileList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.UI_FileList.Location = new System.Drawing.Point(12, 12);
             this.UI_FileList.Name = "UI_FileList";
-            this.UI_FileList.Size = new System.Drawing.Size(934, 629);
+            this.UI_FileList.Size = new System.Drawing.Size(459, 629);
             this.UI_FileList.TabIndex = 5;
+            // 
+            // UI_ImagePreview
+            // 
+            this.UI_ImagePreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ImagePreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UI_ImagePreview.Location = new System.Drawing.Point(477, 12);
+            this.UI_ImagePreview.Name = "UI_ImagePreview";
+            this.UI_ImagePreview.Size = new System.Drawing.Size(586, 629);
+            this.UI_ImagePreview.TabIndex = 6;
+            this.UI_ImagePreview.TabStop = false;
+            // 
+            // UI_PreviewStatus
+            // 
+            this.UI_PreviewStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_PreviewStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_PreviewStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_PreviewStatus.ForeColor = System.Drawing.Color.Black;
+            this.UI_PreviewStatus.Location = new System.Drawing.Point(491, 288);
+            this.UI_PreviewStatus.MinimumSize = new System.Drawing.Size(0, 36);
+            this.UI_PreviewStatus.Multiline = true;
+            this.UI_PreviewStatus.Name = "UI_PreviewStatus";
+            this.UI_PreviewStatus.ReadOnly = true;
+            this.UI_PreviewStatus.Size = new System.Drawing.Size(561, 36);
+            this.UI_PreviewStatus.TabIndex = 7;
+            this.UI_PreviewStatus.TabStop = false;
+            this.UI_PreviewStatus.Text = "Click to load preview...";
+            this.UI_PreviewStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // UI_AutoLoadPreview_Field
+            // 
+            this.UI_AutoLoadPreview_Field.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_AutoLoadPreview_Field.AutoSize = true;
+            this.UI_AutoLoadPreview_Field.Location = new System.Drawing.Point(876, 661);
+            this.UI_AutoLoadPreview_Field.Name = "UI_AutoLoadPreview_Field";
+            this.UI_AutoLoadPreview_Field.Size = new System.Drawing.Size(187, 17);
+            this.UI_AutoLoadPreview_Field.TabIndex = 8;
+            this.UI_AutoLoadPreview_Field.Text = "Automatically load image previews";
+            this.UI_AutoLoadPreview_Field.UseVisualStyleBackColor = true;
             // 
             // ArtExplorerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(958, 688);
+            this.ClientSize = new System.Drawing.Size(1075, 688);
+            this.Controls.Add(this.UI_AutoLoadPreview_Field);
+            this.Controls.Add(this.UI_PreviewStatus);
+            this.Controls.Add(this.UI_ImagePreview);
             this.Controls.Add(this.UI_FileList);
             this.Controls.Add(this.UI_FilterOverlay);
             this.Controls.Add(this.UI_FilterField);
             this.Controls.Add(this.UI_FileCount_Label);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(900, 421);
             this.Name = "ArtExplorerWindow";
             this.Text = "Artwork Explorer - W3DT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ArtExplorerWindow_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.UI_ImagePreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,5 +164,8 @@
         private System.Windows.Forms.Timer UI_FilterCheckTimer;
         private System.Windows.Forms.Label UI_FilterOverlay;
         private System.Windows.Forms.TreeView UI_FileList;
+        private System.Windows.Forms.PictureBox UI_ImagePreview;
+        private Controls.StaticTextBox UI_PreviewStatus;
+        private System.Windows.Forms.CheckBox UI_AutoLoadPreview_Field;
     }
 }
