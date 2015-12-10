@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using W3DT.CASC;
 using W3DT.Events;
 
@@ -21,6 +22,12 @@ namespace W3DT.Runners
 
             try
             {
+                // Clear existing cache.
+                if (Directory.Exists(Constants.TEMP_DIRECTORY))
+                    Directory.Delete(Constants.TEMP_DIRECTORY, true);
+
+                Directory.CreateDirectory(Constants.TEMP_DIRECTORY);
+
                 CASCEngine engine = Program.Settings.UseRemote ? CASCEngine.OpenOnlineStorage() : CASCEngine.OpenLocalStorage();
                 RootHandler handler = engine.RootHandler;
 
