@@ -43,6 +43,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SereniaBLPLib">
+      <HintPath>..\lib\SereniaBLPLib.dll</HintPath>
+    </Reference>
     <Reference Include="SharpGL">
       <HintPath>..\packages\SharpGLCore.2.3.0.1\lib\net40\SharpGL.dll</HintPath>
     </Reference>

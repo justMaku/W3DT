@@ -35,10 +35,9 @@
             this.UI_FilterCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_FilterOverlay = new System.Windows.Forms.Label();
             this.UI_FileList = new System.Windows.Forms.TreeView();
-            this.UI_ImagePreview = new System.Windows.Forms.PictureBox();
+            this.UI_ImagePreview = new System.Windows.Forms.Panel();
             this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
             this.UI_AutoLoadPreview_Field = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.UI_ImagePreview)).BeginInit();
             this.SuspendLayout();
             // 
             // UI_FileCount_Label
@@ -91,6 +90,7 @@
             this.UI_FileList.Name = "UI_FileList";
             this.UI_FileList.Size = new System.Drawing.Size(459, 629);
             this.UI_FileList.TabIndex = 5;
+            this.UI_FileList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.UI_FileList_AfterSelect);
             // 
             // UI_ImagePreview
             // 
@@ -102,7 +102,6 @@
             this.UI_ImagePreview.Name = "UI_ImagePreview";
             this.UI_ImagePreview.Size = new System.Drawing.Size(586, 629);
             this.UI_ImagePreview.TabIndex = 6;
-            this.UI_ImagePreview.TabStop = false;
             // 
             // UI_PreviewStatus
             // 
@@ -110,6 +109,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_PreviewStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_PreviewStatus.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_PreviewStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UI_PreviewStatus.ForeColor = System.Drawing.Color.Black;
             this.UI_PreviewStatus.Location = new System.Drawing.Point(491, 288);
@@ -122,6 +122,7 @@
             this.UI_PreviewStatus.TabStop = false;
             this.UI_PreviewStatus.Text = "Click to load preview...";
             this.UI_PreviewStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.UI_PreviewStatus.Click += new System.EventHandler(this.UI_PreviewStatus_Click);
             // 
             // UI_AutoLoadPreview_Field
             // 
@@ -152,7 +153,6 @@
             this.Name = "ArtExplorerWindow";
             this.Text = "Artwork Explorer - W3DT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ArtExplorerWindow_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.UI_ImagePreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,7 +165,7 @@
         private System.Windows.Forms.Timer UI_FilterCheckTimer;
         private System.Windows.Forms.Label UI_FilterOverlay;
         private System.Windows.Forms.TreeView UI_FileList;
-        private System.Windows.Forms.PictureBox UI_ImagePreview;
+        private System.Windows.Forms.Panel UI_ImagePreview;
         private Controls.StaticTextBox UI_PreviewStatus;
         private System.Windows.Forms.CheckBox UI_AutoLoadPreview_Field;
     }

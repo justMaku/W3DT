@@ -6,9 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 using W3DT.CASC;
 using W3DT.Events;
 using W3DT.Runners;
+using SereniaBLPLib;
 
 namespace W3DT
 {
@@ -22,6 +24,7 @@ namespace W3DT
 
         private RunnerBase runner;
         private bool filterHasChanged = false;
+        private RunnerExtractItem extractRunner;
 
         public ArtExplorerWindow()
         {
@@ -29,6 +32,7 @@ namespace W3DT
             InitializeArtList();
 
             UI_AutoLoadPreview_Field.Checked = Program.Settings.AutoShowArtworkPreview;
+            EventManager.FileExtractComplete += OnFileExtractComplete;
         }
 
         private void InitializeArtList()
@@ -50,6 +54,32 @@ namespace W3DT
 
             runner = new RunnerFileExplore(currentID, extensions, GetFilter());
             runner.Begin();
+        }
+
+        private void OnFileExtractComplete(object sender, EventArgs rawArgs)
+        {
+            FileExtractCompleteArgs args = (FileExtractCompleteArgs)rawArgs;
+            if (args.Success)
+            {
+                UI_PreviewStatus.Hide();
+
+                Bitmap bmp;
+                using (var blp = new BlpFile(File.OpenRead(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName))))
+                {
+                    bmp = blp.GetBitmap(0);
+                }
+
+                Graphics gfx = UI_ImagePreview.CreateGraphics();
+                gfx.Clear(UI_ImagePreview.BackColor);
+                gfx.DrawImage(bmp, 0, 0);
+            }
+            else
+            {
+                UI_PreviewStatus.Text = "Error loading image!";
+                UI_PreviewStatus.Show();
+            }
+
+            extractRunner = null;
         }
 
         private void OnFileExploreHit(object sender, EventArgs args)
@@ -146,6 +176,63 @@ namespace W3DT
         {
             Program.Settings.AutoShowArtworkPreview = UI_AutoLoadPreview_Field.Checked;
             Program.Settings.Persist();
+        }
+
+        private void LoadSelectedImage()
+        {
+            TreeNode selected = UI_FileList.SelectedNode;
+
+            if (selected.Tag != null && selected.Tag is CASCFile)
+            {
+                CASCFile file = (CASCFile)selected.Tag;
+                if (extractRunner != null)
+                {
+                    extractRunner.Kill();
+                    extractRunner = null;
+                }
+
+                Graphics gfx = UI_ImagePreview.CreateGraphics();
+                gfx.Clear(UI_ImagePreview.BackColor);
+
+                extractRunner = new RunnerExtractItem(file);
+                extractRunner.Begin();
+
+                UI_PreviewStatus.Text = "Loading...";
+                UI_PreviewStatus.Show();
+            }
+        }
+
+        private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            TreeNode selected = UI_FileList.SelectedNode;
+
+            if (selected != null && selected.Tag is CASCFile)
+            {
+                if (Program.Settings.AutoShowArtworkPreview)
+                {
+                    LoadSelectedImage();
+                }
+                else
+                {
+                    if (extractRunner != null)
+                    {
+                        extractRunner.Kill();
+                        extractRunner = null;
+                    }
+
+                    Graphics gfx = UI_ImagePreview.CreateGraphics();
+                    gfx.Clear(UI_ImagePreview.BackColor);
+
+                    UI_PreviewStatus.Text = "Click to load preview...";
+                    UI_PreviewStatus.Show();
+                }
+            }
+        }
+
+        private void UI_PreviewStatus_Click(object sender, EventArgs e)
+        {
+            if (!Program.Settings.AutoShowArtworkPreview && extractRunner == null)
+                LoadSelectedImage();
         }
     }
 }
