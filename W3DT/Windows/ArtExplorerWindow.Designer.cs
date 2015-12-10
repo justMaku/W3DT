@@ -36,8 +36,11 @@
             this.UI_FilterOverlay = new System.Windows.Forms.Label();
             this.UI_FileList = new System.Windows.Forms.TreeView();
             this.UI_ImagePreview = new System.Windows.Forms.Panel();
-            this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
             this.UI_AutoLoadPreview_Field = new System.Windows.Forms.CheckBox();
+            this.UI_ExportButton = new System.Windows.Forms.Button();
+            this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
+            this.UI_DialogSave = new System.Windows.Forms.SaveFileDialog();
+            this.UI_ImagePreview.SuspendLayout();
             this.SuspendLayout();
             // 
             // UI_FileCount_Label
@@ -98,10 +101,35 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_ImagePreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UI_ImagePreview.Controls.Add(this.UI_ExportButton);
             this.UI_ImagePreview.Location = new System.Drawing.Point(477, 12);
             this.UI_ImagePreview.Name = "UI_ImagePreview";
             this.UI_ImagePreview.Size = new System.Drawing.Size(586, 629);
             this.UI_ImagePreview.TabIndex = 6;
+            // 
+            // UI_AutoLoadPreview_Field
+            // 
+            this.UI_AutoLoadPreview_Field.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_AutoLoadPreview_Field.AutoSize = true;
+            this.UI_AutoLoadPreview_Field.Location = new System.Drawing.Point(876, 661);
+            this.UI_AutoLoadPreview_Field.Name = "UI_AutoLoadPreview_Field";
+            this.UI_AutoLoadPreview_Field.Size = new System.Drawing.Size(187, 17);
+            this.UI_AutoLoadPreview_Field.TabIndex = 8;
+            this.UI_AutoLoadPreview_Field.Text = "Automatically load image previews";
+            this.UI_AutoLoadPreview_Field.UseVisualStyleBackColor = true;
+            this.UI_AutoLoadPreview_Field.CheckedChanged += new System.EventHandler(this.UI_AutoLoadPreview_Field_CheckedChanged);
+            // 
+            // UI_ExportButton
+            // 
+            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ExportButton.Location = new System.Drawing.Point(478, 597);
+            this.UI_ExportButton.Name = "UI_ExportButton";
+            this.UI_ExportButton.Size = new System.Drawing.Size(99, 23);
+            this.UI_ExportButton.TabIndex = 0;
+            this.UI_ExportButton.Text = "Export Image";
+            this.UI_ExportButton.UseVisualStyleBackColor = true;
+            this.UI_ExportButton.Visible = false;
+            this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
             // 
             // UI_PreviewStatus
             // 
@@ -124,17 +152,10 @@
             this.UI_PreviewStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.UI_PreviewStatus.Click += new System.EventHandler(this.UI_PreviewStatus_Click);
             // 
-            // UI_AutoLoadPreview_Field
+            // UI_DialogSave
             // 
-            this.UI_AutoLoadPreview_Field.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_AutoLoadPreview_Field.AutoSize = true;
-            this.UI_AutoLoadPreview_Field.Location = new System.Drawing.Point(876, 661);
-            this.UI_AutoLoadPreview_Field.Name = "UI_AutoLoadPreview_Field";
-            this.UI_AutoLoadPreview_Field.Size = new System.Drawing.Size(187, 17);
-            this.UI_AutoLoadPreview_Field.TabIndex = 8;
-            this.UI_AutoLoadPreview_Field.Text = "Automatically load image previews";
-            this.UI_AutoLoadPreview_Field.UseVisualStyleBackColor = true;
-            this.UI_AutoLoadPreview_Field.CheckedChanged += new System.EventHandler(this.UI_AutoLoadPreview_Field_CheckedChanged);
+            this.UI_DialogSave.Filter = "Bitmap Image (*.bmp)|*.bmp|Portable Networks Graphics (*.png)|*.png|JPEG Image (." +
+    "jpg)|*.jpg";
             // 
             // ArtExplorerWindow
             // 
@@ -153,6 +174,7 @@
             this.Name = "ArtExplorerWindow";
             this.Text = "Artwork Explorer - W3DT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ArtExplorerWindow_FormClosing);
+            this.UI_ImagePreview.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,5 +190,7 @@
         private System.Windows.Forms.Panel UI_ImagePreview;
         private Controls.StaticTextBox UI_PreviewStatus;
         private System.Windows.Forms.CheckBox UI_AutoLoadPreview_Field;
+        private System.Windows.Forms.Button UI_ExportButton;
+        private System.Windows.Forms.SaveFileDialog UI_DialogSave;
     }
 }

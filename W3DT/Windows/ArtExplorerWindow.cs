@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -25,6 +26,9 @@ namespace W3DT
         private RunnerBase runner;
         private bool filterHasChanged = false;
         private RunnerExtractItem extractRunner;
+
+        private string currentImageName;
+        private Bitmap currentImage;
 
         public ArtExplorerWindow()
         {
@@ -59,19 +63,26 @@ namespace W3DT
         private void OnFileExtractComplete(object sender, EventArgs rawArgs)
         {
             FileExtractCompleteArgs args = (FileExtractCompleteArgs)rawArgs;
+            currentImage = null;
+            currentImageName = null;
+
+            UI_ExportButton.Hide();
+
             if (args.Success)
             {
                 UI_PreviewStatus.Hide();
 
-                Bitmap bmp;
                 using (var blp = new BlpFile(File.OpenRead(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName))))
                 {
-                    bmp = blp.GetBitmap(0);
+                    currentImage = blp.GetBitmap(0);
                 }
 
                 Graphics gfx = UI_ImagePreview.CreateGraphics();
                 gfx.Clear(UI_ImagePreview.BackColor);
-                gfx.DrawImage(bmp, 0, 0);
+                gfx.DrawImage(currentImage, 0, 0);
+                UI_ExportButton.Show();
+
+                currentImageName = args.File.Name;
             }
             else
             {
@@ -191,8 +202,7 @@ namespace W3DT
                     extractRunner = null;
                 }
 
-                Graphics gfx = UI_ImagePreview.CreateGraphics();
-                gfx.Clear(UI_ImagePreview.BackColor);
+                ClearImagePreview();
 
                 extractRunner = new RunnerExtractItem(file);
                 extractRunner.Begin();
@@ -220,8 +230,7 @@ namespace W3DT
                         extractRunner = null;
                     }
 
-                    Graphics gfx = UI_ImagePreview.CreateGraphics();
-                    gfx.Clear(UI_ImagePreview.BackColor);
+                    ClearImagePreview();
 
                     UI_PreviewStatus.Text = "Click to load preview...";
                     UI_PreviewStatus.Show();
@@ -229,10 +238,37 @@ namespace W3DT
             }
         }
 
+        private void ClearImagePreview()
+        {
+            Graphics gfx = UI_ImagePreview.CreateGraphics();
+            gfx.Clear(UI_ImagePreview.BackColor);
+            currentImage = null;
+            currentImageName = null;
+            UI_ExportButton.Hide();
+        }
+
         private void UI_PreviewStatus_Click(object sender, EventArgs e)
         {
             if (!Program.Settings.AutoShowArtworkPreview && extractRunner == null)
                 LoadSelectedImage();
+        }
+
+        private void UI_ExportButton_Click(object sender, EventArgs e)
+        {
+            UI_DialogSave.FileName = currentImageName;
+
+            if (UI_DialogSave.ShowDialog() == DialogResult.OK)
+            {
+                ImageFormat format = ImageFormat.Jpeg;
+                string extension = Path.GetExtension(UI_DialogSave.FileName);
+
+                if (extension.EndsWith("png"))
+                    format = ImageFormat.Png;
+                else if (extension.EndsWith("bmp"))
+                    format = ImageFormat.Bmp;
+
+                currentImage.Save(UI_DialogSave.FileName, format);
+            }
         }
     }
 }
