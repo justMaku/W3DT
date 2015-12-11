@@ -35,7 +35,10 @@ namespace W3DT_Updater
                         {
                             // Ensure we don't try to over-write the running executable.
                             if (!entry.FullName.Equals(System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.Name))
-                                entry.ExtractToFile(Path.Combine(Directory.GetCurrentDirectory(), entry.FullName));
+                            {
+                                entry.ExtractToFile(Path.Combine(Directory.GetCurrentDirectory(), entry.FullName), true);
+                                Debug.WriteLine("Extracting: " + entry.FullName);
+                            }
                         }
                     } 
                 }
