@@ -66,7 +66,7 @@ namespace W3DT
                     WoWVersion defaultVersion = Program.Settings.RemoteClientVersion;
 
                     if (defaultVersion != null && defaultVersion.Equals(version))
-                        field.SelectedItem = version;
+                        field.SelectedIndex = field.Items.IndexOf(version);
                 }                
             }
             else
