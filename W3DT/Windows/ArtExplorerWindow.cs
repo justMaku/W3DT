@@ -63,26 +63,13 @@ namespace W3DT
         private void OnFileExtractComplete(object sender, EventArgs rawArgs)
         {
             FileExtractCompleteArgs args = (FileExtractCompleteArgs)rawArgs;
-            currentImage = null;
             currentImageName = null;
 
             UI_ExportButton.Hide();
 
             if (args.Success)
             {
-                UI_PreviewStatus.Hide();
-
-                using (var blp = new BlpFile(File.OpenRead(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName))))
-                {
-                    currentImage = blp.GetBitmap(0);
-                }
-
-                Graphics gfx = UI_ImagePreview.CreateGraphics();
-                gfx.Clear(UI_ImagePreview.BackColor);
-                gfx.DrawImage(currentImage, 0, 0);
-                UI_ExportButton.Show();
-
-                currentImageName = args.File.Name;
+                displayImage(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName));
             }
             else
             {
@@ -91,6 +78,20 @@ namespace W3DT
             }
 
             extractRunner = null;
+        }
+
+        private void displayImage(string file)
+        {
+            currentImage = null;
+            UI_PreviewStatus.Hide();
+
+            using (var blp = new BlpFile(File.OpenRead(file)))
+                currentImage = blp.GetBitmap(0);
+
+            Graphics gfx = UI_ImagePreview.CreateGraphics();
+            gfx.Clear(UI_ImagePreview.BackColor);
+            gfx.DrawImage(currentImage, 0, 0);
+            UI_ExportButton.Show();
         }
 
         private void OnFileExploreHit(object sender, EventArgs args)
@@ -204,11 +205,19 @@ namespace W3DT
 
                 ClearImagePreview();
 
-                extractRunner = new RunnerExtractItem(file);
-                extractRunner.Begin();
-
                 UI_PreviewStatus.Text = "Loading...";
                 UI_PreviewStatus.Show();
+
+                string fullPath = Path.Combine(Constants.TEMP_DIRECTORY, file.FullName);
+                if (File.Exists(fullPath))
+                {
+                    displayImage(fullPath);
+                }
+                else
+                {
+                    extractRunner = new RunnerExtractItem(file);
+                    extractRunner.Begin();
+                }
             }
         }
 
