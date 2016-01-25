@@ -24,7 +24,7 @@ namespace W3DT
             new WoWVersion("wowt", "PTR (In Development)")
         };
 
-        public static readonly WoWVersion DEFAULT_VERSION = WOW_VERSIONS[0];
+        //public static readonly WoWVersion DEFAULT_VERSION = WOW_VERSIONS[0];
 
         // Base Stuff //
         public static readonly string LOAD_FLAVOR_FILE = "load_flavor";

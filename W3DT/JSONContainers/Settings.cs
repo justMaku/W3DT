@@ -31,7 +31,7 @@ namespace W3DT.JSONContainers
             WoWDirectory = null;
             RemoteHost = null;
             RemoteHostPath = null;
-            RemoteClientVersion = Constants.DEFAULT_VERSION;
+            RemoteClientVersion = new WoWVersion("wow", "Live (Retail)");
             SoundPlayerVolume = 100;
             FileLocale = Locale.Default.ID;
             AllowMultipleSoundPlayers = false;

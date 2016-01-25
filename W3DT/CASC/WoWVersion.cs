@@ -22,5 +22,10 @@ namespace W3DT.CASC
         {
             return Title;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is WoWVersion && ((WoWVersion)obj).Title.Equals(Title);
+        }
     }
 }
