@@ -92,6 +92,8 @@ namespace W3DT
             gfx.Clear(UI_ImagePreview.BackColor);
             gfx.DrawImage(currentImage, 0, 0);
             UI_ExportButton.Show();
+
+            currentImageName = file;
         }
 
         private void OnFileExploreHit(object sender, EventArgs args)
@@ -264,7 +266,7 @@ namespace W3DT
 
         private void UI_ExportButton_Click(object sender, EventArgs e)
         {
-            UI_DialogSave.FileName = currentImageName;
+            UI_DialogSave.FileName = Path.GetFileNameWithoutExtension(currentImageName);
 
             if (UI_DialogSave.ShowDialog() == DialogResult.OK)
             {
@@ -277,6 +279,16 @@ namespace W3DT
                     format = ImageFormat.Bmp;
 
                 currentImage.Save(UI_DialogSave.FileName, format);
+            }
+        }
+
+        private void ArtExplorerWindow_ResizeEnd(object sender, EventArgs e)
+        {
+            if (currentImage != null)
+            {
+                Graphics gfx = UI_ImagePreview.CreateGraphics();
+                gfx.Clear(UI_ImagePreview.BackColor);
+                gfx.DrawImage(currentImage, 0, 0);
             }
         }
     }

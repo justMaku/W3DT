@@ -36,10 +36,10 @@
             this.UI_FilterOverlay = new System.Windows.Forms.Label();
             this.UI_FileList = new System.Windows.Forms.TreeView();
             this.UI_ImagePreview = new System.Windows.Forms.Panel();
-            this.UI_AutoLoadPreview_Field = new System.Windows.Forms.CheckBox();
             this.UI_ExportButton = new System.Windows.Forms.Button();
-            this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
+            this.UI_AutoLoadPreview_Field = new System.Windows.Forms.CheckBox();
             this.UI_DialogSave = new System.Windows.Forms.SaveFileDialog();
+            this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
             this.UI_ImagePreview.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -107,6 +107,18 @@
             this.UI_ImagePreview.Size = new System.Drawing.Size(586, 629);
             this.UI_ImagePreview.TabIndex = 6;
             // 
+            // UI_ExportButton
+            // 
+            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ExportButton.Location = new System.Drawing.Point(478, 597);
+            this.UI_ExportButton.Name = "UI_ExportButton";
+            this.UI_ExportButton.Size = new System.Drawing.Size(99, 23);
+            this.UI_ExportButton.TabIndex = 0;
+            this.UI_ExportButton.Text = "Export Image";
+            this.UI_ExportButton.UseVisualStyleBackColor = true;
+            this.UI_ExportButton.Visible = false;
+            this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
+            // 
             // UI_AutoLoadPreview_Field
             // 
             this.UI_AutoLoadPreview_Field.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -119,17 +131,10 @@
             this.UI_AutoLoadPreview_Field.UseVisualStyleBackColor = true;
             this.UI_AutoLoadPreview_Field.CheckedChanged += new System.EventHandler(this.UI_AutoLoadPreview_Field_CheckedChanged);
             // 
-            // UI_ExportButton
+            // UI_DialogSave
             // 
-            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_ExportButton.Location = new System.Drawing.Point(478, 597);
-            this.UI_ExportButton.Name = "UI_ExportButton";
-            this.UI_ExportButton.Size = new System.Drawing.Size(99, 23);
-            this.UI_ExportButton.TabIndex = 0;
-            this.UI_ExportButton.Text = "Export Image";
-            this.UI_ExportButton.UseVisualStyleBackColor = true;
-            this.UI_ExportButton.Visible = false;
-            this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
+            this.UI_DialogSave.Filter = "Bitmap Image (*.bmp)|*.bmp|Portable Networks Graphics (*.png)|*.png|JPEG Image (." +
+    "jpg)|*.jpg";
             // 
             // UI_PreviewStatus
             // 
@@ -152,11 +157,6 @@
             this.UI_PreviewStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.UI_PreviewStatus.Click += new System.EventHandler(this.UI_PreviewStatus_Click);
             // 
-            // UI_DialogSave
-            // 
-            this.UI_DialogSave.Filter = "Bitmap Image (*.bmp)|*.bmp|Portable Networks Graphics (*.png)|*.png|JPEG Image (." +
-    "jpg)|*.jpg";
-            // 
             // ArtExplorerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,6 +174,7 @@
             this.Name = "ArtExplorerWindow";
             this.Text = "Artwork Explorer - W3DT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ArtExplorerWindow_FormClosing);
+            this.ResizeEnd += new System.EventHandler(this.ArtExplorerWindow_ResizeEnd);
             this.UI_ImagePreview.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
