@@ -46,7 +46,7 @@ namespace W3DT
             {
                 UI_FileLocale_Field.Items.Add(locale);
                 if (locale.ID.Equals(userLocale.ID))
-                    UI_FileLocale_Field.SelectedItem = locale;
+                    UI_FileLocale_Field.SelectedIndex = UI_FileLocale_Field.Items.IndexOf(locale);
             }
         }
 
