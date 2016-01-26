@@ -42,11 +42,13 @@
             this.UI_SecText_Sound = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Maps = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Settings = new W3DT.Controls.StaticTextBox();
-            this.textBox1 = new W3DT.Controls.StaticTextBox();
+            this.UI_SecText_Artwork = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Spellbook = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Doodads = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_WMO = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Players = new W3DT.Controls.StaticTextBox();
+            this.UI_SecBtn_DBC = new System.Windows.Forms.Button();
+            this.UI_SecText_DBC = new W3DT.Controls.StaticTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SponserBlock2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SponserBlock1)).BeginInit();
             this.SuspendLayout();
@@ -126,7 +128,7 @@
             // UI_SecBtn_Settings
             // 
             this.UI_SecBtn_Settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UI_SecBtn_Settings.Location = new System.Drawing.Point(12, 362);
+            this.UI_SecBtn_Settings.Location = new System.Drawing.Point(12, 412);
             this.UI_SecBtn_Settings.Name = "UI_SecBtn_Settings";
             this.UI_SecBtn_Settings.Size = new System.Drawing.Size(257, 44);
             this.UI_SecBtn_Settings.TabIndex = 8;
@@ -141,7 +143,7 @@
             this.UI_SponserBlock2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.UI_SponserBlock2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.UI_SponserBlock2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.UI_SponserBlock2.Location = new System.Drawing.Point(413, 430);
+            this.UI_SponserBlock2.Location = new System.Drawing.Point(413, 476);
             this.UI_SponserBlock2.Name = "UI_SponserBlock2";
             this.UI_SponserBlock2.Size = new System.Drawing.Size(389, 80);
             this.UI_SponserBlock2.TabIndex = 3;
@@ -156,7 +158,7 @@
             this.UI_SponserBlock1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.UI_SponserBlock1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.UI_SponserBlock1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.UI_SponserBlock1.Location = new System.Drawing.Point(12, 430);
+            this.UI_SponserBlock1.Location = new System.Drawing.Point(12, 476);
             this.UI_SponserBlock1.Name = "UI_SponserBlock1";
             this.UI_SponserBlock1.Size = new System.Drawing.Size(389, 80);
             this.UI_SponserBlock1.TabIndex = 3;
@@ -169,6 +171,7 @@
             this.UI_SecText_Sound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Sound.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_Sound.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_SecText_Sound.Location = new System.Drawing.Point(275, 227);
             this.UI_SecText_Sound.Multiline = true;
             this.UI_SecText_Sound.Name = "UI_SecText_Sound";
@@ -184,6 +187,7 @@
             this.UI_SecText_Maps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Maps.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_Maps.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_SecText_Maps.Location = new System.Drawing.Point(275, 171);
             this.UI_SecText_Maps.Multiline = true;
             this.UI_SecText_Maps.Name = "UI_SecText_Maps";
@@ -200,7 +204,8 @@
             this.UI_SecText_Settings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Settings.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.UI_SecText_Settings.Location = new System.Drawing.Point(275, 378);
+            this.UI_SecText_Settings.Cursor = System.Windows.Forms.Cursors.Default;
+            this.UI_SecText_Settings.Location = new System.Drawing.Point(275, 428);
             this.UI_SecText_Settings.Multiline = true;
             this.UI_SecText_Settings.Name = "UI_SecText_Settings";
             this.UI_SecText_Settings.ReadOnly = true;
@@ -209,19 +214,20 @@
             this.UI_SecText_Settings.TabStop = false;
             this.UI_SecText_Settings.Text = "Configure W3DT to your liking!";
             // 
-            // textBox1
+            // UI_SecText_Artwork
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.UI_SecText_Artwork.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(275, 321);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(527, 29);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.TabStop = false;
-            this.textBox1.Text = "View all textures and interface art used within World of Warcraft, allowing conve" +
+            this.UI_SecText_Artwork.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_Artwork.Cursor = System.Windows.Forms.Cursors.Default;
+            this.UI_SecText_Artwork.Location = new System.Drawing.Point(275, 321);
+            this.UI_SecText_Artwork.Multiline = true;
+            this.UI_SecText_Artwork.Name = "UI_SecText_Artwork";
+            this.UI_SecText_Artwork.ReadOnly = true;
+            this.UI_SecText_Artwork.Size = new System.Drawing.Size(527, 29);
+            this.UI_SecText_Artwork.TabIndex = 2;
+            this.UI_SecText_Artwork.TabStop = false;
+            this.UI_SecText_Artwork.Text = "View all textures and interface art used within World of Warcraft, allowing conve" +
     "rsion and exportation to various file formats.";
             // 
             // UI_SecText_Spellbook
@@ -229,6 +235,7 @@
             this.UI_SecText_Spellbook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Spellbook.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_Spellbook.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_SecText_Spellbook.Location = new System.Drawing.Point(275, 277);
             this.UI_SecText_Spellbook.Multiline = true;
             this.UI_SecText_Spellbook.Name = "UI_SecText_Spellbook";
@@ -243,6 +250,7 @@
             this.UI_SecText_Doodads.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Doodads.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_Doodads.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_SecText_Doodads.Location = new System.Drawing.Point(275, 121);
             this.UI_SecText_Doodads.Multiline = true;
             this.UI_SecText_Doodads.Name = "UI_SecText_Doodads";
@@ -257,6 +265,7 @@
             this.UI_SecText_WMO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_WMO.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_WMO.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_SecText_WMO.Location = new System.Drawing.Point(275, 71);
             this.UI_SecText_WMO.Multiline = true;
             this.UI_SecText_WMO.Name = "UI_SecText_WMO";
@@ -271,6 +280,7 @@
             this.UI_SecText_Players.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_SecText_Players.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_Players.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_SecText_Players.Location = new System.Drawing.Point(275, 21);
             this.UI_SecText_Players.Multiline = true;
             this.UI_SecText_Players.Name = "UI_SecText_Players";
@@ -280,17 +290,46 @@
             this.UI_SecText_Players.TabStop = false;
             this.UI_SecText_Players.Text = resources.GetString("UI_SecText_Players.Text");
             // 
+            // UI_SecBtn_DBC
+            // 
+            this.UI_SecBtn_DBC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_SecBtn_DBC.Location = new System.Drawing.Point(12, 362);
+            this.UI_SecBtn_DBC.Name = "UI_SecBtn_DBC";
+            this.UI_SecBtn_DBC.Size = new System.Drawing.Size(257, 44);
+            this.UI_SecBtn_DBC.TabIndex = 7;
+            this.UI_SecBtn_DBC.Text = "DBC Viewer";
+            this.UI_SecBtn_DBC.UseVisualStyleBackColor = true;
+            this.UI_SecBtn_DBC.Click += new System.EventHandler(this.UI_SecBtn_Artwork_Click);
+            // 
+            // UI_SecText_DBC
+            // 
+            this.UI_SecText_DBC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_SecText_DBC.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_DBC.Cursor = System.Windows.Forms.Cursors.Default;
+            this.UI_SecText_DBC.Location = new System.Drawing.Point(275, 371);
+            this.UI_SecText_DBC.Multiline = true;
+            this.UI_SecText_DBC.Name = "UI_SecText_DBC";
+            this.UI_SecText_DBC.ReadOnly = true;
+            this.UI_SecText_DBC.Size = new System.Drawing.Size(527, 29);
+            this.UI_SecText_DBC.TabIndex = 2;
+            this.UI_SecText_DBC.TabStop = false;
+            this.UI_SecText_DBC.Text = "DBC files act as small databases containing various tables of data used by the ga" +
+    "me client. This tool allows you to explore those and export the data from within" +
+    "!";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(814, 521);
+            this.ClientSize = new System.Drawing.Size(814, 567);
             this.Controls.Add(this.UI_SponserBlock2);
             this.Controls.Add(this.UI_SponserBlock1);
             this.Controls.Add(this.UI_SecText_Sound);
             this.Controls.Add(this.UI_SecText_Maps);
             this.Controls.Add(this.UI_SecText_Settings);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.UI_SecText_DBC);
+            this.Controls.Add(this.UI_SecText_Artwork);
             this.Controls.Add(this.UI_SecText_Spellbook);
             this.Controls.Add(this.UI_SecText_Doodads);
             this.Controls.Add(this.UI_SecText_WMO);
@@ -298,13 +337,14 @@
             this.Controls.Add(this.UI_SecBtn_Sound);
             this.Controls.Add(this.UI_SecBtn_Maps);
             this.Controls.Add(this.UI_SecBtn_Settings);
+            this.Controls.Add(this.UI_SecBtn_DBC);
             this.Controls.Add(this.UI_SecBtn_Artwork);
             this.Controls.Add(this.UI_SecBtn_SpellBook);
             this.Controls.Add(this.UI_SecBtn_Doodads);
             this.Controls.Add(this.UI_SecBtn_WMO);
             this.Controls.Add(this.UI_SecBtn_Models);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(830, 559);
+            this.MaximumSize = new System.Drawing.Size(830, 605);
             this.MinimumSize = new System.Drawing.Size(830, 559);
             this.Name = "MainForm";
             this.Text = "Warcraft 3D Toolkit";
@@ -330,10 +370,12 @@
         private System.Windows.Forms.Button UI_SecBtn_Sound;
         private W3DT.Controls.StaticTextBox UI_SecText_Sound;
         private System.Windows.Forms.Button UI_SecBtn_Artwork;
-        private W3DT.Controls.StaticTextBox textBox1;
+        private W3DT.Controls.StaticTextBox UI_SecText_Artwork;
         private System.Windows.Forms.PictureBox UI_SponserBlock1;
         private System.Windows.Forms.PictureBox UI_SponserBlock2;
         private System.Windows.Forms.Button UI_SecBtn_Settings;
         private W3DT.Controls.StaticTextBox UI_SecText_Settings;
+        private System.Windows.Forms.Button UI_SecBtn_DBC;
+        private Controls.StaticTextBox UI_SecText_DBC;
     }
 }
