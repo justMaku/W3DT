@@ -39,7 +39,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.UI_FileList.Location = new System.Drawing.Point(12, 12);
             this.UI_FileList.Name = "UI_FileList";
-            this.UI_FileList.Size = new System.Drawing.Size(195, 547);
+            this.UI_FileList.Size = new System.Drawing.Size(227, 547);
             this.UI_FileList.TabIndex = 0;
             // 
             // UI_FilesFound
