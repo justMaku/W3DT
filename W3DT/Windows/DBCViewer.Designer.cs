@@ -43,6 +43,7 @@
             this.UI_FileList.Name = "UI_FileList";
             this.UI_FileList.Size = new System.Drawing.Size(227, 547);
             this.UI_FileList.TabIndex = 0;
+            this.UI_FileList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.UI_FileList_AfterSelect);
             // 
             // UI_FilesFound
             // 

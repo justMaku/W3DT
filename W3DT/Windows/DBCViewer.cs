@@ -10,6 +10,7 @@ using System.IO;
 using W3DT.Events;
 using W3DT.Runners;
 using W3DT.CASC;
+using W3DT.Formats;
 
 namespace W3DT
 {
@@ -19,12 +20,14 @@ namespace W3DT
         private static readonly string[] EXTENSIONS = new string[] { "dbc" };
 
         private string currentScanID = null;
-        private string saveTargetPath = null;
         private CASCFile selectedFile = null;
+        private DBCFile selectedDbcFile = null;
         private int scanIndex = 0;
         private int found = 0;
+
         private RunnerBase runner;
         private RunnerExtractItem extractRunner;
+        private LoadingWindow loadingWindow;
 
         public DBCViewer()
         {
@@ -55,17 +58,23 @@ namespace W3DT
             runner.Begin();
         }
 
+        private void ShowDBCFile(string path)
+        {
+            selectedDbcFile = new DBCFile(path);
+        }
+
         private void OnFileExtractComplete(object sender, EventArgs rawArgs)
         {
             FileExtractCompleteArgs args = (FileExtractCompleteArgs)rawArgs;
+            extractRunner = null;
+
+            loadingWindow.Close();
+            loadingWindow = null;
 
             if (args.Success)
-                File.Copy(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName), saveTargetPath);
+                ShowDBCFile(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName));
             else
-                MessageBox.Show("Unable to export file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            extractRunner = null;
-            saveTargetPath = null;
+                throw new Exception("Unable to extract DBC file -> " + args.File.FullName);
         }
 
         private void OnFileExploreDone(object sender, EventArgs args)
@@ -98,36 +107,43 @@ namespace W3DT
 
         private void UI_ExportButton_Click(object sender, EventArgs e)
         {
-            if (UI_FileList.SelectedNode != null && UI_FileList.SelectedNode.Tag is CASCFile)
+            if (selectedDbcFile != null)
             {
-                CASCFile file = (CASCFile)UI_FileList.SelectedNode.Tag;
-                UI_SaveDialog.FileName = file.Name;
-                saveTargetPath = null;
-
-                if (extractRunner != null)
-                {
-                    extractRunner.Kill();
-                    extractRunner = null;
-                }
-
+                UI_SaveDialog.FileName = selectedFile.Name;
                 if (UI_SaveDialog.ShowDialog() == DialogResult.OK)
                 {
                     string extension = Path.GetExtension(UI_SaveDialog.FileName);
 
                     if (extension.EndsWith("dbc"))
-                    {
-                        string fullPath = Path.Combine(Constants.TEMP_DIRECTORY, file.FullName);
-                        if (File.Exists(fullPath))
-                        {
-                            File.Copy(fullPath, UI_SaveDialog.FileName);
-                        }
-                        else
-                        {
-                            saveTargetPath = UI_SaveDialog.FileName;
-                            extractRunner = new RunnerExtractItem(file);
-                            extractRunner.Begin();
-                        }
-                    }
+                        selectedDbcFile.writeToFile(UI_SaveDialog.FileName);
+                    else
+                        MessageBox.Show("Unable to save, unsupported format!", "No can do, Captain!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (UI_FileList.SelectedNode != null && UI_FileList.SelectedNode.Tag is CASCFile)
+            {
+                selectedFile = null;
+                selectedDbcFile = null;
+
+                CASCFile cascFile = (CASCFile)UI_FileList.SelectedNode.Tag;
+                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, cascFile.FullName);
+                selectedFile = cascFile;
+
+                if (!File.Exists(tempPath))
+                {
+                    extractRunner = new RunnerExtractItem(cascFile);
+                    extractRunner.Begin();
+
+                    loadingWindow = new LoadingWindow("Loading DBC file: " + cascFile.Name, "Life advice: Avoid dragon's breath.");
+                    loadingWindow.ShowDialog();
+                }
+                else
+                {
+                    ShowDBCFile(tempPath);
                 }
             }
         }

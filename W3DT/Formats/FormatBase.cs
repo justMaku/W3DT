@@ -6,7 +6,7 @@ using System.IO;
 
 namespace W3DT.Formats
 {
-    class FormatBase
+    public class FormatBase
     {
         private byte[] data;
         private int seek = 0;
@@ -168,6 +168,12 @@ namespace W3DT.Formats
                 outBytes[i] = data[seek + i];
 
             return outBytes;
+        }
+
+        public void writeToFile(string file)
+        {
+            using (FileStream stream = new FileStream(file, FileMode.Create, FileAccess.Write))
+                stream.Write(data, 0, data.Length);
         }
     }
 }
