@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DBCViewer));
             this.UI_FileList = new System.Windows.Forms.TreeView();
             this.UI_FilesFound = new System.Windows.Forms.Label();
+            this.UI_ExportButton = new System.Windows.Forms.Button();
+            this.UI_SaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // UI_FileList
@@ -54,11 +56,26 @@
             this.UI_FilesFound.TabIndex = 1;
             this.UI_FilesFound.Text = "0 Files Found (Searching: 0%)";
             // 
+            // UI_ExportButton
+            // 
+            this.UI_ExportButton.Location = new System.Drawing.Point(706, 570);
+            this.UI_ExportButton.Name = "UI_ExportButton";
+            this.UI_ExportButton.Size = new System.Drawing.Size(114, 23);
+            this.UI_ExportButton.TabIndex = 2;
+            this.UI_ExportButton.Text = "Export selected file";
+            this.UI_ExportButton.UseVisualStyleBackColor = true;
+            this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
+            // 
+            // UI_SaveDialog
+            // 
+            this.UI_SaveDialog.Filter = "Client Database File (*.dbc)|*.dbc";
+            // 
             // DBCViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 605);
+            this.Controls.Add(this.UI_ExportButton);
             this.Controls.Add(this.UI_FilesFound);
             this.Controls.Add(this.UI_FileList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -73,5 +90,7 @@
 
         private System.Windows.Forms.TreeView UI_FileList;
         private System.Windows.Forms.Label UI_FilesFound;
+        private System.Windows.Forms.Button UI_ExportButton;
+        private System.Windows.Forms.SaveFileDialog UI_SaveDialog;
     }
 }
