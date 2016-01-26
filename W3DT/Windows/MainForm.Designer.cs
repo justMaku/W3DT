@@ -299,7 +299,7 @@
             this.UI_SecBtn_DBC.TabIndex = 7;
             this.UI_SecBtn_DBC.Text = "DBC Viewer";
             this.UI_SecBtn_DBC.UseVisualStyleBackColor = true;
-            this.UI_SecBtn_DBC.Click += new System.EventHandler(this.UI_SecBtn_Artwork_Click);
+            this.UI_SecBtn_DBC.Click += new System.EventHandler(this.UI_SecBtn_DBC_Click);
             // 
             // UI_SecText_DBC
             // 

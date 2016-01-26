@@ -68,5 +68,10 @@ namespace W3DT
             if (sender is PictureBox)
                 Process.Start((string)((PictureBox)sender).Tag);
         }
+
+        private void UI_SecBtn_DBC_Click(object sender, EventArgs e)
+        {
+            ShowWindow(typeof(DBCViewer));
+        }
     }
 }

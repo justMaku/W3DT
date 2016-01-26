@@ -113,6 +113,12 @@
     <Compile Include="Windows\ArtExplorerWindow.Designer.cs">
       <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\DBCViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DBCViewer.Designer.cs">
+      <DependentUpon>DBCViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoadingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -198,6 +204,9 @@
     </Compile>
     <EmbeddedResource Include="Windows\ArtExplorerWindow.resx">
       <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DBCViewer.resx">
+      <DependentUpon>DBCViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\LoadingWindow.resx">
       <DependentUpon>LoadingWindow.cs</DependentUpon>
