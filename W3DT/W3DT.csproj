@@ -129,6 +129,7 @@
     <Compile Include="Windows\DBCViewer.Designer.cs">
       <DependentUpon>DBCViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Explorer.cs" />
     <Compile Include="Windows\LoadingWindow.cs">
       <SubType>Form</SubType>
     </Compile>

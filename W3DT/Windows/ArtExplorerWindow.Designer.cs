@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArtExplorerWindow));
             this.UI_FileCount_Label = new System.Windows.Forms.Label();
             this.UI_FilterField = new System.Windows.Forms.TextBox();
-            this.UI_FilterCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_FilterOverlay = new System.Windows.Forms.Label();
             this.UI_FileList = new System.Windows.Forms.TreeView();
             this.UI_ImagePreview = new System.Windows.Forms.Panel();
@@ -40,6 +39,7 @@
             this.UI_AutoLoadPreview_Field = new System.Windows.Forms.CheckBox();
             this.UI_DialogSave = new System.Windows.Forms.SaveFileDialog();
             this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
+            this.UI_FilterTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_ImagePreview.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,13 +62,6 @@
             this.UI_FilterField.Name = "UI_FilterField";
             this.UI_FilterField.Size = new System.Drawing.Size(238, 31);
             this.UI_FilterField.TabIndex = 2;
-            this.UI_FilterField.TextChanged += new System.EventHandler(this.UI_FilterField_TextChanged);
-            // 
-            // UI_FilterCheckTimer
-            // 
-            this.UI_FilterCheckTimer.Enabled = true;
-            this.UI_FilterCheckTimer.Interval = 1000;
-            this.UI_FilterCheckTimer.Tick += new System.EventHandler(this.UI_FilterCheckTimer_Tick);
             // 
             // UI_FilterOverlay
             // 
@@ -83,7 +76,6 @@
             this.UI_FilterOverlay.Size = new System.Drawing.Size(135, 25);
             this.UI_FilterOverlay.TabIndex = 3;
             this.UI_FilterOverlay.Text = "Enter Filter...";
-            this.UI_FilterOverlay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_FilterOverlay_MouseUp);
             // 
             // UI_FileList
             // 
@@ -157,6 +149,10 @@
             this.UI_PreviewStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.UI_PreviewStatus.Click += new System.EventHandler(this.UI_PreviewStatus_Click);
             // 
+            // UI_FilterTimer
+            // 
+            this.UI_FilterTimer.Interval = 1000;
+            // 
             // ArtExplorerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -185,7 +181,6 @@
 
         private System.Windows.Forms.Label UI_FileCount_Label;
         private System.Windows.Forms.TextBox UI_FilterField;
-        private System.Windows.Forms.Timer UI_FilterCheckTimer;
         private System.Windows.Forms.Label UI_FilterOverlay;
         private System.Windows.Forms.TreeView UI_FileList;
         private System.Windows.Forms.Panel UI_ImagePreview;
@@ -193,5 +188,6 @@
         private System.Windows.Forms.CheckBox UI_AutoLoadPreview_Field;
         private System.Windows.Forms.Button UI_ExportButton;
         private System.Windows.Forms.SaveFileDialog UI_DialogSave;
+        private System.Windows.Forms.Timer UI_FilterTimer;
     }
 }

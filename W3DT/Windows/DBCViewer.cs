@@ -16,46 +16,20 @@ namespace W3DT
 {
     public partial class DBCViewer : Form
     {
-        private static readonly string RUNNER_ID = "DBC_SCAN_{0}";
-        private static readonly string[] EXTENSIONS = new string[] { "dbc" };
-
-        private string currentScanID = null;
         private CASCFile selectedFile = null;
         private DBCFile selectedDbcFile = null;
-        private int scanIndex = 0;
-        private int found = 0;
 
-        private RunnerBase runner;
         private RunnerExtractItem extractRunner;
         private LoadingWindow loadingWindow;
+
+        private Explorer explorer;
 
         public DBCViewer()
         {
             InitializeComponent();
-            InitializeDBCList();
+            explorer = new Explorer(this, null, null, null, UI_FilesFound, UI_FileList, new string[] { "dbc" }, "DBC_SCAN_{0}", false);
 
             EventManager.FileExtractComplete += OnFileExtractComplete;
-        }
-
-        private void InitializeDBCList()
-        {
-            UI_FileList.Nodes.Clear();
-
-            if (!Program.IsCASCReady())
-                return;
-
-            found = 0;
-
-            EventManager.FileExploreHit += OnFileExploreHit;
-            EventManager.FileExploreDone += OnFileExploreDone;
-
-            UI_FilesFound.Text = string.Format(Constants.GENERIC_WINDOW_SEARCH_STATE, 0, "Preparing...");
-
-            scanIndex++;
-            currentScanID = string.Format(RUNNER_ID, scanIndex);
-
-            runner = new RunnerFileExplore(currentScanID, EXTENSIONS, null);
-            runner.Begin();
         }
 
         private void ShowDBCFile(string path)
@@ -88,34 +62,6 @@ namespace W3DT
                 ShowDBCFile(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName));
             else
                 throw new Exception("Unable to extract DBC file -> " + args.File.FullName);
-        }
-
-        private void OnFileExploreDone(object sender, EventArgs args)
-        {
-            if (((FileExploreDoneArgs)args).ID.Equals(currentScanID))
-            {
-                EventManager.FileExploreDone -= OnFileExploreDone;
-                EventManager.FileExploreHit -= OnFileExploreHit;
-                runner = null;
-
-                UI_FilesFound.Text = string.Format(Constants.GENERIC_WINDOW_SEARCH_STATE, found, "Done");
-            }
-        }
-
-        private void OnFileExploreHit(object sender, EventArgs args)
-        {
-            FileExploreHitArgs fileArgs = (FileExploreHitArgs)args;
-
-            if (fileArgs.ID.Equals(currentScanID))
-            {
-                found++;
-
-                TreeNode newNode = new TreeNode(fileArgs.Entry.Name);
-                newNode.Tag = fileArgs.Entry;
-                UI_FileList.Nodes.Add(newNode);
-
-                UI_FilesFound.Text = string.Format(Constants.GENERIC_WINDOW_SEARCH_STATE, found, "Searching...");
-            }
         }
 
         private void UI_ExportButton_Click(object sender, EventArgs e)

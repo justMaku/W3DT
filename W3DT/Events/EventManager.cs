@@ -202,8 +202,14 @@ namespace W3DT.Events
                 try
                 {
                     var capture = listener;
-                    var syncObject = (ISynchronizeInvoke)listener.Target;
-                    syncObject.Invoke(
+                    ISynchronizeInvoke sync;
+
+                    if (listener.Target is Explorer)
+                        sync = (ISynchronizeInvoke)((Explorer)listener.Target).target;
+                    else
+                        sync = (ISynchronizeInvoke)listener.Target;
+
+                    sync.Invoke(
                         (Action)(() =>
                             {
                                 capture(null, args);
@@ -219,7 +225,7 @@ namespace W3DT.Events
 
         private static void TargetCheck(object target)
         {
-            if (!(target is ISynchronizeInvoke))
+            if (!(target is ISynchronizeInvoke) && !(target is Explorer))
                 throw new ArgumentException();
         }
     }

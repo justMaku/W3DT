@@ -8,27 +8,28 @@ using System.Text;
 using System.Windows.Forms;
 using SharpGL;
 using W3DT._3D;
+using W3DT.Runners;
+using W3DT.Events;
 
 namespace W3DT
 {
-    /// <summary>
-    /// The main form class.
-    /// </summary>
     public partial class WMOViewer : Form
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WMOViewer"/> class.
-        /// </summary>
+        private static readonly string RUNNER_ID = "WMO_V_{0}";
+        private static readonly string[] extensions = new string[] { "wmo" };
+
+        private bool filterHasChanged = false;
+        private int currentScan = 0;
+        private int found = 0;
+
+        private RunnerBase runner;
+
         public WMOViewer()
         {
             InitializeComponent();
+            //InitializeWMOList();
         }
 
-        /// <summary>
-        /// Handles the OpenGLDraw event of the openGLControl control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RenderEventArgs"/> instance containing the event data.</param>
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;
@@ -43,13 +44,6 @@ namespace W3DT
             rotation += 3.0f;
         }
 
-
-
-        /// <summary>
-        /// Handles the OpenGLInitialized event of the openGLControl control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void openGLControl_OpenGLInitialized(object sender, EventArgs e)
         {
             //  TODO: Initialise OpenGL here.
@@ -62,11 +56,6 @@ namespace W3DT
             gl.ClearColor(0, 0, 0, 0);
         }
 
-        /// <summary>
-        /// Handles the Resized event of the openGLControl control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void openGLControl_Resized(object sender, EventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;

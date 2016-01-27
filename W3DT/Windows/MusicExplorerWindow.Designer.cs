@@ -57,13 +57,11 @@
             this.UI_FilterField.Name = "UI_FilterField";
             this.UI_FilterField.Size = new System.Drawing.Size(238, 31);
             this.UI_FilterField.TabIndex = 2;
-            this.UI_FilterField.TextChanged += new System.EventHandler(this.UI_FilterField_TextChanged);
             // 
             // UI_FilterCheckTimer
             // 
             this.UI_FilterCheckTimer.Enabled = true;
             this.UI_FilterCheckTimer.Interval = 1000;
-            this.UI_FilterCheckTimer.Tick += new System.EventHandler(this.UI_FilterCheckTimer_Tick);
             // 
             // UI_FilterOverlay
             // 
@@ -78,7 +76,6 @@
             this.UI_FilterOverlay.Size = new System.Drawing.Size(135, 25);
             this.UI_FilterOverlay.TabIndex = 3;
             this.UI_FilterOverlay.Text = "Enter Filter...";
-            this.UI_FilterOverlay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_FilterOverlay_MouseUp);
             // 
             // UI_MultiWindows_Field
             // 
