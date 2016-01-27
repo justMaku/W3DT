@@ -6,7 +6,7 @@ using SharpGL;
 
 namespace W3DT._3D
 {
-    class Cube
+    class Cube : _3DObject
     {
         public Cube(float r, float g, float b)
         {
@@ -15,7 +15,7 @@ namespace W3DT._3D
             B = b;
         }
 
-        public void Draw(OpenGL gl)
+        public override void Draw(OpenGL gl)
         {
             gl.Color(R, G, B);
 
