@@ -9,6 +9,7 @@ namespace W3DT.Formats.WMO
     {
         protected WMOFile file;
         protected string chunkName;
+        private static string LOG_PREFIX = "WMO: [{0}] ";
 
         public UInt32 ChunkSize { get; private set; }
         public UInt32 ChunkID { get; protected set; }
@@ -22,9 +23,14 @@ namespace W3DT.Formats.WMO
             ChunkSize = file.readUInt32();
         }
 
+        protected string GetLogPrefix()
+        {
+            return string.Format(LOG_PREFIX, chunkName);
+        }
+
         protected void LogWrite(string message)
         {
-            Log.Write("WMO: [{0}] {1}", chunkName, message);
+            Log.Write(GetLogPrefix() + message);
         }
 
         protected void LogValue(string key, object value)
