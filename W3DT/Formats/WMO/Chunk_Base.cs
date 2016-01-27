@@ -26,5 +26,10 @@ namespace W3DT.Formats.WMO
         {
             Log.Write("WMO: [{0}] {1}", chunkName, message);
         }
+
+        protected void LogValue(string key, object value)
+        {
+            LogWrite(string.Format("{0} -> {1}", key, value.ToString()));
+        }
     }
 }
