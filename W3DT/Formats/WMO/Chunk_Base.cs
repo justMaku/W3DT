@@ -5,7 +5,7 @@ using System.Text;
 
 namespace W3DT.Formats.WMO
 {
-    abstract public class Chunk_Base
+    public class Chunk_Base
     {
         protected WMOFile file;
         protected string chunkName;
@@ -13,10 +13,12 @@ namespace W3DT.Formats.WMO
         public UInt32 ChunkSize { get; private set; }
         public UInt32 ChunkID { get; protected set; }
 
-        public Chunk_Base(WMOFile file, string chunkName)
+        public Chunk_Base(WMOFile file, string chunkName = "????")
         {
             this.file = file;
             this.chunkName = chunkName;
+
+            ChunkID = 0x0;
             ChunkSize = file.readUInt32();
         }
 

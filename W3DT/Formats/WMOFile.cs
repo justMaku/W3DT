@@ -30,12 +30,13 @@ namespace W3DT.Formats
                 switch (chunkID)
                 {
                     case Chunk_MVER.Magic: chunk = new Chunk_MVER(this); break;
+                    default: chunk = new Chunk_Base(this); break;
                 }
 
-                if (chunk != null)
-                    chunks.Add(chunk);
-                else
+                if (chunk.ChunkID == 0x0)
                     Log.Write("WMO: Unknown chunk encountered = {0}", chunkID);
+                else
+                    chunks.Add(chunk);
             }
 
             // Check version
