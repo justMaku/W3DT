@@ -37,18 +37,18 @@
             this.UI_SecBtn_Sound = new System.Windows.Forms.Button();
             this.UI_SecBtn_Artwork = new System.Windows.Forms.Button();
             this.UI_SecBtn_Settings = new System.Windows.Forms.Button();
+            this.UI_SecBtn_DBC = new System.Windows.Forms.Button();
             this.UI_SponserBlock2 = new System.Windows.Forms.PictureBox();
             this.UI_SponserBlock1 = new System.Windows.Forms.PictureBox();
             this.UI_SecText_Sound = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Maps = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Settings = new W3DT.Controls.StaticTextBox();
+            this.UI_SecText_DBC = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Artwork = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Spellbook = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Doodads = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_WMO = new W3DT.Controls.StaticTextBox();
             this.UI_SecText_Players = new W3DT.Controls.StaticTextBox();
-            this.UI_SecBtn_DBC = new System.Windows.Forms.Button();
-            this.UI_SecText_DBC = new W3DT.Controls.StaticTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SponserBlock2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SponserBlock1)).BeginInit();
             this.SuspendLayout();
@@ -72,6 +72,7 @@
             this.UI_SecBtn_WMO.TabIndex = 2;
             this.UI_SecBtn_WMO.Text = "WMO Exporter";
             this.UI_SecBtn_WMO.UseVisualStyleBackColor = true;
+            this.UI_SecBtn_WMO.Click += new System.EventHandler(this.UI_SecBtn_WMO_Click);
             // 
             // UI_SecBtn_Doodads
             // 
@@ -135,6 +136,17 @@
             this.UI_SecBtn_Settings.Text = "Application Settings";
             this.UI_SecBtn_Settings.UseVisualStyleBackColor = true;
             this.UI_SecBtn_Settings.Click += new System.EventHandler(this.UI_SecBtn_Settings_Click);
+            // 
+            // UI_SecBtn_DBC
+            // 
+            this.UI_SecBtn_DBC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_SecBtn_DBC.Location = new System.Drawing.Point(12, 362);
+            this.UI_SecBtn_DBC.Name = "UI_SecBtn_DBC";
+            this.UI_SecBtn_DBC.Size = new System.Drawing.Size(257, 44);
+            this.UI_SecBtn_DBC.TabIndex = 7;
+            this.UI_SecBtn_DBC.Text = "DBC Viewer";
+            this.UI_SecBtn_DBC.UseVisualStyleBackColor = true;
+            this.UI_SecBtn_DBC.Click += new System.EventHandler(this.UI_SecBtn_DBC_Click);
             // 
             // UI_SponserBlock2
             // 
@@ -214,6 +226,23 @@
             this.UI_SecText_Settings.TabStop = false;
             this.UI_SecText_Settings.Text = "Configure W3DT to your liking!";
             // 
+            // UI_SecText_DBC
+            // 
+            this.UI_SecText_DBC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_SecText_DBC.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_SecText_DBC.Cursor = System.Windows.Forms.Cursors.Default;
+            this.UI_SecText_DBC.Location = new System.Drawing.Point(275, 371);
+            this.UI_SecText_DBC.Multiline = true;
+            this.UI_SecText_DBC.Name = "UI_SecText_DBC";
+            this.UI_SecText_DBC.ReadOnly = true;
+            this.UI_SecText_DBC.Size = new System.Drawing.Size(527, 29);
+            this.UI_SecText_DBC.TabIndex = 2;
+            this.UI_SecText_DBC.TabStop = false;
+            this.UI_SecText_DBC.Text = "DBC files act as small databases containing various tables of data used by the ga" +
+    "me client. This tool allows you to explore those and export the data from within" +
+    "!";
+            // 
             // UI_SecText_Artwork
             // 
             this.UI_SecText_Artwork.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -289,34 +318,6 @@
             this.UI_SecText_Players.TabIndex = 2;
             this.UI_SecText_Players.TabStop = false;
             this.UI_SecText_Players.Text = resources.GetString("UI_SecText_Players.Text");
-            // 
-            // UI_SecBtn_DBC
-            // 
-            this.UI_SecBtn_DBC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UI_SecBtn_DBC.Location = new System.Drawing.Point(12, 362);
-            this.UI_SecBtn_DBC.Name = "UI_SecBtn_DBC";
-            this.UI_SecBtn_DBC.Size = new System.Drawing.Size(257, 44);
-            this.UI_SecBtn_DBC.TabIndex = 7;
-            this.UI_SecBtn_DBC.Text = "DBC Viewer";
-            this.UI_SecBtn_DBC.UseVisualStyleBackColor = true;
-            this.UI_SecBtn_DBC.Click += new System.EventHandler(this.UI_SecBtn_DBC_Click);
-            // 
-            // UI_SecText_DBC
-            // 
-            this.UI_SecText_DBC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_SecText_DBC.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.UI_SecText_DBC.Cursor = System.Windows.Forms.Cursors.Default;
-            this.UI_SecText_DBC.Location = new System.Drawing.Point(275, 371);
-            this.UI_SecText_DBC.Multiline = true;
-            this.UI_SecText_DBC.Name = "UI_SecText_DBC";
-            this.UI_SecText_DBC.ReadOnly = true;
-            this.UI_SecText_DBC.Size = new System.Drawing.Size(527, 29);
-            this.UI_SecText_DBC.TabIndex = 2;
-            this.UI_SecText_DBC.TabStop = false;
-            this.UI_SecText_DBC.Text = "DBC files act as small databases containing various tables of data used by the ga" +
-    "me client. This tool allows you to explore those and export the data from within" +
-    "!";
             // 
             // MainForm
             // 

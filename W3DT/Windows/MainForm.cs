@@ -73,5 +73,10 @@ namespace W3DT
         {
             ShowWindow(typeof(DBCViewer));
         }
+
+        private void UI_SecBtn_WMO_Click(object sender, EventArgs e)
+        {
+            ShowWindow(typeof(WMOViewer));
+        }
     }
 }

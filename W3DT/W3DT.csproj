@@ -194,11 +194,11 @@
     <Compile Include="Windows\SourceSelectionScreen.Designer.cs">
       <DependentUpon>SourceSelectionScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Temp3DWindow.cs">
+    <Compile Include="Windows\WMOViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Temp3DWindow.Designer.cs">
-      <DependentUpon>Temp3DWindow.cs</DependentUpon>
+    <Compile Include="Windows\WMOViewer.Designer.cs">
+      <DependentUpon>WMOViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -242,8 +242,8 @@
     <EmbeddedResource Include="Windows\SourceSelectionScreen.resx">
       <DependentUpon>SourceSelectionScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Temp3DWindow.resx">
-      <DependentUpon>Temp3DWindow.cs</DependentUpon>
+    <EmbeddedResource Include="Windows\WMOViewer.resx">
+      <DependentUpon>WMOViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>

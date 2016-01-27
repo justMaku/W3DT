@@ -14,12 +14,12 @@ namespace W3DT
     /// <summary>
     /// The main form class.
     /// </summary>
-    public partial class Temp3DWindow : Form
+    public partial class WMOViewer : Form
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Temp3DWindow"/> class.
+        /// Initializes a new instance of the <see cref="WMOViewer"/> class.
         /// </summary>
-        public Temp3DWindow()
+        public WMOViewer()
         {
             InitializeComponent();
         }
