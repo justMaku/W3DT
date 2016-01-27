@@ -21,7 +21,7 @@ namespace W3DT.Formats.WMO
             for (int i = 0; i < entryCount; i++)
                 entries[i] = FogInfo.Read(file);
 
-            LogWrite("Loaded " + entries + " fog info entries.");
+            LogWrite("Loaded " + entryCount + " fog info entries.");
         }
     }
 }
