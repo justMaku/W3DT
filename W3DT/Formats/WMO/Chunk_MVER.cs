@@ -13,8 +13,10 @@ namespace W3DT.Formats.WMO
         public Chunk_MVER(WMOFile file) : base(file, "MVER")
         {
             ChunkID = Magic;
+
             FileVersion = file.readUInt32();
-            LogWrite("File Version -> " + FileVersion);
+
+            LogValue("File Version", FileVersion);
         }
     }
 }
