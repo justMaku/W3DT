@@ -37,6 +37,8 @@ namespace W3DT.Formats
                     Log.Write("WMO: Unknown chunk encountered = {0}", chunkID);
                 else
                     chunks.Add(chunk);
+
+                seekPosition((int) (startSeek + chunk.ChunkSize));
             }
 
             // Check version
