@@ -17,10 +17,10 @@ namespace W3DT.Formats.WMO
         public UInt32 nDoodadNames { get; private set; }
         public UInt32 nDoodadRefs { get; private set; }
         public UInt32 nDoodadSets { get; private set; }
-        public UInt32 colourR { get; private set; }
-        public UInt32 colourG { get; private set; }
-        public UInt32 colourB { get; private set; }
-        public UInt32 colourX { get; private set; }
+        public int colourR { get; private set; }
+        public int colourG { get; private set; }
+        public int colourB { get; private set; }
+        public int colourX { get; private set; }
         public UInt32 wmoID { get; private set; }
         public Position boundingBoxLow { get; private set; }
         public Position boundingBoxHigh { get; private set; }
@@ -30,9 +30,23 @@ namespace W3DT.Formats.WMO
         {
             ChunkID = Magic;
 
-            // ToDo: Populate variables.
+            nTextures = file.readUInt32();
+            nGroups = file.readUInt32();
+            nPortals = file.readUInt32();
+            nLights = file.readUInt32();
+            nDoodadNames = file.readUInt32();
+            nDoodadRefs = file.readUInt32();
+            nDoodadSets = file.readUInt32();
+            colourR = file.readUInt8();
+            colourG = file.readUInt8();
+            colourB = file.readUInt8();
+            colourX = file.readUInt8();
+            wmoID = file.readUInt32();
+            boundingBoxLow = Position.Read(file);
+            boundingBoxHigh = Position.Read(file);
+            flags = file.readUInt32();
 
-            // ToDo: Logging
+            // ToDo: Logging.
         }
     }
 }
