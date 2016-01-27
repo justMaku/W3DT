@@ -106,5 +106,10 @@ namespace W3DT
                 }
             }
         }
+
+        private void DBCViewer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            explorer.Dispose();
+        }
     }
 }

@@ -98,6 +98,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DBCViewer";
             this.Text = "DBC Viewer - W3DT";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DBCViewer_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.UI_DBCTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
