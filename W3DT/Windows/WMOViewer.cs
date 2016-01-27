@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 using SharpGL;
 using W3DT._3D;
 using W3DT.Runners;
@@ -16,11 +17,13 @@ namespace W3DT
     public partial class WMOViewer : Form
     {
         private Explorer explorer;
+        private Regex ignoreFilter = new Regex(@"(.*)[0-9]{3}\.wmo$");
 
         public WMOViewer()
         {
             InitializeComponent();
             explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTime, UI_FileCount_Label, UI_FileList, new string[] { "wmo" }, "WMO_V_{0}", true);
+            explorer.IgnoreFilter = ignoreFilter;
             explorer.Initialize();
         }
 
