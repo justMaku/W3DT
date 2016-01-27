@@ -9,14 +9,17 @@ namespace W3DT.Formats
     public class FormatBase
     {
         private byte[] data;
-        private int seek = 0;
+        protected int seek = 0;
         public string FileName { get; private set; }
 
         public FormatBase(string filePath)
         {
             FileName = Path.GetFileName(filePath);
+
             if (File.Exists(filePath))
                 data = File.ReadAllBytes(filePath);
+            else
+                throw new Exception("Unable to read binary file: " + filePath);
         }
 
         public bool isEndOfStream()
@@ -123,12 +126,20 @@ namespace W3DT.Formats
             return seekAmount;
         }
 
+        public void seekPosition(int position)
+        {
+            this.seek = position;
+        }
+
         public string readString()
         {
             string result = string.Empty;
 
             while (true)
             {
+                if (isEndOfStream())
+                    return result;
+
                 byte next = readBytes(1)[0];
                 if (next == 0x0)
                     return result;

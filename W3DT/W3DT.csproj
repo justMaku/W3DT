@@ -104,6 +104,9 @@
     <Compile Include="Events\FileExploreHitArgs.cs" />
     <Compile Include="Events\FileExtractCompleteArgs.cs" />
     <Compile Include="Formats\DBCFile.cs" />
+    <Compile Include="Formats\DBC\DBCRecord.cs" />
+    <Compile Include="Formats\DBC\DBCTable.cs" />
+    <Compile Include="Formats\DBC\DBC_EmotesText.cs" />
     <Compile Include="Formats\FormatBase.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />

@@ -61,6 +61,19 @@ namespace W3DT
         private void ShowDBCFile(string path)
         {
             selectedDbcFile = new DBCFile(path);
+
+            DataGridView view = UI_DBCTable;
+            DBCFile file = selectedDbcFile;
+            DBCTable table = file.Table;
+
+            // Reset
+            view.Columns.Clear();
+
+            for (int i = 0; i < table.getColumnCount(); i++)
+                view.Columns.Add(table.getColumnName(i), table.getColumnName(i));
+
+            foreach (DBCRecord record in table.getRecords())
+                view.Rows.Add(record.getValues());
         }
 
         private void OnFileExtractComplete(object sender, EventArgs rawArgs)

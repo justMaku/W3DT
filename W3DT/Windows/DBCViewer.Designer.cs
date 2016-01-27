@@ -33,6 +33,8 @@
             this.UI_FilesFound = new System.Windows.Forms.Label();
             this.UI_ExportButton = new System.Windows.Forms.Button();
             this.UI_SaveDialog = new System.Windows.Forms.SaveFileDialog();
+            this.UI_DBCTable = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.UI_DBCTable)).BeginInit();
             this.SuspendLayout();
             // 
             // UI_FileList
@@ -59,6 +61,7 @@
             // 
             // UI_ExportButton
             // 
+            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_ExportButton.Location = new System.Drawing.Point(706, 570);
             this.UI_ExportButton.Name = "UI_ExportButton";
             this.UI_ExportButton.Size = new System.Drawing.Size(114, 23);
@@ -71,17 +74,33 @@
             // 
             this.UI_SaveDialog.Filter = "Client Database File (*.dbc)|*.dbc";
             // 
+            // UI_DBCTable
+            // 
+            this.UI_DBCTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_DBCTable.BackgroundColor = System.Drawing.Color.White;
+            this.UI_DBCTable.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.UI_DBCTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.UI_DBCTable.Location = new System.Drawing.Point(245, 12);
+            this.UI_DBCTable.Name = "UI_DBCTable";
+            this.UI_DBCTable.ReadOnly = true;
+            this.UI_DBCTable.Size = new System.Drawing.Size(575, 547);
+            this.UI_DBCTable.TabIndex = 3;
+            // 
             // DBCViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 605);
+            this.Controls.Add(this.UI_DBCTable);
             this.Controls.Add(this.UI_ExportButton);
             this.Controls.Add(this.UI_FilesFound);
             this.Controls.Add(this.UI_FileList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DBCViewer";
             this.Text = "DBC Viewer - W3DT";
+            ((System.ComponentModel.ISupportInitialize)(this.UI_DBCTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -93,5 +112,6 @@
         private System.Windows.Forms.Label UI_FilesFound;
         private System.Windows.Forms.Button UI_ExportButton;
         private System.Windows.Forms.SaveFileDialog UI_SaveDialog;
+        private System.Windows.Forms.DataGridView UI_DBCTable;
     }
 }
