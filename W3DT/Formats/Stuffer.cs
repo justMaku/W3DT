@@ -11,7 +11,6 @@ namespace W3DT.Formats
     {
         public static void Stuff(object target, FormatBase feed, string logPrefix = null, bool muteLogging = false)
         {
-            //Type type = target.GetType();
             foreach (PropertyInfo prop in target.GetType().GetProperties())
             {
                 if (prop.CanWrite)
