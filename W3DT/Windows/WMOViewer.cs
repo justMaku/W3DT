@@ -19,7 +19,7 @@ namespace W3DT
     public partial class WMOViewer : Form
     {
         private Explorer explorer;
-        private Regex ignoreFilter = new Regex(@"(.*)[0-9]{3}\.wmo$");
+        private Regex ignoreFilter = new Regex(@"(.*)_[0-9]{3}\.wmo$");
 
         private Dictionary<string, List<CASCFile>> groupFiles;
 
