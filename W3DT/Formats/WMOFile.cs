@@ -48,7 +48,7 @@ namespace W3DT.Formats
                 throw new WMOException("File is not a valid WMO file (missing version header).");
 
             // WMOv4 required.
-            if (((Chunk_MVER)version).FileVersion != 17)
+            if (((Chunk_MVER)version).fileVersion != 17)
                 throw new WMOException("Unsupported WMO version!");
         }
 
