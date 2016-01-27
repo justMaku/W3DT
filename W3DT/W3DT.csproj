@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="3D\3DObject.cs" />
     <Compile Include="3D\Cube.cs" />
+    <Compile Include="3D\Position.cs" />
     <Compile Include="CASC\BLTEHandler.cs" />
     <Compile Include="CASC\CDNCache.cs" />
     <Compile Include="CASC\CDNIndexHandler.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Formats\FormatBase.cs" />
     <Compile Include="Formats\WMOFile.cs" />
     <Compile Include="Formats\WMO\Chunk_Base.cs" />
+    <Compile Include="Formats\WMO\Chunk_MOHD.cs" />
     <Compile Include="Formats\WMO\Chunk_MVER.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />

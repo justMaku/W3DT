@@ -6,7 +6,7 @@ using W3DT.Formats;
 
 namespace W3DT._3D
 {
-    class Position
+    public class Position
     {
         public float X { get; private set; }
         public float Y { get; private set; }
