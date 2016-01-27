@@ -46,7 +46,21 @@ namespace W3DT.Formats.WMO
             boundingBoxHigh = Position.Read(file);
             flags = file.readUInt32();
 
-            // ToDo: Logging.
+            LogValue("nTextures", nTextures);
+            LogValue("nGroups", nGroups);
+            LogValue("nPortals", nPortals);
+            LogValue("nLights", nLights);
+            LogValue("nDoodadNames", nDoodadNames);
+            LogValue("nDoodadRefs", nDoodadRefs);
+            LogValue("nDoodadSets", nDoodadSets);
+            LogValue("colourR", colourR);
+            LogValue("colourG", colourG);
+            LogValue("colourB", colourB);
+            LogValue("colourX", colourX);
+            LogValue("wmoID", wmoID);
+            LogValue("boundingBoxLow", boundingBoxLow);
+            LogValue("boundingBoxHigh", boundingBoxHigh);
+            LogValue("flags", flags);
         }
     }
 }
