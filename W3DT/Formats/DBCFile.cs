@@ -74,6 +74,7 @@ namespace W3DT.Formats
             switch (fileName)
             {
                 case "EmotesText": return new DBC_EmotesText(this);
+                case "EmotesTextData": return new DBC_EmotesTextData(this);
             }
             throw new DBCException("DBC structure is unknown!");
         }

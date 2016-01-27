@@ -49,8 +49,7 @@
             // 
             // UI_FilesFound
             // 
-            this.UI_FilesFound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.UI_FilesFound.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.UI_FilesFound.AutoSize = true;
             this.UI_FilesFound.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.UI_FilesFound.Location = new System.Drawing.Point(12, 569);
@@ -76,8 +75,7 @@
             // 
             // UI_DBCTable
             // 
-            this.UI_DBCTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.UI_DBCTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_DBCTable.BackgroundColor = System.Drawing.Color.White;
             this.UI_DBCTable.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
