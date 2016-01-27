@@ -59,6 +59,7 @@
             this.UI_FileList.Name = "UI_FileList";
             this.UI_FileList.Size = new System.Drawing.Size(315, 617);
             this.UI_FileList.TabIndex = 1;
+            this.UI_FileList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.UI_FileList_AfterSelect);
             // 
             // UI_FilterOverlay
             // 

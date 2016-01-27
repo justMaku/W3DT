@@ -13,6 +13,7 @@ using W3DT._3D;
 using W3DT.Runners;
 using W3DT.Events;
 using W3DT.CASC;
+using W3DT.Formats;
 
 namespace W3DT
 {
@@ -20,17 +21,26 @@ namespace W3DT
     {
         private Explorer explorer;
         private Regex ignoreFilter = new Regex(@"(.*)_[0-9]{3}\.wmo$");
-
+        private LoadingWindow loadingWindow;
         private Dictionary<string, List<CASCFile>> groupFiles;
+        private RunnerBase extractRunner;
 
         public WMOViewer()
         {
             InitializeComponent();
             groupFiles = new Dictionary<string, List<CASCFile>>();
+
+            EventManager.FileExtractComplete += OnFileExtractComplete;
+
             explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTime, UI_FileCount_Label, UI_FileList, new string[] { "wmo" }, "WMO_V_{0}", true);
             explorer.IgnoreFilter = ignoreFilter;
             explorer.ExploreHitCallback = OnExploreHit;
             explorer.Initialize();
+        }
+
+        private void LoadWMOFile(string path)
+        {
+            WMOFile file = new WMOFile(path);
         }
 
         public void OnExploreHit(CASCFile file)
@@ -45,6 +55,47 @@ namespace W3DT
 
                 groupFiles[nameBase].Add(file);
             }
+        }
+
+        private void WMOViewer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            explorer.Dispose();
+        }
+
+        private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (UI_FileList.SelectedNode != null && UI_FileList.SelectedNode.Tag is CASCFile)
+            {
+                CASCFile entry = (CASCFile)UI_FileList.SelectedNode.Tag;
+                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, entry.FullName);
+
+                if (!File.Exists(tempPath))
+                {
+                    extractRunner = new RunnerExtractItem(entry);
+                    extractRunner.Begin();
+
+                    loadingWindow = new LoadingWindow("Loading WMO file: " + entry.Name, "Notice: No peons were harmed in the making of this software.");
+                    loadingWindow.ShowDialog();
+                }
+                else
+                {
+                    LoadWMOFile(tempPath);
+                }
+            }
+        }
+
+        private void OnFileExtractComplete(object sender, EventArgs e)
+        {
+            FileExtractCompleteArgs args = (FileExtractCompleteArgs)e;
+            extractRunner = null;
+
+            loadingWindow.Close();
+            loadingWindow = null;
+
+            if (args.Success)
+                LoadWMOFile(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName));
+            else
+                throw new Exception("Unable to extract WMO file -> " + args.File.FullName);
         }
 
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
@@ -88,11 +139,6 @@ namespace W3DT
 
             //  Set the modelview matrix.
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
-        }
-
-        private void WMOViewer_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            explorer.Dispose();
         }
 
         private float rotation = 0.0f;
