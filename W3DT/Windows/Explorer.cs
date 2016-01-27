@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using W3DT.Runners;
 using W3DT.Events;
+using W3DT.CASC;
 
 namespace W3DT
 {
@@ -17,9 +18,11 @@ namespace W3DT
         private Label status;
         private TreeView fileList;
 
-        public Regex IgnoreFilter;
         private Timer FilterTimer;
         private RunnerBase runner;
+
+        public Regex IgnoreFilter;
+        public Action<CASCFile> ExploreHitCallback;
 
         private string[] extensions;
         private string runnerID;
@@ -164,6 +167,13 @@ namespace W3DT
 
             if (args.ID.Equals(currentScanID))
             {
+                // Use callback if set.
+                // This is purposely above the ignore filter check.
+                // Results filtered by the primary filter do not make it here.
+                // IgnoreFilter is secondary and does not exclude from the callback.
+                if (ExploreHitCallback != null)
+                    ExploreHitCallback(args.Entry);
+
                 // Ignore filter check.
                 if (IgnoreFilter != null && IgnoreFilter.IsMatch(args.Entry.Name))
                     return;

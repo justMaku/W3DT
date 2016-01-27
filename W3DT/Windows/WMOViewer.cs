@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.IO;
 using SharpGL;
 using W3DT._3D;
 using W3DT.Runners;
 using W3DT.Events;
+using W3DT.CASC;
 
 namespace W3DT
 {
@@ -19,12 +21,30 @@ namespace W3DT
         private Explorer explorer;
         private Regex ignoreFilter = new Regex(@"(.*)[0-9]{3}\.wmo$");
 
+        private Dictionary<string, List<CASCFile>> groupFiles;
+
         public WMOViewer()
         {
             InitializeComponent();
+            groupFiles = new Dictionary<string, List<CASCFile>>();
             explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTime, UI_FileCount_Label, UI_FileList, new string[] { "wmo" }, "WMO_V_{0}", true);
             explorer.IgnoreFilter = ignoreFilter;
+            explorer.ExploreHitCallback = OnExploreHit;
             explorer.Initialize();
+        }
+
+        public void OnExploreHit(CASCFile file)
+        {
+            Match match = ignoreFilter.Match(file.Name);
+
+            if (match.Success)
+            {
+                string nameBase = match.Groups[1].ToString();
+                if (!groupFiles.ContainsKey(nameBase))
+                    groupFiles.Add(nameBase, new List<CASCFile>());
+
+                groupFiles[nameBase].Add(file);
+            }
         }
 
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
