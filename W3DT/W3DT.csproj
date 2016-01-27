@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3D\3DObject.cs" />
     <Compile Include="3D\Cube.cs" />
     <Compile Include="CASC\BLTEHandler.cs" />
     <Compile Include="CASC\CDNCache.cs" />
@@ -109,6 +110,9 @@
     <Compile Include="Formats\DBC\DBC_EmotesText.cs" />
     <Compile Include="Formats\DBC\DBC_EmotesTextData.cs" />
     <Compile Include="Formats\FormatBase.cs" />
+    <Compile Include="Formats\WMOFile.cs" />
+    <Compile Include="Formats\WMO\Chunk_Base.cs" />
+    <Compile Include="Formats\WMO\Chunk_MVER.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerFileExplore.cs" />

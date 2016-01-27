@@ -8,6 +8,6 @@ namespace W3DT._3D
 {
     abstract class _3DObject
     {
-        abstract void Draw(OpenGL gl);
+        abstract public void Draw(OpenGL gl);
     }
 }
