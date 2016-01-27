@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 using W3DT.Runners;
 using W3DT.Events;
 
@@ -16,7 +17,7 @@ namespace W3DT
         private Label status;
         private TreeView fileList;
 
-        //private System.Timers.Timer FilterTimer;
+        public Regex IgnoreFilter;
         private Timer FilterTimer;
         private RunnerBase runner;
 
@@ -165,6 +166,10 @@ namespace W3DT
 
             if (args.ID.Equals(currentScanID))
             {
+                // Ignore filter check.
+                if (IgnoreFilter != null && IgnoreFilter.IsMatch(args.Entry.Name))
+                    return;
+
                 found++;
 
                 if (splitIntoDirectories)
