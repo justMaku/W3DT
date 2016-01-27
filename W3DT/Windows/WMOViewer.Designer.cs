@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WMOViewer));
             this.openGLControl = new SharpGL.OpenGLControl();
             this.UI_FileList = new System.Windows.Forms.TreeView();
             this.UI_FilterOverlay = new System.Windows.Forms.Label();
             this.UI_FilterField = new System.Windows.Forms.TextBox();
             this.UI_FileCount_Label = new System.Windows.Forms.Label();
+            this.UI_FilterTime = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,6 +94,10 @@
             this.UI_FileCount_Label.TabIndex = 4;
             this.UI_FileCount_Label.Text = "0 Files Found (Searching: 100%)";
             // 
+            // UI_FilterTime
+            // 
+            this.UI_FilterTime.Interval = 1000;
+            // 
             // WMOViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -105,6 +111,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WMOViewer";
             this.Text = "Warcraft 3D Toolkit";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WMOViewer_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -118,6 +125,7 @@
         private System.Windows.Forms.Label UI_FilterOverlay;
         private System.Windows.Forms.TextBox UI_FilterField;
         private System.Windows.Forms.Label UI_FileCount_Label;
+        private System.Windows.Forms.Timer UI_FilterTime;
     }
 }
 

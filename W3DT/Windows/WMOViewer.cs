@@ -15,19 +15,12 @@ namespace W3DT
 {
     public partial class WMOViewer : Form
     {
-        private static readonly string RUNNER_ID = "WMO_V_{0}";
-        private static readonly string[] extensions = new string[] { "wmo" };
-
-        private bool filterHasChanged = false;
-        private int currentScan = 0;
-        private int found = 0;
-
-        private RunnerBase runner;
+        private Explorer explorer;
 
         public WMOViewer()
         {
             InitializeComponent();
-            //InitializeWMOList();
+            explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTime, UI_FileCount_Label, UI_FileList, new string[] { "wmo" }, "WMO_V_{0}", true);
         }
 
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
@@ -71,6 +64,11 @@ namespace W3DT
 
             //  Set the modelview matrix.
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
+        }
+
+        private void WMOViewer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            explorer.Dispose();
         }
 
         private float rotation = 0.0f;
