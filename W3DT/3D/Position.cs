@@ -23,5 +23,10 @@ namespace W3DT._3D
         {
             return new Position(input.readFloat(), input.readFloat(), input.readFloat());
         }
+
+        public override string ToString()
+        {
+            return string.Format("X: [{0}] Y: [{1}] Z: [{2}]", X, Y, Z);
+        }
     }
 }
