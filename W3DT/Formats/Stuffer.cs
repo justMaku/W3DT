@@ -9,7 +9,7 @@ namespace W3DT.Formats
 {
     class Stuffer
     {
-        public static void Stuff(object target, FormatBase feed, string logPrefix = "")
+        public static void Stuff(object target, FormatBase feed, string logPrefix = null)
         {
             //Type type = target.GetType();
             foreach (PropertyInfo prop in target.GetType().GetProperties())
@@ -49,7 +49,7 @@ namespace W3DT.Formats
                     if (set != null)
                     {
                         prop.SetValue(target, set, null);
-                        Log.Write("{0}{1} -> {2}", logPrefix, prop.Name, set);
+                        Log.Write("{0}{1} -> {2}", logPrefix == null ? string.Empty : logPrefix, prop.Name, set);
                     }
                     else
                     {
