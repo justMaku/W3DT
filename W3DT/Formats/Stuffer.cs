@@ -46,6 +46,10 @@ namespace W3DT.Formats
                         set = Position.Read(feed);
                     else if (type.Equals(typeof(C4Plane)))
                         set = C4Plane.Read(feed);
+                    else if (type.Equals(typeof(Colour4)))
+                        set = Colour4.Read(feed);
+                    else if (type.Equals(typeof(Rotation)))
+                        set = Rotation.Read(feed);
 
                     if (set != null)
                     {
