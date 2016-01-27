@@ -57,11 +57,9 @@ namespace W3DT
                 if (searchOverlay != null)
                     searchOverlay.MouseUp += OnOverlayMouseUp;
             }
-
-            Initialize();
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             fileList.Nodes.Clear(); // Clear existing nodes.
 

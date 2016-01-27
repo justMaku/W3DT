@@ -21,6 +21,7 @@ namespace W3DT
         {
             InitializeComponent();
             explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterCheckTimer, UI_FileCount_Label, UI_FileList, new string[] { "ogg", "mp3" }, "MEW_N_{0}", true);
+            explorer.Initialize();
 
             UI_MultiWindows_Field.Checked = Program.Settings.AllowMultipleSoundPlayers;
         }

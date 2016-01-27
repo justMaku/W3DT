@@ -30,6 +30,8 @@ namespace W3DT
             explorer = new Explorer(this, null, null, null, UI_FilesFound, UI_FileList, new string[] { "dbc" }, "DBC_SCAN_{0}", false);
 
             EventManager.FileExtractComplete += OnFileExtractComplete;
+
+            explorer.Initialize();
         }
 
         private void ShowDBCFile(string path)

@@ -30,6 +30,8 @@ namespace W3DT
 
             UI_AutoLoadPreview_Field.Checked = Program.Settings.AutoShowArtworkPreview;
             EventManager.FileExtractComplete += OnFileExtractComplete;
+
+            explorer.Initialize();
         }
 
         private void OnFileExtractComplete(object sender, EventArgs rawArgs)
