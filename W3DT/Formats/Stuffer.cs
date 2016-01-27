@@ -44,6 +44,8 @@ namespace W3DT.Formats
                         set = feed.readString();
                     else if (type.Equals(typeof(Position)))
                         set = Position.Read(feed);
+                    else if (type.Equals(typeof(C4Plane)))
+                        set = C4Plane.Read(feed);
 
                     if (set != null)
                     {
