@@ -6,7 +6,7 @@ using W3DT._3D;
 
 namespace W3DT.Formats.WMO
 {
-    public class Chunk_MONR : Chunk_Base
+    public class Chunk_MONR : Chunk_Base, IChunkSoup
     {
         // MONR WMO Chunk
         // Define normals!

@@ -35,11 +35,24 @@ namespace W3DT.Formats.WMO
         public UInt32 unk1 { get; set; } // 0
         public UInt32 unk2 { get; set; } // 0
 
+        private List<Chunk_Base> subChunks;
 
         public Chunk_MOGP(WMOFile file) : base(file, "MOGP")
         {
             ChunkID = Magic;
+            subChunks = new List<Chunk_Base>();
             Stuffer.Stuff(this, file, GetLogPrefix());
+        }
+
+        public void addChunk(Chunk_Base chunk)
+        {
+            subChunks.Add(chunk);
+            LogWrite(string.Format("Added sub-chunk {0} as sub-chunk; {1} in pool", chunk.GetType().Name, subChunks.Count));
+        }
+
+        public IEnumerable<Chunk_Base> getChunks()
+        {
+            return subChunks;
         }
     }
 }

@@ -39,6 +39,8 @@ namespace W3DT.Formats
 
         public void parse()
         {
+            Chunk_MOGP groupRoot = null;
+
             while (!isEndOfStream())
             {
                 UInt32 chunkID = readUInt32();
@@ -56,17 +58,35 @@ namespace W3DT.Formats
                     case Chunk_MODS.Magic: chunk = new Chunk_MODS(this); break;
                     case Chunk_MOGI.Magic: chunk = new Chunk_MOGI(this); break;
                     case Chunk_MOGN.Magic: chunk = new Chunk_MOGN(this); break;
-                    case Chunk_MOGP.Magic: chunk = new Chunk_MOGP(this); break;
                     case Chunk_MOLT.Magic: chunk = new Chunk_MOLT(this); break;
                     case Chunk_MOMT.Magic: chunk = new Chunk_MOMT(this); break;
-                    case Chunk_MONR.Magic: chunk = new Chunk_MONR(this); break;
+
+                    case Chunk_MOGP.Magic:
+                        groupRoot = new Chunk_MOGP(this);
+                        chunk = groupRoot;
+                        break;
+
                     default: chunk = new Chunk_Base(this); break;
                 }
 
-                if (chunk.ChunkID == 0x0)
-                    Log.Write("WMO: Unknown chunk encountered = {0}", chunkID);
+                if (chunk.ChunkID != 0x0)
+                {
+                    if (chunk is IChunkSoup)
+                    {
+                        if (groupRoot != null)
+                            groupRoot.addChunk(chunk);
+                        else
+                            Log.Write("WMO: ");
+                    }
+                    else
+                    {
+                        chunks.Add(chunk);
+                    }
+                }
                 else
-                    chunks.Add(chunk);
+                {
+                    Log.Write("WMO: Unknown chunk encountered = {0}", chunkID);
+                }
 
                 if (!(chunk is Chunk_MOGP))
                     seekPosition((int) (startSeek + chunk.ChunkSize));
