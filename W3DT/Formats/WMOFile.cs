@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using W3DT.Formats.WMO;
 
 namespace W3DT.Formats
@@ -13,6 +14,7 @@ namespace W3DT.Formats
 
     public class WMOFile : FormatBase
     {
+        public string baseName { get; private set; }
         private List<Chunk_Base> chunks;
         private List<WMOFile> groupFiles;
         private bool isRoot;
@@ -24,6 +26,8 @@ namespace W3DT.Formats
 
             if (isRoot)
                 groupFiles = new List<WMOFile>();
+
+            baseName = Path.GetFileNameWithoutExtension(path);
         }
 
         public void addGroupFile(WMOFile file)
