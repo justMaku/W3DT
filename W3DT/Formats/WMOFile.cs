@@ -101,7 +101,7 @@ namespace W3DT.Formats
                         if (groupRoot != null)
                             groupRoot.addChunk(chunk);
                         else
-                            Log.Write("WMO: ");
+                            Log.Write("WMO: MOGP sub-chunk found before the MOGP chunk? Darkness! Madness!");
                     }
                     else
                     {
