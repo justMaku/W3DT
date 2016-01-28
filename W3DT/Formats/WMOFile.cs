@@ -110,7 +110,8 @@ namespace W3DT.Formats
                 }
                 else
                 {
-                    Log.Write("WMO: Unknown chunk encountered = {0}", chunkID);
+                    string hex = chunkID.ToString("X");
+                    Log.Write("WMO: Unknown chunk encountered = {0} (0x{1}) at {2} in {3}", chunkID, hex, seek, baseName);
                 }
 
                 if (!(chunk is Chunk_MOGP))
