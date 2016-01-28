@@ -44,6 +44,7 @@ namespace W3DT.Formats
             while (!isEndOfStream())
             {
                 UInt32 chunkID = readUInt32();
+                string skip = null;
                 Chunk_Base chunk = null;
                 int startSeek = seek + 4;
 
@@ -66,6 +67,18 @@ namespace W3DT.Formats
                     case Chunk_MOTX.Magic: chunk = new Chunk_MOTX(this); break;
                     case Chunk_MOVI.Magic: chunk = new Chunk_MOVI(this); break;
                     case Chunk_MOVT.Magic: chunk = new Chunk_MOTV(this); break;
+                    case 0x4D4F4241: skip = "MOBA (render batches)"; break;
+                    case 0x4D4F4C52: skip = "MOLR (light references)"; break;
+                    case 0x4D4F4452: skip = "MODR (doodad references)"; break;
+                    case 0x4D4F424E: skip = "MOBN (BSP nodes)"; break;
+                    case 0x4D4F4252: skip = "MOBR (CAaBSP MOBN)"; break;
+                    case 0x4D4F4357: skip = "MOCV (vertex colours)"; break;
+                    case 0x4D4C4952: skip = "MLIQ (liquids)"; break;
+                    case 0x4D4F5249: skip = "MORI (???)"; break;
+                    case 0x4D4F5242: skip = "MORB (???)"; break;
+                    case 0x4D4F5441: skip = "MOTA (map object tangent array)"; break;
+                    case 0x4D4F4253: skip = "MOBS (???)"; break;
+                    case 0x4D4F504C: skip = "MOPL (plane holes)"; break;
 
                     case Chunk_MOGP.Magic:
                         groupRoot = new Chunk_MOGP(this);
@@ -73,6 +86,12 @@ namespace W3DT.Formats
                         break;
 
                     default: chunk = new Chunk_Base(this); break;
+                }
+
+                if (skip != null)
+                {
+                    Log.Write("WMO: Skipping chunk " + skip);
+                    continue;
                 }
 
                 if (chunk.ChunkID != 0x0)
