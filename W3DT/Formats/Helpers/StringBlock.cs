@@ -16,7 +16,7 @@ namespace W3DT.Formats
             blockOffset = input.getSeek();
 
             int i = 0; // Relative offset.
-            while ((readLimit == -1 || i < readLimit) && input.isEndOfStream())
+            while ((readLimit == -1 || i < readLimit) && !input.isEndOfStream())
             {
                 i += input.seekNonZero();
 
