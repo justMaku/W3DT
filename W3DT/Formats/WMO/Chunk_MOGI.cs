@@ -11,7 +11,7 @@ namespace W3DT.Formats.WMO
         // MOGI WMO Chunk
         // Defines group information for the WMO file.
 
-        public const UInt32 Magic = 0x0;
+        public const UInt32 Magic = 0x4D4F4749;
         public GroupInformation[] groups { get; private set; }
 
         public Chunk_MOGI(WMOFile file) : base(file, "MOGI")
