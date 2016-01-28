@@ -80,6 +80,7 @@
     <Compile Include="CASC\CDNIndexHandler.cs" />
     <Compile Include="CASC\DownloadHandler.cs" />
     <Compile Include="CASC\EncodingHandler.cs" />
+    <Compile Include="CASC\ExtractState.cs" />
     <Compile Include="CASC\FileNameCache.cs" />
     <Compile Include="CASC\InstallHandler.cs" />
     <Compile Include="CASC\KeyService.cs" />
@@ -116,8 +117,8 @@
     <Compile Include="Formats\DBC\DBC_EmotesText.cs" />
     <Compile Include="Formats\DBC\DBC_EmotesTextData.cs" />
     <Compile Include="Formats\FormatBase.cs" />
-    <Compile Include="Formats\StringBlock.cs" />
-    <Compile Include="Formats\Stuffer.cs" />
+    <Compile Include="Formats\Helpers\StringBlock.cs" />
+    <Compile Include="Formats\Helpers\Stuffer.cs" />
     <Compile Include="Formats\WMOFile.cs" />
     <Compile Include="Formats\WMO\Chunk_Base.cs" />
     <Compile Include="Formats\WMO\Chunk_MCVP.cs" />

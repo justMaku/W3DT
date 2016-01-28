@@ -10,11 +10,13 @@ namespace W3DT.Events
     {
         public CASCFile File { get; private set; }
         public bool Success { get; private set; }
+        public int RunnerID { get; private set; }
 
-        public FileExtractCompleteArgs(CASCFile file, bool success)
+        public FileExtractCompleteArgs(CASCFile file, bool success, int runnerID)
         {
             File = file;
             Success = success;
+            RunnerID = runnerID;
         }
     }
 }

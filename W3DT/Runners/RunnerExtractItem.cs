@@ -9,11 +9,17 @@ namespace W3DT.Runners
 {
     class RunnerExtractItem : RunnerBase
     {
+        private static int E_RUNNER_ID = 1;
+
         private CASCFile file;
+        public int runnerID { get; private set; }
 
         public RunnerExtractItem(CASCFile file)
         {
             this.file = file;
+
+            runnerID = E_RUNNER_ID;
+            E_RUNNER_ID++;
         }
 
         public override void Work()
@@ -23,7 +29,6 @@ namespace W3DT.Runners
 
             if (Program.IsCASCReady())
             {
-
                 try
                 {
                     Program.CASCEngine.SaveFileTo(file.FullName, Constants.TEMP_DIRECTORY);
@@ -35,7 +40,7 @@ namespace W3DT.Runners
                 }
             }
 
-            EventManager.Trigger_FileExtractComplete(new FileExtractCompleteArgs(file, success));
+            EventManager.Trigger_FileExtractComplete(new FileExtractCompleteArgs(file, success, runnerID));
         }
     }
 }

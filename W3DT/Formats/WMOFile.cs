@@ -13,13 +13,27 @@ namespace W3DT.Formats
 
     public class WMOFile : FormatBase
     {
-        public WMOFile(string path) : base(path)
+        private List<Chunk_Base> chunks;
+        private List<WMOFile> groupFiles;
+        private bool isRoot;
+
+        public WMOFile(string path, bool isRoot = true) : base(path)
         {
+            this.isRoot = isRoot;
             chunks = new List<Chunk_Base>();
-            readChunks();
+
+            if (isRoot)
+                groupFiles = new List<WMOFile>();
         }
 
-        private void readChunks()
+        public void addGroupFile(WMOFile file)
+        {
+            // Group files can only be inside root files.
+            if (isRoot)
+                groupFiles.Add(file);
+        }
+
+        public void parse()
         {
             while (!isEndOfStream())
             {
@@ -46,15 +60,36 @@ namespace W3DT.Formats
                 seekPosition((int) (startSeek + chunk.ChunkSize));
             }
 
-            // Check version
-            Chunk_Base version = getChunksByID(Chunk_MVER.Magic).FirstOrDefault();
+            if (isRoot)
+            {
+                // Check version
+                Chunk_Base version = getChunksByID(Chunk_MVER.Magic).FirstOrDefault();
 
-            if (version == null || !(version is Chunk_MVER))
-                throw new WMOException("File is not a valid WMO file (missing version header).");
+                if (version == null || !(version is Chunk_MVER))
+                    throw new WMOException("File is not a valid WMO file (missing version header).");
 
-            // WMOv4 required.
-            if (((Chunk_MVER)version).fileVersion != 17)
-                throw new WMOException("Unsupported WMO version!");
+                // WMOv4 required.
+                if (((Chunk_MVER)version).fileVersion != 17)
+                    throw new WMOException("Unsupported WMO version!");
+
+                // Parse all group files and import their chunks.
+                foreach (WMOFile groupFile in groupFiles)
+                {
+                    groupFile.parse();
+                    chunks.AddRange(groupFile.getChunks().Where(c => c.ChunkID != Chunk_MVER.Magic));
+                    groupFile.flush();
+                }
+
+                Log.Write("WMO: Root file loaded with {0} group file children.", groupFiles.Count);
+            }
+        }
+
+        public void flush()
+        {
+            chunks.Clear();
+
+            if (groupFiles != null)
+                groupFiles.Clear();
         }
 
         public IEnumerable<Chunk_Base> getChunksByID(UInt32 id)
@@ -66,7 +101,5 @@ namespace W3DT.Formats
         {
             return chunks;
         }
-
-        private List<Chunk_Base> chunks;
     }
 }

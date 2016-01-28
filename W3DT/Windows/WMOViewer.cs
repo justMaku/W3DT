@@ -23,7 +23,8 @@ namespace W3DT
         private Regex ignoreFilter = new Regex(@"(.*)_[0-9]{3}\.wmo$");
         private LoadingWindow loadingWindow;
         private Dictionary<string, List<CASCFile>> groupFiles;
-        private RunnerBase extractRunner;
+        private List<ExtractState> requiredFiles;
+        private WMOFile loadedFile = null;
 
         public WMOViewer()
         {
@@ -38,9 +39,19 @@ namespace W3DT
             explorer.Initialize();
         }
 
-        private void LoadWMOFile(string path)
+        private void LoadWMOFile()
         {
-            WMOFile file = new WMOFile(path);
+            WMOFile root = null;
+            foreach (ExtractState state in requiredFiles)
+            {
+                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, state.File.FullName);
+                if (root == null)
+                    root = new WMOFile(tempPath, true);
+                else
+                    root.addGroupFile(new WMOFile(tempPath, false));
+            }
+            root.parse();
+            loadedFile = root;
         }
 
         public void OnExploreHit(CASCFile file)
@@ -66,36 +77,66 @@ namespace W3DT
         {
             if (UI_FileList.SelectedNode != null && UI_FileList.SelectedNode.Tag is CASCFile)
             {
+                // Dispose current loaded file.
+                if (loadedFile != null)
+                {
+                    loadedFile.flush();
+                    loadedFile = null;
+                }
+
                 CASCFile entry = (CASCFile)UI_FileList.SelectedNode.Tag;
-                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, entry.FullName);
+                string rootBase = Path.GetFileNameWithoutExtension(entry.FullName);
 
-                if (!File.Exists(tempPath))
-                {
-                    extractRunner = new RunnerExtractItem(entry);
-                    extractRunner.Begin();
+                requiredFiles = new List<ExtractState>();
+                requiredFiles.Add(new ExtractState(entry));
 
-                    loadingWindow = new LoadingWindow("Loading WMO file: " + entry.Name, "Notice: No peons were harmed in the making of this software.");
-                    loadingWindow.ShowDialog();
-                }
-                else
+                // Collect group files for extraction.
+                if (groupFiles.ContainsKey(rootBase))
+                    foreach (CASCFile groupFile in groupFiles[rootBase])
+                        requiredFiles.Add(new ExtractState(groupFile));
+
+
+                foreach (ExtractState target in requiredFiles)
                 {
-                    LoadWMOFile(tempPath);
+                    string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, target.File.FullName);
+
+                    if (!File.Exists(tempPath))
+                    {
+                        RunnerExtractItem extract = new RunnerExtractItem(target.File);
+                        target.TrackerID = extract.runnerID;
+                        extract.Begin();
+                    }
+                    else
+                    {
+                        target.State = true;
+                    }
                 }
+
+                loadingWindow = new LoadingWindow("Loading WMO file: " + entry.Name, "Notice: No peons were harmed in the making of this software.");
+                loadingWindow.ShowDialog();
             }
         }
 
         private void OnFileExtractComplete(object sender, EventArgs e)
         {
             FileExtractCompleteArgs args = (FileExtractCompleteArgs)e;
-            extractRunner = null;
 
-            loadingWindow.Close();
-            loadingWindow = null;
+            ExtractState match = requiredFiles.FirstOrDefault(f => f.TrackerID == args.RunnerID);
+            if (match != null)
+            {
+                if (!args.Success)
+                    throw new Exception("Unable to extract WMO file -> " + args.File.FullName);
 
-            if (args.Success)
-                LoadWMOFile(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName));
-            else
-                throw new Exception("Unable to extract WMO file -> " + args.File.FullName);
+                match.State = true;
+
+                if (!requiredFiles.Any(f => !f.State))
+                {
+                    loadingWindow.Close();
+                    loadingWindow = null;
+
+                    LoadWMOFile();
+                }
+            }
         }
 
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
