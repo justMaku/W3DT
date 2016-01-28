@@ -26,6 +26,8 @@ namespace W3DT.Formats.WMO
                 sets[i] = DoodadSet.Read(file);
                 file.skip(4); // Unused
             }
+
+            LogWrite("Loaded " + setCount + " doodad sets.");
         }
     }
 }

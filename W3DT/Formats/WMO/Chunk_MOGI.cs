@@ -23,6 +23,8 @@ namespace W3DT.Formats.WMO
 
             for (int i = 0; i < groupCount; i++)
                 groups[i] = GroupInformation.Read(file);
+
+            LogWrite("Loaded " + groupCount + " group information modules.");
         }
     }
 }

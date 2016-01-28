@@ -42,5 +42,10 @@ namespace W3DT.Formats
         {
             return data.Values;
         }
+
+        public int count()
+        {
+            return data.Count;
+        }
     }
 }

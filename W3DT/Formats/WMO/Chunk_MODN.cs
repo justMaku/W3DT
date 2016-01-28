@@ -17,6 +17,8 @@ namespace W3DT.Formats.WMO
         {
             ChunkID = Magic;
             data = new StringBlock(file, (int) ChunkSize);
+
+            LogWrite("Loaded " + data.count() + " doodad names.");
         }
     }
 }
