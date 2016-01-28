@@ -63,6 +63,7 @@ namespace W3DT.Formats
                     case Chunk_MONR.Magic: chunk = new Chunk_MONR(this); break;
                     case Chunk_MOPY.Magic: chunk = new Chunk_MOPY(this); break;
                     case Chunk_MOTV.Magic: chunk = new Chunk_MOTV(this); break;
+                    case Chunk_MOTX.Magic: chunk = new Chunk_MOTX(this); break;
 
                     case Chunk_MOGP.Magic:
                         groupRoot = new Chunk_MOGP(this);
