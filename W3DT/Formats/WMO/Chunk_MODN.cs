@@ -7,6 +7,9 @@ namespace W3DT.Formats.WMO
 {
     public class Chunk_MODN : Chunk_Base
     {
+        // MODN WMO Chunk
+        // Contains doodad names for the WMO file.
+
         public const UInt32 Magic = 0x4D4F444E;
         public StringBlock data { get; private set; }
 

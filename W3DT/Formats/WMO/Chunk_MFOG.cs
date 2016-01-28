@@ -8,6 +8,9 @@ namespace W3DT.Formats.WMO
 {
     public class Chunk_MFOG : Chunk_Base
     {
+        // MFOG WMO Chunk
+        // Fog information for the WMO object.
+
         public const UInt32 Magic = 0x4D464F47;
         public FogInfo[] entries { get; private set; }
 

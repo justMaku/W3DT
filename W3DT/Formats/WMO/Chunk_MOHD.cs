@@ -8,6 +8,9 @@ namespace W3DT.Formats.WMO
 {
     public class Chunk_MOHD : Chunk_Base
     {
+        // MOHD WMO Chunk
+        // Header for WMO files, only found in root.
+
         public const UInt32 Magic = 0x4D4F4844;
 
         public UInt32 nTextures { get; set; }

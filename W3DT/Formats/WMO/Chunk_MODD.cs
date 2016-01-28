@@ -8,6 +8,9 @@ namespace W3DT.Formats.WMO
 {
     public class Chunk_MODD : Chunk_Base
     {
+        // MODD WMO Chunk
+        // Contains doodad spawn instances for the WMO.
+
         public const UInt32 Magic = 0x4D4F4444;
         public Doodad[] doodads { get; private set; }
 

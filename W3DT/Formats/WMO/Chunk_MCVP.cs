@@ -8,6 +8,9 @@ namespace W3DT.Formats.WMO
 {
     class Chunk_MCVP : Chunk_Base
     {
+        // MCVP WMO Chunk
+        // Convex colume plane data.
+
         public const UInt32 Magic = 0x4D435650;
         public C4Plane[] planes { get; private set; }
 
