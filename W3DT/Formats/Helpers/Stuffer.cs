@@ -57,7 +57,9 @@ namespace W3DT.Formats
                     {
                         prop.SetValue(target, set, null);
 
+                        #if !DEBUG
                         if (!muteLogging)
+                        #endif
                             Log.Write("{0}{1} -> {2}", logPrefix == null ? string.Empty : logPrefix, prop.Name, set);
                     }
                     else
