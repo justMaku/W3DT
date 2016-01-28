@@ -5,7 +5,7 @@ using System.Text;
 
 namespace W3DT.Formats.WMO
 {
-    public class Chunk_MOVI : Chunk_Base
+    public class Chunk_MOVI : Chunk_Base, IChunkSoup
     {
         // MOVI WMO Chunk
         // Map verts to faces.
