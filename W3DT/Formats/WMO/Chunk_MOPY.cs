@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using W3DT._3D;
 
 namespace W3DT.Formats.WMO
 {

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using W3DT.Formats;
 
-namespace W3DT._3D
+namespace W3DT.Formats.WMO
 {
     public class FacePosition
     {

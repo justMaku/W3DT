@@ -73,12 +73,15 @@
     <Compile Include="3D\Cube.cs" />
     <Compile Include="3D\Doodad.cs" />
     <Compile Include="3D\DoodadSet.cs" />
+    <Compile Include="Formats\WMO\FaceInfo.cs" />
+    <Compile Include="Formats\WMO\FacePosition.cs" />
     <Compile Include="3D\FogInfo.cs" />
     <Compile Include="3D\GroupInformation.cs" />
     <Compile Include="3D\Material.cs" />
     <Compile Include="3D\MaterialTexture.cs" />
     <Compile Include="3D\Position.cs" />
     <Compile Include="3D\Rotation.cs" />
+    <Compile Include="3D\UV.cs" />
     <Compile Include="CASC\BLTEHandler.cs" />
     <Compile Include="CASC\CDNCache.cs" />
     <Compile Include="CASC\CDNIndexHandler.cs" />
@@ -137,6 +140,9 @@
     <Compile Include="Formats\WMO\Chunk_MOLT.cs" />
     <Compile Include="Formats\WMO\Chunk_MOMT.cs" />
     <Compile Include="Formats\WMO\Chunk_MONR.cs" />
+    <Compile Include="Formats\WMO\Chunk_MOPY.cs" />
+    <Compile Include="Formats\WMO\Chunk_MOTV.cs" />
+    <Compile Include="Formats\WMO\Chunk_MOTX.cs" />
     <Compile Include="Formats\WMO\Chunk_MVER.cs" />
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
