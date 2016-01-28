@@ -22,6 +22,16 @@ namespace W3DT.Formats
                 throw new Exception("Unable to read binary file: " + filePath);
         }
 
+        public int getSeek()
+        {
+            return seek;
+        }
+
+        public bool isOutOfBounds(int offset)
+        {
+            return offset < 0 || offset >= data.Length;
+        }
+
         public bool isEndOfStream()
         {
             return seek == data.Length;

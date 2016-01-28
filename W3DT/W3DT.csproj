@@ -116,12 +116,14 @@
     <Compile Include="Formats\DBC\DBC_EmotesText.cs" />
     <Compile Include="Formats\DBC\DBC_EmotesTextData.cs" />
     <Compile Include="Formats\FormatBase.cs" />
+    <Compile Include="Formats\StringBlock.cs" />
     <Compile Include="Formats\Stuffer.cs" />
     <Compile Include="Formats\WMOFile.cs" />
     <Compile Include="Formats\WMO\Chunk_Base.cs" />
     <Compile Include="Formats\WMO\Chunk_MCVP.cs" />
     <Compile Include="Formats\WMO\Chunk_MFOG.cs" />
     <Compile Include="Formats\WMO\Chunk_MODD.cs" />
+    <Compile Include="Formats\WMO\Chunk_MODN.cs" />
     <Compile Include="Formats\WMO\Chunk_MOHD.cs" />
     <Compile Include="Formats\WMO\Chunk_MVER.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />

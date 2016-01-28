@@ -34,6 +34,7 @@ namespace W3DT.Formats
                     case Chunk_MCVP.Magic: chunk = new Chunk_MCVP(this); break;
                     case Chunk_MFOG.Magic: chunk = new Chunk_MFOG(this); break;
                     case Chunk_MODD.Magic: chunk = new Chunk_MODD(this); break;
+                    case Chunk_MODN.Magic: chunk = new Chunk_MODN(this); break;
                     default: chunk = new Chunk_Base(this); break;
                 }
 
