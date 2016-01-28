@@ -50,6 +50,8 @@ namespace W3DT.Formats
                         set = Colour4.Read(feed);
                     else if (type.Equals(typeof(Rotation)))
                         set = Rotation.Read(feed);
+                    else if (type.Equals(typeof(MaterialTexture))
+                        set = MaterialTexture.Read(feed);
 
                     if (set != null)
                     {

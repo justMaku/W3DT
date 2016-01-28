@@ -11,7 +11,7 @@ namespace W3DT.Formats.WMO
         // MOGP WMO Chunk
         // Root chunk. ChunkSize = entire file.
 
-        public const UInt32 Magic = 0x0;
+        public const UInt32 Magic = 0x4D4F4750;
         public UInt32 groupNameIndex { get; set; }
         public UInt32 dGroupName { get; set; }
         public UInt32 flags { get; set; }
