@@ -65,7 +65,8 @@ namespace W3DT.Formats
                 else
                     chunks.Add(chunk);
 
-                seekPosition((int) (startSeek + chunk.ChunkSize));
+                if (!(chunk is Chunk_MOGP))
+                    seekPosition((int) (startSeek + chunk.ChunkSize));
             }
 
             if (isRoot)
