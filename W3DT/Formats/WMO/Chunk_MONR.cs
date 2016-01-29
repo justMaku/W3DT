@@ -24,7 +24,7 @@ namespace W3DT.Formats.WMO
             for (int i = 0; i < normalCount; i++)
             {
                 float x = file.readFloat();
-                float z = file.readFloat() * -1;
+                float z = file.readFloat();
                 float y = file.readFloat();
 
                 normals[i] = new Position(x, y, z);
