@@ -28,6 +28,11 @@ namespace W3DT.Formats
 
                 i += line.Length + 1;
             }
+
+            #if DEBUG
+            foreach (KeyValuePair<int, string> node in data)
+                Log.Write("StringBlock [{0}] -> {1}", node.Key, node.Value);
+            #endif
         }
 
         public string get(int offset, bool relative = true)
