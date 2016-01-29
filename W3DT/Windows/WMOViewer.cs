@@ -14,6 +14,7 @@ using W3DT.Runners;
 using W3DT.Events;
 using W3DT.CASC;
 using W3DT.Formats;
+using W3DT.Formats.WMO;
 
 namespace W3DT
 {
@@ -27,6 +28,10 @@ namespace W3DT
         private List<RunnerExtractItem> runners;
         private WMOFile loadedFile = null;
         private Action cancelCallback;
+
+        // 3D View
+        private float rotation = 0.0f;
+        private Mesh mesh = null;
 
         public WMOViewer()
         {
@@ -60,6 +65,8 @@ namespace W3DT
             {
                 root.parse();
                 loadedFile = root;
+
+                CreateWMOMesh();
             }
             catch (WMOException e)
             {
@@ -67,6 +74,28 @@ namespace W3DT
                 Log.Write("ERROR: " + e.Message);
 
                 MessageBox.Show("Sorry, that WMO file cannot be opened!", "Errk!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CreateWMOMesh()
+        {
+            if (loadedFile == null)
+                return;
+
+            mesh = new Mesh();
+            Chunk_MOGP firstGroup = (Chunk_MOGP)loadedFile.getChunksByID(Chunk_MOGP.Magic).FirstOrDefault();
+
+            if (firstGroup != null)
+            {
+                // Verts.
+                Chunk_MOVT vertChunk = (Chunk_MOVT)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOVT.Magic).FirstOrDefault();
+                foreach (Position vertPos in vertChunk.vertices)
+                    mesh.addVert(vertPos);
+
+                // Faces.
+                Chunk_MOVI faceChunk = (Chunk_MOVI)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOVI.Magic).FirstOrDefault();
+                foreach (FacePosition facePos in faceChunk.positions)
+                    mesh.addFace(facePos.point1, facePos.point2, facePos.point3);
             }
         }
 
@@ -176,7 +205,9 @@ namespace W3DT
 
             //  Rotate around the Y axis.
             gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
-            cube.Draw(gl);
+
+            if (mesh != null)
+                mesh.Draw(gl);
 
             //  Nudge the rotation.
             rotation += 3.0f;
@@ -184,11 +215,8 @@ namespace W3DT
 
         private void openGLControl_OpenGLInitialized(object sender, EventArgs e)
         {
-            //  TODO: Initialise OpenGL here.
-
             //  Get the OpenGL object.
             OpenGL gl = openGLControl.OpenGL;
-            cube = new Cube(1F, 0F, 0F);
 
             //  Set the clear color.
             gl.ClearColor(0, 0, 0, 0);
@@ -210,8 +238,5 @@ namespace W3DT
             //  Set the modelview matrix.
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
         }
-
-        private float rotation = 0.0f;
-        private Cube cube;
     }
 }
