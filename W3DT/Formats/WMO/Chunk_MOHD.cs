@@ -20,10 +20,10 @@ namespace W3DT.Formats.WMO
         public UInt32 nDoodadNames { get; set; }
         public UInt32 nDoodadRefs { get; set; }
         public UInt32 nDoodadSets { get; set; }
-        public int colourR { get; set; }
-        public int colourG { get; set; }
-        public int colourB { get; set; }
-        public int colourX { get; set; }
+        public byte colourR { get; set; }
+        public byte colourG { get; set; }
+        public byte colourB { get; set; }
+        public byte colourX { get; set; }
         public UInt32 wmoID { get; set; }
         public Position boundingBoxLow { get; set; }
         public Position boundingBoxHigh { get; set; }

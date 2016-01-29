@@ -7,10 +7,10 @@ namespace W3DT.Formats.WMO
 {
     public class FaceInfo
     {
-        public int flags { get; private set; }
-        public int materialID { get; private set; }
+        public byte flags { get; private set; }
+        public byte materialID { get; private set; }
 
-        public FaceInfo(int flags, int materialID)
+        public FaceInfo(byte flags, byte materialID)
         {
             this.flags = flags;
             this.materialID = materialID;

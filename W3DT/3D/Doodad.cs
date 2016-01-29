@@ -9,7 +9,7 @@ namespace W3DT._3D
     public class Doodad
     {
         public UInt32 offset { get; private set; }
-        public int flags { get; set; }
+        public byte flags { get; set; }
         public Position position { get; set; }
         public Rotation rotation { get; set; }
         public float scale { get; set; }

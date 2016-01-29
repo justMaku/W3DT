@@ -37,9 +37,9 @@ namespace W3DT.Formats
             return seek == data.Length;
         }
 
-        public int readUInt8()
+        public byte readUInt8()
         {
-            return (int) readBytes(1)[0];
+            return readBytes(1)[0];
         }
 
         public Int16 readInt16()

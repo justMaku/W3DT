@@ -25,10 +25,10 @@ namespace W3DT.Formats.WMO
         public UInt16 nBatchInterior { get; set; }
         public UInt16 nBatchExterior { get; set; }
 
-        public int fog1 { get; set; }
-        public int fog2 { get; set; }
-        public int fog3 { get; set; }
-        public int fog4 { get; set; }
+        public byte fog1 { get; set; }
+        public byte fog2 { get; set; }
+        public byte fog3 { get; set; }
+        public byte fog4 { get; set; }
 
         public UInt32 liquidType { get; set; }
         public UInt32 groupID { get; set; }

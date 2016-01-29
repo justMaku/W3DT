@@ -30,7 +30,7 @@ namespace W3DT.Formats
                         set = feed.readInt64();
                     else if (type.Equals(typeof(UInt16)))
                         set = feed.readUInt16();
-                    else if (type.Equals(typeof(int)))
+                    else if (type.Equals(typeof(byte)))
                         set = feed.readUInt8();
                     else if (type.Equals(typeof(UInt32)))
                         set = feed.readUInt32();

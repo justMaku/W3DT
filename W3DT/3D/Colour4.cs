@@ -8,12 +8,12 @@ namespace W3DT._3D
 {
     public class Colour4
     {
-        public int r { get; set; }
-        public int g { get; set; }
-        public int b { get; set; }
-        public int a { get; set; }
+        public byte r { get; set; }
+        public byte g { get; set; }
+        public byte b { get; set; }
+        public byte a { get; set; }
 
-        public Colour4(int r, int g, int b, int a)
+        public Colour4(byte r, byte g, byte b, byte a)
         {
             this.r = r;
             this.g = g;
