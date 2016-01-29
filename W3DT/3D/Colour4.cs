@@ -21,6 +21,11 @@ namespace W3DT._3D
             this.a = a;
         }
 
+        public override string ToString()
+        {
+            return string.Format("R: [{0}] G: [{1}] B: [{2}] A: [{3}]", r, g, b, a);
+        }
+
         public static Colour4 Read(FormatBase input)
         {
             return new Colour4(input.readUInt8(), input.readUInt8(), input.readUInt8(), input.readUInt8());
