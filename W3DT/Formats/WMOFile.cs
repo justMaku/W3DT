@@ -66,7 +66,7 @@ namespace W3DT.Formats
                     case Chunk_MOTV.Magic: chunk = new Chunk_MOTV(this); break;
                     case Chunk_MOTX.Magic: chunk = new Chunk_MOTX(this); break;
                     case Chunk_MOVI.Magic: chunk = new Chunk_MOVI(this); break;
-                    case Chunk_MOVT.Magic: chunk = new Chunk_MOTV(this); break;
+                    case Chunk_MOVT.Magic: chunk = new Chunk_MOVT(this); break;
                     case 0x4D4F4241: skip = "MOBA (render batches)"; break;
                     case 0x4D4F4C52: skip = "MOLR (light references)"; break;
                     case 0x4D4F4452: skip = "MODR (doodad references)"; break;
