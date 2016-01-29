@@ -50,8 +50,19 @@ namespace W3DT
                 else
                     root.addGroupFile(new WMOFile(tempPath, false));
             }
-            root.parse();
-            loadedFile = root;
+
+            try
+            {
+                root.parse();
+                loadedFile = root;
+            }
+            catch (WMOException e)
+            {
+                Log.Write("ERROR: Exception was caught while opening WMO file!");
+                Log.Write("ERROR: " + e.Message);
+
+                MessageBox.Show("Sorry, that WMO file cannot be opened!", "Errk!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public void OnExploreHit(CASCFile file)
