@@ -22,9 +22,7 @@ namespace W3DT.Formats
                     Type type = prop.PropertyType;
 
                     object set = null;
-                    if (type.Equals(typeof(int)))
-                        set = feed.readUInt8();
-                    else if (type.Equals(typeof(Int16)))
+                    if (type.Equals(typeof(Int16)))
                         set = feed.readInt16();
                     else if (type.Equals(typeof(Int32)))
                         set = feed.readInt32();
@@ -32,6 +30,8 @@ namespace W3DT.Formats
                         set = feed.readInt64();
                     else if (type.Equals(typeof(UInt16)))
                         set = feed.readUInt16();
+                    else if (type.Equals(typeof(int)))
+                        set = feed.readUInt8();
                     else if (type.Equals(typeof(UInt32)))
                         set = feed.readUInt32();
                     else if (type.Equals(typeof(UInt64)))
