@@ -23,7 +23,7 @@ namespace W3DT.Formats.WMO
         public UInt16 moprCount { get; set; }
         public UInt16 nBatchA { get; set; }
         public UInt16 nBatchInterior { get; set; }
-        public UInt16 nBatchExterior { get; set; }
+        public UInt32 nBatchExterior { get; set; }
 
         public byte fog1 { get; set; }
         public byte fog2 { get; set; }
