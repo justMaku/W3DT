@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using W3DT.Events;
 using W3DT.CASC;
 
@@ -41,6 +42,17 @@ namespace W3DT.Runners
             }
 
             EventManager.Trigger_FileExtractComplete(new FileExtractCompleteArgs(file, success, runnerID));
+        }
+
+        public new void Kill()
+        {
+            string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file.FullName);
+
+            if (File.Exists(tempPath))
+                File.Delete(tempPath);
+
+            if (thread != null && thread.IsAlive)
+                thread.Abort();
         }
     }
 }
