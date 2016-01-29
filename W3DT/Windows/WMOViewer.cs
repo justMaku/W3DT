@@ -141,7 +141,7 @@ namespace W3DT
                     }
                 }
 
-                loadingWindow = new LoadingWindow("Loading WMO file: " + entry.Name, "Notice: No peons were harmed in the making of this software.", true, cancelCallback);
+                loadingWindow = new LoadingWindow("Loading WMO file: " + entry.Name, "No peons were harmed in the making of this software.", true, cancelCallback);
                 loadingWindow.ShowDialog();
             }
         }
