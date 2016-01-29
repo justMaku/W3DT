@@ -20,7 +20,7 @@ namespace W3DT.Formats
             {
                 i += input.seekNonZero();
 
-                if (input.isOutOfBounds(i) || i > readLimit)
+                if (input.isOutOfBounds(i) || i >= readLimit)
                     break;
 
                 string line = input.readString();
