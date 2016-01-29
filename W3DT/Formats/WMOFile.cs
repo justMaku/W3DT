@@ -131,6 +131,10 @@ namespace W3DT.Formats
                 if (((Chunk_MVER)version).fileVersion != 17)
                     throw new WMOException("Unsupported WMO version!");
 
+                // Root file needs to be a root file.
+                if (!chunks.Any(c => c.ChunkID == Chunk_MOHD.Magic))
+                    throw new WMOException("File is not a valid WMO file (missing root header).");
+
                 // Parse all group files and import their chunks.
                 foreach (WMOFile groupFile in groupFiles)
                 {
