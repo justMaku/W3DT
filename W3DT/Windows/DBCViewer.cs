@@ -21,6 +21,7 @@ namespace W3DT
 
         private RunnerExtractItem extractRunner;
         private LoadingWindow loadingWindow;
+        private Action cancelCallback;
         private int runnerID = -1;
 
         private Explorer explorer;
@@ -28,11 +29,21 @@ namespace W3DT
         public DBCViewer()
         {
             InitializeComponent();
+            cancelCallback = CancelCallback;
             explorer = new Explorer(this, null, null, null, UI_FilesFound, UI_FileList, new string[] { "dbc" }, "DBC_SCAN_{0}", false);
 
             EventManager.FileExtractComplete += OnFileExtractComplete;
 
             explorer.Initialize();
+        }
+
+        private void CancelCallback()
+        {
+            if (extractRunner != null)
+            {
+                extractRunner.Kill();
+                extractRunner = null;
+            }
         }
 
         private void ShowDBCFile(string path)
@@ -105,7 +116,7 @@ namespace W3DT
                     runnerID = extractRunner.runnerID;
                     extractRunner.Begin();
 
-                    loadingWindow = new LoadingWindow("Loading DBC file: " + cascFile.Name, "Life advice: Avoid dragon's breath.");
+                    loadingWindow = new LoadingWindow("Loading DBC file: " + cascFile.Name, "Life advice: Avoid dragon's breath.", true, cancelCallback);
                     loadingWindow.ShowDialog();
                 }
                 else

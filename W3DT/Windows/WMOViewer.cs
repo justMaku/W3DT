@@ -26,6 +26,7 @@ namespace W3DT
         private List<ExtractState> requiredFiles;
         private List<RunnerExtractItem> runners;
         private WMOFile loadedFile = null;
+        private Action cancelCallback;
 
         public WMOViewer()
         {
@@ -39,6 +40,8 @@ namespace W3DT
             explorer.IgnoreFilter = ignoreFilter;
             explorer.ExploreHitCallback = OnExploreHit;
             explorer.Initialize();
+
+            cancelCallback = TerminateRunners;
         }
 
         private void LoadWMOFile()
@@ -83,11 +86,11 @@ namespace W3DT
 
         private void WMOViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
-            terminateRunners();
+            TerminateRunners();
             explorer.Dispose();
         }
 
-        private void terminateRunners()
+        private void TerminateRunners()
         {
             if (runners != null)
                 foreach (RunnerExtractItem runner in runners)
@@ -107,7 +110,7 @@ namespace W3DT
                     loadedFile = null;
                 }
 
-                terminateRunners();
+                TerminateRunners();
 
                 CASCFile entry = (CASCFile)UI_FileList.SelectedNode.Tag;
                 string rootBase = Path.GetFileNameWithoutExtension(entry.FullName);
@@ -138,7 +141,7 @@ namespace W3DT
                     }
                 }
 
-                loadingWindow = new LoadingWindow("Loading WMO file: " + entry.Name, "Notice: No peons were harmed in the making of this software.");
+                loadingWindow = new LoadingWindow("Loading WMO file: " + entry.Name, "Notice: No peons were harmed in the making of this software.", true, cancelCallback);
                 loadingWindow.ShowDialog();
             }
         }

@@ -33,6 +33,7 @@
             this.UI_TextLine1 = new System.Windows.Forms.Label();
             this.UI_TextLine2 = new System.Windows.Forms.Label();
             this.LoadingEye = new W3DT.Controls.LoadingEye();
+            this.UI_CancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -72,12 +73,24 @@
             this.LoadingEye.Size = new System.Drawing.Size(64, 64);
             this.LoadingEye.TabIndex = 0;
             // 
+            // UI_CancelButton
+            // 
+            this.UI_CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_CancelButton.Location = new System.Drawing.Point(383, 58);
+            this.UI_CancelButton.Name = "UI_CancelButton";
+            this.UI_CancelButton.Size = new System.Drawing.Size(60, 23);
+            this.UI_CancelButton.TabIndex = 2;
+            this.UI_CancelButton.Text = "Cancel";
+            this.UI_CancelButton.UseVisualStyleBackColor = true;
+            this.UI_CancelButton.Click += new System.EventHandler(this.UI_CancelButton_Click);
+            // 
             // LoadingWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 89);
             this.ControlBox = false;
+            this.Controls.Add(this.UI_CancelButton);
             this.Controls.Add(this.UI_TextLine2);
             this.Controls.Add(this.UI_TextLine1);
             this.Controls.Add(this.label1);
@@ -99,6 +112,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label UI_TextLine1;
         private System.Windows.Forms.Label UI_TextLine2;
+        private System.Windows.Forms.Button UI_CancelButton;
 
     }
 }
