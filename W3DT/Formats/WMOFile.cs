@@ -88,31 +88,31 @@ namespace W3DT.Formats
                     default: chunk = new Chunk_Base(this); break;
                 }
 
-                if (skip == null)
+                if (skip != null)
                 {
-                    if (chunk.ChunkID != 0x0)
+                    Log.Write("WMO: Skipping chunk " + skip);
+                    seekPosition((int) (startSeek + readUInt32()));
+                    continue;
+                }
+
+                if (chunk.ChunkID != 0x0)
+                {
+                    if (chunk is IChunkSoup)
                     {
-                        if (chunk is IChunkSoup)
-                        {
-                            if (groupRoot != null)
-                                groupRoot.addChunk(chunk);
-                            else
-                                Log.Write("WMO: MOGP sub-chunk found before the MOGP chunk? Darkness! Madness!");
-                        }
+                        if (groupRoot != null)
+                            groupRoot.addChunk(chunk);
                         else
-                        {
-                            chunks.Add(chunk);
-                        }
+                            Log.Write("WMO: MOGP sub-chunk found before the MOGP chunk? Darkness! Madness!");
                     }
                     else
                     {
-                        string hex = chunkID.ToString("X");
-                        Log.Write("WMO: Unknown chunk encountered = {0} (0x{1}) at {2} in {3}", chunkID, hex, seek, baseName);
+                        chunks.Add(chunk);
                     }
                 }
                 else
                 {
-                    Log.Write("WMO: Skipping chunk " + skip);
+                    string hex = chunkID.ToString("X");
+                    Log.Write("WMO: Unknown chunk encountered = {0} (0x{1}) at {2} in {3}", chunkID, hex, seek, baseName);
                 }
 
                 if (!(chunk is Chunk_MOGP))
