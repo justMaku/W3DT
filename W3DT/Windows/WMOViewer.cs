@@ -24,12 +24,14 @@ namespace W3DT
         private LoadingWindow loadingWindow;
         private Dictionary<string, List<CASCFile>> groupFiles;
         private List<ExtractState> requiredFiles;
+        private List<RunnerExtractItem> runners;
         private WMOFile loadedFile = null;
 
         public WMOViewer()
         {
             InitializeComponent();
             groupFiles = new Dictionary<string, List<CASCFile>>();
+            runners = new List<RunnerExtractItem>();
 
             EventManager.FileExtractComplete += OnFileExtractComplete;
 
@@ -81,7 +83,17 @@ namespace W3DT
 
         private void WMOViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
+            terminateRunners();
             explorer.Dispose();
+        }
+
+        private void terminateRunners()
+        {
+            if (runners != null)
+                foreach (RunnerExtractItem runner in runners)
+                    runner.Kill();
+
+            runners.Clear();
         }
 
         private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
@@ -94,6 +106,8 @@ namespace W3DT
                     loadedFile.flush();
                     loadedFile = null;
                 }
+
+                terminateRunners();
 
                 CASCFile entry = (CASCFile)UI_FileList.SelectedNode.Tag;
                 string rootBase = Path.GetFileNameWithoutExtension(entry.FullName);
@@ -116,6 +130,7 @@ namespace W3DT
                         RunnerExtractItem extract = new RunnerExtractItem(target.File);
                         target.TrackerID = extract.runnerID;
                         extract.Begin();
+                        runners.Add(extract);
                     }
                     else
                     {
