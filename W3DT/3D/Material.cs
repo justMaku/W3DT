@@ -29,6 +29,8 @@ namespace W3DT._3D
             temp.terrainType = input.readUInt32();
             temp.texture3 = MaterialTexture.Read(input);
 
+            Stuffer.DescribeStuffing(temp);
+
             input.skip(4 * 4); // runtime floats
             return temp;
         }

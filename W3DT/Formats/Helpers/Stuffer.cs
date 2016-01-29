@@ -69,5 +69,20 @@ namespace W3DT.Formats
                 }
             }
         }
+
+        public static void DescribeStuffing(object target)
+        {
+            foreach (PropertyInfo prop in target.GetType().GetProperties())
+            {
+                if (prop.CanWrite)
+                {
+                    MethodInfo setter = prop.GetSetMethod();
+                    if (setter == null || !setter.IsPublic)
+                        continue;
+
+                    Log.Write("{0} -> {1}", prop.Name, prop.GetValue(target, null));
+                }
+            }
+        }
     }
 }

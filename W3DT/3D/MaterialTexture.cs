@@ -19,6 +19,11 @@ namespace W3DT._3D
             this.flags = flags;
         }
 
+        public override string ToString()
+        {
+            return string.Format("offset: {0}, colour: {1}, flags: {2}", offset, colour, flags);
+        }
+
         public static MaterialTexture Read(FormatBase input)
         {
             return new MaterialTexture(input.readUInt32(), input.readUInt32(), input.readUInt32());
