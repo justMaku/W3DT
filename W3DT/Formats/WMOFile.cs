@@ -41,7 +41,7 @@ namespace W3DT.Formats
         {
             Chunk_MOGP groupRoot = null;
 
-            while (!isEndOfStream())
+            while (!isEndOfStream() && !isOutOfBounds(seek + 4))
             {
                 UInt32 chunkID = readUInt32();
                 string skip = null;
