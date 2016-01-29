@@ -21,6 +21,7 @@ namespace W3DT
 
         private RunnerExtractItem extractRunner;
         private LoadingWindow loadingWindow;
+        private int runnerID = -1;
 
         private Explorer explorer;
 
@@ -55,15 +56,19 @@ namespace W3DT
         private void OnFileExtractComplete(object sender, EventArgs rawArgs)
         {
             FileExtractCompleteArgs args = (FileExtractCompleteArgs)rawArgs;
-            extractRunner = null;
 
-            loadingWindow.Close();
-            loadingWindow = null;
+            if (args.RunnerID == runnerID)
+            {
+                extractRunner = null;
 
-            if (args.Success)
-                ShowDBCFile(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName));
-            else
-                throw new Exception("Unable to extract DBC file -> " + args.File.FullName);
+                loadingWindow.Close();
+                loadingWindow = null;
+
+                if (args.Success)
+                    ShowDBCFile(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName));
+                else
+                    throw new Exception("Unable to extract DBC file -> " + args.File.FullName);
+            }
         }
 
         private void UI_ExportButton_Click(object sender, EventArgs e)
@@ -97,6 +102,7 @@ namespace W3DT
                 if (!File.Exists(tempPath))
                 {
                     extractRunner = new RunnerExtractItem(cascFile);
+                    runnerID = extractRunner.runnerID;
                     extractRunner.Begin();
 
                     loadingWindow = new LoadingWindow("Loading DBC file: " + cascFile.Name, "Life advice: Avoid dragon's breath.");

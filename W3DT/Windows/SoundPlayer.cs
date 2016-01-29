@@ -21,6 +21,7 @@ namespace W3DT
         private bool paused = false;
         private CASCFile file;
         private string localPath;
+        private int runnerID = -1;
 
         public SoundPlayer(CASCFile file)
         {
@@ -33,7 +34,11 @@ namespace W3DT
             if (!File.Exists(localPath))
             {
                 EventManager.FileExtractComplete += OnFileExtractComplete;
-                new RunnerExtractItem(file).Begin();
+
+                RunnerExtractItem extract = new RunnerExtractItem(file);
+                runnerID = extract.runnerID;
+                extract.Begin();
+
                 SetState("Extracting file...");
             }
             else
@@ -52,7 +57,8 @@ namespace W3DT
         private void OnFileExtractComplete(object sender, EventArgs args)
         {
             FileExtractCompleteArgs extractArgs = (FileExtractCompleteArgs)args;
-            if (extractArgs.File.Equals(file))
+
+            if (extractArgs.RunnerID == runnerID)
             {
                 EventManager.FileExtractComplete -= OnFileExtractComplete;
                 if (extractArgs.Success)

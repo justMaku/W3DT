@@ -18,6 +18,7 @@ namespace W3DT
     public partial class ArtExplorerWindow : Form
     {
         private RunnerExtractItem extractRunner;
+        private int runnerID = -1;
         private string currentImageName;
         private Bitmap currentImage;
 
@@ -37,21 +38,25 @@ namespace W3DT
         private void OnFileExtractComplete(object sender, EventArgs rawArgs)
         {
             FileExtractCompleteArgs args = (FileExtractCompleteArgs)rawArgs;
-            currentImageName = null;
 
-            UI_ExportButton.Hide();
-
-            if (args.Success)
+            if (args.RunnerID == runnerID)
             {
-                displayImage(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName));
-            }
-            else
-            {
-                UI_PreviewStatus.Text = "Error loading image!";
-                UI_PreviewStatus.Show();
-            }
+                currentImageName = null;
 
-            extractRunner = null;
+                UI_ExportButton.Hide();
+
+                if (args.Success)
+                {
+                    displayImage(Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName));
+                }
+                else
+                {
+                    UI_PreviewStatus.Text = "Error loading image!";
+                    UI_PreviewStatus.Show();
+                }
+
+                extractRunner = null;
+            }
         }
 
         private void displayImage(string file)
@@ -107,6 +112,7 @@ namespace W3DT
                 else
                 {
                     extractRunner = new RunnerExtractItem(file);
+                    runnerID = extractRunner.runnerID;
                     extractRunner.Begin();
                 }
             }
