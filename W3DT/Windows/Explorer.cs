@@ -87,7 +87,7 @@ namespace W3DT
             {
                 string fieldText = searchField.Text.Trim();
                 if (fieldText.Length > 0)
-                    filter = fieldText;
+                    filter = fieldText.ToLower();
             }
 
             runner = new RunnerFileExplore(currentScanID, extensions, filter);
