@@ -11,7 +11,7 @@ namespace W3DT.Formats.WMO
         // MOTV WMO Chunk
         // Defines UV data.
 
-        public const UInt32 Magic = 0x4D4F5654;
+        public const UInt32 Magic = 0x4D4F5456;
         public UV[] uvData { get; private set; }
 
         public Chunk_MOTV(WMOFile file) : base(file, "MOTV")
