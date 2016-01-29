@@ -17,6 +17,8 @@ namespace W3DT._3D
         public float fogEnd { get; set; }
         public float fogMultiplier { get; set; }
         public Colour4 colour1 { get; set; }
+        public float unk1 { get; set; } // 222.222
+        public float unk2 { get; set; }
         public Colour4 colour2 { get; set; }
 
         public static FogInfo Read(FormatBase input)
