@@ -14,6 +14,7 @@ namespace W3DT._3D
         public Mesh()
         {
             verts = new List<Position>();
+            faces = new List<Face>();
         }
 
         public void addVert(Position vert)
