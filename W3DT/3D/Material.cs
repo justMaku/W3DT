@@ -19,7 +19,16 @@ namespace W3DT._3D
         public static Material Read(FormatBase input)
         {
             Material temp = new Material();
-            Stuffer.Stuff(temp, input, null, true);
+            //Stuffer.Stuff(temp, input, null, true);
+            temp.flags = input.readUInt32();
+            temp.shader = input.readUInt32();
+            temp.blendMode = input.readUInt32();
+
+            temp.texture1 = MaterialTexture.Read(input);
+            temp.texture2 = new MaterialTexture(input.readUInt32(), input.readUInt32(), 0);
+            temp.terrainType = input.readUInt32();
+            temp.texture3 = MaterialTexture.Read(input);
+
             input.skip(4 * 4); // runtime floats
             return temp;
         }

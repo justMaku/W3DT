@@ -12,7 +12,7 @@ namespace W3DT._3D
         public UInt32 colour { get; set; }
         public UInt32 flags { get; set; }
 
-        private MaterialTexture(UInt32 offset, UInt32 colour, UInt32 flags)
+        public MaterialTexture(UInt32 offset, UInt32 colour, UInt32 flags)
         {
             this.offset = offset;
             this.colour = colour;
