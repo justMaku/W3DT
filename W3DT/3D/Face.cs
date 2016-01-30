@@ -24,7 +24,7 @@ namespace W3DT._3D
 
         public void Draw(OpenGL gl)
         {
-            gl.Begin(OpenGL.GL_POLYGON);
+            gl.Begin(OpenGL.GL_TRIANGLES);
 
             foreach (Position point in points)
                 gl.Vertex(point.X, point.Y, point.Z);
