@@ -32,7 +32,7 @@ namespace W3DT._3D
 
             foreach (int point in points)
             {
-                int index = point - 1;
+                int index = point;
                 if (index >= 0 && index < vertCount)
                     face.addPoint(verts[index]);
             }

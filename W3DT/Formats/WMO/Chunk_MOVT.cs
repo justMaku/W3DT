@@ -24,7 +24,7 @@ namespace W3DT.Formats.WMO
             for (int i = 0; i < vertCount; i++)
             {
                 float x = file.readFloat();
-                float z = file.readFloat();
+                float z = file.readFloat() * -1;
                 float y = file.readFloat();
 
                 vertices[i] = new Position(x, y, z);
