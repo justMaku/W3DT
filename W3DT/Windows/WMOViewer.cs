@@ -320,7 +320,11 @@ namespace W3DT
             gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
 
             if (mesh != null)
+            {
+                gl.Enable(OpenGL.GL_TEXTURE_2D);
                 mesh.Draw(gl);
+                gl.Disable(OpenGL.GL_TEXTURE_2D);
+            }
 
             //  Nudge the rotation.
             rotation += 3.0f;
