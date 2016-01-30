@@ -22,7 +22,7 @@ namespace W3DT.Formats.WMO
             materials = new Material[materialCount];
 
             for (int i = 0; i < materialCount; i++)
-                materials[i] = Material.Read(file);
+                materials[i] = Material.Read(file, i);
 
             LogWrite("Loaded " + materialCount + " materials.");
         }

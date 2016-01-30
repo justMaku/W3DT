@@ -15,11 +15,12 @@ namespace W3DT._3D
         public MaterialTexture texture2 { get; set; }
         public MaterialTexture texture3 { get; set; }
         public UInt32 terrainType { get; set; }
+        public int index { get; private set; }
 
-        public static Material Read(FormatBase input)
+        public static Material Read(FormatBase input, int index)
         {
             Material temp = new Material();
-            //Stuffer.Stuff(temp, input, null, true);
+            temp.index = index;
             temp.flags = input.readUInt32();
             temp.shader = input.readUInt32();
             temp.blendMode = input.readUInt32();
