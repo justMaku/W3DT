@@ -44,14 +44,5 @@ namespace W3DT._3D
             foreach (Face face in faces)
                 face.Draw(gl);
         }
-
-        private Position findPoint(int index)
-        {
-            index--;
-            if (index >= 0 && index < verts.Count)
-                return verts[index];
-
-            return null;
-        }
     }
 }
