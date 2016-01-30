@@ -82,8 +82,11 @@ namespace W3DT
             if (loadedFile == null)
                 return;
 
+            Log.Write("CreateWMOMesh: Creating new mesh from WMO data...");
+
             mesh = new Mesh();
             Chunk_MOGP firstGroup = (Chunk_MOGP)loadedFile.getChunksByID(Chunk_MOGP.Magic).FirstOrDefault();
+            // ToDo: Confirm we actually have this.
 
             if (firstGroup != null)
             {
@@ -92,10 +95,14 @@ namespace W3DT
                 foreach (Position vertPos in vertChunk.vertices)
                     mesh.addVert(vertPos);
 
+                Log.Write("CreateWMOMesh: {0} vertices added to mesh index", mesh.VertCount);
+
                 // Faces.
                 Chunk_MOVI faceChunk = (Chunk_MOVI)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOVI.Magic).FirstOrDefault();
                 foreach (FacePosition facePos in faceChunk.positions)
                     mesh.addFace(facePos.point1, facePos.point2, facePos.point3);
+
+                Log.Write("CreateWMOMesh: {0} faces added to mesh", mesh.FaceCount);
             }
         }
 

@@ -10,6 +10,8 @@ namespace W3DT._3D
     {
         private List<Position> points;
 
+        public int PointCount { get { return points.Count; } }
+
         public Face()
         {
             points = new List<Position>();
@@ -18,11 +20,6 @@ namespace W3DT._3D
         public void addPoint(Position point)
         {
             points.Add(point);
-        }
-
-        public int getPointCount()
-        {
-            return points.Count;
         }
 
         public void Draw(OpenGL gl)

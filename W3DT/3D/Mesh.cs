@@ -11,6 +11,9 @@ namespace W3DT._3D
         private List<Position> verts;
         private List<Face> faces;
 
+        public int VertCount { get { return verts.Count; } }
+        public int FaceCount { get { return faces.Count; } }
+
         public Mesh()
         {
             verts = new List<Position>();
@@ -34,7 +37,7 @@ namespace W3DT._3D
                     face.addPoint(verts[index]);
             }
 
-            if (face.getPointCount() > 0)
+            if (face.PointCount > 0)
                 faces.Add(face);
         }
 
