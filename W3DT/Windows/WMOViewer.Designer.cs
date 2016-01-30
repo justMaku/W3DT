@@ -41,13 +41,16 @@
             // 
             // openGLControl
             // 
+            this.openGLControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.openGLControl.DrawFPS = false;
             this.openGLControl.Location = new System.Drawing.Point(333, 12);
             this.openGLControl.Name = "openGLControl";
             this.openGLControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
             this.openGLControl.RenderContextType = SharpGL.RenderContextType.FBO;
             this.openGLControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
-            this.openGLControl.Size = new System.Drawing.Size(624, 391);
+            this.openGLControl.Size = new System.Drawing.Size(831, 724);
             this.openGLControl.TabIndex = 0;
             this.openGLControl.OpenGLInitialized += new System.EventHandler(this.openGLControl_OpenGLInitialized);
             this.openGLControl.OpenGLDraw += new SharpGL.RenderEventHandler(this.openGLControl_OpenGLDraw);
@@ -55,9 +58,11 @@
             // 
             // UI_FileList
             // 
+            this.UI_FileList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.UI_FileList.Location = new System.Drawing.Point(12, 12);
             this.UI_FileList.Name = "UI_FileList";
-            this.UI_FileList.Size = new System.Drawing.Size(315, 617);
+            this.UI_FileList.Size = new System.Drawing.Size(315, 724);
             this.UI_FileList.TabIndex = 1;
             this.UI_FileList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.UI_FileList_AfterSelect);
             // 
@@ -69,7 +74,7 @@
             this.UI_FilterOverlay.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.UI_FilterOverlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UI_FilterOverlay.ForeColor = System.Drawing.Color.Gray;
-            this.UI_FilterOverlay.Location = new System.Drawing.Point(15, 638);
+            this.UI_FilterOverlay.Location = new System.Drawing.Point(15, 745);
             this.UI_FilterOverlay.Name = "UI_FilterOverlay";
             this.UI_FilterOverlay.Size = new System.Drawing.Size(135, 25);
             this.UI_FilterOverlay.TabIndex = 6;
@@ -79,7 +84,7 @@
             // 
             this.UI_FilterField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.UI_FilterField.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UI_FilterField.Location = new System.Drawing.Point(12, 635);
+            this.UI_FilterField.Location = new System.Drawing.Point(12, 742);
             this.UI_FilterField.Name = "UI_FilterField";
             this.UI_FilterField.Size = new System.Drawing.Size(238, 31);
             this.UI_FilterField.TabIndex = 5;
@@ -89,7 +94,7 @@
             this.UI_FileCount_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.UI_FileCount_Label.AutoSize = true;
             this.UI_FileCount_Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UI_FileCount_Label.Location = new System.Drawing.Point(256, 638);
+            this.UI_FileCount_Label.Location = new System.Drawing.Point(256, 745);
             this.UI_FileCount_Label.Name = "UI_FileCount_Label";
             this.UI_FileCount_Label.Size = new System.Drawing.Size(327, 25);
             this.UI_FileCount_Label.TabIndex = 4;
@@ -103,7 +108,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(969, 672);
+            this.ClientSize = new System.Drawing.Size(1176, 779);
             this.Controls.Add(this.UI_FilterOverlay);
             this.Controls.Add(this.UI_FilterField);
             this.Controls.Add(this.UI_FileCount_Label);
