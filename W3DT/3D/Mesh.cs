@@ -31,11 +31,8 @@ namespace W3DT._3D
             Face face = new Face();
 
             foreach (int point in points)
-            {
-                int index = point;
-                if (index >= 0 && index < vertCount)
-                    face.addPoint(verts[index]);
-            }
+                if (point >= 0 && point < vertCount)
+                    face.addPoint(verts[point]);
 
             if (face.PointCount > 0)
                 faces.Add(face);
