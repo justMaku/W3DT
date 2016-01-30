@@ -204,19 +204,6 @@ namespace W3DT
             }
         }
 
-        private void upateCamera()
-        {
-            OpenGL gl = openGLControl.OpenGL;
-
-            gl.MatrixMode(OpenGL.GL_PROJECTION);
-            gl.LoadIdentity();
-
-            float distance = cameraDist * -1;
-            gl.LookAt(distance, 20, distance, 0, 0, 0, 0, 1, 0);
-
-            gl.MatrixMode(OpenGL.GL_MODELVIEW);
-        }
-
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;
