@@ -52,6 +52,7 @@ namespace W3DT._3D
             }
 
             gl.End();
+            gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
         }
     }
 }
