@@ -25,7 +25,7 @@ namespace W3DT._3D
             verts.Add(vert);
         }
 
-        public void addFace(params int[] points)
+        public void addFace(byte material, params int[] points)
         {
             int vertCount = verts.Count;
             Face face = new Face();

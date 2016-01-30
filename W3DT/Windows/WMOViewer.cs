@@ -99,8 +99,15 @@ namespace W3DT
 
                 // Faces.
                 Chunk_MOVI faceChunk = (Chunk_MOVI)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOVI.Magic).FirstOrDefault();
-                foreach (FacePosition facePos in faceChunk.positions)
-                    mesh.addFace(facePos.point1, facePos.point2, facePos.point3);
+                Chunk_MOPY faceMatChunk = (Chunk_MOPY)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOPY.Magic).FirstOrDefault();
+
+                for (int i = 0; i < faceChunk.positions.Length; i++)
+                {
+                    FacePosition position = faceChunk.positions[i];
+                    FaceInfo info = faceMatChunk.faceInfo[i];
+
+                    mesh.addFace(info.materialID, position.point1, position.point2, position.point3);
+                }
 
                 Log.Write("CreateWMOMesh: {0} faces added to mesh", mesh.FaceCount);
             }
