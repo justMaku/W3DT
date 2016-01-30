@@ -204,6 +204,19 @@ namespace W3DT
             }
         }
 
+        private void upateCamera()
+        {
+            OpenGL gl = openGLControl.OpenGL;
+
+            gl.MatrixMode(OpenGL.GL_PROJECTION);
+            gl.LoadIdentity();
+
+            float distance = cameraDist * -1;
+            gl.LookAt(distance, 20, distance, 0, 0, 0, 0, 1, 0);
+
+            gl.MatrixMode(OpenGL.GL_MODELVIEW);
+        }
+
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;
@@ -236,13 +249,9 @@ namespace W3DT
             gl.MatrixMode(OpenGL.GL_PROJECTION);
             gl.LoadIdentity();
 
-            //  Create a perspective transformation.
-            gl.Perspective(60.0f, (double)Width / (double)Height, 0.01, 100.0);
+            gl.Perspective(60.0f, (double)Width / (double)Height, 0.01, 900.0);
+            gl.LookAt(50, 20, 50, 0, 0, 0, 0, 1, 0);
 
-            //  Use the 'look at' helper function to position and aim the camera.
-            gl.LookAt(-2, 2, -2, 0, 0, 0, 0, 1, 0);
-
-            //  Set the modelview matrix.
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
         }
     }
