@@ -48,6 +48,11 @@ namespace W3DT.Formats
             return data.Values;
         }
 
+        public IEnumerable<KeyValuePair<int, string>> raw()
+        {
+            return data;
+        }
+
         public int count()
         {
             return data.Count;

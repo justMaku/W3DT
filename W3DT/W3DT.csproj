@@ -75,6 +75,9 @@
     <Compile Include="3D\DoodadSet.cs" />
     <Compile Include="3D\Face.cs" />
     <Compile Include="3D\Mesh.cs" />
+    <Compile Include="3D\TextureManager.cs" />
+    <Compile Include="Events\FileExtractArgs.cs" />
+    <Compile Include="Events\FileExtractCompleteUnsafeArgs.cs" />
     <Compile Include="Formats\WMO\Chunk_MOVI.cs" />
     <Compile Include="Formats\WMO\Chunk_MOVT.cs" />
     <Compile Include="Formats\WMO\FaceInfo.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />
+    <Compile Include="Runners\RunnerExtractItemUnsafe.cs" />
     <Compile Include="Runners\RunnerFileExplore.cs" />
     <Compile Include="Sound\libZPlay.cs" />
     <Compile Include="Windows\ArtExplorerWindow.cs">

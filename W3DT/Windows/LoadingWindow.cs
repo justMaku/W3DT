@@ -24,6 +24,16 @@ namespace W3DT
                 callback = cancelCallback;
         }
 
+        public void SetFirstLine(string text)
+        {
+            UI_TextLine1.Text = text;
+        }
+
+        public void SetSecondLine(string text)
+        {
+            UI_TextLine2.Text = text;
+        }
+
         private void UI_CancelButton_Click(object sender, EventArgs e)
         {
             if (callback != null)

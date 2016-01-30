@@ -187,7 +187,7 @@ namespace W3DT.Events
             TriggerEvent(_FileExploreDone, args);
         }
 
-        public static void Trigger_FileExtractComplete(FileExtractCompleteArgs args)
+        public static void Trigger_FileExtractComplete(FileExtractArgs args)
         {
             TriggerEvent(_FileExtractComplete, args);
         }

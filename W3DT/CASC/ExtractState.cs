@@ -7,11 +7,11 @@ namespace W3DT.CASC
 {
     public class ExtractState
     {
-        public CASCFile File { get; private set; }
+        public object File { get; private set; }
         public bool State { get; set; }
         public int TrackerID { get; set; }
 
-        public ExtractState(CASCFile file)
+        public ExtractState(object file)
         {
             File = file;
             State = false;
