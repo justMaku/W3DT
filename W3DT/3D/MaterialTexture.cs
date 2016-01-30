@@ -9,10 +9,10 @@ namespace W3DT._3D
     public class MaterialTexture
     {
         public UInt32 offset { get; set; }
-        public UInt32 colour { get; set; }
+        public Colour4 colour { get; set; }
         public UInt32 flags { get; set; }
 
-        public MaterialTexture(UInt32 offset, UInt32 colour, UInt32 flags)
+        public MaterialTexture(UInt32 offset, Colour4 colour, UInt32 flags)
         {
             this.offset = offset;
             this.colour = colour;
@@ -26,7 +26,7 @@ namespace W3DT._3D
 
         public static MaterialTexture Read(FormatBase input)
         {
-            return new MaterialTexture(input.readUInt32(), input.readUInt32(), input.readUInt32());
+            return new MaterialTexture(input.readUInt32(), Colour4.Read(input), input.readUInt32());
         }
     }
 }
