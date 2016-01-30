@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace W3DT.Formats
 {
@@ -16,10 +17,16 @@ namespace W3DT.Formats
         {
             FileName = Path.GetFileName(filePath);
 
-            if (File.Exists(filePath))
-                data = File.ReadAllBytes(filePath);
-            else
+            if (!File.Exists(filePath))
                 throw new Exception("Unable to read binary file: " + filePath);
+
+            data = File.ReadAllBytes(filePath);
+
+            using (SHA1CryptoServiceProvider hasher = new SHA1CryptoServiceProvider())
+            {
+                string hash = Convert.ToBase64String(hasher.ComputeHash(data));
+                Log.Write("Opening binary file {0} [{1}]", FileName, hash);
+            }
         }
 
         public int getSeek()
