@@ -8,24 +8,32 @@ namespace W3DT._3D
 {
     public class Face
     {
-        // ToDo: Hard-code these to be 3 in length.
-        private List<Position> points;
-        private List<UV> uvs;
+        private Position[] points;
+        private UV[] uvs;
         private uint textureID;
+        private short index = 0;
 
-        public int PointCount { get { return points.Count; } }
+        public int PointCount { get { return points.Length; } }
 
         public Face(uint texID)
         {
-            points = new List<Position>();
-            uvs = new List<UV>();
+            points = new Position[3];
+            uvs = new UV[3];
+
             textureID = texID;
         }
 
         public void addPoint(Position point, UV uv)
         {
-            points.Add(point);
-            uvs.Add(uv);
+            if (index == 3)
+            {
+                Log.Write("WARNING: Trying to add more than 3 verts to a triangle?");
+                return;
+            }
+
+            points[index] = point;
+            uvs[index] = uv;
+            index++;
         }
 
         public void Draw(OpenGL gl)
@@ -34,7 +42,7 @@ namespace W3DT._3D
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, textureID);
             gl.Begin(OpenGL.GL_TRIANGLES);
 
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 0; i < points.Length; i++)
             {
                 Position point = points[i];
                 UV uv = uvs[i];
