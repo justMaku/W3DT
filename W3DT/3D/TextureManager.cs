@@ -67,6 +67,8 @@ namespace W3DT._3D
         {
             foreach (uint[] intID in mapping.Values)
                 gl.DeleteTextures(1, intID);
+
+            mapping.Clear();
         }
     }
 }
