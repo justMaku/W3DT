@@ -91,6 +91,12 @@ namespace W3DT
                 Log.Write("ERROR: " + e.Message);
 
                 MessageBox.Show("Sorry, that WMO file cannot be opened!", "Errk!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                if (loadingWindow != null)
+                {
+                    loadingWindow.Hide();
+                    loadingWindow = null;
+                }
             }
         }
 
