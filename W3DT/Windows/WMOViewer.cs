@@ -226,7 +226,7 @@ namespace W3DT
             OpenGL gl = openGLControl.OpenGL;
 
             //  Set the clear color.
-            gl.ClearColor(0, 0, 0, 0);
+            gl.ClearColor(1, 1, 1, 1);
         }
 
         private void openGLControl_Resized(object sender, EventArgs e)
