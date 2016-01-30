@@ -185,7 +185,8 @@ namespace W3DT
 
                     if (info.materialID != 0xff)
                     {
-                        uint texID = texManager.getTexture((int)matChunk.materials[info.materialID].texture1.offset);
+                        Material mat = matChunk.materials[info.materialID];
+                        uint texID = texManager.getTexture((int)mat.texture1.offset);
                         mesh.addFace(texID, position.point1, position.point2, position.point3);
                     }
                 }
