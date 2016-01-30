@@ -61,6 +61,7 @@ namespace W3DT
         private void CancelExtraction()
         {
             TerminateRunners();
+            loadingWindow = null;
         }
 
         private void LoadWMOFile()
