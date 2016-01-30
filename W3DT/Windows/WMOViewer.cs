@@ -176,13 +176,15 @@ namespace W3DT
                 // Faces.
                 Chunk_MOVI faceChunk = (Chunk_MOVI)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOVI.Magic).FirstOrDefault();
                 Chunk_MOPY faceMatChunk = (Chunk_MOPY)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOPY.Magic).FirstOrDefault();
+                Chunk_MOMT matChunk = (Chunk_MOMT)loadedFile.getChunks().Where(c => c.ChunkID == Chunk_MOMT.Magic).FirstOrDefault();
 
                 for (int i = 0; i < faceChunk.positions.Length; i++)
                 {
                     FacePosition position = faceChunk.positions[i];
                     FaceInfo info = faceMatChunk.faceInfo[i];
 
-                    mesh.addFace(texManager.getTexture(info.materialID), position.point1, position.point2, position.point3);
+                    uint texID = texManager.getTexture((int) matChunk.materials[info.materialID].texture1.offset);
+                    mesh.addFace(texID, position.point1, position.point2, position.point3);
                 }
 
                 Log.Write("CreateWMOMesh: {0} faces added to mesh", mesh.FaceCount);

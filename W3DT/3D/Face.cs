@@ -38,7 +38,6 @@ namespace W3DT._3D
 
         public void Draw(OpenGL gl)
         {
-            gl.Color(0.0f, 1.0f, 0.0f, 1.0f);
             gl.Enable(OpenGL.GL_TEXTURE_2D);
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, textureID);
             gl.Begin(OpenGL.GL_TRIANGLES);
