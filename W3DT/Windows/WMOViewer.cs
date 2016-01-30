@@ -183,8 +183,11 @@ namespace W3DT
                     FacePosition position = faceChunk.positions[i];
                     FaceInfo info = faceMatChunk.faceInfo[i];
 
-                    uint texID = texManager.getTexture((int) matChunk.materials[info.materialID].texture1.offset);
-                    mesh.addFace(texID, position.point1, position.point2, position.point3);
+                    if (info.materialID != 0xff)
+                    {
+                        uint texID = texManager.getTexture((int)matChunk.materials[info.materialID].texture1.offset);
+                        mesh.addFace(texID, position.point1, position.point2, position.point3);
+                    }
                 }
 
                 Log.Write("CreateWMOMesh: {0} faces added to mesh", mesh.FaceCount);
