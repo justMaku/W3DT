@@ -46,7 +46,6 @@ namespace W3DT._3D
 
         public override void Draw(OpenGL gl)
         {
-            gl.Color(1, 0, 0);
             foreach (Face face in faces)
                 face.Draw(gl);
         }
