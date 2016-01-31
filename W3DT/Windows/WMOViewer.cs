@@ -378,7 +378,8 @@ namespace W3DT
 
                 WaveFrontWriter writer = new WaveFrontWriter(UI_ExportSaveDialog.FileName, texManager);
                 foreach (Mesh mesh in meshes)
-                    writer.addMesh(mesh);
+                    if (mesh.ShouldRender)
+                        writer.addMesh(mesh);
 
                 writer.Write();
                 writer.Close();
