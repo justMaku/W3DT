@@ -26,7 +26,7 @@ namespace W3DT._3D
             temp.blendMode = input.readUInt32();
 
             temp.texture1 = MaterialTexture.Read(input);
-            temp.texture2 = new MaterialTexture(input.readUInt32(), input.readUInt32(), 0);
+            temp.texture2 = new MaterialTexture(input.readUInt32(), Colour4.Read(input), 0);
             temp.terrainType = input.readUInt32();
             temp.texture3 = MaterialTexture.Read(input);
 

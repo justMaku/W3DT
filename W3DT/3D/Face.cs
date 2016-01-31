@@ -12,15 +12,17 @@ namespace W3DT._3D
         private UV[] uvs;
         private uint textureID;
         private short index = 0;
+        private Colour4 colour;
 
         public int PointCount { get { return points.Length; } }
 
-        public Face(uint texID)
+        public Face(uint texID, Colour4 colour)
         {
             points = new Position[3];
             uvs = new UV[3];
 
             textureID = texID;
+            this.colour = colour;
         }
 
         public void addPoint(Position point, UV uv)
@@ -39,6 +41,10 @@ namespace W3DT._3D
         public void Draw(OpenGL gl)
         {
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, textureID);
+
+            int[] amb_diff = { colour.a, colour.b, colour.g, colour.a };
+            gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT_AND_DIFFUSE, amb_diff);
+
             gl.Begin(OpenGL.GL_TRIANGLES);
 
             for (int i = 0; i < 3; i++)

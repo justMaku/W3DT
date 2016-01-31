@@ -33,9 +33,9 @@ namespace W3DT._3D
             uvs.Add(uv);
         }
 
-        public void addFace(uint texID, params int[] points)
+        public void addFace(uint texID, Colour4 colour, params int[] points)
         {
-            Face face = new Face(texID);
+            Face face = new Face(texID, colour);
 
             foreach (int point in points)
                 face.addPoint(verts[point], uvs[point]);
@@ -46,6 +46,7 @@ namespace W3DT._3D
 
         public override void Draw(OpenGL gl)
         {
+            gl.Color(1.0F, 1.0F, 1.0F, 1.0F);
             foreach (Face face in faces)
                 face.Draw(gl);
         }

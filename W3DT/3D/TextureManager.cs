@@ -34,7 +34,7 @@ namespace W3DT._3D
                 width = bitmap.Width;
                 height = bitmap.Height;
 
-                int length = width * height * 3;
+                int length = width * height * 4;
                 var rawData = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
                 data = new byte[length];
 
@@ -47,7 +47,7 @@ namespace W3DT._3D
             gl.GenTextures(1, intID);
 
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, intID[0]);
-            gl.TexImage2D(OpenGL.GL_TEXTURE_2D, 0, OpenGL.GL_RGB, width, height, 0, OpenGL.GL_BGR, OpenGL.GL_UNSIGNED_BYTE, data);
+            gl.TexImage2D(OpenGL.GL_TEXTURE_2D, 0, OpenGL.GL_RGBA, width, height, 0, OpenGL.GL_BGRA, OpenGL.GL_UNSIGNED_BYTE, data);
 
             gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MAG_FILTER, OpenGL.GL_LINEAR);
             gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MIN_FILTER, OpenGL.GL_LINEAR_MIPMAP_LINEAR);
