@@ -32,9 +32,15 @@ namespace W3DT
             cancelCallback = CancelCallback;
             explorer = new Explorer(this, null, null, null, UI_FilesFound, UI_FileList, new string[] { "dbc" }, "DBC_SCAN_{0}", false);
 
+            EventManager.CASCLoadStart += OnCASCLoadStart;
             EventManager.FileExtractComplete += OnFileExtractComplete;
 
             explorer.Initialize();
+        }
+
+        private void OnCASCLoadStart(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void CancelCallback()
