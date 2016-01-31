@@ -134,13 +134,8 @@ namespace W3DT
 
         private void DBCViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (loadingWindow != null)
-            {
-                if (!loadingWindow.IsDisposed && loadingWindow.Visible)
-                    loadingWindow.Close();
-
-                loadingWindow = null;
-            }
+            if (loadingWindow != null && !loadingWindow.IsDisposed && loadingWindow.Visible)
+                loadingWindow.Close();
 
             CancelCallback();
             EventManager.FileExtractComplete -= OnFileExtractComplete;
