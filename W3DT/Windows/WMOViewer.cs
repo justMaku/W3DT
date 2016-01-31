@@ -224,6 +224,8 @@ namespace W3DT
 
         private void WMOViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
+            EventManager.FileExtractComplete -= OnFileExtractComplete;
+
             TerminateRunners();
             explorer.Dispose();
         }
