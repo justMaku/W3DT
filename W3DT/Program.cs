@@ -82,11 +82,12 @@ namespace W3DT
 
             // Close any explorer windows that use our temp directory.
             ShellWindows windows = new SHDocVw.ShellWindows();
+            string tempPath = Path.GetFullPath(Constants.TEMP_DIRECTORY);
             foreach (InternetExplorer ex in windows)
             {
                 string procName = Path.GetFileNameWithoutExtension(ex.FullName).ToLower();
 
-                if (procName.Equals("explorer") && ex.LocationURL.Contains(Constants.TEMP_DIRECTORY))
+                if (procName.Equals("explorer") && ex.LocationURL.Contains(tempPath))
                 {
                     Log.Write("Found explorer.exe process using our temp directory, invoking exit!");
                     ex.Quit();
