@@ -128,6 +128,7 @@ namespace W3DT
 
         private void DBCViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
+            CancelCallback();
             EventManager.FileExtractComplete -= OnFileExtractComplete;
             explorer.Dispose();
         }
