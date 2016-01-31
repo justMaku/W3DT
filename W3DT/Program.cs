@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using W3DT.JSONContainers;
 using W3DT.CASC;
+using SHDocVw;
 
 namespace W3DT
 {
@@ -77,6 +78,19 @@ namespace W3DT
             {
                 Log.Write("NOT UPDATING: Automatic updating disabled in settings.");
                 DO_UPDATE = false;
+            }
+
+            // Close any explorer windows that use our temp directory.
+            ShellWindows windows = new SHDocVw.ShellWindows();
+            foreach (InternetExplorer ex in windows)
+            {
+                string procName = Path.GetFileNameWithoutExtension(ex.FullName).ToLower();
+
+                if (procName.Equals("explorer") && ex.LocationURL.Contains(Constants.TEMP_DIRECTORY))
+                {
+                    Log.Write("Found explorer.exe process using our temp directory, invoking exit!");
+                    ex.Quit();
+                }
             }
 
             Application.EnableVisualStyles();
