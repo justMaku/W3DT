@@ -173,13 +173,16 @@ namespace W3DT
             foreach (KeyValuePair<int, string> tex in texChunk.textures.raw())
                 texManager.addTexture(tex.Key, Path.Combine(Constants.TEMP_DIRECTORY, tex.Value));
 
+            Chunk_MOGN nameChunk = (Chunk_MOGN)loadedFile.getChunk(Chunk_MOGN.Magic);
+            
             // Material register.
             Chunk_MOMT matChunk = (Chunk_MOMT)loadedFile.getChunk(Chunk_MOMT.Magic);
 
             foreach (Chunk_Base rawChunk in loadedFile.getChunksByID(Chunk_MOGP.Magic))
             {
-                Mesh mesh = new Mesh();
                 Chunk_MOGP chunk = (Chunk_MOGP)rawChunk;
+                string meshName = nameChunk.data.get((int)chunk.groupNameIndex);
+                Mesh mesh = new Mesh(meshName);
 
                 // Populate mesh with vertices.
                 Chunk_MOVT vertChunk = (Chunk_MOVT)chunk.getChunk(Chunk_MOVT.Magic);
