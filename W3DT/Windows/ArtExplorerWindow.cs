@@ -30,9 +30,15 @@ namespace W3DT
             explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTimer, UI_FileCount_Label, UI_FileList, new string[] { "blp" }, "AEW_N_{0}", true);
 
             UI_AutoLoadPreview_Field.Checked = Program.Settings.AutoShowArtworkPreview;
+            EventManager.CASCLoadStart += OnCASCLoadStart;
             EventManager.FileExtractComplete += OnFileExtractComplete;
 
             explorer.Initialize();
+        }
+
+        private void OnCASCLoadStart(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void OnFileExtractComplete(object sender, EventArgs rawArgs)
