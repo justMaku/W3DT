@@ -6,7 +6,7 @@ using W3DT._3D;
 
 namespace W3DT.Formats.WMO
 {
-    public class Chunk_MOGP : Chunk_Base
+    public class Chunk_MOGP : Chunk_Base, IChunkProvider
     {
         // MOGP WMO Chunk
         // Root chunk. ChunkSize = entire file.
@@ -48,6 +48,21 @@ namespace W3DT.Formats.WMO
         {
             subChunks.Add(chunk);
             LogWrite(string.Format("Added sub-chunk {0} as sub-chunk; {1} in pool", chunk.GetType().Name, subChunks.Count));
+        }
+
+        public Chunk_Base getChunk(UInt32 chunkID)
+        {
+            Chunk_Base chunk = getChunksByID(chunkID).FirstOrDefault();
+
+            if (chunk == null)
+                throw new WMOException(string.Format("Chunk does not contain sub-chunk 0x{0}.", chunkID.ToString("X")));
+
+            return chunk;
+        }
+
+        public IEnumerable<Chunk_Base> getChunksByID(UInt32 chunkID)
+        {
+            return subChunks.Where(c => c.ChunkID == chunkID);
         }
 
         public IEnumerable<Chunk_Base> getChunks()

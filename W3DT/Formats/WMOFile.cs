@@ -12,7 +12,7 @@ namespace W3DT.Formats
         public WMOException(string message) : base(message) { }
     }
 
-    public class WMOFile : FormatBase
+    public class WMOFile : FormatBase, IChunkProvider
     {
         public string baseName { get; private set; }
         private List<Chunk_Base> chunks;
@@ -155,12 +155,21 @@ namespace W3DT.Formats
                 groupFiles.Clear();
         }
 
-        public IEnumerable<Chunk_Base> getChunksByID(UInt32 id)
+        public Chunk_Base getChunk(UInt32 chunkID)
         {
-            return chunks.Where(c => c.ChunkID == id);
+            Chunk_Base chunk = getChunksByID(chunkID).FirstOrDefault();
+            if (chunk == null)
+                throw new WMOException(string.Format("File does not contain chunk 0x{0}.", chunkID.ToString("X")));
+
+            return chunk;
         }
 
-        public List<Chunk_Base> getChunks()
+        public IEnumerable<Chunk_Base> getChunksByID(UInt32 chunkID)
+        {
+            return chunks.Where(c => c.ChunkID == chunkID);
+        }
+
+        public IEnumerable<Chunk_Base> getChunks()
         {
             return chunks;
         }

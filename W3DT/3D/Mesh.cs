@@ -16,11 +16,15 @@ namespace W3DT._3D
         public int FaceCount { get { return faces.Count; } }
         public int UVCount { get { return uvs.Count; } }
 
-        public Mesh()
+        public string Name { get; private set; }
+
+        public Mesh(string name = "Unnamed Mesh")
         {
             verts = new List<Position>();
             faces = new List<Face>();
             uvs = new List<UV>();
+
+            Name = name;
         }
 
         public void addVert(Position vert)
@@ -49,6 +53,11 @@ namespace W3DT._3D
             gl.Color(1.0F, 1.0F, 1.0F, 1.0F);
             foreach (Face face in faces)
                 face.Draw(gl);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Mesh [{0}] => {0} Verts, {1} UVs, {2} Faces.", Name, VertCount, UVCount, FaceCount);
         }
     }
 }

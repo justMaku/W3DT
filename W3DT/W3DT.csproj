@@ -151,6 +151,7 @@
     <Compile Include="Formats\WMO\Chunk_MOTV.cs" />
     <Compile Include="Formats\WMO\Chunk_MOTX.cs" />
     <Compile Include="Formats\WMO\Chunk_MVER.cs" />
+    <Compile Include="Formats\WMO\IChunkProvider.cs" />
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />

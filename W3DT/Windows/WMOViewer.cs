@@ -36,7 +36,7 @@ namespace W3DT
 
         // 3D View
         private float rotation = 0.0f;
-        private Mesh mesh = null;
+        private List<Mesh> meshes;
 
         public WMOViewer()
         {
@@ -45,6 +45,7 @@ namespace W3DT
 
             runners = new List<RunnerExtractItem>();
             texRunners = new List<RunnerExtractItemUnsafe>();
+            meshes = new List<Mesh>();
 
             EventManager.CASCLoadStart += OnCASCLoadStart;
             EventManager.FileExtractComplete += OnFileExtractComplete;
@@ -105,25 +106,25 @@ namespace W3DT
             }
             catch (WMOException e)
             {
-                Log.Write("ERROR: Exception was caught while opening WMO file!");
-                Log.Write("ERROR: " + e.Message);
-
-                ErrorMessage("Sorry, that WMO file cannot be opened!");
-
-                if (loadingWindow != null)
-                {
-                    loadingWindow.Hide();
-                    loadingWindow = null;
-                }
+                OnWMOException(e);
             }
+        }
+
+        private void OnWMOException(WMOException e)
+        {
+            CancelExtraction();
+
+            Log.Write("ERROR: Exception was caught while opening WMO file!");
+            Log.Write("ERROR: " + e.Message);
+
+            ErrorMessage("Sorry, that WMO file cannot be opened!");
         }
 
         private void PrepareTextureFiles()
         {
             loadingWindow.SetFirstLine("Extracting WMO textures...");
 
-            // ToDo: Confirm this chunk exists.
-            Chunk_MOTX texChunk = (Chunk_MOTX)loadedFile.getChunksByID(Chunk_MOTX.Magic).FirstOrDefault();
+            Chunk_MOTX texChunk = (Chunk_MOTX)loadedFile.getChunk(Chunk_MOTX.Magic);
             requiredTex = new List<ExtractState>(texChunk.textures.count());
             foreach (string tex in texChunk.textures.all())
                 requiredTex.Add(new ExtractState(tex));
@@ -162,46 +163,44 @@ namespace W3DT
             if (loadedFile == null)
                 return;
 
-            Log.Write("CreateWMOMesh: Creating new mesh from WMO data...");
-
-            mesh = new Mesh();
+            Log.Write("CreateWMOMesh: Created new meshes from WMO data...");
 
             texManager.clear(); // Clear any existing textures from the GL.
-            Chunk_MOTX texChunk = (Chunk_MOTX)loadedFile.getChunksByID(Chunk_MOTX.Magic).FirstOrDefault();
+            meshes.Clear(); // Clear existing meshes.
+
+            // Load all textures into the texture manager.
+            Chunk_MOTX texChunk = (Chunk_MOTX)loadedFile.getChunk(Chunk_MOTX.Magic);
             foreach (KeyValuePair<int, string> tex in texChunk.textures.raw())
                 texManager.addTexture(tex.Key, Path.Combine(Constants.TEMP_DIRECTORY, tex.Value));
 
-            Chunk_MOGP firstGroup = (Chunk_MOGP)loadedFile.getChunksByID(Chunk_MOGP.Magic).FirstOrDefault();
-            // ToDo: Confirm we actually have this.
+            // Material register.
+            Chunk_MOMT matChunk = (Chunk_MOMT)loadedFile.getChunk(Chunk_MOMT.Magic);
 
-            if (firstGroup != null)
+            foreach (Chunk_Base rawChunk in loadedFile.getChunksByID(Chunk_MOGP.Magic))
             {
-                // Verts.
-                Chunk_MOVT vertChunk = (Chunk_MOVT)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOVT.Magic).FirstOrDefault();
+                Mesh mesh = new Mesh();
+                Chunk_MOGP chunk = (Chunk_MOGP)rawChunk;
+
+                // Populate mesh with vertices.
+                Chunk_MOVT vertChunk = (Chunk_MOVT)chunk.getChunk(Chunk_MOVT.Magic);
                 foreach (Position vertPos in vertChunk.vertices)
                     mesh.addVert(vertPos);
 
-                Log.Write("CreateWMOMesh: {0} vertices added to mesh index", mesh.VertCount);
-
-                // UVS
-
-                Chunk_MOTV uvChunk = (Chunk_MOTV)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOTV.Magic).FirstOrDefault();
+                // Populate mesh with UVs.
+                Chunk_MOTV uvChunk = (Chunk_MOTV)chunk.getChunk(Chunk_MOTV.Magic);
                 foreach (UV uv in uvChunk.uvData)
                     mesh.addUV(uv);
 
-                Log.Write("CreateWMOMesh: {0} uv co-ords added to mesh", mesh.UVCount);
-
-                // Faces.
-                Chunk_MOVI faceChunk = (Chunk_MOVI)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOVI.Magic).FirstOrDefault();
-                Chunk_MOPY faceMatChunk = (Chunk_MOPY)firstGroup.getChunks().Where(c => c.ChunkID == Chunk_MOPY.Magic).FirstOrDefault();
-                Chunk_MOMT matChunk = (Chunk_MOMT)loadedFile.getChunks().Where(c => c.ChunkID == Chunk_MOMT.Magic).FirstOrDefault();
+                // Populate mesh with triangles (faces).
+                Chunk_MOVI faceChunk = (Chunk_MOVI)chunk.getChunk(Chunk_MOVI.Magic);
+                Chunk_MOPY faceMatChunk = (Chunk_MOPY)chunk.getChunk(Chunk_MOPY.Magic);
 
                 for (int i = 0; i < faceChunk.positions.Length; i++)
                 {
                     FacePosition position = faceChunk.positions[i];
                     FaceInfo info = faceMatChunk.faceInfo[i];
 
-                    if (info.materialID != 0xff)
+                    if (info.materialID != 0xFF) // 0xFF (255) identifies a collision face.
                     {
                         Material mat = matChunk.materials[info.materialID];
                         uint texID = texManager.getTexture((int)mat.texture1.offset);
@@ -210,7 +209,8 @@ namespace W3DT
                     }
                 }
 
-                Log.Write("CreateWMOMesh: {0} faces added to mesh", mesh.FaceCount);
+                Log.Write("CreateWMOMesh: " + mesh.ToString());
+                meshes.Add(mesh);
             }
         }
 
@@ -333,9 +333,20 @@ namespace W3DT
                     texMatch.State = true;
 
                     if (!requiredTex.Any(f => !f.State))
-                        CreateWMOMesh();
+                    {
+                        try
+                        {
+                            CreateWMOMesh();
+                        }
+                        catch (WMOException ex)
+                        {
+                            OnWMOException(ex);
+                        }
+                    }
                     else
+                    {
                         UpdateTexturePrepStatus();
+                    }
                 }
             }
         }
@@ -349,12 +360,11 @@ namespace W3DT
             //  Rotate around the Y axis.
             gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
 
-            if (mesh != null)
-            {
-                gl.Enable(OpenGL.GL_TEXTURE_2D);
+            gl.Enable(OpenGL.GL_TEXTURE_2D);
+            foreach (Mesh mesh in meshes)
                 mesh.Draw(gl);
-                gl.Disable(OpenGL.GL_TEXTURE_2D);
-            }
+
+            gl.Disable(OpenGL.GL_TEXTURE_2D);
 
             //  Nudge the rotation.
             rotation += 3.0f;
