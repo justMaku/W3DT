@@ -11,10 +11,12 @@ namespace W3DT._3D
         public List<Position> Verts { get; private set; }
         public List<UV> UVs { get; private set; }
         public List<Face> Faces { get; private set; }
+        public List<Position> Normals { get; private set; }
 
         public int VertCount { get { return Verts.Count; } }
         public int FaceCount { get { return Faces.Count; } }
         public int UVCount { get { return UVs.Count; } }
+        public int NormalCount { get { return Normals.Count; } }
 
         public string Name { get; private set; }
         public bool ShouldRender { get; set; }
@@ -24,6 +26,7 @@ namespace W3DT._3D
             Verts = new List<Position>();
             Faces = new List<Face>();
             UVs = new List<UV>();
+            Normals = new List<Position>();
 
             Name = name;
             ShouldRender = true;
@@ -37,6 +40,11 @@ namespace W3DT._3D
         public void addUV(UV uv)
         {
             UVs.Add(uv);
+        }
+
+        public void addNormal(Position normal)
+        {
+            Normals.Add(normal);
         }
 
         public void addFace(uint texID, Colour4 colour, params int[] points)
@@ -64,7 +72,7 @@ namespace W3DT._3D
 
         public string ToAdvancedString()
         {
-            return string.Format("Mesh [{0}] => {0} Verts, {1} UVs, {2} Faces.", Name, VertCount, UVCount, FaceCount);
+            return string.Format("Mesh [{0}] => {0} Verts, {1} UVs, {2} Faces, {3} Normals.", Name, VertCount, UVCount, FaceCount, NormalCount);
         }
     }
 }

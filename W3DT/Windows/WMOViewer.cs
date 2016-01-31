@@ -200,6 +200,11 @@ namespace W3DT
                 foreach (UV uv in uvChunk.uvData)
                     mesh.addUV(uv);
 
+                // Populate mesh with normals.
+                Chunk_MONR normChunk = (Chunk_MONR)chunk.getChunk(Chunk_MONR.Magic);
+                foreach (Position norm in normChunk.normals)
+                    mesh.addNormal(norm);
+
                 // Populate mesh with triangles (faces).
                 Chunk_MOVI faceChunk = (Chunk_MOVI)chunk.getChunk(Chunk_MOVI.Magic);
                 Chunk_MOPY faceMatChunk = (Chunk_MOPY)chunk.getChunk(Chunk_MOPY.Magic);

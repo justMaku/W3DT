@@ -77,7 +77,12 @@ namespace W3DT.Formats
                 obj.WriteLine("    # " + mesh.UVCount + " UVs");
                 nl(obj);
 
-                // ToDo: Normals
+                // Normals
+                foreach (Position norm in mesh.Normals)
+                    obj.WriteLine(string.Format("    vn {0} {1} {2}", norm.X.ToString(FORMAT), norm.Y.ToString(FORMAT), norm.Z.ToString(FORMAT)));
+
+                obj.WriteLine("    # " + mesh.NormalCount + " normals");
+                nl(obj);
 
                 // Faces
                 uint previousTexID = 0xFF;
@@ -98,7 +103,7 @@ namespace W3DT.Formats
                     int p2 = face.Offset[1] + faceOffset;
                     int p3 = face.Offset[2] + faceOffset;
 
-                    obj.WriteLine(string.Format("    f {0}/{0} {1}/{1} {2}/{2}", p1, p2, p3));
+                    obj.WriteLine(string.Format("    f {0}/{0}/{0} {1}/{1}/{1} {2}/{2}/{2}", p1, p2, p3));
                 }
                 faceOffset += mesh.VertCount;
                 obj.WriteLine("    # " + mesh.FaceCount + " faces");
