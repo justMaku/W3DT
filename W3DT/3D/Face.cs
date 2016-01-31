@@ -10,22 +10,24 @@ namespace W3DT._3D
     {
         private Position[] points;
         private UV[] uvs;
-        private uint textureID;
         private short index = 0;
         private Colour4 colour;
 
+        public int[] Offset { get; private set; }
+        public uint TextureID { get; private set; }
         public int PointCount { get { return points.Length; } }
 
         public Face(uint texID, Colour4 colour)
         {
             points = new Position[3];
             uvs = new UV[3];
+            Offset = new int[3];
 
-            textureID = texID;
+            TextureID = texID;
             this.colour = colour;
         }
 
-        public void addPoint(Position point, UV uv)
+        public void addPoint(Position point, UV uv, int offset)
         {
             if (index == 3)
             {
@@ -35,12 +37,17 @@ namespace W3DT._3D
 
             points[index] = point;
             uvs[index] = uv;
+
+            // Used to identify the position this face took from the
+            // stack it was produced from. IE index in a WMO group.
+            Offset[index] = offset;
+
             index++;
         }
 
         public void Draw(OpenGL gl)
         {
-            gl.BindTexture(OpenGL.GL_TEXTURE_2D, textureID);
+            gl.BindTexture(OpenGL.GL_TEXTURE_2D, TextureID);
 
             int[] amb_diff = { colour.a, colour.b, colour.g, colour.a };
             gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT_AND_DIFFUSE, amb_diff);

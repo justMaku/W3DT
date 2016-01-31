@@ -15,11 +15,13 @@ namespace W3DT._3D
     {
         private OpenGL gl;
         private Dictionary<int, uint[]> mapping;
+        private Dictionary<int, string> fileMapping;
 
         public TextureManager(OpenGL gl)
         {
             this.gl = gl;
             mapping = new Dictionary<int, uint[]>();
+            fileMapping = new Dictionary<int, string>();
         }
 
         public void addTexture(int extID, string file)
@@ -27,6 +29,8 @@ namespace W3DT._3D
             int width = 0;
             int height = 0;
             byte[] data = null;
+
+            fileMapping.Add(extID, file);
 
             using (BlpFile raw = new BlpFile(File.OpenRead(file)))
             {
@@ -61,6 +65,25 @@ namespace W3DT._3D
         public uint getTexture(int extID)
         {
             return mapping.ContainsKey(extID) ? mapping[extID][0] : 0;
+        }
+
+        public int getID(uint textureID)
+        {
+            foreach (KeyValuePair<int, uint[]> node in mapping)
+                if (node.Value[0] == textureID)
+                    return node.Key;
+
+            return -1;
+        }
+
+        public string getFile(uint extID)
+        {
+            return getFile(getID(extID));
+        }
+
+        public string getFile(int extID)
+        {
+            return fileMapping.ContainsKey(extID) ? fileMapping[extID] : null;
         }
 
         public void clear()

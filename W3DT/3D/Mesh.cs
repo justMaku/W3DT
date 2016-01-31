@@ -8,22 +8,22 @@ namespace W3DT._3D
 {
     public class Mesh : _3DObject
     {
-        private List<Position> verts;
-        private List<UV> uvs;
-        private List<Face> faces;
+        public List<Position> Verts { get; private set; }
+        public List<UV> UVs { get; private set; }
+        public List<Face> Faces { get; private set; }
 
-        public int VertCount { get { return verts.Count; } }
-        public int FaceCount { get { return faces.Count; } }
-        public int UVCount { get { return uvs.Count; } }
+        public int VertCount { get { return Verts.Count; } }
+        public int FaceCount { get { return Faces.Count; } }
+        public int UVCount { get { return UVs.Count; } }
 
         public string Name { get; private set; }
         public bool ShouldRender { get; set; }
 
         public Mesh(string name = "Unnamed Mesh")
         {
-            verts = new List<Position>();
-            faces = new List<Face>();
-            uvs = new List<UV>();
+            Verts = new List<Position>();
+            Faces = new List<Face>();
+            UVs = new List<UV>();
 
             Name = name;
             ShouldRender = true;
@@ -31,12 +31,12 @@ namespace W3DT._3D
 
         public void addVert(Position vert)
         {
-            verts.Add(vert);
+            Verts.Add(vert);
         }
 
         public void addUV(UV uv)
         {
-            uvs.Add(uv);
+            UVs.Add(uv);
         }
 
         public void addFace(uint texID, Colour4 colour, params int[] points)
@@ -44,16 +44,16 @@ namespace W3DT._3D
             Face face = new Face(texID, colour);
 
             foreach (int point in points)
-                face.addPoint(verts[point], uvs[point]);
+                face.addPoint(Verts[point], UVs[point], point);
 
             if (face.PointCount > 0)
-                faces.Add(face);
+                Faces.Add(face);
         }
 
         public override void Draw(OpenGL gl)
         {
             gl.Color(1.0F, 1.0F, 1.0F, 1.0F);
-            foreach (Face face in faces)
+            foreach (Face face in Faces)
                 face.Draw(gl);
         }
 

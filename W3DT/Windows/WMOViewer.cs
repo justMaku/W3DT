@@ -369,6 +369,20 @@ namespace W3DT
             ((Mesh)UI_MeshList.Items[e.Index]).ShouldRender = e.NewValue == CheckState.Checked;
         }
 
+        private void UI_ExportObjButton_Click(object sender, EventArgs e)
+        {
+            UI_ExportSaveDialog.FileName = Path.GetFileNameWithoutExtension(loadedFile.baseName) + ".obj";
+            if (UI_ExportSaveDialog.ShowDialog() == DialogResult.OK)
+            {
+                WaveFrontWriter writer = new WaveFrontWriter(UI_ExportSaveDialog.FileName, texManager);
+                foreach (Mesh mesh in meshes)
+                    writer.addMesh(mesh);
+
+                writer.Write();
+                writer.Close();
+            }
+        }
+
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;

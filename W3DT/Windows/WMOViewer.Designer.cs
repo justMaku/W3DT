@@ -37,6 +37,8 @@
             this.UI_FileCount_Label = new System.Windows.Forms.Label();
             this.UI_FilterTime = new System.Windows.Forms.Timer(this.components);
             this.UI_MeshList = new System.Windows.Forms.CheckedListBox();
+            this.UI_ExportObjButton = new System.Windows.Forms.Button();
+            this.UI_ExportSaveDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -108,19 +110,36 @@
             // 
             // UI_MeshList
             // 
+            this.UI_MeshList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_MeshList.CheckOnClick = true;
             this.UI_MeshList.FormattingEnabled = true;
             this.UI_MeshList.Location = new System.Drawing.Point(1111, 12);
             this.UI_MeshList.Name = "UI_MeshList";
-            this.UI_MeshList.Size = new System.Drawing.Size(160, 529);
+            this.UI_MeshList.Size = new System.Drawing.Size(160, 304);
             this.UI_MeshList.TabIndex = 7;
             this.UI_MeshList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.UI_MeshList_ItemCheck);
+            // 
+            // UI_ExportObjButton
+            // 
+            this.UI_ExportObjButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ExportObjButton.Location = new System.Drawing.Point(1111, 322);
+            this.UI_ExportObjButton.Name = "UI_ExportObjButton";
+            this.UI_ExportObjButton.Size = new System.Drawing.Size(160, 23);
+            this.UI_ExportObjButton.TabIndex = 8;
+            this.UI_ExportObjButton.Text = "Export selected as OBJ";
+            this.UI_ExportObjButton.UseVisualStyleBackColor = true;
+            this.UI_ExportObjButton.Click += new System.EventHandler(this.UI_ExportObjButton_Click);
+            // 
+            // UI_ExportSaveDialog
+            // 
+            this.UI_ExportSaveDialog.Filter = "WaveFront OBJ (*.obj)|*.obj";
             // 
             // WMOViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 634);
+            this.Controls.Add(this.UI_ExportObjButton);
             this.Controls.Add(this.UI_MeshList);
             this.Controls.Add(this.UI_FilterOverlay);
             this.Controls.Add(this.UI_FilterField);
@@ -146,6 +165,8 @@
         private System.Windows.Forms.Label UI_FileCount_Label;
         private System.Windows.Forms.Timer UI_FilterTime;
         private System.Windows.Forms.CheckedListBox UI_MeshList;
+        private System.Windows.Forms.Button UI_ExportObjButton;
+        private System.Windows.Forms.SaveFileDialog UI_ExportSaveDialog;
     }
 }
 

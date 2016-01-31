@@ -78,6 +78,8 @@
     <Compile Include="3D\TextureManager.cs" />
     <Compile Include="Events\FileExtractArgs.cs" />
     <Compile Include="Events\FileExtractCompleteUnsafeArgs.cs" />
+    <Compile Include="Formats\IWriter.cs" />
+    <Compile Include="Formats\WaveFrontWriter.cs" />
     <Compile Include="Formats\WMO\Chunk_MOVI.cs" />
     <Compile Include="Formats\WMO\Chunk_MOVT.cs" />
     <Compile Include="Formats\WMO\FaceInfo.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="Formats\WMO\Chunk_MVER.cs" />
     <Compile Include="Formats\WMO\IChunkProvider.cs" />
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
+    <Compile Include="Formats\WriterBase.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerExtractItemUnsafe.cs" />
