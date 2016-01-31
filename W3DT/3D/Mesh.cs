@@ -17,6 +17,7 @@ namespace W3DT._3D
         public int UVCount { get { return uvs.Count; } }
 
         public string Name { get; private set; }
+        public bool ShouldRender { get; set; }
 
         public Mesh(string name = "Unnamed Mesh")
         {
@@ -25,6 +26,7 @@ namespace W3DT._3D
             uvs = new List<UV>();
 
             Name = name;
+            ShouldRender = true;
         }
 
         public void addVert(Position vert)
@@ -56,6 +58,11 @@ namespace W3DT._3D
         }
 
         public override string ToString()
+        {
+            return Name;
+        }
+
+        public string ToAdvancedString()
         {
             return string.Format("Mesh [{0}] => {0} Verts, {1} UVs, {2} Faces.", Name, VertCount, UVCount, FaceCount);
         }

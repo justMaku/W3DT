@@ -167,6 +167,7 @@ namespace W3DT
 
             texManager.clear(); // Clear any existing textures from the GL.
             meshes.Clear(); // Clear existing meshes.
+            UI_MeshList.Items.Clear();
 
             // Load all textures into the texture manager.
             Chunk_MOTX texChunk = (Chunk_MOTX)loadedFile.getChunk(Chunk_MOTX.Magic);
@@ -217,9 +218,13 @@ namespace W3DT
                     }
                 }
 
-                Log.Write("CreateWMOMesh: " + mesh.ToString());
+                Log.Write("CreateWMOMesh: " + mesh.ToAdvancedString());
                 meshes.Add(mesh);
+                UI_MeshList.Items.Add(mesh);
             }
+
+            for (int i = 0; i < UI_MeshList.Items.Count; i++)
+                UI_MeshList.SetItemChecked(i, true);
         }
 
         public void OnExploreHit(CASCFile file)
@@ -359,6 +364,11 @@ namespace W3DT
             }
         }
 
+        private void UI_MeshList_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            ((Mesh)UI_MeshList.Items[e.Index]).ShouldRender = e.NewValue == CheckState.Checked;
+        }
+
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;
@@ -370,7 +380,8 @@ namespace W3DT
 
             gl.Enable(OpenGL.GL_TEXTURE_2D);
             foreach (Mesh mesh in meshes)
-                mesh.Draw(gl);
+                if (mesh.ShouldRender)
+                    mesh.Draw(gl);
 
             gl.Disable(OpenGL.GL_TEXTURE_2D);
 
