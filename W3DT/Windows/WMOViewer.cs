@@ -390,7 +390,7 @@ namespace W3DT
             gl.MatrixMode(OpenGL.GL_PROJECTION);
             gl.LoadIdentity();
 
-            gl.Perspective(60.0f, (double)Width / (double)Height, 0.01, 900.0);
+            gl.Perspective(60.0f, openGLControl.Width / openGLControl.Height, 0.01, 900.0);
             gl.LookAt(50, 20, 50, 0, 0, 0, 0, 1, 0);
 
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
