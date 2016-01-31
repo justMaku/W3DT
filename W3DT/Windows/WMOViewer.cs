@@ -46,6 +46,7 @@ namespace W3DT
             runners = new List<RunnerExtractItem>();
             texRunners = new List<RunnerExtractItemUnsafe>();
 
+            EventManager.CASCLoadStart += OnCASCLoadStart;
             EventManager.FileExtractComplete += OnFileExtractComplete;
 
             explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTime, UI_FileCount_Label, UI_FileList, new string[] { "wmo" }, "WMO_V_{0}", true);
@@ -56,6 +57,11 @@ namespace W3DT
             cancelCallback = CancelExtraction;
 
             texManager = new TextureManager(openGLControl.OpenGL);
+        }
+
+        private void OnCASCLoadStart(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void CancelExtraction()
