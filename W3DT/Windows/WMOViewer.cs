@@ -233,7 +233,7 @@ namespace W3DT
             EventManager.FileExtractComplete -= OnFileExtractComplete;
             EventManager.CASCLoadStart -= OnCASCLoadStart;
 
-            TerminateRunners();
+            CancelExtraction();
             explorer.Dispose();
         }
 
