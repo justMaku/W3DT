@@ -374,13 +374,30 @@ namespace W3DT
             UI_ExportSaveDialog.FileName = Path.GetFileNameWithoutExtension(loadedFile.baseName) + ".obj";
             if (UI_ExportSaveDialog.ShowDialog() == DialogResult.OK)
             {
+                EventManager.ExportBLPtoPNGComplete += OnExportBLPtoPNGComplete;
+
                 WaveFrontWriter writer = new WaveFrontWriter(UI_ExportSaveDialog.FileName, texManager);
                 foreach (Mesh mesh in meshes)
                     writer.addMesh(mesh);
 
                 writer.Write();
                 writer.Close();
+
+                loadingWindow = new LoadingWindow("Exporting WMO as WaveFront OBJ...", "*Loud disconcerting grinding of cogs*");
+                loadingWindow.ShowDialog();
             }
+        }
+
+        private void OnExportBLPtoPNGComplete(object sender, EventArgs e)
+        {
+            ExportBLPtoPNGArgs args = (ExportBLPtoPNGArgs)e;
+            EventManager.ExportBLPtoPNGComplete -= OnExportBLPtoPNGComplete;
+
+            if (!args.Success)
+                ErrorMessage("Unable to export textures!");
+
+            loadingWindow.Close();
+            loadingWindow = null;
         }
 
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)

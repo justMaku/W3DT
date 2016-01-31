@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using W3DT._3D;
+using W3DT.Runners;
 
 namespace W3DT.Formats
 {
@@ -18,6 +19,7 @@ namespace W3DT.Formats
 
         private string mtlFile;
         private string name;
+        private string targetDir;
 
         public WaveFrontWriter(string file, TextureManager texManager)
         {
@@ -28,6 +30,7 @@ namespace W3DT.Formats
             mtl = new StreamWriter(mtlPath, false);
 
             mtlFile = Path.GetFileName(mtlPath);
+            targetDir = Path.GetDirectoryName(file);
             name = Path.GetFileNameWithoutExtension(file);
 
             meshes = new List<Mesh>();
@@ -116,6 +119,8 @@ namespace W3DT.Formats
                 mtl.WriteLine("map_Kd -s 1 -1 1 " + file + ".png");
                 nl(mtl);
             }
+
+            new RunnerExportBLPtoPNG(texList.ToArray(), targetDir).Begin();
         }
 
         public override void Close()

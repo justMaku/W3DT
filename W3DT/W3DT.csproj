@@ -76,6 +76,7 @@
     <Compile Include="3D\Face.cs" />
     <Compile Include="3D\Mesh.cs" />
     <Compile Include="3D\TextureManager.cs" />
+    <Compile Include="Events\ExportBLPtoPNGArgs.cs" />
     <Compile Include="Events\FileExtractArgs.cs" />
     <Compile Include="Events\FileExtractCompleteUnsafeArgs.cs" />
     <Compile Include="Formats\IWriter.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
     <Compile Include="Formats\WriterBase.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
+    <Compile Include="Runners\RunnerExportBLPtoPNG.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerExtractItemUnsafe.cs" />
     <Compile Include="Runners\RunnerFileExplore.cs" />

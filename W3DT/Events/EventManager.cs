@@ -18,6 +18,7 @@ namespace W3DT.Events
         private static EventHandler _FileExploreHit;
         private static EventHandler _FileExploreDone;
         private static EventHandler _FileExtractComplete;
+        private static EventHandler _ExportBLPtoPNGComplete;
 
         public static event EventHandler CDNScanDone
         {
@@ -145,6 +146,20 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler ExportBLPtoPNGComplete
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _ExportBLPtoPNGComplete = (EventHandler)Delegate.Combine(_ExportBLPtoPNGComplete, value);
+            }
+
+            remove
+            {
+                _ExportBLPtoPNGComplete = (EventHandler)Delegate.Remove(_ExportBLPtoPNGComplete, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
         {
                 TriggerEvent(_CDNScanDone, args);
@@ -190,6 +205,11 @@ namespace W3DT.Events
         public static void Trigger_FileExtractComplete(FileExtractArgs args)
         {
             TriggerEvent(_FileExtractComplete, args);
+        }
+
+        public static void Trigger_ExportBLPtoPNGComplete(ExportBLPtoPNGArgs args)
+        {
+            TriggerEvent(_ExportBLPtoPNGComplete, args);
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)
