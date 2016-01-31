@@ -77,6 +77,9 @@ namespace W3DT
 
         private void ArtExplorerWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (extractRunner != null)
+                extractRunner.Kill();
+
             EventManager.FileExtractComplete -= OnFileExtractComplete;
             explorer.Dispose();
         }
