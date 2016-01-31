@@ -297,7 +297,10 @@ namespace W3DT
                 if (match != null)
                 {
                     if (!args.Success)
-                        throw new Exception("Unable to extract WMO file -> " + args.File.FullName);
+                    {
+                        CancelExtraction();
+                        ErrorMessage("Unable to extract WMO file -> " + args.File.FullName);
+                    }
 
                     match.State = true;
 
@@ -312,9 +315,11 @@ namespace W3DT
 
                 if (texMatch != null)
                 {
-                    // ToDo: Handle this more gracefully.
                     if (!args.Success)
-                        throw new Exception("Unable to extract WMO texture -> " + args.File);
+                    {
+                        CancelExtraction();
+                        ErrorMessage("Unable to extract WMO texture -> " + args.File);
+                    }
 
                     texMatch.State = true;
 
