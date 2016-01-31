@@ -299,7 +299,7 @@ namespace W3DT
                     if (!args.Success)
                     {
                         CancelExtraction();
-                        ErrorMessage("Unable to extract WMO file -> " + args.File.FullName);
+                        ErrorMessage(string.Format("Unable to extract WMO file '{0}'.", args.File.FullName));
                     }
 
                     match.State = true;
@@ -318,7 +318,7 @@ namespace W3DT
                     if (!args.Success)
                     {
                         CancelExtraction();
-                        ErrorMessage("Unable to extract WMO texture -> " + args.File);
+                        ErrorMessage(string.Format("Unable to extract WMO texture '{0}'.", args.File));
                     }
 
                     texMatch.State = true;
