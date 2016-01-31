@@ -92,6 +92,7 @@ namespace W3DT._3D
                 gl.DeleteTextures(1, intID);
 
             mapping.Clear();
+            fileMapping.Clear();
         }
     }
 }
