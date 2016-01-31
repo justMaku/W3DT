@@ -182,6 +182,11 @@ namespace W3DT
             {
                 Chunk_MOGP chunk = (Chunk_MOGP)rawChunk;
                 string meshName = nameChunk.data.get((int)chunk.groupNameIndex);
+
+                // Skip antiportals.
+                if (meshName.ToLower().Equals("antiportal"))
+                    continue;
+
                 Mesh mesh = new Mesh(meshName);
 
                 // Populate mesh with vertices.
