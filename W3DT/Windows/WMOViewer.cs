@@ -375,6 +375,10 @@ namespace W3DT
             //  Get the OpenGL object.
             OpenGL gl = openGLControl.OpenGL;
 
+            gl.DepthFunc(OpenGL.GL_LESS);
+            gl.Enable(OpenGL.GL_CULL_FACE);
+            gl.Enable(OpenGL.GL_DEPTH_TEST);
+
             //  Set the clear color.
             gl.ClearColor(1, 1, 1, 1);
         }
