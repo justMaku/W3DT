@@ -71,6 +71,11 @@ namespace W3DT
             }
         }
 
+        private void ErrorMessage(string message)
+        {
+            MessageBox.Show(message, "WMO Extraction Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         private void LoadWMOFile()
         {
             loadingWindow.SetSecondLine("Almost done.. hang tight!");
@@ -97,7 +102,7 @@ namespace W3DT
                 Log.Write("ERROR: Exception was caught while opening WMO file!");
                 Log.Write("ERROR: " + e.Message);
 
-                MessageBox.Show("Sorry, that WMO file cannot be opened!", "Errk!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorMessage("Sorry, that WMO file cannot be opened!");
 
                 if (loadingWindow != null)
                 {
@@ -291,7 +296,6 @@ namespace W3DT
 
                 if (match != null)
                 {
-                    // ToDo: Handle this more gracefully.
                     if (!args.Success)
                         throw new Exception("Unable to extract WMO file -> " + args.File.FullName);
 
