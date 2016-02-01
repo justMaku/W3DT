@@ -49,6 +49,9 @@ namespace W3DT
         public static readonly string MAP_SEARCH_STATE = "{0} maps found ({1})";
         public static readonly string SEARCH_STATE_SEARCHING = "Searching...";
         public static readonly string SEARCH_STATE_DONE = "Done";
+
+        // Map Viewer //
+        public static readonly string MAP_VIEWER_LOADING_MAP = "Loading {0}...";
         
         // External //
         public static readonly string FINAL_BOSS_URL = "http://finalboss.tv/";

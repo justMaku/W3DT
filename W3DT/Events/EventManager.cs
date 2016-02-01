@@ -19,6 +19,7 @@ namespace W3DT.Events
         private static EventHandler _FileExploreDone;
         private static EventHandler _FileExtractComplete;
         private static EventHandler _ExportBLPtoPNGComplete;
+        private static EventHandler _MapBuildDone;
 
         public static event EventHandler CDNScanDone
         {
@@ -160,6 +161,20 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler MapBuildDone
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _MapBuildDone = (EventHandler)Delegate.Combine(_MapBuildDone, value);
+            }
+
+            remove
+            {
+                _MapBuildDone = (EventHandler)Delegate.Remove(_MapBuildDone, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
         {
                 TriggerEvent(_CDNScanDone, args);
@@ -210,6 +225,11 @@ namespace W3DT.Events
         public static void Trigger_ExportBLPtoPNGComplete(ExportBLPtoPNGArgs args)
         {
             TriggerEvent(_ExportBLPtoPNGComplete, args);
+        }
+
+        public static void Trigger_MapBuildDone(MapBuildDoneArgs args)
+        {
+            TriggerEvent(_MapBuildDone, args);
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)

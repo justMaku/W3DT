@@ -121,7 +121,7 @@
             this.Name = "MapViewerWindow";
             this.Text = "Map Viewer - W3DT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapViewerWindow_FormClosing);
-            this.ResizeEnd += new System.EventHandler(this.ArtExplorerWindow_ResizeEnd);
+            this.ResizeEnd += new System.EventHandler(this.MapViewerWindow_ResizeEnd);
             this.UI_Map.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

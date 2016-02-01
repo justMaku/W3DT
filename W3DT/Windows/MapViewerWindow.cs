@@ -19,6 +19,7 @@ namespace W3DT
     {
         private Explorer explorer;
         private Dictionary<string, List<string>> maps;
+        private RunnerMapBuilder runner;
 
         public MapViewerWindow()
         {
@@ -30,8 +31,14 @@ namespace W3DT
             explorer.ExploreHitCallback = OnExploreHit;
             explorer.ExploreDoneCallback = OnExploreDone;
 
+            EventManager.MapBuildDone += OnMapBuildDone;
             EventManager.CASCLoadStart += OnCASCLoadStart;
             explorer.Initialize();
+        }
+
+        private void ClearMap()
+        {
+            UI_Map.CreateGraphics().Clear(UI_Map.BackColor);
         }
 
         private void OnExploreHit(CASCFile file)
@@ -67,22 +74,38 @@ namespace W3DT
             Close();
         }
 
-        private void MapViewerWindow_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnMapBuildDone(object sender, EventArgs e)
         {
-            explorer.Dispose();
+            MapBuildDoneArgs args = (MapBuildDoneArgs)e;
+            // ToDo: Use the bitmap given here to display the map.
         }
 
         private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode selected = UI_FileList.SelectedNode;
 
-            if (selected != null && selected.Tag is CASCFile)
+            if (selected != null)
             {
-                // ToDo: Load the map for the selected map.
+                // Kill existing runner if it's already going.
+                if (runner != null)
+                    runner.Kill();
+
+                // Clear map background.
+                ClearMap();
+
+                string mapName = selected.Text;
+                UI_PreviewStatus.Text = string.Format(Constants.MAP_VIEWER_LOADING_MAP, mapName);
+
+                runner = new RunnerMapBuilder(maps[mapName].ToArray());
             }
         }
 
-        private void ArtExplorerWindow_ResizeEnd(object sender, EventArgs e)
+        private void MapViewerWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            explorer.Dispose();
+        }
+
+        private void MapViewerWindow_ResizeEnd(object sender, EventArgs e)
         {
             /*if (currentImage != null)
             {

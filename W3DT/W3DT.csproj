@@ -79,6 +79,7 @@
     <Compile Include="Events\ExportBLPtoPNGArgs.cs" />
     <Compile Include="Events\FileExtractArgs.cs" />
     <Compile Include="Events\FileExtractCompleteUnsafeArgs.cs" />
+    <Compile Include="Events\MapBuildDoneArgs.cs" />
     <Compile Include="Formats\IWriter.cs" />
     <Compile Include="Formats\WaveFrontWriter.cs" />
     <Compile Include="Formats\WMO\Chunk_MOVI.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerExtractItemUnsafe.cs" />
     <Compile Include="Runners\RunnerFileExplore.cs" />
+    <Compile Include="Runners\RunnerMapBuilder.cs" />
     <Compile Include="Sound\libZPlay.cs" />
     <Compile Include="Windows\ArtExplorerWindow.cs">
       <SubType>Form</SubType>
