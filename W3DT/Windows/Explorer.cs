@@ -66,7 +66,7 @@ namespace W3DT
                 }
                 else
                 {
-                    hardFilter = searchField.ToString();
+                    hardFilter = searchField.ToString().ToLower();
                 }
             }
         }
