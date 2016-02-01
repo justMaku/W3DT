@@ -219,7 +219,7 @@ namespace W3DT
                 }
 
                 if (status != null)
-                    status.Text = string.Format(Constants.GENERIC_WINDOW_SEARCH_STATE, found, "Searching...");
+                    status.Text = string.Format(Constants.GENERIC_WINDOW_SEARCH_STATE, found, Constants.SEARCH_STATE_SEARCHING);
             }
         }
     }
