@@ -42,7 +42,7 @@ namespace W3DT.Runners
                 else if (entry is CASCFile)
                 {
                     CASCFile file = (CASCFile)entry;
-                    if ((filter == null || file.Name.ToLower().Contains(filter)) && IsValidExtension(file))
+                    if ((filter == null || file.FullName.ToLower().Contains(filter)) && IsValidExtension(file))
                         EventManager.Trigger_FileExploreHit(new FileExploreHitArgs(id, file));
                 }
             }
