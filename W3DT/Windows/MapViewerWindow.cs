@@ -22,7 +22,7 @@ namespace W3DT
         public MapViewerWindow()
         {
             InitializeComponent();
-            explorer = new Explorer(this, null, null, UI_FilterTimer, UI_FileCount_Label, UI_FileList, new string[] { "blp" }, "MVT_N_{0}", true);
+            explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, UI_FileCount_Label, UI_FileList, new string[] { "blp" }, "MVT_N_{0}", true);
 
             EventManager.CASCLoadStart += OnCASCLoadStart;
             explorer.Initialize();
