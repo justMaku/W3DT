@@ -39,14 +39,17 @@ namespace W3DT
             string[] parts = file.FullName.Split(new char[] { '/', '\\' });
             string mapName = parts[parts.Length - 2];
 
-            if (!maps.ContainsKey(mapName) && !mapName.Equals("WMO"))
+            if (!mapName.Equals("WMO"))
             {
-                UI_FileList.Nodes.Add(mapName);
-                maps.Add(mapName, new List<string>());
-            }
+                if (!maps.ContainsKey(mapName))
+                {
+                    UI_FileList.Nodes.Add(mapName);
+                    maps.Add(mapName, new List<string>());
+                }
 
-            maps[mapName].Add(file.Name);
-            UpdateSearchState(Constants.SEARCH_STATE_SEARCHING);
+                maps[mapName].Add(file.Name);
+                UpdateSearchState(Constants.SEARCH_STATE_SEARCHING);
+            }
         }
 
         private void OnExploreDone()
