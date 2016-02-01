@@ -28,6 +28,7 @@ namespace W3DT
 
             explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, null, UI_FileList, new string[] { "blp" }, "MVT_N_{0}", true);
             explorer.ExploreHitCallback = OnExploreHit;
+            explorer.ExploreDoneCallback = OnExploreDone;
 
             EventManager.CASCLoadStart += OnCASCLoadStart;
             explorer.Initialize();
@@ -42,7 +43,17 @@ namespace W3DT
                 maps.Add(mapName, new List<string>());
 
             maps[mapName].Add(file.Name);
-            UI_FileCount_Label.Text = string.Format(Constants.MAP_SEARCH_STATE, maps.Count, Constants.SEARCH_STATE_SEARCHING);
+            UpdateSearchState(Constants.SEARCH_STATE_SEARCHING);
+        }
+
+        private void OnExploreDone()
+        {
+            UpdateSearchState(Constants.SEARCH_STATE_DONE);
+        }
+
+        private void UpdateSearchState(string state)
+        {
+            UI_FileCount_Label.Text = string.Format(Constants.MAP_SEARCH_STATE, maps.Count, state);
         }
 
         private void OnCASCLoadStart(object sender, EventArgs e)
