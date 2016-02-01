@@ -18,14 +18,31 @@ namespace W3DT
     public partial class MapViewerWindow : Form
     {
         private Explorer explorer;
+        private Dictionary<string, List<string>> maps;
 
         public MapViewerWindow()
         {
             InitializeComponent();
-            explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, UI_FileCount_Label, UI_FileList, new string[] { "blp" }, "MVT_N_{0}", true);
+
+            maps = new Dictionary<string, List<string>>();
+
+            explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, null, UI_FileList, new string[] { "blp" }, "MVT_N_{0}", true);
+            explorer.ExploreHitCallback = OnExploreHit;
 
             EventManager.CASCLoadStart += OnCASCLoadStart;
             explorer.Initialize();
+        }
+
+        private void OnExploreHit(CASCFile file)
+        {
+            string[] parts = file.FullName.Split(new char[] { '/', '\\' });
+            string mapName = parts[parts.Length - 2];
+
+            if (!maps.ContainsKey(mapName))
+                maps.Add(mapName, new List<string>());
+
+            maps[mapName].Add(file.Name);
+            UI_FileCount_Label.Text = string.Format(Constants.MAP_SEARCH_STATE, maps.Count, Constants.SEARCH_STATE_SEARCHING);
         }
 
         private void OnCASCLoadStart(object sender, EventArgs e)

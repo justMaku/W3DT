@@ -44,8 +44,10 @@ namespace W3DT
         public static readonly string CDN_HOST_STRING = "Remote CDN Host: {0}";
         public static readonly string WOW_DIRECTORY_STRING = "Local Directory: {0}";
 
-        // Music Window //
+        // Explorer Status //
         public static readonly string GENERIC_WINDOW_SEARCH_STATE = "{0} Files Found ({1})";
+        public static readonly string MAP_SEARCH_STATE = "{0} maps found ({1})";
+        public static readonly string SEARCH_STATE_SEARCHING = "Searching...";
         
         // External //
         public static readonly string FINAL_BOSS_URL = "http://finalboss.tv/";
