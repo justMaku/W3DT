@@ -482,7 +482,7 @@ namespace W3DT
                 int diffY = e.Y - mouseStartY;
 
                 rotationY += diffX >= 0 ? 0.25f : -0.25f;
-                rotationZ += diffY >= 0 ? 0.25f : -0.25f;
+                //rotationZ += diffY >= 0 ? 0.25f : -0.25f;
 
                 autoRotate = false;
             }
