@@ -78,5 +78,10 @@ namespace W3DT
         {
             ShowWindow(typeof(WMOViewer));
         }
+
+        private void UI_SecBtn_Maps_Click(object sender, EventArgs e)
+        {
+            ShowWindow(typeof(MapViewerWindow));
+        }
     }
 }

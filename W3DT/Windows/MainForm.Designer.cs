@@ -101,8 +101,9 @@
             this.UI_SecBtn_Maps.Name = "UI_SecBtn_Maps";
             this.UI_SecBtn_Maps.Size = new System.Drawing.Size(257, 44);
             this.UI_SecBtn_Maps.TabIndex = 4;
-            this.UI_SecBtn_Maps.Text = "Maps";
+            this.UI_SecBtn_Maps.Text = "Map Viewer";
             this.UI_SecBtn_Maps.UseVisualStyleBackColor = true;
+            this.UI_SecBtn_Maps.Click += new System.EventHandler(this.UI_SecBtn_Maps_Click);
             // 
             // UI_SecBtn_Sound
             // 

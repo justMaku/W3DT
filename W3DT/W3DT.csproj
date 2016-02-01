@@ -169,6 +169,12 @@
     <Compile Include="Windows\ArtExplorerWindow.Designer.cs">
       <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MapViewerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\MapViewerWindow.Designer.cs">
+      <DependentUpon>MapViewerWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\DBCViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +267,9 @@
     </Compile>
     <EmbeddedResource Include="Windows\ArtExplorerWindow.resx">
       <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\MapViewerWindow.resx">
+      <DependentUpon>MapViewerWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\DBCViewer.resx">
       <DependentUpon>DBCViewer.cs</DependentUpon>
