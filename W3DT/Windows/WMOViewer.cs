@@ -35,8 +35,16 @@ namespace W3DT
         private TextureManager texManager;
 
         // 3D View
-        private float rotation = 0.0f;
+        private float rotationY = 0.0f;
+        //private float rotationZ = 0.0f;
+        private float zoom = 1.0f;
+        private bool autoRotate = true;
         private List<Mesh> meshes;
+
+        // Mouse position cache for 3D rotation
+        private int mouseStartX = 0;
+        private int mouseStartY = 0;
+        private bool isMouseRotating = false;
 
         public WMOViewer()
         {
@@ -230,6 +238,12 @@ namespace W3DT
 
             for (int i = 0; i < UI_MeshList.Items.Count; i++)
                 UI_MeshList.SetItemChecked(i, true);
+
+            // Reset 3D
+            autoRotate = true;
+            rotationY = 0f;
+            //rotationZ = 0f;
+            zoom = 1f;
         }
 
         public void OnExploreHit(CASCFile file)
@@ -406,14 +420,30 @@ namespace W3DT
             loadingWindow = null;
         }
 
+        private void openGLControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (autoRotate)
+                autoRotate = false;
+
+            zoom += e.Delta >= 0 ? -0.15f : 0.15f;
+            if (zoom < 0.01f)
+                zoom = 0.01f;
+
+            updateCamera();
+        }
+
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             gl.LoadIdentity();
 
-            //  Rotate around the Y axis.
-            gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
+            // Auto-correct rotation values to keep them sane.
+            if (rotationY > 360f) rotationY -= 360f; else if (rotationY < -360f) rotationY += 360f;
+            //if (rotationZ > 360f) rotationZ -= 360f; else if (rotationZ < -360f) rotationZ += 360f;
+
+            gl.Rotate(rotationY, 0.0f, 1.0f, 0.0f); // Rotate Y
+            //gl.Rotate(rotationZ, 0.0f, 0.0f, 1.0f); // Rotate Z
 
             gl.Enable(OpenGL.GL_TEXTURE_2D);
             foreach (Mesh mesh in meshes)
@@ -422,13 +452,13 @@ namespace W3DT
 
             gl.Disable(OpenGL.GL_TEXTURE_2D);
 
-            //  Nudge the rotation.
-            rotation += 3.0f;
+            if (autoRotate)
+                rotationY += 3.0f;
         }
 
         private void openGLControl_OpenGLInitialized(object sender, EventArgs e)
         {
-            //  Get the OpenGL object.
+            updateCamera();
             OpenGL gl = openGLControl.OpenGL;
 
             gl.DepthFunc(OpenGL.GL_LESS);
@@ -441,12 +471,43 @@ namespace W3DT
 
         private void openGLControl_Resized(object sender, EventArgs e)
         {
+            updateCamera();
+        }
+
+        private void openGLControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMouseRotating)
+            {
+                int diffX = e.X - mouseStartX;
+                int diffY = e.Y - mouseStartY;
+
+                rotationY += diffX >= 0 ? 0.25f : -0.25f;
+                rotationZ += diffY >= 0 ? 0.25f : -0.25f;
+
+                autoRotate = false;
+            }
+        }
+
+        private void openGLControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            isMouseRotating = false;
+        }
+
+        private void openGLControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseStartX = e.X;
+            mouseStartY = e.Y;
+            isMouseRotating = true;
+        }
+
+        private void updateCamera()
+        {
             OpenGL gl = openGLControl.OpenGL;
 
             gl.MatrixMode(OpenGL.GL_PROJECTION);
             gl.LoadIdentity();
 
-            gl.Perspective(60.0f, (double)openGLControl.Width / (double)openGLControl.Height, 0.01, 900.0);
+            gl.Perspective(60.0f * zoom, (double)openGLControl.Width / (double)openGLControl.Height, 0.01, 900.0);
             gl.LookAt(50, 20, 50, 0, 0, 0, 0, 1, 0);
 
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
