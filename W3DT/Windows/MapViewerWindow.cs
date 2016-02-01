@@ -26,7 +26,7 @@ namespace W3DT
 
             maps = new Dictionary<string, List<string>>();
 
-            explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, null, UI_FileList, new string[] { "blp" }, "MVT_N_{0}", true);
+            explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, null, null, new string[] { "blp" }, "MVT_N_{0}", true);
             explorer.ExploreHitCallback = OnExploreHit;
             explorer.ExploreDoneCallback = OnExploreDone;
 
@@ -40,7 +40,10 @@ namespace W3DT
             string mapName = parts[parts.Length - 2];
 
             if (!maps.ContainsKey(mapName))
+            {
+                UI_FileList.Nodes.Add(mapName);
                 maps.Add(mapName, new List<string>());
+            }
 
             maps[mapName].Add(file.Name);
             UpdateSearchState(Constants.SEARCH_STATE_SEARCHING);
