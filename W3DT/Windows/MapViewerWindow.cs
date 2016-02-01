@@ -37,10 +37,10 @@ namespace W3DT
         private void OnExploreHit(CASCFile file)
         {
             string[] parts = file.FullName.Split(new char[] { '/', '\\' });
-            string mapName = parts[parts.Length - 2];
 
             if (!parts[2].Equals("WMO"))
             {
+                string mapName = parts[parts.Length - 2];
                 if (!maps.ContainsKey(mapName))
                 {
                     UI_FileList.Nodes.Add(mapName);
