@@ -27,6 +27,7 @@ namespace W3DT
         private string[] extensions;
         private string runnerID;
         private string currentScanID;
+        private string hardFilter = null;
 
         private bool splitIntoDirectories;
         private bool filterHasChanged;
@@ -36,10 +37,9 @@ namespace W3DT
 
         public ISynchronizeInvoke target { get; private set; }
 
-        public Explorer(ISynchronizeInvoke sync, TextBox searchField, Label searchOverlay, Timer timer, Label status, TreeView fileList, string[] extensions, string runnerID, bool splitIntoDirectories)
+        public Explorer(ISynchronizeInvoke sync, object searchField, Label searchOverlay, Timer timer, Label status, TreeView fileList, string[] extensions, string runnerID, bool splitIntoDirectories)
         {
             this.target = sync;
-            this.searchField = searchField;
             this.searchOverlay = searchOverlay;
             this.status = status;
             this.fileList = fileList;
@@ -51,14 +51,23 @@ namespace W3DT
             // If we have a search field, monitor it for changes.
             if (searchField != null)
             {
-                if (timer == null)
-                    throw new Exception("Explorer tasked without a timer! Bad Hannah.");
+                if (searchField is TextBox)
+                {
+                    if (timer == null)
+                        throw new Exception("Explorer tasked without a timer! Bad Hannah.");
 
-                timer.Tick += OnFilterTimerTick;
-                searchField.TextChanged += OnFilterChanged;
+                    this.searchField = (TextBox)searchField;
 
-                if (searchOverlay != null)
-                    searchOverlay.MouseUp += OnOverlayMouseUp;
+                    timer.Tick += OnFilterTimerTick;
+                    this.searchField.TextChanged += OnFilterChanged;
+
+                    if (searchOverlay != null)
+                        searchOverlay.MouseUp += OnOverlayMouseUp;
+                }
+                else
+                {
+                    hardFilter = searchField.ToString();
+                }
             }
         }
 
@@ -82,7 +91,7 @@ namespace W3DT
             currentScan++;
             currentScanID = string.Format(runnerID, currentScan);
 
-            string filter = null;
+            string filter = hardFilter;
             if (searchField != null)
             {
                 string fieldText = searchField.Text.Trim();
