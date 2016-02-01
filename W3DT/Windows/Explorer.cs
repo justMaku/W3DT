@@ -74,7 +74,8 @@ namespace W3DT
 
         public void Initialize()
         {
-            fileList.Nodes.Clear(); // Clear existing nodes.
+            if (fileList != null)
+                fileList.Nodes.Clear(); // Clear existing nodes.
 
             // Do not continue without the CASC engine.
             if (!Program.IsCASCReady())
@@ -193,33 +194,36 @@ namespace W3DT
 
                 found++;
 
-                if (splitIntoDirectories)
+                if (fileList != null)
                 {
-                    List<string> pathParts = args.Entry.FullName.Split('\\').ToList();
-
-                    int index = 1;
-                    TreeNode currentNode = null;
-                    foreach (string pathPart in pathParts)
+                    if (splitIntoDirectories)
                     {
-                        if (currentNode != null)
-                        {
-                            currentNode = TreeNodeHelper.FindOrCreateSubNode(currentNode, pathPart);
+                        List<string> pathParts = args.Entry.FullName.Split('\\').ToList();
 
-                            if (index == pathParts.Count)
-                                currentNode.Tag = args.Entry;
-                        }
-                        else
+                        int index = 1;
+                        TreeNode currentNode = null;
+                        foreach (string pathPart in pathParts)
                         {
-                            currentNode = TreeNodeHelper.FindOrCreateSubNode(fileList, pathPart);
+                            if (currentNode != null)
+                            {
+                                currentNode = TreeNodeHelper.FindOrCreateSubNode(currentNode, pathPart);
+
+                                if (index == pathParts.Count)
+                                    currentNode.Tag = args.Entry;
+                            }
+                            else
+                            {
+                                currentNode = TreeNodeHelper.FindOrCreateSubNode(fileList, pathPart);
+                            }
+                            index++;
                         }
-                        index++;
                     }
-                }
-                else
-                {
-                    TreeNode newNode = new TreeNode(args.Entry.Name);
-                    newNode.Tag = args.Entry;
-                    fileList.Nodes.Add(newNode);
+                    else
+                    {
+                        TreeNode newNode = new TreeNode(args.Entry.Name);
+                        newNode.Tag = args.Entry;
+                        fileList.Nodes.Add(newNode);
+                    }
                 }
 
                 if (status != null)
