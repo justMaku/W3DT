@@ -23,6 +23,7 @@ namespace W3DT
 
         public Regex IgnoreFilter;
         public Action<CASCFile> ExploreHitCallback;
+        public Action ExploreDoneCallback;
 
         private string[] extensions;
         private string runnerID;
@@ -167,6 +168,9 @@ namespace W3DT
 
                 if (status != null)
                     status.Text = string.Format(Constants.GENERIC_WINDOW_SEARCH_STATE, found, "Done");
+
+                if (ExploreDoneCallback != null)
+                    ExploreDoneCallback();
             }
         }
 
