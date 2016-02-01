@@ -39,7 +39,7 @@ namespace W3DT
             string[] parts = file.FullName.Split(new char[] { '/', '\\' });
             string mapName = parts[parts.Length - 2];
 
-            if (!maps.ContainsKey(mapName))
+            if (!maps.ContainsKey(mapName) && !mapName.Equals("WMO"))
             {
                 UI_FileList.Nodes.Add(mapName);
                 maps.Add(mapName, new List<string>());
