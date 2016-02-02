@@ -76,6 +76,12 @@
     <Compile Include="3D\Face.cs" />
     <Compile Include="3D\Mesh.cs" />
     <Compile Include="3D\TextureManager.cs" />
+    <Compile Include="Controls\DoubleBufferedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DoubleBufferedPanel.Designer.cs">
+      <DependentUpon>DoubleBufferedPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\ExportBLPtoPNGArgs.cs" />
     <Compile Include="Events\FileExtractArgs.cs" />
     <Compile Include="Events\FileExtractCompleteUnsafeArgs.cs" />

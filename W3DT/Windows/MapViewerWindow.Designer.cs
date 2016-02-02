@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapViewerWindow));
             this.UI_FileCount_Label = new System.Windows.Forms.Label();
             this.UI_FileList = new System.Windows.Forms.TreeView();
-            this.UI_Map = new System.Windows.Forms.Panel();
+            this.UI_Map = new W3DT.Controls.DoubleBufferedPanel();
             this.UI_ExportButton = new System.Windows.Forms.Button();
             this.UI_FilterTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
@@ -135,7 +135,7 @@
 
         private System.Windows.Forms.Label UI_FileCount_Label;
         private System.Windows.Forms.TreeView UI_FileList;
-        private System.Windows.Forms.Panel UI_Map;
+        private W3DT.Controls.DoubleBufferedPanel UI_Map;
         private Controls.StaticTextBox UI_PreviewStatus;
         private System.Windows.Forms.Button UI_ExportButton;
         private System.Windows.Forms.Timer UI_FilterTimer;
