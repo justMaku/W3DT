@@ -29,6 +29,8 @@ namespace W3DT
         private Bitmap image;
         private int drawOffsetX = 0;
         private int drawOffsetY = 0;
+        private int lastOffsetX = 0;
+        private int lastOffsetY = 0;
 
         // Mouse input
         private int mouseStartX;
@@ -227,18 +229,17 @@ namespace W3DT
         private void UI_Map_MouseUp(object sender, MouseEventArgs e)
         {
             isMovingMap = false;
+
+            lastOffsetX = drawOffsetX;
+            lastOffsetY = drawOffsetY;
         }
 
         private void UI_Map_MouseMove(object sender, MouseEventArgs e)
         {
             if (isMovingMap)
             {
-                int diffX = e.X - mouseStartX;
-                int diffY = e.Y - mouseStartY;
-
-                // ToDo: More maths.
-                drawOffsetX = diffX;
-                drawOffsetY = diffY;
+                drawOffsetX = lastOffsetX + (e.X - mouseStartX);
+                drawOffsetY = lastOffsetY + (e.Y - mouseStartY);
 
                 RenderImage();
             }
