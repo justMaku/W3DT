@@ -71,6 +71,9 @@
             this.UI_Map.Name = "UI_Map";
             this.UI_Map.Size = new System.Drawing.Size(586, 629);
             this.UI_Map.TabIndex = 6;
+            this.UI_Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseDown);
+            this.UI_Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseMove);
+            this.UI_Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseUp);
             // 
             // UI_ExportButton
             // 

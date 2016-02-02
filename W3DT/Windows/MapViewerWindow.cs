@@ -27,6 +27,13 @@ namespace W3DT
         private List<string> paths;
 
         private Bitmap image;
+        private int drawOffsetX = 0;
+        private int drawOffsetY = 0;
+
+        // Mouse input
+        private int mouseStartX;
+        private int mouseStartY;
+        private bool isMovingMap = false;
 
         public MapViewerWindow()
         {
@@ -59,7 +66,7 @@ namespace W3DT
             using (Graphics gfx = UI_Map.CreateGraphics())
             {
                 gfx.Clear(UI_Map.BackColor);
-                gfx.DrawImage(image, 0, 0);
+                gfx.DrawImage(image, drawOffsetX, drawOffsetY);
             }
         }
 
@@ -115,6 +122,9 @@ namespace W3DT
         {
             UI_PreviewStatus.Hide();
 
+            drawOffsetX = 0;
+            drawOffsetY = 0;
+
             MapBuildDoneArgs args = (MapBuildDoneArgs)e;
             image = args.Data;
             RenderImage();
@@ -131,6 +141,9 @@ namespace W3DT
                 ClearMap(); // Clear map background.
                 requiredFiles.Clear(); // Clear required file list.
                 paths.Clear(); // Clear paths cache.
+
+                // Detatch mouse control (this shouldn't ever be an issue, really).
+                isMovingMap = false;
 
                 string mapName = selected.Text;
                 UI_PreviewStatus.Text = string.Format(Constants.MAP_VIEWER_LOADING_MAP, mapName);
@@ -202,6 +215,33 @@ namespace W3DT
         {
             if (image != null)
                 RenderImage();
+        }
+
+        private void UI_Map_MouseDown(object sender, MouseEventArgs e)
+        {
+            isMovingMap = true;
+            mouseStartX = e.X;
+            mouseStartY = e.Y;
+        }
+
+        private void UI_Map_MouseUp(object sender, MouseEventArgs e)
+        {
+            isMovingMap = false;
+        }
+
+        private void UI_Map_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMovingMap)
+            {
+                int diffX = e.X - mouseStartX;
+                int diffY = e.Y - mouseStartY;
+
+                // ToDo: More maths.
+                drawOffsetX = diffX;
+                drawOffsetY = diffY;
+
+                RenderImage();
+            }
         }
     }
 }
