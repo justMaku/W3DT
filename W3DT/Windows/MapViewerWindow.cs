@@ -109,8 +109,8 @@ namespace W3DT
         {
             UI_PreviewStatus.Hide();
 
-            drawOffsetX = 0;
-            drawOffsetY = 0;
+            drawOffsetX = lastOffsetX = 0;
+            drawOffsetY = lastOffsetY = 0;
 
             MapBuildDoneArgs args = (MapBuildDoneArgs)e;
             image = args.Data;
