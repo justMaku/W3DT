@@ -257,6 +257,8 @@ namespace W3DT
                 drawOffsetX = lastOffsetX + (e.X - mouseStartX);
                 drawOffsetY = lastOffsetY + (e.Y - mouseStartY);
 
+                // ToDo: Prevent scrolling out of bounds here.
+
                 UI_Map.Invalidate();
             }
         }
