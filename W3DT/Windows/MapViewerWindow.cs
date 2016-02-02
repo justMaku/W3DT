@@ -23,8 +23,10 @@ namespace W3DT
 
         // File extraction
         private List<ExtractState> requiredFiles;
-        private List<RunnerExtractItem> runners;
         private List<string> paths;
+
+        private Queue<RunnerExtractItem> runnerQueue;
+        private int queueThreads = 0;
 
         private Bitmap image;
         private int drawOffsetX = 0;
@@ -44,8 +46,8 @@ namespace W3DT
             maps = new Dictionary<string, List<CASCFile>>();
 
             requiredFiles = new List<ExtractState>();
-            runners = new List<RunnerExtractItem>();
             paths = new List<string>();
+            runnerQueue = new Queue<RunnerExtractItem>();
 
             explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, null, null, new string[] { "blp" }, "MVT_N_{0}", true);
             explorer.ExploreHitCallback = OnExploreHit;
@@ -66,10 +68,11 @@ namespace W3DT
             runner = null;
 
             // Kill extraction runners.
-            foreach (RunnerExtractItem extractRunner in runners)
+            foreach (RunnerExtractItem extractRunner in runnerQueue)
                 extractRunner.Kill();
 
-            runners.Clear();
+            runnerQueue.Clear();
+            queueThreads = 0;
         }
 
         private void OnExploreHit(CASCFile file)
@@ -149,8 +152,7 @@ namespace W3DT
                         state.TrackerID = extractRunner.runnerID;
                         state.State = false;
 
-                        extractRunner.Begin();
-                        runners.Add(extractRunner);
+                        runnerQueue.Enqueue(extractRunner);
                     }
                     else
                     {
@@ -159,6 +161,24 @@ namespace W3DT
 
                     requiredFiles.Add(state);
                     paths.Add(tempPath);
+                }
+
+                CheckRunnerQueue();
+            }
+        }
+
+        private void CheckRunnerQueue()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                if (runnerQueue.Count > 0)
+                {
+                    runnerQueue.Dequeue().Begin();
+                    queueThreads++;
+                }
+                else
+                {
+                    break;
                 }
             }
         }
@@ -183,9 +203,19 @@ namespace W3DT
                 // It the tile cannot be extracted, we'll just render nothing in it's place.
 
                 state.State = true;
+                queueThreads--;
 
-                if (!requiredFiles.Any(s => !s.State))
+                if (requiredFiles.Any(s => !s.State))
+                {
+                    // If no threads are running, poke the next batch.
+                    if (queueThreads == 0)
+                        CheckRunnerQueue();
+                }
+                else
+                {
+                    // We've got all the tiles we wanted; build!
                     BeginMapBuild();
+                }
             }
         }
 
