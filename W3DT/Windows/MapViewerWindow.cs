@@ -113,11 +113,11 @@ namespace W3DT
 
         private void OnMapBuildDone(object sender, EventArgs e)
         {
+            UI_PreviewStatus.Hide();
+
             MapBuildDoneArgs args = (MapBuildDoneArgs)e;
             image = args.Data;
             RenderImage();
-
-            UI_PreviewStatus.Hide();
         }
 
         private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
