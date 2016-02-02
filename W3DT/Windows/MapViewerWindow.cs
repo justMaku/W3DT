@@ -200,12 +200,8 @@ namespace W3DT
 
         private void MapViewerWindow_ResizeEnd(object sender, EventArgs e)
         {
-            /*if (currentImage != null)
-            {
-                  Graphics gfx = UI_ImagePreview.CreateGraphics();
-                  gfx.Clear(UI_ImagePreview.BackColor);
-                  gfx.DrawImage(currentImage, 0, 0);
-            }*/
+            if (image != null)
+                RenderImage();
         }
     }
 }
