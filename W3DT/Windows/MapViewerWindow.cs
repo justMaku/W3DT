@@ -129,6 +129,8 @@ namespace W3DT
                 paths.Clear(); // Clear paths cache.
                 image = null; // Prevent redrawing the old map.
 
+                UI_Map.Invalidate();
+
                 // Detatch mouse control (this shouldn't ever be an issue, really).
                 isMovingMap = false;
 
