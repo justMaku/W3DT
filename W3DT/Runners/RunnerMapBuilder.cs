@@ -60,15 +60,8 @@ namespace W3DT.Runners
                     foreach (KeyValuePair<int, string> subNode in node.Value)
                     {
                         if (File.Exists(subNode.Value))
-                        {
                             using (BlpFile blp = new BlpFile(File.OpenRead(subNode.Value)))
-                            {
                                 gfx.DrawImage(blp.GetBitmap(0), new Rectangle(iX * 256, iY * 256, 256, 256), new Rectangle(0, 0, 256, 256), GraphicsUnit.Pixel);
-
-                                // ! Debugging !
-                                Log.Write("Stitching {0} at {1} x {2}", subNode.Value, iX * 256, iY * 256);
-                            }
-                        }
 
                         iY++;
                     }
