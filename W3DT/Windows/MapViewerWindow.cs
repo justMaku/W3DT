@@ -57,21 +57,6 @@ namespace W3DT
             explorer.Initialize();
         }
 
-        private void ClearMap()
-        {
-            using (Graphics gfx = UI_Map.CreateGraphics())
-                gfx.Clear(UI_Map.BackColor);
-        }
-
-        private void RenderImage()
-        {
-            using (Graphics gfx = UI_Map.CreateGraphics())
-            {
-                gfx.Clear(UI_Map.BackColor);
-                gfx.DrawImage(image, drawOffsetX, drawOffsetY);
-            }
-        }
-
         private void TerminateRunners()
         {
             // Kill existing map runner if it's already going.
@@ -129,7 +114,7 @@ namespace W3DT
 
             MapBuildDoneArgs args = (MapBuildDoneArgs)e;
             image = args.Data;
-            RenderImage();
+            UI_Map.Invalidate();
         }
 
         private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
@@ -140,9 +125,9 @@ namespace W3DT
             {
                 // Clean up previous excursions.
                 TerminateRunners(); // Terminate runners that be running.
-                ClearMap(); // Clear map background.
                 requiredFiles.Clear(); // Clear required file list.
                 paths.Clear(); // Clear paths cache.
+                image = null; // Prevent redrawing the old map.
 
                 // Detatch mouse control (this shouldn't ever be an issue, really).
                 isMovingMap = false;
@@ -215,8 +200,7 @@ namespace W3DT
 
         private void MapViewerWindow_ResizeEnd(object sender, EventArgs e)
         {
-            if (image != null)
-                RenderImage();
+            UI_Map.Invalidate();
         }
 
         private void UI_Map_MouseDown(object sender, MouseEventArgs e)
@@ -241,8 +225,16 @@ namespace W3DT
                 drawOffsetX = lastOffsetX + (e.X - mouseStartX);
                 drawOffsetY = lastOffsetY + (e.Y - mouseStartY);
 
-                RenderImage();
+                UI_Map.Invalidate();
             }
+        }
+
+        private void UI_Map_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.Clear(UI_Map.BackColor);
+
+            if (image != null)
+                e.Graphics.DrawImage(image, drawOffsetX, drawOffsetY);
         }
     }
 }

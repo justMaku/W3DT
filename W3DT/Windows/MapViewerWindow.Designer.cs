@@ -71,6 +71,7 @@
             this.UI_Map.Name = "UI_Map";
             this.UI_Map.Size = new System.Drawing.Size(586, 629);
             this.UI_Map.TabIndex = 6;
+            this.UI_Map.Paint += new System.Windows.Forms.PaintEventHandler(this.UI_Map_Paint);
             this.UI_Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseDown);
             this.UI_Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseMove);
             this.UI_Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseUp);
@@ -124,7 +125,6 @@
             this.Name = "MapViewerWindow";
             this.Text = "Map Viewer - W3DT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapViewerWindow_FormClosing);
-            this.ResizeEnd += new System.EventHandler(this.MapViewerWindow_ResizeEnd);
             this.UI_Map.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
