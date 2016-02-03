@@ -31,6 +31,10 @@ namespace W3DT
         public SplashScreen()
         {
             InitializeComponent();
+
+            if (Program.Settings.FirstTime)
+                ShowFirstTimeWarning();
+
             EventManager.LoadStepDone += OnLoadBarStepDone;
             EventManager.UpdateCheckDone += OnUpdateCheckComplete;
             EventManager.UpdateDownloadDone += OnUpdateDownloadComplete;
@@ -72,6 +76,16 @@ namespace W3DT
 
                 isUpdateCheckDone = true;
             }
+        }
+
+        private void ShowFirstTimeWarning()
+        {
+            Point point = PointToScreen(UI_FirstRunText.Location);
+            point = UI_SplashImage.PointToClient(point);
+
+            UI_FirstRunText.Parent = UI_SplashImage;
+            UI_FirstRunText.Location = point;
+            UI_FirstRunText.Show();
         }
 
         public void OnLoadBarStepDone(object sender, EventArgs args)
@@ -226,6 +240,12 @@ namespace W3DT
             // Check if we're really done loading.
             if (isCASCDone)
             {
+                if (Program.Settings.FirstTime)
+                {
+                    Program.Settings.FirstTime = false;
+                    Program.Settings.Persist();
+                }
+
                 Timer_SplashClose.Enabled = false; // Disable timer.
                 EventManager.LoadStepDone -= OnLoadBarStepDone;
                 this.Close(); // Close the splash screen.

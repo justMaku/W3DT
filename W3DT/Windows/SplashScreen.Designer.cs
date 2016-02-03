@@ -33,6 +33,7 @@
             this.UI_SplashImage = new System.Windows.Forms.PictureBox();
             this.Timer_SplashClose = new System.Windows.Forms.Timer(this.components);
             this.loadBar = new W3DT.Controls.LoadBar();
+            this.UI_FirstRunText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.UI_SplashImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,12 +63,25 @@
             this.loadBar.TabIndex = 1;
             this.loadBar.Tag = "This is a test";
             // 
+            // UI_FirstRunText
+            // 
+            this.UI_FirstRunText.AutoSize = true;
+            this.UI_FirstRunText.BackColor = System.Drawing.Color.Transparent;
+            this.UI_FirstRunText.ForeColor = System.Drawing.Color.White;
+            this.UI_FirstRunText.Location = new System.Drawing.Point(717, 629);
+            this.UI_FirstRunText.Name = "UI_FirstRunText";
+            this.UI_FirstRunText.Size = new System.Drawing.Size(250, 13);
+            this.UI_FirstRunText.TabIndex = 2;
+            this.UI_FirstRunText.Text = "Performing first-time set-up, this may take a moment!";
+            this.UI_FirstRunText.Visible = false;
+            // 
             // SplashScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1035, 691);
             this.ControlBox = false;
+            this.Controls.Add(this.UI_FirstRunText);
             this.Controls.Add(this.loadBar);
             this.Controls.Add(this.UI_SplashImage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -80,6 +94,7 @@
             this.Text = "Warcraft 3D Toolkit - Loading";
             ((System.ComponentModel.ISupportInitialize)(this.UI_SplashImage)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -88,5 +103,6 @@
         private System.Windows.Forms.PictureBox UI_SplashImage;
         private System.Windows.Forms.Timer Timer_SplashClose;
         private W3DT.Controls.LoadBar loadBar;
+        private System.Windows.Forms.Label UI_FirstRunText;
     }
 }
