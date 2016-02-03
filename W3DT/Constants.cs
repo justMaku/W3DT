@@ -14,8 +14,9 @@ namespace W3DT
         public static readonly string UPDATE_PACKAGE_FILE = "update.zip";
 
         // CDN // 
-        public static string CDN_VERSION_URL { get { return string.Format(@"http://us.patch.battle.net/{0}/versions", Program.Settings.RemoteClientVersion.UrlTag); } }
-        public static string CDN_CONFIG_URL { get { return string.Format(@"http://us.patch.battle.net/{0}/cdns", Program.Settings.RemoteClientVersion.UrlTag); } }
+        public static string[] CDN_REGIONS = new string[] { "us", "eu" };
+        public static string CDN_VERSION_URL { get { return @"http://{0}.patch.battle.net/" + Program.Settings.RemoteClientVersion.UrlTag + "/versions"; } }
+        public static string CDN_CONFIG_URL { get { return @"http://{0}.patch.battle.net/" + Program.Settings.RemoteClientVersion.UrlTag + "/cdns"; } }
 
         // CDN Versions //
         public static readonly WoWVersion[] WOW_VERSIONS = new WoWVersion[] {

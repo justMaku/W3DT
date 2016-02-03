@@ -15,8 +15,18 @@ namespace W3DT.Runners
             Log.Write("CDN scan has started!");
 
             string rawData;
+
             using (WebClient client = new WebClient())
-                rawData = client.DownloadString(Constants.CDN_CONFIG_URL);
+            {
+                try
+                {
+                    rawData = client.DownloadString(string.Format(Constants.CDN_CONFIG_URL, Constants.CDN_REGIONS[0]));
+                }
+                catch
+                {
+                    rawData = client.DownloadString(string.Format(Constants.CDN_CONFIG_URL, Constants.CDN_REGIONS[1]));
+                }
+            }
 
             if (rawData == null || rawData == string.Empty)
                 throw new Exception("Malformed CDN data from US server.");

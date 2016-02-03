@@ -38,11 +38,22 @@ namespace W3DT.CASC
         {
             var config = new CASCConfig();
 
-            using (var stream = CDNIndexHandler.OpenFileDirect(Constants.CDN_CONFIG_URL))
-                config.CDNData = VerBarConfig.ReadVerBarConfig(stream);
+            try
+            {
+                using (var stream = CDNIndexHandler.OpenFileDirect(string.Format(Constants.CDN_CONFIG_URL, Constants.CDN_REGIONS[0])))
+                    config.CDNData = VerBarConfig.ReadVerBarConfig(stream);
 
-            using (Stream stream = CDNIndexHandler.OpenFileDirect(Constants.CDN_VERSION_URL))
-                config.VersionsData = VerBarConfig.ReadVerBarConfig(stream);
+                using (Stream stream = CDNIndexHandler.OpenFileDirect(string.Format(Constants.CDN_VERSION_URL, Constants.CDN_REGIONS[0])))
+                    config.VersionsData = VerBarConfig.ReadVerBarConfig(stream);
+            }
+            catch
+            {
+                using (var stream = CDNIndexHandler.OpenFileDirect(string.Format(Constants.CDN_CONFIG_URL, Constants.CDN_REGIONS[1])))
+                    config.CDNData = VerBarConfig.ReadVerBarConfig(stream);
+
+                using (Stream stream = CDNIndexHandler.OpenFileDirect(string.Format(Constants.CDN_VERSION_URL, Constants.CDN_REGIONS[1])))
+                    config.VersionsData = VerBarConfig.ReadVerBarConfig(stream);
+            }
 
             string cdnKey = config.VersionsData[0]["CDNConfig"];
             using (Stream stream = CDNIndexHandler.OpenConfigFileDirect(config, cdnKey))
