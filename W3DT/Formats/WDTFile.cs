@@ -34,6 +34,7 @@ namespace W3DT.Formats
                 switch (chunkID)
                 {
                     case Chunk_MVER.Magic: chunk = new Chunk_MVER(this); break;
+                    case Chunk_MPHD.Magic: chunl = new Chunk_MPHD(this); break;
                     default: chunk = new Chunk_Base(this); break;
                 }
 
