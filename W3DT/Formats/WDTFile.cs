@@ -37,6 +37,7 @@ namespace W3DT.Formats
                     case Chunk_MPHD.Magic: chunk = new Chunk_MPHD(this); break;
                     case Chunk_MAIN.Magic: chunk = new Chunk_MAIN(this); break;
                     case Chunk_MWMO.Magic: chunk = new Chunk_MWMO(this); break;
+                    case Chunk_MODF.Magic: chunk = new Chunk_MODF(this); break;
                     default: chunk = new Chunk_Base(this); break;
                 }
 

@@ -92,8 +92,10 @@
     <Compile Include="Formats\WDTFile.cs" />
     <Compile Include="Formats\WDT\Chunk_Base.cs" />
     <Compile Include="Formats\WDT\Chunk_MAIN.cs" />
+    <Compile Include="Formats\WDT\Chunk_MODF.cs" />
     <Compile Include="Formats\WDT\Chunk_MPHD.cs" />
     <Compile Include="Formats\WDT\Chunk_MVER.cs" />
+    <Compile Include="Formats\WDT\Chunk_MWMO.cs" />
     <Compile Include="Formats\WMO\Chunk_MOVI.cs" />
     <Compile Include="Formats\WMO\Chunk_MOVT.cs" />
     <Compile Include="Formats\WMO\FaceInfo.cs" />
