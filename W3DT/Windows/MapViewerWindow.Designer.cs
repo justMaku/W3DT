@@ -35,8 +35,8 @@
             this.UI_FilterTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
             this.UI_Map = new W3DT.Controls.DoubleBufferedPanel();
-            this.UI_ExportButton = new System.Windows.Forms.Button();
             this.UI_TileStatus = new W3DT.Controls.StaticTextBox();
+            this.UI_ExportButton = new System.Windows.Forms.Button();
             this.UI_Map.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,9 +67,7 @@
             // 
             // UI_PreviewStatus
             // 
-            this.UI_PreviewStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_PreviewStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_PreviewStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UI_PreviewStatus.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_PreviewStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -102,23 +100,9 @@
             this.UI_Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseMove);
             this.UI_Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseUp);
             // 
-            // UI_ExportButton
-            // 
-            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_ExportButton.Location = new System.Drawing.Point(462, 597);
-            this.UI_ExportButton.Name = "UI_ExportButton";
-            this.UI_ExportButton.Size = new System.Drawing.Size(115, 23);
-            this.UI_ExportButton.TabIndex = 0;
-            this.UI_ExportButton.Text = "Export Map Terrain";
-            this.UI_ExportButton.UseVisualStyleBackColor = true;
-            this.UI_ExportButton.Visible = false;
-            this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
-            // 
             // UI_TileStatus
             // 
-            this.UI_TileStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_TileStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_TileStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UI_TileStatus.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_TileStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -132,6 +116,18 @@
             this.UI_TileStatus.TabIndex = 7;
             this.UI_TileStatus.TabStop = false;
             this.UI_TileStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // UI_ExportButton
+            // 
+            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ExportButton.Location = new System.Drawing.Point(462, 597);
+            this.UI_ExportButton.Name = "UI_ExportButton";
+            this.UI_ExportButton.Size = new System.Drawing.Size(115, 23);
+            this.UI_ExportButton.TabIndex = 0;
+            this.UI_ExportButton.Text = "Export Map Terrain";
+            this.UI_ExportButton.UseVisualStyleBackColor = true;
+            this.UI_ExportButton.Visible = false;
+            this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
             // 
             // MapViewerWindow
             // 
