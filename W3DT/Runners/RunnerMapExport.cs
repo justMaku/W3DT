@@ -47,6 +47,7 @@ namespace W3DT.Runners
                 Program.CASCEngine.SaveFileTo(wdtPath, Constants.TEMP_DIRECTORY);
 
                 WDTFile headerFile = new WDTFile(Path.Combine(Constants.TEMP_DIRECTORY, wdtPath));
+                headerFile.parse();
 
                 // Job's done.
                 EventManager.Trigger_MapExportDone(new MapExportDoneArgs(true));
