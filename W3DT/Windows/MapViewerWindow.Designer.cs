@@ -36,6 +36,7 @@
             this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
             this.UI_Map = new W3DT.Controls.DoubleBufferedPanel();
             this.UI_ExportButton = new System.Windows.Forms.Button();
+            this.UI_TileStatus = new W3DT.Controls.StaticTextBox();
             this.UI_Map.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,6 +91,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_Map.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UI_Map.Controls.Add(this.UI_TileStatus);
             this.UI_Map.Controls.Add(this.UI_ExportButton);
             this.UI_Map.Location = new System.Drawing.Point(477, 12);
             this.UI_Map.Name = "UI_Map";
@@ -112,6 +114,25 @@
             this.UI_ExportButton.Visible = false;
             this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
             // 
+            // UI_TileStatus
+            // 
+            this.UI_TileStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_TileStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_TileStatus.Cursor = System.Windows.Forms.Cursors.Default;
+            this.UI_TileStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_TileStatus.ForeColor = System.Drawing.Color.Black;
+            this.UI_TileStatus.Location = new System.Drawing.Point(13, 312);
+            this.UI_TileStatus.MinimumSize = new System.Drawing.Size(0, 36);
+            this.UI_TileStatus.Multiline = true;
+            this.UI_TileStatus.Name = "UI_TileStatus";
+            this.UI_TileStatus.ReadOnly = true;
+            this.UI_TileStatus.Size = new System.Drawing.Size(561, 36);
+            this.UI_TileStatus.TabIndex = 7;
+            this.UI_TileStatus.TabStop = false;
+            this.UI_TileStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // MapViewerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -127,6 +148,7 @@
             this.Text = "Map Viewer - W3DT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapViewerWindow_FormClosing);
             this.UI_Map.ResumeLayout(false);
+            this.UI_Map.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,5 +162,6 @@
         private Controls.StaticTextBox UI_PreviewStatus;
         private System.Windows.Forms.Button UI_ExportButton;
         private System.Windows.Forms.Timer UI_FilterTimer;
+        private Controls.StaticTextBox UI_TileStatus;
     }
 }

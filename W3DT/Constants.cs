@@ -53,6 +53,7 @@ namespace W3DT
 
         // Map Viewer //
         public static readonly string MAP_VIEWER_LOADING_MAP = "Loading {0}...";
+        public static readonly string MAP_VIEWER_TILE_STATUS = "{0} / {1} Tiles Loaded...";
         
         // External //
         public static readonly string FINAL_BOSS_URL = "http://finalboss.tv/";

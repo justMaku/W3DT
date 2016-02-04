@@ -28,6 +28,9 @@ namespace W3DT
         private Queue<RunnerExtractItem> runnerQueue;
         private int queueThreads = 0;
 
+        private int tileTotal = 0;
+        private int tileDone = 0;
+
         private Bitmap image;
         private int drawOffsetX = 0;
         private int drawOffsetY = 0;
@@ -124,6 +127,7 @@ namespace W3DT
         private void OnMapBuildDone(object sender, EventArgs e)
         {
             UI_PreviewStatus.Hide();
+            UI_TileStatus.Hide();
 
             drawOffsetX = lastOffsetX = 0;
             drawOffsetY = lastOffsetY = 0;
@@ -178,6 +182,9 @@ namespace W3DT
                     paths.Add(tempPath);
                 }
 
+                tileDone = 0;
+                tileTotal = runnerQueue.Count;
+
                 CheckRunnerQueue();
                 selectedMapName = mapName;
             }
@@ -220,6 +227,10 @@ namespace W3DT
 
                 state.State = true;
                 queueThreads--;
+
+                tileDone++;
+                UI_TileStatus.Text = string.Format(Constants.MAP_VIEWER_TILE_STATUS, tileDone, tileTotal);
+                UI_TileStatus.Show();
 
                 if (requiredFiles.Any(s => !s.State))
                 {
