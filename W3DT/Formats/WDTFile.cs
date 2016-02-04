@@ -46,6 +46,9 @@ namespace W3DT.Formats
                     string hex = chunkID.ToString("X");
                     Log.Write("WDT: Unknown chunk encountered = {0} (0x{1}) at {2} in {3}", chunkID, hex, seek, BaseName);
                 }
+
+                // Ensure we're at the right position for the next chunk.
+                seekPosition((int)(startSeek + chunk.ChunkSize));
             }
         }
     }
