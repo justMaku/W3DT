@@ -59,9 +59,9 @@ namespace W3DT.CASC
             using (Stream stream = CDNIndexHandler.OpenConfigFileDirect(config, cdnKey))
                 config.CDNConfig = new KeyValueConfig(stream);
 
-            config.ActiveBuild = 0;
             config.Builds = new List<KeyValueConfig>();
 
+            int selectedBuild = -1;
             for (int i = 0; i < config.CDNConfig["builds"].Count; i++)
             {
                 try
@@ -70,6 +70,14 @@ namespace W3DT.CASC
                     {
                         var cfg = new KeyValueConfig(stream);
                         config.Builds.Add(cfg);
+
+                        string buildUID = cfg["build-uid"][0];
+                        if (selectedBuild == -1 && buildUID == Program.Settings.RemoteClientVersion.UrlTag)
+                        {
+                            selectedBuild = i;
+
+                            Log.Write("Using build [{0} - {1}] {2}", i, buildUID, cfg["build-name"][0]);
+                        }
                     }
                 }
                 catch
@@ -77,6 +85,8 @@ namespace W3DT.CASC
 
                 }
             }
+
+            config.ActiveBuild = selectedBuild > -1 ? selectedBuild : 0;
 
             return config;
         }
