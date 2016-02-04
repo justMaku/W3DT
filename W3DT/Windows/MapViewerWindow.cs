@@ -34,6 +34,11 @@ namespace W3DT
         private int lastOffsetX = 0;
         private int lastOffsetY = 0;
 
+        private string selectedMapName;
+        private RunnerMapExport exportRunner;
+        private LoadingWindow loadingWindow;
+        private Action exportCancelCallback;
+
         // Mouse input
         private int mouseStartX;
         private int mouseStartY;
@@ -57,6 +62,14 @@ namespace W3DT
             EventManager.CASCLoadStart += OnCASCLoadStart;
             EventManager.FileExtractComplete += OnFileExtractComplete;
             explorer.Initialize();
+
+            exportCancelCallback = CancelExport;
+        }
+
+        private void OnFileExploreHit(object sender, EventArgs e)
+        {
+            FileExploreHitArgs args = (FileExploreHitArgs)e;
+            Log.Write("DEBUG EXPLORE: " + args.Entry.FullName);
         }
 
         private void TerminateRunners()
@@ -118,6 +131,7 @@ namespace W3DT
             MapBuildDoneArgs args = (MapBuildDoneArgs)e;
             image = args.Data;
             UI_Map.Invalidate();
+            UI_ExportButton.Show();
         }
 
         private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
@@ -133,6 +147,7 @@ namespace W3DT
                 image = null; // Prevent redrawing the old map.
 
                 UI_Map.Invalidate();
+                UI_ExportButton.Hide();
 
                 // Detatch mouse control (this shouldn't ever be an issue, really).
                 isMovingMap = false;
@@ -164,6 +179,7 @@ namespace W3DT
                 }
 
                 CheckRunnerQueue();
+                selectedMapName = mapName;
             }
         }
 
@@ -226,6 +242,8 @@ namespace W3DT
             EventManager.CASCLoadStart -= OnCASCLoadStart;
             EventManager.FileExtractComplete -= OnFileExtractComplete;
 
+            CancelExport();
+
             TerminateRunners();
             explorer.Dispose();
         }
@@ -269,6 +287,39 @@ namespace W3DT
 
             if (image != null)
                 e.Graphics.DrawImage(image, drawOffsetX, drawOffsetY);
+        }
+
+        private void UI_ExportButton_Click(object sender, EventArgs e)
+        {
+            // Ensure we actually have a map selected.
+            if (selectedMapName == null)
+            {
+                UI_ExportButton.Hide();
+                return;
+            }
+
+            exportRunner = new RunnerMapExport(selectedMapName);
+            exportRunner.Begin();
+
+            loadingWindow = new LoadingWindow(string.Format("Exporting {0}...", selectedMapName), "Depending on map size, this may take a while.", true, exportCancelCallback);
+            loadingWindow.ShowDialog();
+        }
+
+        private void CancelExport()
+        {
+            if (loadingWindow != null)
+            {
+                if (!loadingWindow.IsDisposed && loadingWindow.Visible)
+                    loadingWindow.Close();
+
+                loadingWindow = null;
+            }
+
+            if (exportRunner != null)
+            {
+                exportRunner.Kill();
+                exportRunner = null;
+            }
         }
     }
 }

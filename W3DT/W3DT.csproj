@@ -86,8 +86,12 @@
     <Compile Include="Events\FileExtractArgs.cs" />
     <Compile Include="Events\FileExtractCompleteUnsafeArgs.cs" />
     <Compile Include="Events\MapBuildDoneArgs.cs" />
+    <Compile Include="Events\MapExportDoneArgs.cs" />
     <Compile Include="Formats\IWriter.cs" />
     <Compile Include="Formats\WaveFrontWriter.cs" />
+    <Compile Include="Formats\WDTFile.cs" />
+    <Compile Include="Formats\WDT\Chunk_Base.cs" />
+    <Compile Include="Formats\WDT\Chunk_MVER.cs" />
     <Compile Include="Formats\WMO\Chunk_MOVI.cs" />
     <Compile Include="Formats\WMO\Chunk_MOVT.cs" />
     <Compile Include="Formats\WMO\FaceInfo.cs" />
@@ -170,6 +174,7 @@
     <Compile Include="Runners\RunnerExtractItemUnsafe.cs" />
     <Compile Include="Runners\RunnerFileExplore.cs" />
     <Compile Include="Runners\RunnerMapBuilder.cs" />
+    <Compile Include="Runners\RunnerMapExport.cs" />
     <Compile Include="Sound\libZPlay.cs" />
     <Compile Include="Windows\ArtExplorerWindow.cs">
       <SubType>Form</SubType>
@@ -353,6 +358,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

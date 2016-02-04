@@ -32,10 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapViewerWindow));
             this.UI_FileCount_Label = new System.Windows.Forms.Label();
             this.UI_FileList = new System.Windows.Forms.TreeView();
-            this.UI_Map = new W3DT.Controls.DoubleBufferedPanel();
-            this.UI_ExportButton = new System.Windows.Forms.Button();
             this.UI_FilterTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
+            this.UI_Map = new W3DT.Controls.DoubleBufferedPanel();
+            this.UI_ExportButton = new System.Windows.Forms.Button();
             this.UI_Map.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,33 +60,6 @@
             this.UI_FileList.TabIndex = 5;
             this.UI_FileList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.UI_FileList_AfterSelect);
             // 
-            // UI_Map
-            // 
-            this.UI_Map.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_Map.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.UI_Map.Controls.Add(this.UI_ExportButton);
-            this.UI_Map.Location = new System.Drawing.Point(477, 12);
-            this.UI_Map.Name = "UI_Map";
-            this.UI_Map.Size = new System.Drawing.Size(586, 629);
-            this.UI_Map.TabIndex = 6;
-            this.UI_Map.Paint += new System.Windows.Forms.PaintEventHandler(this.UI_Map_Paint);
-            this.UI_Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseDown);
-            this.UI_Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseMove);
-            this.UI_Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseUp);
-            // 
-            // UI_ExportButton
-            // 
-            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_ExportButton.Location = new System.Drawing.Point(469, 597);
-            this.UI_ExportButton.Name = "UI_ExportButton";
-            this.UI_ExportButton.Size = new System.Drawing.Size(108, 23);
-            this.UI_ExportButton.TabIndex = 0;
-            this.UI_ExportButton.Text = "Export Map (NYI)";
-            this.UI_ExportButton.UseVisualStyleBackColor = true;
-            this.UI_ExportButton.Visible = false;
-            // 
             // UI_FilterTimer
             // 
             this.UI_FilterTimer.Interval = 1000;
@@ -110,6 +83,34 @@
             this.UI_PreviewStatus.TabStop = false;
             this.UI_PreviewStatus.Text = "<- Select map";
             this.UI_PreviewStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // UI_Map
+            // 
+            this.UI_Map.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_Map.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UI_Map.Controls.Add(this.UI_ExportButton);
+            this.UI_Map.Location = new System.Drawing.Point(477, 12);
+            this.UI_Map.Name = "UI_Map";
+            this.UI_Map.Size = new System.Drawing.Size(586, 629);
+            this.UI_Map.TabIndex = 6;
+            this.UI_Map.Paint += new System.Windows.Forms.PaintEventHandler(this.UI_Map_Paint);
+            this.UI_Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseDown);
+            this.UI_Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseMove);
+            this.UI_Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseUp);
+            // 
+            // UI_ExportButton
+            // 
+            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ExportButton.Location = new System.Drawing.Point(462, 597);
+            this.UI_ExportButton.Name = "UI_ExportButton";
+            this.UI_ExportButton.Size = new System.Drawing.Size(115, 23);
+            this.UI_ExportButton.TabIndex = 0;
+            this.UI_ExportButton.Text = "Export Map Terrain";
+            this.UI_ExportButton.UseVisualStyleBackColor = true;
+            this.UI_ExportButton.Visible = false;
+            this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
             // 
             // MapViewerWindow
             // 
