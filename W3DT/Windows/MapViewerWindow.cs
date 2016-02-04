@@ -182,11 +182,19 @@ namespace W3DT
                     paths.Add(tempPath);
                 }
 
-                tileDone = 0;
-                tileTotal = runnerQueue.Count;
-
-                CheckRunnerQueue();
                 selectedMapName = mapName;
+
+                if (runnerQueue.Count > 0)
+                {
+                    tileDone = 0;
+                    tileTotal = runnerQueue.Count;
+
+                    CheckRunnerQueue();
+                }
+                else
+                {
+                    BeginMapBuild();
+                }
             }
         }
 
