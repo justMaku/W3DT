@@ -17,6 +17,7 @@ namespace W3DT.Formats.WDT
         public Chunk_Base(WDTFile file, string prefix = "????")
         {
             this.file = file;
+            this.chunkName = prefix;
 
             ChunkID = 0x0;
             ChunkSize = file.readUInt32();
