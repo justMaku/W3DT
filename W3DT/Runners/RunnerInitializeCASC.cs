@@ -25,7 +25,14 @@ namespace W3DT.Runners
                 // Clear existing cache.
                 if (Directory.Exists(Constants.TEMP_DIRECTORY))
                     Directory.Delete(Constants.TEMP_DIRECTORY, true);
+            }
+            catch
+            {
+                Log.Write("Notice: Unable to delete all temporary directories/files. Something has it open.");
+            }
 
+            try
+            {
                 Directory.CreateDirectory(Constants.TEMP_DIRECTORY);
 
                 CASCEngine engine = Program.Settings.UseRemote ? CASCEngine.OpenOnlineStorage() : CASCEngine.OpenLocalStorage();
