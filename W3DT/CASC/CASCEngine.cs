@@ -183,14 +183,8 @@ namespace W3DT.CASC
 
             Stream dataStream = GetDataStream(idxInfo.Index);
 
-            try
-            {
+            if (dataStream.CanSeek)
                 dataStream.Position = idxInfo.Offset;
-            }
-            catch
-            {
-                // This shouldn't happen, but it does.
-            }
 
             using (BinaryReader reader = new BinaryReader(dataStream, System.Text.Encoding.ASCII))
             {
