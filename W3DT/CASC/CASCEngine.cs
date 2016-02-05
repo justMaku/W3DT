@@ -182,7 +182,15 @@ namespace W3DT.CASC
                 throw new Exception("local index missing");
 
             Stream dataStream = GetDataStream(idxInfo.Index);
-            dataStream.Position = idxInfo.Offset;
+
+            try
+            {
+                dataStream.Position = idxInfo.Offset;
+            }
+            catch
+            {
+                // This shouldn't happen, but it does.
+            }
 
             using (BinaryReader reader = new BinaryReader(dataStream, System.Text.Encoding.ASCII))
             {
