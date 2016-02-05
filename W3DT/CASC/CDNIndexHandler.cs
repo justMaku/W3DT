@@ -131,8 +131,6 @@ namespace W3DT.CASC
                 return ms;
             }
 
-            Log.Write("CDN WR @ " + url);
-
             HttpWebRequest req = (HttpWebRequest) WebRequest.Create(url);
             req.AddRange(entry.Offset, entry.Offset + entry.Size - 1);
             using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
