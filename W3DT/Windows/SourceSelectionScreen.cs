@@ -15,6 +15,7 @@ namespace W3DT
     public partial class SourceSelectionScreen : Form
     {
         private bool selectionDone = false;
+        private string selectedDirectory = null;
         private ISourceSelectionParent parent;
         private LoadingWindow cdnWindow;
 
@@ -37,6 +38,8 @@ namespace W3DT
 
             if (useRemote)
             {
+                selectedDirectory = null;
+
                 EventManager.CDNScanDone += OnCDNSearchDone;
                 new RunnerCDNCheck().Begin();
                 cdnWindow = new LoadingWindow("C'Thun is searching for the closest Blizzard server to you!", "Did you know: Poking an Old God with a stick will result in rapid death.");
@@ -68,15 +71,13 @@ namespace W3DT
                     return;
                 }
 
-                Program.Settings.UseRemote = false;
-                Program.Settings.RemoteHost = null;
-                Program.Settings.RemoteHostPath = null;
-                Program.Settings.ShowSourceSelector = false;
-                Program.Settings.WoWDirectory = selectedDirectory;
-                Program.Settings.Persist();
+                this.selectedDirectory = selectedDirectory;
 
-                selectionDone = true;
-                DeferToParent();
+                // We need a valid CDN even for the local installation.
+                EventManager.CDNScanDone += OnCDNSearchDone;
+                new RunnerCDNCheck().Begin();
+                cdnWindow = new LoadingWindow("C'Thun is checking your local installation!", "Did you know: Shgla'yos plahf mh'naus.");
+                cdnWindow.ShowDialog();
             }
         }
 
@@ -95,9 +96,10 @@ namespace W3DT
             {
                 Program.Settings.RemoteHost = scanResult.BestHost;
                 Program.Settings.RemoteHostPath = scanResult.HostPath;
-                Program.Settings.WoWDirectory = null;
                 Program.Settings.ShowSourceSelector = false;
-                Program.Settings.UseRemote = true;
+                Program.Settings.UseRemote = selectedDirectory == null;
+                Program.Settings.WoWDirectory = selectedDirectory;
+
                 Program.Settings.Persist();
 
                 selectionDone = true;
