@@ -44,7 +44,7 @@ namespace W3DT.Runners
                 string[] hosts = parts[2].Split(null);
 
                 foreach (string host in hosts)
-                    if (!knownHosts.ContainsKey(host))
+                    if (host.Length > 0 && !knownHosts.ContainsKey(host))
                         knownHosts.Add(host, parts[1]);
             }
 
