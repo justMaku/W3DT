@@ -156,17 +156,10 @@ namespace W3DT.CASC
             }
             else
             {
-                try
+                using (Stream s = CDNIndex.OpenDataFileDirect(key))
+                using (BLTEHandler blte = new BLTEHandler(s, key))
                 {
-                    using (Stream s = CDNIndex.OpenDataFileDirect(key))
-                    using (BLTEHandler blte = new BLTEHandler(s, key))
-                    {
-                        return blte.OpenFile(true);
-                    }
-                }
-                catch
-                {
-                    throw new Exception("CDN index missing");
+                    return blte.OpenFile(true);
                 }
             }
         }
@@ -241,17 +234,10 @@ namespace W3DT.CASC
             }
             else
             {
-                try
+                using (Stream s = CDNIndex.OpenDataFileDirect(key))
+                using (BLTEHandler blte = new BLTEHandler(s, key))
                 {
-                    using (Stream s = CDNIndex.OpenDataFileDirect(key))
-                    using (BLTEHandler blte = new BLTEHandler(s, key))
-                    {
-                        blte.ExtractToFile(path, name);
-                    }
-                }
-                catch
-                {
-                    throw new Exception("CDN index missing");
+                    blte.ExtractToFile(path, name);
                 }
             }
         }
@@ -273,7 +259,7 @@ namespace W3DT.CASC
             if (DataStreams.TryGetValue(index, out stream))
                 return stream;
 
-            string dataFile = Path.Combine(Program.Settings.WoWDirectory, string.Format("Data\\data\\data.{1:D3}", index));
+            string dataFile = Path.Combine(Program.Settings.WoWDirectory, string.Format("Data\\data\\data.{0:D3}", index));
 
             stream = new FileStream(dataFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             DataStreams[index] = stream;
