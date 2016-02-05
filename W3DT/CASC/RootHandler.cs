@@ -237,10 +237,7 @@ namespace W3DT.CASC
 
                         // skip invalid names
                         if (!RootData.ContainsKey(fileHash))
-                        {
-                            Log.Write("CASC: Invalid file name -> {0}", fileNameFull);
                             continue;
-                        }
 
                         CASCFile.FileNames[fileHash] = fileNameFull;
                         //FileNameCache.StoreFileName(new StringHashPair(fileHash, fileNameFull));
