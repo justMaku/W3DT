@@ -25,8 +25,8 @@ namespace W3DT
         private List<ExtractState> requiredFiles;
         private List<string> paths;
 
+        private static int maxThreads = 15;
         private Queue<RunnerExtractItem> runnerQueue;
-        private int queueThreads = 0;
 
         private int tileTotal = 0;
         private int tileDone = 0;
@@ -88,7 +88,6 @@ namespace W3DT
                 extractRunner.Kill();
 
             runnerQueue.Clear();
-            queueThreads = 0;
         }
 
         private void OnExploreHit(CASCFile file)
@@ -200,18 +199,15 @@ namespace W3DT
 
         private void CheckRunnerQueue()
         {
-            for (int i = 0; i < 15; i++)
-            {
-                if (runnerQueue.Count > 0)
-                {
-                    runnerQueue.Dequeue().Begin();
-                    queueThreads++;
-                }
-                else
-                {
-                    break;
-                }
-            }
+            int max = runnerQueue.Count;
+
+            if (max == 0)
+                return;
+            else if (max > maxThreads)
+                max = maxThreads;
+
+            for (int i = 0; i < max; i++)
+                runnerQueue.Dequeue().Begin();
         }
 
         private void BeginMapBuild()
@@ -234,23 +230,15 @@ namespace W3DT
                 // It the tile cannot be extracted, we'll just render nothing in it's place.
 
                 state.State = true;
-                queueThreads--;
 
                 tileDone++;
                 UI_TileStatus.Text = string.Format(Constants.MAP_VIEWER_TILE_STATUS, tileDone, tileTotal);
                 UI_TileStatus.Show();
 
                 if (requiredFiles.Any(s => !s.State))
-                {
-                    // If no threads are running, poke the next batch.
-                    if (queueThreads == 0)
-                        CheckRunnerQueue();
-                }
+                    CheckRunnerQueue(); // Poke the next batch.
                 else
-                {
-                    // We've got all the tiles we wanted; build!
-                    BeginMapBuild();
-                }
+                    BeginMapBuild(); // We've got all the tiles we wanted; build!
             }
         }
 
