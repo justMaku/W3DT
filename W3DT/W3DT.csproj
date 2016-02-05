@@ -173,6 +173,7 @@
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
     <Compile Include="Formats\WriterBase.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
+    <Compile Include="Logging\Lumbermill.cs" />
     <Compile Include="Runners\RunnerExportBLPtoPNG.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerExtractItemUnsafe.cs" />
@@ -231,7 +232,7 @@
     <Compile Include="JSONContainers\LatestReleaseData.cs" />
     <Compile Include="JSONContainers\ReleaseAsset.cs" />
     <Compile Include="JSONContainers\Settings.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="Logging\Log.cs" />
     <Compile Include="Windows\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
