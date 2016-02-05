@@ -22,6 +22,7 @@ namespace W3DT.CASC
         private CDNIndexHandler(CASCConfig cascConfig)
         {
             CASCConfig = cascConfig;
+            downloader = new SyncDownloader();
         }
 
         public static CDNIndexHandler Initialize(CASCConfig config)
