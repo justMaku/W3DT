@@ -27,8 +27,6 @@ namespace W3DT.CASC
 
         private static readonly Jenkins96 Hasher = new Jenkins96();
 
-        private readonly Dictionary<int, Stream> DataStreams = new Dictionary<int, Stream>();
-
         public EncodingHandler Encoding { get { return EncodingHandler; } }
         public DownloadHandler Download { get { return DownloadHandler; } }
         public RootHandler RootHandler { get; private set; }
@@ -258,13 +256,8 @@ namespace W3DT.CASC
         {
             Stream stream;
 
-            if (DataStreams.TryGetValue(index, out stream))
-                return stream;
-
             string dataFile = Path.Combine(Program.Settings.WoWDirectory, string.Format("Data\\data\\data.{0:D3}", index));
-
             stream = new FileStream(dataFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            DataStreams[index] = stream;
 
             return stream;
         }
@@ -387,11 +380,6 @@ namespace W3DT.CASC
         {
             CDNIndex.Clear();
             CDNIndex = null;
-
-            foreach (var stream in DataStreams)
-                stream.Value.Close();
-
-            DataStreams.Clear();
 
             EncodingHandler.Clear();
             EncodingHandler = null;
