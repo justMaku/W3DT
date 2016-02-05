@@ -9,6 +9,7 @@ namespace W3DT
 {
     class Log
     {
+        private static Queue<string> pipe;
         private static TextWriter writer;
 
         public static void Initialize(string file)
@@ -21,7 +22,7 @@ namespace W3DT
             string year = DateTime.Now.ToString("yyyy");
             string monthDay = DateTime.Now.ToString("MMdd");
 
-            Write(String.Format("Captain's log, USS Enterprise (NCC-{0}-D), {1}", year, monthDay), false);
+            Write(string.Format("Captain's log, USS Enterprise (NCC-{0}-D), {1}", year, monthDay), false);
         }
 
         public static void Dispose()
@@ -54,7 +55,7 @@ namespace W3DT
             if (IsValid())
             {
                 if (timestamp)
-                    writer.WriteLine(String.Format("[{0}] {1}", GetTimestamp(), message));
+                    writer.WriteLine(string.Format("[{0}] {1}", GetTimestamp(), message));
                 else
                     writer.WriteLine(message);
             }
