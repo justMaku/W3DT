@@ -145,9 +145,9 @@
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label12.Location = new System.Drawing.Point(219, 175);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(94, 13);
+            this.label12.Size = new System.Drawing.Size(164, 13);
             this.label12.TabIndex = 3;
-            this.label12.Text = "Likely to be slower";
+            this.label12.Text = "Impacted by slow internet speeds";
             // 
             // label5
             // 
@@ -167,9 +167,9 @@
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label11.Location = new System.Drawing.Point(219, 160);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(241, 13);
+            this.label11.Size = new System.Drawing.Size(173, 13);
             this.label11.TabIndex = 3;
-            this.label11.Text = "Requires internet (impacted by connection speed)";
+            this.label11.Text = "Data files sourced remotely (slower)";
             // 
             // label4
             // 
@@ -222,9 +222,9 @@
             this.label6.ForeColor = System.Drawing.Color.Green;
             this.label6.Location = new System.Drawing.Point(23, 60);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(179, 13);
+            this.label6.Size = new System.Drawing.Size(150, 13);
             this.label6.TabIndex = 3;
-            this.label6.Text = "Does not require internet connection";
+            this.label6.Text = "Data files sourced locally (fast)";
             // 
             // label9
             // 
@@ -244,9 +244,9 @@
             this.label2.ForeColor = System.Drawing.Color.Green;
             this.label2.Location = new System.Drawing.Point(23, 45);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.Size = new System.Drawing.Size(159, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Generally faster";
+            this.label2.Text = "Not impacted by internet speeds";
             // 
             // label8
             // 
@@ -324,6 +324,7 @@
             this.UI_DataSourceInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_DataSourceInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_DataSourceInfo.Cursor = System.Windows.Forms.Cursors.Default;
             this.UI_DataSourceInfo.Location = new System.Drawing.Point(17, 42);
             this.UI_DataSourceInfo.Multiline = true;
             this.UI_DataSourceInfo.Name = "UI_DataSourceInfo";
