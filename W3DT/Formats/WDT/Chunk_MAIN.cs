@@ -8,28 +8,31 @@ namespace W3DT.Formats.WDT
     public class Chunk_MAIN : Chunk_Base
     {
         public const UInt32 Magic = 0x4D41494E;
-        public bool[] map { get; private set; }
+        public bool[,] map { get; private set; }
 
         public Chunk_MAIN(WDTFile file) : base(file, "MAIN")
         {
             ChunkID = Magic;
 
-            map = new bool[4096];
+            map = new bool[64,64];
             int tileCount = 0;
 
-            for (int i = 0; i < 4096; i++)
+            for (int y = 0; y < 64; y++)
             {
-                UInt32 flags = file.readUInt32();
-                file.skip(4); // Runtime area
+                for (int x = 0; x < 64; x++)
+                {
+                    UInt32 flags = file.readUInt32();
+                    file.skip(4); // Runtime area
 
-                if (flags == 1)
-                {
-                    map[i] = true;
-                    tileCount++;
-                }
-                else
-                {
-                    map[i] = false;
+                    if (flags == 1)
+                    {
+                        map[x, y] = true;
+                        tileCount++;
+                    }
+                    else
+                    {
+                        map[x, y] = false;
+                    }
                 }
             }
 

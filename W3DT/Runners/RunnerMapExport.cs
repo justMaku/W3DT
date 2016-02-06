@@ -25,17 +25,6 @@ namespace W3DT.Runners
 
         public override void Work()
         {
-            /*
-             * ToDo:
-             * 
-             * - Locate WDT file and parse the data.
-             * - Load the World WMO if one exists.
-             * - Load ADT tiles and parse them.
-             * - Plug all data into WaveFrontWriter
-             * - Save as file.
-             * 
-             */
-
             LogWrite("Beginning export of {0}...", mapName);
 
             try
@@ -48,6 +37,33 @@ namespace W3DT.Runners
 
                 WDTFile headerFile = new WDTFile(Path.Combine(Constants.TEMP_DIRECTORY, wdtPath));
                 headerFile.parse();
+
+                if (!headerFile.Chunks.Any(c => c.ChunkID == Chunk_MPHD.Magic))
+                    throw new MapExportException("Invalid map header (WDT)");
+
+                // ToDo: Check if world WMO exists and load it.
+
+                // Ensure we have a MAIN chunk before trying to process terrain.
+                Chunk_MAIN mainChunk = (Chunk_MAIN)headerFile.Chunks.Where(c => c.ChunkID == Chunk_MAIN.Magic).FirstOrDefault();
+                if (mainChunk != null)
+                {
+                    for (int y = 0; y < 64; y++)
+                    {
+                        for (int x = 0; x < 64; x++)
+                        {
+                            if (mainChunk.map[x, y])
+                            {
+                                string adtPath = string.Format(@"World\Maps\{0}\{0}_{1}_{2}.adt", mapName, x, y);
+                                Program.CASCEngine.SaveFileTo(adtPath, Constants.TEMP_DIRECTORY);
+
+                                string adtTempPath = Path.Combine(Constants.TEMP_DIRECTORY, adtPath);
+                                // ToDo: Read ADT files.
+                            }
+                        }
+                    }
+                }
+
+                // ToDo: Push all data into a mesh and export it.
 
                 // Job's done.
                 EventManager.Trigger_MapExportDone(new MapExportDoneArgs(true));
