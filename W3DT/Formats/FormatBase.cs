@@ -7,15 +7,15 @@ using System.Security.Cryptography;
 
 namespace W3DT.Formats
 {
-    public class FormatBase
+    abstract public class FormatBase : IFormat
     {
         private byte[] data;
         protected int seek = 0;
-        public string FileName { get; private set; }
+        public string BaseName { get; private set; }
 
         public FormatBase(string filePath)
         {
-            FileName = Path.GetFileName(filePath);
+            BaseName = Path.GetFileName(filePath);
 
             if (!File.Exists(filePath))
                 throw new Exception("Unable to read binary file: " + filePath);
@@ -25,9 +25,11 @@ namespace W3DT.Formats
             using (SHA1CryptoServiceProvider hasher = new SHA1CryptoServiceProvider())
             {
                 string hash = Convert.ToBase64String(hasher.ComputeHash(data));
-                Log.Write("Opening binary file {0} [{1}]", FileName, hash);
+                Log.Write("Opening binary file {0} [{1}]", BaseName, hash);
             }
         }
+
+        public abstract void parse();
 
         public int getSeek()
         {

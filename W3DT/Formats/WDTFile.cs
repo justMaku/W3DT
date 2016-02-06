@@ -14,16 +14,14 @@ namespace W3DT.Formats
 
     public class WDTFile : FormatBase
     {
-        public string BaseName { get; private set; }
         public List<Chunk_Base> Chunks { get; private set; }
 
         public WDTFile(string file) : base(file)
         {
             Chunks = new List<Chunk_Base>();
-            BaseName = Path.GetFileName(file);
         }
 
-        public void parse()
+        public override void parse()
         {
             while (!isEndOfStream() && !isOutOfBounds(seek + 4))
             {

@@ -37,7 +37,7 @@ namespace W3DT.Formats
                 groupFiles.Add(file);
         }
 
-        public void parse()
+        public override void parse()
         {
             Chunk_MOGP groupRoot = null;
 

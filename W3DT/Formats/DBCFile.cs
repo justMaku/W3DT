@@ -27,7 +27,9 @@ namespace W3DT.Formats
         private int stringRefOffset;
         //private byte[] stringData;
 
-        public DBCFile(string path) : base(path)
+        public DBCFile(string path) : base(path) { }
+
+        public override void parse()
         {
             if (readUInt32() != MAGIC)
                 throw new Exception("Invalid DBC file format!");
@@ -36,11 +38,11 @@ namespace W3DT.Formats
 
             // Locate string data before processing.
             int preSeek = seek;
-            skip((int) (Header.RecordCount * Header.RecordSize));
+            skip((int)(Header.RecordCount * Header.RecordSize));
             stringRefOffset = seek;
             seekPosition(preSeek);
 
-            Table = getTable(Path.GetFileNameWithoutExtension(path));
+            Table = getTable(Path.GetFileNameWithoutExtension(BaseName));
         }
 
         public string getString(int offset)

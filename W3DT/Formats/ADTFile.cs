@@ -13,14 +13,12 @@ namespace W3DT.Formats
 
     public class ADTFile : FormatBase
     {
-        public string BaseName { get; private set; }
-
         public ADTFile(string file) : base(file)
         {
-            BaseName = Path.GetFileName(file);
+            // ToDo: Construct chunk holder.
         }
 
-        public void parse()
+        public override void parse()
         {
             // ToDo: Actually parse the file.
         }
