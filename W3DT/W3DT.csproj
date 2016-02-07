@@ -88,11 +88,13 @@
     <Compile Include="Events\MapBuildDoneArgs.cs" />
     <Compile Include="Events\MapExportDoneArgs.cs" />
     <Compile Include="Formats\ADTFile.cs" />
+    <Compile Include="Formats\ChunkedFormatBase.cs" />
+    <Compile Include="Formats\Chunk_Base.cs" />
+    <Compile Include="Formats\IChunkedFormat.cs" />
     <Compile Include="Formats\IFormat.cs" />
     <Compile Include="Formats\IWriter.cs" />
     <Compile Include="Formats\WaveFrontWriter.cs" />
     <Compile Include="Formats\WDTFile.cs" />
-    <Compile Include="Formats\WDT\Chunk_Base.cs" />
     <Compile Include="Formats\WDT\Chunk_MAIN.cs" />
     <Compile Include="Formats\WDT\Chunk_MODF.cs" />
     <Compile Include="Formats\WDT\Chunk_MPHD.cs" />
@@ -154,7 +156,6 @@
     <Compile Include="Formats\Helpers\StringBlock.cs" />
     <Compile Include="Formats\Helpers\Stuffer.cs" />
     <Compile Include="Formats\WMOFile.cs" />
-    <Compile Include="Formats\WMO\Chunk_Base.cs" />
     <Compile Include="Formats\WMO\Chunk_MCVP.cs" />
     <Compile Include="Formats\WMO\Chunk_MFOG.cs" />
     <Compile Include="Formats\WMO\Chunk_MODD.cs" />

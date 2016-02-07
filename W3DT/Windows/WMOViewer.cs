@@ -390,7 +390,7 @@ namespace W3DT
 
         private void UI_ExportObjButton_Click(object sender, EventArgs e)
         {
-            UI_ExportSaveDialog.FileName = Path.GetFileNameWithoutExtension(loadedFile.baseName) + ".obj";
+            UI_ExportSaveDialog.FileName = Path.GetFileNameWithoutExtension(loadedFile.BaseName) + ".obj";
             if (UI_ExportSaveDialog.ShowDialog() == DialogResult.OK)
             {
                 EventManager.ExportBLPtoPNGComplete += OnExportBLPtoPNGComplete;

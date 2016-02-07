@@ -12,46 +12,31 @@ namespace W3DT.Formats
         public WDTException(string message) : base(message) { }
     }
 
-    public class WDTFile : FormatBase
+    public class WDTFile : ChunkedFormatBase
     {
-        public List<Chunk_Base> Chunks { get; private set; }
+        public WDTFile(string file) : base(file) { }
 
-        public WDTFile(string file) : base(file)
+        public override void storeChunk(Chunk_Base chunk)
         {
-            Chunks = new List<Chunk_Base>();
+            Chunks.Add(chunk);
         }
 
-        public override void parse()
+        public override Chunk_Base lookupChunk(UInt32 magic)
         {
-            while (!isEndOfStream() && !isOutOfBounds(seek + 4))
+            switch (magic)
             {
-                UInt32 chunkID = readUInt32();
-                Chunk_Base chunk = null;
-                int startSeek = seek + 4;
-
-                switch (chunkID)
-                {
-                    case Chunk_MVER.Magic: chunk = new Chunk_MVER(this); break;
-                    case Chunk_MPHD.Magic: chunk = new Chunk_MPHD(this); break;
-                    case Chunk_MAIN.Magic: chunk = new Chunk_MAIN(this); break;
-                    case Chunk_MWMO.Magic: chunk = new Chunk_MWMO(this); break;
-                    case Chunk_MODF.Magic: chunk = new Chunk_MODF(this); break;
-                    default: chunk = new Chunk_Base(this); break;
-                }
-
-                if (chunk.ChunkID != 0x0)
-                {
-                    Chunks.Add(chunk);
-                }
-                else
-                {
-                    string hex = chunkID.ToString("X");
-                    Log.Write("WDT: Unknown chunk encountered = {0} (0x{1}) at {2} in {3}", chunkID, hex, seek, BaseName);
-                }
-
-                // Ensure we're at the right position for the next chunk.
-                seekPosition((int)(startSeek + chunk.ChunkSize));
+                case Chunk_MVER.Magic: return new Chunk_MVER(this);
+                case Chunk_MPHD.Magic: return new Chunk_MPHD(this);
+                case Chunk_MAIN.Magic: return new Chunk_MAIN(this);
+                case Chunk_MWMO.Magic: return new Chunk_MWMO(this);
+                case Chunk_MODF.Magic: return new Chunk_MODF(this);
+                default: return new Chunk_Base(this);
             }
+        }
+
+        public override string getFormatName()
+        {
+            return "WDT";
         }
     }
 }

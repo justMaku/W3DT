@@ -11,16 +11,23 @@ namespace W3DT.Formats
         public ADTException(string message) : base(message) { }
     }
 
-    public class ADTFile : FormatBase
+    public class ADTFile : ChunkedFormatBase
     {
-        public ADTFile(string file) : base(file)
+        public ADTFile(string file) : base(file) { }
+
+        public override void storeChunk(Chunk_Base chunk)
         {
-            // ToDo: Construct chunk holder.
+            Chunks.Add(chunk);
         }
 
-        public override void parse()
+        public override Chunk_Base lookupChunk(UInt32 magic)
         {
-            // ToDo: Actually parse the file.
+            return new Chunk_Base(this);
+        }
+
+        public override string getFormatName()
+        {
+            return "ADT";
         }
     }
 }
