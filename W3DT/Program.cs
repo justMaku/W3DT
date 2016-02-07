@@ -116,7 +116,6 @@ namespace W3DT
                 {
                     Match match = buildName.Match(CASCEngine.Config.BuildName);
                     buildCache = string.Format("{0}.{1}", match.Groups[2].ToString(), match.Groups[1].ToString());
-
                 }
                 return buildCache;
             }
