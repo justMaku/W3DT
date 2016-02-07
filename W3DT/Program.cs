@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using W3DT.JSONContainers;
 using W3DT.CASC;
@@ -28,6 +29,10 @@ namespace W3DT
             public static bool IS_DEBUG = false;
             public static bool DO_UPDATE = true;
         #endif
+
+        private static Regex buildName = new Regex(@"(\d{5})patch(\d\.\d\.\d)");
+        private static string buildRaw;
+        private static string buildCache;
 
         /// <summary>
         /// The main entry point for the application.
@@ -97,6 +102,23 @@ namespace W3DT
                     return false;
 
                 return !CASC_LOADING;
+            }
+        }
+
+        public static string LoadedBuild
+        {
+            get
+            {
+                if (!IsCASCReady)
+                    return "0";
+
+                if (buildCache == null || buildRaw != CASCEngine.Config.BuildName)
+                {
+                    Match match = buildName.Match(CASCEngine.Config.BuildName);
+                    buildCache = string.Format("{0}.{1}", match.Groups[2].ToString(), match.Groups[1].ToString());
+
+                }
+                return buildCache;
             }
         }
 
