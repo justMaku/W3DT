@@ -205,7 +205,7 @@ namespace W3DT
             }
             else
             {
-                MessageBox.Show("Unable to intialize CASC; something blew up!", "Dammit, Allan...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Alert.Show("Unable to initialize CASC; something blew up!");
 
                 isCASCStarted = false;
                 isDoneLoading = false;

@@ -86,11 +86,6 @@ namespace W3DT
             }
         }
 
-        private void ErrorMessage(string message)
-        {
-            MessageBox.Show(message, "WMO Extraction Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
         private void LoadWMOFile()
         {
             loadingWindow.SetSecondLine("Almost done.. hang tight!");
@@ -125,7 +120,7 @@ namespace W3DT
             Log.Write("ERROR: Exception was caught while opening WMO file!");
             Log.Write("ERROR: " + e.Message);
 
-            ErrorMessage("Sorry, that WMO file cannot be opened!");
+            Alert.Show("Sorry, that WMO file cannot be opened!");
         }
 
         private void PrepareTextureFiles()
@@ -340,7 +335,7 @@ namespace W3DT
                     if (!args.Success)
                     {
                         CancelExtraction();
-                        ErrorMessage(string.Format("Unable to extract WMO file '{0}'.", args.File.FullName));
+                        Alert.Show(string.Format("Unable to extract WMO file '{0}'.", args.File.FullName));
                     }
 
                     match.State = true;
@@ -359,7 +354,7 @@ namespace W3DT
                     if (!args.Success)
                     {
                         CancelExtraction();
-                        ErrorMessage(string.Format("Unable to extract WMO texture '{0}'.", args.File));
+                        Alert.Show(string.Format("Unable to extract WMO texture '{0}'.", args.File));
                     }
 
                     texMatch.State = true;
@@ -414,7 +409,7 @@ namespace W3DT
             EventManager.ExportBLPtoPNGComplete -= OnExportBLPtoPNGComplete;
 
             if (!args.Success)
-                ErrorMessage("Unable to export textures!");
+                Alert.Show("Unable to export textures!");
 
             loadingWindow.Close();
             loadingWindow = null;

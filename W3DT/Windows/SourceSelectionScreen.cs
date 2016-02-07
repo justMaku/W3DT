@@ -108,7 +108,7 @@ namespace W3DT
             }
             else
             {
-                MessageBox.Show("Unable to locate a responsive CDN server. Ensure you are connected to the internet and that the Blizzard servers are not under maintenance, then try again. Otherwise, use a different data source method.", "CDN Scan Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Alert.Show("Unable to locate a responsive CDN server. Ensure you are connected to the internet and that the Blizzard servers are not under maintenance, then try again. Otherwise, use a different data source method.");
             }
         }
 

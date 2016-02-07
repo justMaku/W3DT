@@ -100,7 +100,7 @@ namespace W3DT
                     if (extension.EndsWith("dbc"))
                         selectedDbcFile.writeToFile(UI_SaveDialog.FileName);
                     else
-                        MessageBox.Show("Unable to save, unsupported format!", "No can do, Captain!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Alert.Show("Unable to save, unsupported format!");
                 }
             }
         }

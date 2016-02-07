@@ -320,9 +320,9 @@ namespace W3DT
             CloseLoadingWindow();
 
             if (args.Success)
-                MessageBox.Show(string.Format("{0} successfully extracted!", selectedMapName), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Alert.Show(string.Format("{0} successfully extracted!", selectedMapName), true);
             else
-                MessageBox.Show(string.Format("Unable to extract {0}!", selectedMapName), "Bork!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Alert.Show(string.Format("Unable to extract {0}!", selectedMapName));
         }
 
         private void CloseLoadingWindow()
