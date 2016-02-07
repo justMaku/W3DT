@@ -61,6 +61,7 @@ namespace W3DT
             explorer.ExploreHitCallback = OnExploreHit;
             explorer.ExploreDoneCallback = OnExploreDone;
 
+            EventManager.MapExportDone += OnMapExportDone;
             EventManager.MapBuildDone += OnMapBuildDone;
             EventManager.CASCLoadStart += OnCASCLoadStart;
             EventManager.FileExtractComplete += OnFileExtractComplete;
@@ -312,7 +313,19 @@ namespace W3DT
             loadingWindow.ShowDialog();
         }
 
-        private void CancelExport()
+        private void OnMapExportDone(object sender, EventArgs e)
+        {
+            MapExportDoneArgs args = (MapExportDoneArgs)e;
+
+            CloseLoadingWindow();
+
+            if (args.Success)
+                MessageBox.Show(string.Format("{0} successfully extracted!", selectedMapName), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show(string.Format("Unable to extract {0}!", selectedMapName), "Bork!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void CloseLoadingWindow()
         {
             if (loadingWindow != null)
             {
@@ -321,6 +334,11 @@ namespace W3DT
 
                 loadingWindow = null;
             }
+        }
+
+        private void CancelExport()
+        {
+            CloseLoadingWindow();
 
             if (exportRunner != null)
             {

@@ -88,6 +88,7 @@
     <Compile Include="Events\MapBuildDoneArgs.cs" />
     <Compile Include="Events\MapExportDoneArgs.cs" />
     <Compile Include="Formats\ADTFile.cs" />
+    <Compile Include="Formats\ADT\Chunk_MVER.cs" />
     <Compile Include="Formats\ChunkedFormatBase.cs" />
     <Compile Include="Formats\Chunk_Base.cs" />
     <Compile Include="Formats\IChunkedFormat.cs" />
