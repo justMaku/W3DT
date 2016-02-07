@@ -53,15 +53,29 @@ namespace W3DT.Runners
                         {
                             if (mainChunk.map[x, y])
                             {
-                                string adtPath = string.Format(@"World\Maps\{0}\{0}_{1}_{2}.adt", mapName, x, y);
+                                string pathBase = string.Format(@"World\Maps\{0}\{0}_{1}_{2}", mapName, x, y);
+                                string adtPath = pathBase + ".adt";
+                                string texPath = pathBase + "_tex0.adt";
+                                string objPath = pathBase + "_obj0.adt";
+
                                 Program.CASCEngine.SaveFileTo(adtPath, Constants.TEMP_DIRECTORY);
+                                Program.CASCEngine.SaveFileTo(texPath, Constants.TEMP_DIRECTORY);
+                                Program.CASCEngine.SaveFileTo(objPath, Constants.TEMP_DIRECTORY);
 
                                 string adtTempPath = Path.Combine(Constants.TEMP_DIRECTORY, adtPath);
+                                string texTempPath = Path.Combine(Constants.TEMP_DIRECTORY, texPath);
+                                string objTempPath = Path.Combine(Constants.TEMP_DIRECTORY, objPath);
 
                                 try
                                 {
                                     ADTFile adt = new ADTFile(adtTempPath);
                                     adt.parse();
+
+                                    ADTFile tex = new ADTFile(texTempPath);
+                                    tex.parse();
+
+                                    ADTFile obj = new ADTFile(objTempPath);
+                                    obj.parse();
                                 }
                                 catch (ADTException ex)
                                 {
