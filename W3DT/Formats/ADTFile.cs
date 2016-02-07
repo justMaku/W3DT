@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using W3DT.Formats.ADT;
 
 namespace W3DT.Formats
 {
@@ -22,7 +23,11 @@ namespace W3DT.Formats
 
         public override Chunk_Base lookupChunk(UInt32 magic)
         {
-            return new Chunk_Base(this);
+            switch (magic)
+            {
+                case Chunk_MVER.Magic: return new Chunk_MVER(this);
+                default: return new Chunk_Base(this);
+            }
         }
 
         public override string getFormatName()
