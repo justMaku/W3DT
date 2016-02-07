@@ -88,7 +88,9 @@
     <Compile Include="Events\MapBuildDoneArgs.cs" />
     <Compile Include="Events\MapExportDoneArgs.cs" />
     <Compile Include="Formats\ADTFile.cs" />
+    <Compile Include="Formats\ADT\Chunk_MCNK.cs" />
     <Compile Include="Formats\ADT\Chunk_MVER.cs" />
+    <Compile Include="Formats\ADT\IChunkSoup.cs" />
     <Compile Include="Formats\ChunkedFormatBase.cs" />
     <Compile Include="Formats\Chunk_Base.cs" />
     <Compile Include="Formats\IChunkedFormat.cs" />
@@ -173,7 +175,7 @@
     <Compile Include="Formats\WMO\Chunk_MOTV.cs" />
     <Compile Include="Formats\WMO\Chunk_MOTX.cs" />
     <Compile Include="Formats\WMO\Chunk_MVER.cs" />
-    <Compile Include="Formats\WMO\IChunkProvider.cs" />
+    <Compile Include="Formats\IChunkProvider.cs" />
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
     <Compile Include="Formats\WriterBase.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Runners\RunnerMapBuilder.cs" />
     <Compile Include="Runners\RunnerMapExport.cs" />
     <Compile Include="Sound\libZPlay.cs" />
+    <Compile Include="Windows\Alert.cs" />
     <Compile Include="Windows\ArtExplorerWindow.cs">
       <SubType>Form</SubType>
     </Compile>

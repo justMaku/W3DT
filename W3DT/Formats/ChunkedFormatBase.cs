@@ -38,7 +38,7 @@ namespace W3DT.Formats
                 }
 
                 // Ensure we're at the right position for the next chunk.
-                if (!(chunk is WMO.Chunk_MOGP)) // Tacky non-generic handling, bleh.
+                if (chunk is IChunkProvider)
                     seekPosition((int)(startSeek + chunk.ChunkSize));
             }
         }

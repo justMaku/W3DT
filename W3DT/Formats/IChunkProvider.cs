@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace W3DT.Formats.WMO
+namespace W3DT.Formats
 {
     public interface IChunkProvider
     {
