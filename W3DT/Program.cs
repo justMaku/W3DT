@@ -89,12 +89,15 @@ namespace W3DT
             Log.Dispose();
         }
 
-        public static bool IsCASCReady()
+        public static bool IsCASCReady
         {
-            if (CASCEngine == null)
-                return false;
+            get
+            {
+                if (CASCEngine == null)
+                    return false;
 
-            return !CASC_LOADING;
+                return !CASC_LOADING;
+            }
         }
 
         private static void OnThreadException(object sender, EventArgs e)

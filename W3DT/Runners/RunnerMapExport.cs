@@ -29,7 +29,7 @@ namespace W3DT.Runners
 
             try
             {
-                if (!Program.IsCASCReady())
+                if (!Program.IsCASCReady)
                     throw new MapExportException("CASC file engine is not loaded.");
 
                 string wdtPath = string.Format(@"World\Maps\{0}\{0}.wdt", mapName);

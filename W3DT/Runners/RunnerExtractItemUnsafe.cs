@@ -28,7 +28,7 @@ namespace W3DT.Runners
             bool success = false;
             Log.Write("Extracting CASC item: " + file);
 
-            if (Program.IsCASCReady())
+            if (Program.IsCASCReady)
             {
                 try
                 {

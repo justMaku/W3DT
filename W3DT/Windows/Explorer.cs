@@ -78,7 +78,7 @@ namespace W3DT
                 fileList.Nodes.Clear(); // Clear existing nodes.
 
             // Do not continue without the CASC engine.
-            if (!Program.IsCASCReady())
+            if (!Program.IsCASCReady)
                 return;
 
             found = 0; // Reset found counter.
