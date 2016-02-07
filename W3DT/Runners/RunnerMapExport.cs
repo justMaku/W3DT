@@ -57,7 +57,16 @@ namespace W3DT.Runners
                                 Program.CASCEngine.SaveFileTo(adtPath, Constants.TEMP_DIRECTORY);
 
                                 string adtTempPath = Path.Combine(Constants.TEMP_DIRECTORY, adtPath);
-                                // ToDo: Read ADT files.
+
+                                try
+                                {
+                                    ADTFile adt = new ADTFile(adtTempPath);
+                                    adt.parse();
+                                }
+                                catch (ADTException ex)
+                                {
+                                    LogWrite("Unable to process tile {0},{1} due to exception: {2}", x, y, ex.Message);
+                                }
                             }
                         }
                     }
