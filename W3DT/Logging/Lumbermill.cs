@@ -24,14 +24,17 @@ namespace W3DT.Logging
             {
                 if (Log.Pipe.Count > 0)
                 {
-                    string message = Log.Pipe.Dequeue();
+                    string message;
 
-                    // Write to the log file.
-                    writer.WriteLine(string.Format("[{0}] {1}", getTimestamp(), message));
-                    writer.Flush();
+                    if (Log.Pipe.TryDequeue(out message))
+                    {
+                        // Write to the log file.
+                        writer.WriteLine(string.Format("[{0}] {1}", getTimestamp(), message));
+                        writer.Flush();
 
-                    // Write to the debugger.
-                    Debug.WriteLine(message);
+                        // Write to the debugger.
+                        Debug.WriteLine(message);
+                    }
                 }
                 else
                 {

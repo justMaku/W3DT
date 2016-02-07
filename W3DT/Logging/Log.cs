@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.IO;
@@ -10,7 +11,7 @@ namespace W3DT
 {
     class Log
     {
-        public static Queue<string> Pipe;
+        public static ConcurrentQueue<string> Pipe;
         private static Lumbermill runner;
 
         public static void Initialize(string file)
@@ -18,7 +19,7 @@ namespace W3DT
             if (File.Exists(file))
                 File.Delete(file);
 
-            Pipe = new Queue<string>();
+            Pipe = new ConcurrentQueue<string>();
 
             runner = new Lumbermill(new StreamWriter(file, true));
             runner.Begin();
