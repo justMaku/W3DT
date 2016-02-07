@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 using Newtonsoft.Json;
 using W3DT.JSONContainers;
 using W3DT.CASC;
@@ -62,6 +63,10 @@ namespace W3DT
                 Log.Write("NOT UPDATING: Disabled via arguments.");
                 DO_UPDATE = false;
             }
+            
+            // Asset checking.
+            DevUpdateLocalFile(Constants.LIST_FILE);
+            DevUpdateLocalFile(Constants.LOAD_FLAVOR_FILE);
 
             if (File.Exists(Constants.SETTINGS_FILE))
                 Settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(Constants.SETTINGS_FILE));
@@ -92,6 +97,29 @@ namespace W3DT
                 Application.Run(new MainForm());
 
             Log.Dispose();
+        }
+
+        private static void DevUpdateLocalFile(string file)
+        {
+            bool update = false;
+            string assetPath = Path.Combine(Constants.DEV_ASSET_DIR, file);
+
+            if (File.Exists(file))
+            {
+                if (!File.Exists(assetPath))
+                    return;
+
+                // Doing a checksum or such on assets such as the listfile would be
+                // slow and there's no need. This is really for devs only, so dirty.
+                update = new FileInfo(assetPath).Length != new FileInfo(file).Length;
+            }
+            else
+            {
+                update = true;
+            }
+
+            if (update)
+                File.Copy(assetPath, file);
         }
 
         public static bool IsCASCReady
