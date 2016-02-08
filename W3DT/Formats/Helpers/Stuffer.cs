@@ -53,6 +53,22 @@ namespace W3DT.Formats
                     else if (type.Equals(typeof(MaterialTexture)))
                         set = MaterialTexture.Read(feed);
 
+                    // This is some hacky-ass code, but it allows MCNK chunk to use
+                    // the stuffer without code bloat. Probably could be done better.
+                    if (set == null)
+                    {
+                        if (type.Equals(typeof(UInt32[])))
+                        {
+                            int size = ((UInt32[])prop.GetValue(target, null)).Length;
+                            UInt32[] arr = new UInt32[size];
+
+                            for (int i = 0; i < size; i++)
+                                arr[i] = feed.readUInt32();
+
+                            set = arr;
+                        }
+                    }
+
                     if (set != null)
                     {
                         prop.SetValue(target, set, null);
