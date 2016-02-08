@@ -82,6 +82,12 @@
     <Compile Include="Controls\DoubleBufferedPanel.Designer.cs">
       <DependentUpon>DoubleBufferedPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MainFormButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MainFormButton.Designer.cs">
+      <DependentUpon>MainFormButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\ExportBLPtoPNGArgs.cs" />
     <Compile Include="Events\FileExtractArgs.cs" />
     <Compile Include="Events\FileExtractCompleteUnsafeArgs.cs" />
@@ -180,6 +186,11 @@
     <Compile Include="Formats\WriterBase.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Logging\Lumbermill.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Runners\RunnerExportBLPtoPNG.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerExtractItemUnsafe.cs" />
@@ -193,6 +204,12 @@
     </Compile>
     <Compile Include="Windows\ArtExplorerWindow.Designer.cs">
       <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Windows\MapViewerWindow.cs">
       <SubType>Form</SubType>
@@ -240,12 +257,6 @@
     <Compile Include="JSONContainers\ReleaseAsset.cs" />
     <Compile Include="JSONContainers\Settings.cs" />
     <Compile Include="Logging\Log.cs" />
-    <Compile Include="Windows\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Runners\RunnerBase.cs" />
     <Compile Include="Runners\RunnerCDNCheck.cs" />
     <Compile Include="Runners\RunnerDownloadUpdate.cs" />
@@ -293,6 +304,9 @@
     <EmbeddedResource Include="Windows\ArtExplorerWindow.resx">
       <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\MapViewerWindow.resx">
       <DependentUpon>MapViewerWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -302,19 +316,11 @@
     <EmbeddedResource Include="Windows\LoadingWindow.resx">
       <DependentUpon>LoadingWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Windows\MusicExplorerWindow.resx">
       <DependentUpon>MusicExplorerWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -350,6 +356,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="inv_hammer_20.ico" />
+    <None Include="Resources\inv_misc_questionmark.jpg" />
+    <None Include="Resources\inv_misc_enggizmos_30.jpg" />
+    <None Include="Resources\inv_misc_punchcards_blue.jpg" />
+    <None Include="Resources\inv_inscription_scroll.jpg" />
+    <None Include="Resources\inv_misc_book_09.jpg" />
+    <None Include="Resources\trade_archaeology_delicatemusicbox.jpg" />
+    <None Include="Resources\inv_misc_map03.jpg" />
+    <None Include="Resources\inv_drink_03.jpg" />
+    <None Include="Resources\inv_hammer_20 %281%29.jpg" />
+    <None Include="Resources\achievement_character_human_female.jpg" />
+    <None Include="Resources\icon_border.png" />
     <None Include="Resources\stop.png" />
     <None Include="Resources\pause44.png" />
     <None Include="Resources\rewind45.png" />

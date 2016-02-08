@@ -73,6 +73,16 @@ namespace W3DT.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap achievement_character_human_female {
+            get {
+                object obj = ResourceManager.GetObject("achievement_character_human_female", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fast46 {
             get {
                 object obj = ResourceManager.GetObject("fast46", resourceCulture);
@@ -86,6 +96,96 @@ namespace W3DT.Properties {
         internal static System.Drawing.Bitmap green_eye {
             get {
                 object obj = ResourceManager.GetObject("green_eye", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_border {
+            get {
+                object obj = ResourceManager.GetObject("icon_border", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inv_drink_03 {
+            get {
+                object obj = ResourceManager.GetObject("inv_drink_03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inv_hammer_20__1_ {
+            get {
+                object obj = ResourceManager.GetObject("inv_hammer_20 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inv_inscription_scroll {
+            get {
+                object obj = ResourceManager.GetObject("inv_inscription_scroll", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inv_misc_book_09 {
+            get {
+                object obj = ResourceManager.GetObject("inv_misc_book_09", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inv_misc_enggizmos_30 {
+            get {
+                object obj = ResourceManager.GetObject("inv_misc_enggizmos_30", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inv_misc_map03 {
+            get {
+                object obj = ResourceManager.GetObject("inv_misc_map03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inv_misc_punchcards_blue {
+            get {
+                object obj = ResourceManager.GetObject("inv_misc_punchcards_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inv_misc_questionmark {
+            get {
+                object obj = ResourceManager.GetObject("inv_misc_questionmark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -126,6 +226,16 @@ namespace W3DT.Properties {
         internal static System.Drawing.Bitmap stop {
             get {
                 object obj = ResourceManager.GetObject("stop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap trade_archaeology_delicatemusicbox {
+            get {
+                object obj = ResourceManager.GetObject("trade_archaeology_delicatemusicbox", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
