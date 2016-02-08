@@ -7,6 +7,14 @@ using W3DT.Formats.ADT;
 
 namespace W3DT.Formats
 {
+    public enum ADTFileType
+    {
+        ROOT,
+        TEX,
+        OBJ,
+        LOD
+    }
+
     public class ADTException : Exception
     {
         public ADTException(string message) : base(message) { }
@@ -14,7 +22,12 @@ namespace W3DT.Formats
 
     public class ADTFile : ChunkedFormatBase
     {
-        public ADTFile(string file) : base(file) { }
+        public ADTFileType Type { get; private set; }
+
+        public ADTFile(string file, ADTFileType type) : base(file)
+        {
+            Type = type;
+        }
 
         public override void storeChunk(Chunk_Base chunk)
         {

@@ -68,13 +68,13 @@ namespace W3DT.Runners
 
                                 try
                                 {
-                                    ADTFile adt = new ADTFile(adtTempPath);
+                                    ADTFile adt = new ADTFile(adtTempPath, ADTFileType.ROOT);
                                     adt.parse();
 
-                                    ADTFile tex = new ADTFile(texTempPath);
+                                    ADTFile tex = new ADTFile(texTempPath, ADTFileType.TEX);
                                     tex.parse();
 
-                                    ADTFile obj = new ADTFile(objTempPath);
+                                    ADTFile obj = new ADTFile(objTempPath, ADTFileType.OBJ);
                                     obj.parse();
                                 }
                                 catch (ADTException ex)
