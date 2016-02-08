@@ -38,7 +38,7 @@ namespace W3DT.Formats
                 }
 
                 // Ensure we're at the right position for the next chunk.
-                if (chunk is IChunkProvider)
+                if (!(chunk is IChunkProvider))
                     seekPosition((int)(startSeek + chunk.ChunkSize));
             }
         }
