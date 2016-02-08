@@ -23,6 +23,7 @@ namespace W3DT.Formats
     public class ADTFile : ChunkedFormatBase
     {
         public ADTFileType Type { get; private set; }
+        private Chunk_MCNK CurrentSub;
 
         public ADTFile(string file, ADTFileType type) : base(file)
         {
@@ -31,7 +32,20 @@ namespace W3DT.Formats
 
         public override void storeChunk(Chunk_Base chunk)
         {
-            Chunks.Add(chunk);
+            if (chunk is IChunkSoup)
+            {
+                if (CurrentSub != null)
+                    CurrentSub.addChunk(chunk);
+                else
+                    Log.Write("ADT: Sub-chunk found before MCNK chunk? Shun the demons!");
+            }
+            else
+            {
+                Chunks.Add(chunk);
+
+                if (chunk is Chunk_MCNK)
+                    CurrentSub = (Chunk_MCNK)chunk;
+            }
         }
 
         public override Chunk_Base lookupChunk(UInt32 magic)
