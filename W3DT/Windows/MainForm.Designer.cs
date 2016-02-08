@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.UI_SectionLabel = new System.Windows.Forms.Label();
             this.UI_Button_Help = new W3DT.Controls.MainFormButton();
             this.UI_Button_Settings = new W3DT.Controls.MainFormButton();
             this.UI_Button_DBC = new W3DT.Controls.MainFormButton();
@@ -39,7 +40,6 @@
             this.UI_Button_Doodad = new W3DT.Controls.MainFormButton();
             this.UI_Button_WMO = new W3DT.Controls.MainFormButton();
             this.UI_Button_ModelViewer = new W3DT.Controls.MainFormButton();
-            this.UI_SectionLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.UI_Button_Help)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI_Button_Settings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI_Button_DBC)).BeginInit();
@@ -51,6 +51,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.UI_Button_WMO)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI_Button_ModelViewer)).BeginInit();
             this.SuspendLayout();
+            // 
+            // UI_SectionLabel
+            // 
+            this.UI_SectionLabel.AutoSize = true;
+            this.UI_SectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_SectionLabel.Location = new System.Drawing.Point(14, 88);
+            this.UI_SectionLabel.Name = "UI_SectionLabel";
+            this.UI_SectionLabel.Size = new System.Drawing.Size(266, 31);
+            this.UI_SectionLabel.TabIndex = 1;
+            this.UI_SectionLabel.Tag = "Warcraft 3D Toolkit";
+            this.UI_SectionLabel.Text = "Warcraft 3D Toolkit";
             // 
             // UI_Button_Help
             // 
@@ -207,17 +218,6 @@
             this.UI_Button_ModelViewer.Tag = "Model Viewer";
             this.UI_Button_ModelViewer.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
             this.UI_Button_ModelViewer.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
-            // 
-            // UI_SectionLabel
-            // 
-            this.UI_SectionLabel.AutoSize = true;
-            this.UI_SectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UI_SectionLabel.Location = new System.Drawing.Point(14, 88);
-            this.UI_SectionLabel.Name = "UI_SectionLabel";
-            this.UI_SectionLabel.Size = new System.Drawing.Size(266, 31);
-            this.UI_SectionLabel.TabIndex = 1;
-            this.UI_SectionLabel.Tag = "Warcraft 3D Toolkit";
-            this.UI_SectionLabel.Text = "Warcraft 3D Toolkit";
             // 
             // MainForm
             // 
