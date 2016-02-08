@@ -55,6 +55,7 @@
             // 
             // UI_SecBtn_Models
             // 
+            this.UI_SecBtn_Models.Enabled = false;
             this.UI_SecBtn_Models.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UI_SecBtn_Models.Location = new System.Drawing.Point(12, 12);
             this.UI_SecBtn_Models.Name = "UI_SecBtn_Models";
@@ -76,6 +77,7 @@
             // 
             // UI_SecBtn_Doodads
             // 
+            this.UI_SecBtn_Doodads.Enabled = false;
             this.UI_SecBtn_Doodads.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UI_SecBtn_Doodads.Location = new System.Drawing.Point(12, 112);
             this.UI_SecBtn_Doodads.Name = "UI_SecBtn_Doodads";
@@ -86,6 +88,7 @@
             // 
             // UI_SecBtn_SpellBook
             // 
+            this.UI_SecBtn_SpellBook.Enabled = false;
             this.UI_SecBtn_SpellBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UI_SecBtn_SpellBook.Location = new System.Drawing.Point(12, 262);
             this.UI_SecBtn_SpellBook.Name = "UI_SecBtn_SpellBook";
