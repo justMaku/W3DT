@@ -81,6 +81,16 @@ namespace W3DT.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] bHEI01B {
+            get {
+                object obj = ResourceManager.GetObject("bHEI01B", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap fast46 {
@@ -243,9 +253,9 @@ namespace W3DT.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap w3dt_ad_1 {
+        internal static System.Drawing.Bitmap UI_Tooltip_B {
             get {
-                object obj = ResourceManager.GetObject("w3dt_ad_1", resourceCulture);
+                object obj = ResourceManager.GetObject("UI_Tooltip_B", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,9 +263,79 @@ namespace W3DT.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap w3dt_ad_2 {
+        internal static System.Drawing.Bitmap UI_Tooltip_BL {
             get {
-                object obj = ResourceManager.GetObject("w3dt_ad_2", resourceCulture);
+                object obj = ResourceManager.GetObject("UI_Tooltip_BL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Tooltip_BR {
+            get {
+                object obj = ResourceManager.GetObject("UI_Tooltip_BR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Tooltip_L {
+            get {
+                object obj = ResourceManager.GetObject("UI_Tooltip_L", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Tooltip_R {
+            get {
+                object obj = ResourceManager.GetObject("UI_Tooltip_R", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Tooltip_T {
+            get {
+                object obj = ResourceManager.GetObject("UI_Tooltip_T", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Tooltip_TL {
+            get {
+                object obj = ResourceManager.GetObject("UI_Tooltip_TL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Tooltip_TR {
+            get {
+                object obj = ResourceManager.GetObject("UI_Tooltip_TR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap w3dt_ad_1 {
+            get {
+                object obj = ResourceManager.GetObject("w3dt_ad_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

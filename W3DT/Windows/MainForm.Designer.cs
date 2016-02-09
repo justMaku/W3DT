@@ -74,9 +74,10 @@
             this.UI_Button_Help.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_Help.TabIndex = 0;
             this.UI_Button_Help.TabStop = false;
-            this.UI_Button_Help.Tag = "Support/Information";
-            this.UI_Button_Help.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_Help.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_Help.Tag = "Support/Information|Details on how to get support for W3DT along with some inform" +
+    "ation about the application and its development.";
+            this.UI_Button_Help.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_Help.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // UI_Button_Settings
             // 
@@ -89,10 +90,10 @@
             this.UI_Button_Settings.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_Settings.TabIndex = 0;
             this.UI_Button_Settings.TabStop = false;
-            this.UI_Button_Settings.Tag = "Settings";
+            this.UI_Button_Settings.Tag = "Settings|Adjust how W3DT works to your liking!";
             this.UI_Button_Settings.Click += new System.EventHandler(this.UI_Button_Settings_Click);
-            this.UI_Button_Settings.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_Settings.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_Settings.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_Settings.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // UI_Button_DBC
             // 
@@ -105,10 +106,12 @@
             this.UI_Button_DBC.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_DBC.TabIndex = 0;
             this.UI_Button_DBC.TabStop = false;
-            this.UI_Button_DBC.Tag = "DBC/DB2 Viewer";
+            this.UI_Button_DBC.Tag = "DBC/DB2 Viewer|DBC/DB2 files are client databases that contain various data for t" +
+    "he game, mostly strings of localized information! This tool allows you to browse" +
+    " through them.";
             this.UI_Button_DBC.Click += new System.EventHandler(this.UI_Button_DBC_Click);
-            this.UI_Button_DBC.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_DBC.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_DBC.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_DBC.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // UI_Button_Spellbook
             // 
@@ -121,9 +124,9 @@
             this.UI_Button_Spellbook.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_Spellbook.TabIndex = 0;
             this.UI_Button_Spellbook.TabStop = false;
-            this.UI_Button_Spellbook.Tag = "Spellbook";
-            this.UI_Button_Spellbook.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_Spellbook.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_Spellbook.Tag = "Spellbook|Browse and export spells from within the game; magical!";
+            this.UI_Button_Spellbook.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_Spellbook.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // UI_Button_Artwork
             // 
@@ -136,10 +139,12 @@
             this.UI_Button_Artwork.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_Artwork.TabIndex = 0;
             this.UI_Button_Artwork.TabStop = false;
-            this.UI_Button_Artwork.Tag = "Artwork Explorer";
+            this.UI_Button_Artwork.Tag = "Music/Sound Player|Listen and export any of the sound/music files located within " +
+    "the game files. The language of dialog will depend on your game version (or remo" +
+    "te locale in the settings).";
             this.UI_Button_Artwork.Click += new System.EventHandler(this.UI_Button_Artwork_Click);
-            this.UI_Button_Artwork.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_Artwork.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_Artwork.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_Artwork.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // UI_Button_SoundPlayer
             // 
@@ -152,10 +157,12 @@
             this.UI_Button_SoundPlayer.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_SoundPlayer.TabIndex = 0;
             this.UI_Button_SoundPlayer.TabStop = false;
-            this.UI_Button_SoundPlayer.Tag = "Music/Sound Player";
+            this.UI_Button_SoundPlayer.Tag = "Music/Sound Player|Listen and export any of the sound/music files located within " +
+    "the game files. The language of dialog will depend on your game version (or remo" +
+    "te locale in the settings).";
             this.UI_Button_SoundPlayer.Click += new System.EventHandler(this.UI_Button_SoundPlayer_Click);
-            this.UI_Button_SoundPlayer.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_SoundPlayer.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_SoundPlayer.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_SoundPlayer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // UI_Button_MapViewer
             // 
@@ -168,10 +175,12 @@
             this.UI_Button_MapViewer.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_MapViewer.TabIndex = 0;
             this.UI_Button_MapViewer.TabStop = false;
-            this.UI_Button_MapViewer.Tag = "Map Viewer";
+            this.UI_Button_MapViewer.Tag = "Map Viewer|Browse all maps available in the game using a minimap-based tool. Sele" +
+    "ct regions of the maps (or even the entire maps) can be exported as full-3D terr" +
+    "ain!";
             this.UI_Button_MapViewer.Click += new System.EventHandler(this.UI_Button_MapViewer_Click);
-            this.UI_Button_MapViewer.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_MapViewer.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_MapViewer.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_MapViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // UI_Button_Doodad
             // 
@@ -184,9 +193,10 @@
             this.UI_Button_Doodad.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_Doodad.TabIndex = 0;
             this.UI_Button_Doodad.TabStop = false;
-            this.UI_Button_Doodad.Tag = "Object (Doodad) Viewer";
-            this.UI_Button_Doodad.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_Doodad.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_Doodad.Tag = "Object (Doodad) Viewer|Doodads are small objects generally used for clutter and f" +
+    "urnishing both interior and exterior environments.";
+            this.UI_Button_Doodad.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_Doodad.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // UI_Button_WMO
             // 
@@ -199,10 +209,12 @@
             this.UI_Button_WMO.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_WMO.TabIndex = 0;
             this.UI_Button_WMO.TabStop = false;
-            this.UI_Button_WMO.Tag = "WMO Viewer";
+            this.UI_Button_WMO.Tag = "WMO Viewer|WMO objects are large 3D objects that often contain numerous other sma" +
+    "ller objects (doodads). As an example, buildings and caves are generally WMO obj" +
+    "ects.";
             this.UI_Button_WMO.Click += new System.EventHandler(this.UI_Button_WMO_Click);
-            this.UI_Button_WMO.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_WMO.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_WMO.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_WMO.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // UI_Button_ModelViewer
             // 
@@ -215,9 +227,10 @@
             this.UI_Button_ModelViewer.Size = new System.Drawing.Size(68, 68);
             this.UI_Button_ModelViewer.TabIndex = 0;
             this.UI_Button_ModelViewer.TabStop = false;
-            this.UI_Button_ModelViewer.Tag = "Model Viewer";
-            this.UI_Button_ModelViewer.MouseEnter += new System.EventHandler(this.OnMainButtonMouseEnter);
-            this.UI_Button_ModelViewer.MouseLeave += new System.EventHandler(this.OnMainButtonMouseLeave);
+            this.UI_Button_ModelViewer.Tag = "Model Viewer|View/export characters and creatures from the game. Characters can b" +
+    "e equipped with items and even imported from the armory.";
+            this.UI_Button_ModelViewer.MouseEnter += new System.EventHandler(this.ShowTooltip);
+            this.UI_Button_ModelViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             // 
             // MainForm
             // 
@@ -238,6 +251,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Warcraft 3D Toolkit";
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
             ((System.ComponentModel.ISupportInitialize)(this.UI_Button_Help)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI_Button_Settings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI_Button_DBC)).EndInit();

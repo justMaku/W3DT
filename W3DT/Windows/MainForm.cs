@@ -9,12 +9,18 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using W3DT.Controls;
 
+using W3DT.Events;
+using W3DT.Runners;
+
 namespace W3DT
 {
     public partial class MainForm : Form
     {
         private Dictionary<string, Form> SubWindows;
-        private Point PanelPoint = new System.Drawing.Point(12, 96);
+
+        private AwesomeTooltip tip;
+        private Rectangle tipBound;
+        private bool tipValid = false;
 
         public MainForm()
         {
@@ -24,14 +30,44 @@ namespace W3DT
             SubWindows = new Dictionary<string, Form>();
         }
 
-        private void OnMainButtonMouseLeave(object sender, EventArgs e)
+        private void UpdateTooltip(object sender, MouseEventArgs e)
         {
-            UI_SectionLabel.Text = (string)UI_SectionLabel.Tag;
+            if (tip != null && !tipBound.Contains(PointToClient(Cursor.Position)))
+            {
+                tip.Hide();
+                tipValid = false;
+            }
         }
 
-        private void OnMainButtonMouseEnter(object sender, EventArgs e)
+        private void ShowTooltip(object sender, EventArgs args)
         {
-            UI_SectionLabel.Text = (string) ((MainFormButton)sender).Tag;
+            if (tipValid)
+                return;
+
+            Control control = (Control)sender;
+            string[] parts = ((string)control.Tag).Split('|');
+            if (tip == null)
+            {
+                tip = new AwesomeTooltip(parts[0], parts[1]);
+                tip.MouseMove += UpdateTooltip;
+                Controls.Add(tip);
+            }
+            else
+            {
+                tip.HeaderText = parts[0];
+                tip.BodyText = parts[1];
+            }
+
+            int drawX = control.Left + (control.Width / 2);
+
+            if (drawX + tip.Width > Width)
+                drawX -= tip.Width;
+
+            tip.Location = new Point(drawX, control.Top + (control.Height / 2));
+            tipBound = new Rectangle(control.Left, control.Top, control.Width, control.Height);
+            tip.BringToFront();
+            tip.Show();
+            tipValid = true;
         }
 
         private void ShowWindow(Type windowType, bool dialog = false)

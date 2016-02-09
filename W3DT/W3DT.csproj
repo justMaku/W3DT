@@ -76,6 +76,12 @@
     <Compile Include="3D\Face.cs" />
     <Compile Include="3D\Mesh.cs" />
     <Compile Include="3D\TextureManager.cs" />
+    <Compile Include="Controls\AwesomeTooltip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\AwesomeTooltip.Designer.cs">
+      <DependentUpon>AwesomeTooltip.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -301,6 +307,9 @@
     <Compile Include="Windows\SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\AwesomeTooltip.resx">
+      <DependentUpon>AwesomeTooltip.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\ArtExplorerWindow.resx">
       <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -356,6 +365,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="inv_hammer_20.ico" />
+    <None Include="Resources\UI-Tooltip-R.png" />
+    <None Include="Resources\UI-Tooltip-T.png" />
+    <None Include="Resources\UI-Tooltip-TL.png" />
+    <None Include="Resources\UI-Tooltip-TR.png" />
+    <None Include="Resources\UI-Tooltip-B.png" />
+    <None Include="Resources\UI-Tooltip-BL.png" />
+    <None Include="Resources\UI-Tooltip-BR.png" />
+    <None Include="Resources\UI-Tooltip-L.png" />
+    <None Include="Resources\bHEI01B.ttf" />
+    <None Include="Resources\ThinBorder-BottomRight.png" />
+    <None Include="Resources\ThinBorder-Bottom.png" />
+    <None Include="Resources\ThinBorder-BottomLeft.png" />
+    <None Include="Resources\ThinBorder-Left.png" />
+    <None Include="Resources\ThinBorder-Right.png" />
+    <None Include="Resources\ThinBorder-Top.png" />
+    <None Include="Resources\ThinBorder-TopLeft.png" />
+    <None Include="Resources\ThinBorder-TopRight.png" />
     <None Include="Resources\inv_misc_questionmark.jpg" />
     <None Include="Resources\inv_misc_enggizmos_30.jpg" />
     <None Include="Resources\inv_misc_punchcards_blue.jpg" />

@@ -7,6 +7,9 @@ using System.Threading;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using System.Runtime.InteropServices;
+using System.Drawing.Text;
+using System.Drawing;
 using Newtonsoft.Json;
 using W3DT.JSONContainers;
 using W3DT.CASC;
@@ -22,6 +25,8 @@ namespace W3DT
         public static Settings Settings;
         public static CASCEngine CASCEngine;
         public static CASCFolder Root;
+
+        public static List<Font> Fonts;
 
         #if DEBUG
             public static bool IS_DEBUG = true;
@@ -88,6 +93,18 @@ namespace W3DT
                 Log.Write("NOT UPDATING: Automatic updating disabled in settings.");
                 DO_UPDATE = false;
             }
+
+            // Custom fonts
+            Fonts = new List<Font>();
+            PrivateFontCollection fonts = new PrivateFontCollection();
+
+            byte[] data = W3DT.Properties.Resources.bHEI01B;
+            IntPtr pointer = Marshal.AllocCoTaskMem(data.Length);
+            Marshal.Copy(data, 0, pointer, data.Length);
+            fonts.AddMemoryFont(pointer, data.Length);
+            Marshal.FreeCoTaskMem(pointer);
+
+            Fonts.Add(new Font(fonts.Families[0], 12f, FontStyle.Bold));
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
