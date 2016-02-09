@@ -249,6 +249,8 @@
             this.Controls.Add(this.UI_Button_WMO);
             this.Controls.Add(this.UI_Button_ModelViewer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(777, 510);
+            this.MinimumSize = new System.Drawing.Size(777, 510);
             this.Name = "MainForm";
             this.Text = "Warcraft 3D Toolkit";
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTooltip);
