@@ -40,7 +40,7 @@ namespace W3DT.Formats.ADT
         public UInt32 ofsMCLV { get; set; } // MCLV
         public UInt32 unk2 { get; set; } // Unused
 
-        public Chunk_MCNK(ADTFile file) : base(file)
+        public Chunk_MCNK(ADTFile file) : base(file, "MCNK")
         {
             Chunks = new List<Chunk_Base>();
 
