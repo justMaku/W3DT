@@ -122,7 +122,7 @@ namespace W3DT
             }
 
             if (update)
-                File.Copy(assetPath, file);
+                File.Copy(assetPath, file, true);
         }
 
         public static bool IsCASCReady
