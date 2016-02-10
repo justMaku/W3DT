@@ -7,6 +7,9 @@ namespace W3DT.Formats.ADT
 {
     public class Chunk_MVER : Chunk_Base
     {
+        // MVER ADT Chunk
+        // File version.
+
         public const UInt32 Magic = 0x4D564552;
         public UInt32 Version { get; private set; }
 

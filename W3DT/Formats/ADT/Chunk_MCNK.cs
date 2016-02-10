@@ -8,6 +8,9 @@ namespace W3DT.Formats.ADT
 {
     public class Chunk_MCNK : Chunk_Base, IChunkProvider
     {
+        // MCNK ADT Chunk
+        // Header (has sub-chunks, fields only if this chunk is in the root)
+
         public const UInt32 Magic = 0x4D434E4B;
         private List<Chunk_Base> Chunks;
 

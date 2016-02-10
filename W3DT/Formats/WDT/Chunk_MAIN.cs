@@ -7,6 +7,9 @@ namespace W3DT.Formats.WDT
 {
     public class Chunk_MAIN : Chunk_Base
     {
+        // MAIN WDT Chunk
+        // Defines which ADT tiles are present for the map.
+
         public const UInt32 Magic = 0x4D41494E;
         public bool[,] map { get; private set; }
 

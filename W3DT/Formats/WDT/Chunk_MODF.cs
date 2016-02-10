@@ -8,6 +8,9 @@ namespace W3DT.Formats.WDT
 {
     public class Chunk_MODF : Chunk_Base
     {
+        // MODF WDT Chunk
+        // Placement information for a global WMO object.
+
         public const UInt32 Magic = 0x4D4F4446;
 
         public UInt32 id { get; set; }

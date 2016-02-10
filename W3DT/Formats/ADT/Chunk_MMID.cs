@@ -7,6 +7,9 @@ namespace W3DT.Formats.ADT
 {
     public class Chunk_MMID : Chunk_Base
     {
+        // MMID ADT Chunk
+        // Offsets of the models used in this tile.
+
         public const UInt32 Magic = 0x4D4D4944;
         public UInt32[] offsets { get; private set; }
 

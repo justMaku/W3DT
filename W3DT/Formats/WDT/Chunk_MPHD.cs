@@ -7,6 +7,9 @@ namespace W3DT.Formats.WDT
 {
     public class Chunk_MPHD : Chunk_Base
     {
+        // MPHD WDT Chunk
+        // WDT Header
+
         public const UInt32 Magic = 0x4D504844;
 
         public UInt32 flags { get; private set; }
