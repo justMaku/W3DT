@@ -6,11 +6,11 @@ using W3DT.Formats;
 
 namespace W3DT._3D
 {
-    public class Position
+    public struct Position
     {
-        public float X { get; private set; }
-        public float Y { get; private set; }
-        public float Z { get; private set; }
+        public float X;
+        public float Y;
+        public float Z;
 
         public Position(float x, float y, float z)
         {

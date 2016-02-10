@@ -6,12 +6,12 @@ using W3DT.Formats;
 
 namespace W3DT._3D
 {
-    public class Colour4
+    public struct Colour4
     {
-        public byte r { get; set; }
-        public byte g { get; set; }
-        public byte b { get; set; }
-        public byte a { get; set; }
+        public byte r;
+        public byte g;
+        public byte b;
+        public byte a;
 
         public Colour4(byte r, byte g, byte b, byte a)
         {

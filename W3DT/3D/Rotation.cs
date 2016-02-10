@@ -6,12 +6,12 @@ using W3DT.Formats;
 
 namespace W3DT._3D
 {
-    public class Rotation
+    public struct Rotation
     {
-        public float x { get; set; }
-        public float y { get; set; }
-        public float z { get; set; }
-        public float w { get; set; }
+        public float x;
+        public float y;
+        public float z;
+        public float w;
 
         public Rotation(float x, float y, float z, float w)
         {
