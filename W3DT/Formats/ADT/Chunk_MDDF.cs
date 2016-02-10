@@ -8,12 +8,12 @@ namespace W3DT.Formats.ADT
 {
     public struct MDDFEntry
     {
-        UInt32 entry;
-        UInt32 uniqueID;
-        Position position;
-        Rotation rotation;
-        UInt16 scale;
-        UInt16 flags;
+        public UInt32 entry;
+        public UInt32 uniqueID;
+        public Position position;
+        public Rotation rotation;
+        public UInt16 scale;
+        public UInt16 flags;
     }
 
     public class Chunk_MDDF : Chunk_Base
@@ -29,9 +29,15 @@ namespace W3DT.Formats.ADT
             for (int i = 0; i < entryCount; i++)
             {
                 MDDFEntry entry = new MDDFEntry();
-                Stuffer.Stuff(entry, file, GetLogPrefix());
-                entries[i] = entry;
+                entry.entry = file.readUInt32();
+                entry.uniqueID = file.readUInt32();
+                entry.position = Position.Read(file);
+                entry.rotation = Rotation.Read(file);
+                entry.scale = file.readUInt16();
+                entry.flags = file.readUInt16();
             }
+
+            LogWrite("Loaded " + entryCount + " doodad spawns");
         }
     }
 }
