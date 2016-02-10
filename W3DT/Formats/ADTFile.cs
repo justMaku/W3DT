@@ -57,6 +57,7 @@ namespace W3DT.Formats
                 case Chunk_MTEX.Magic: return new Chunk_MTEX(this);
                 case Chunk_MMDX.Magic: return new Chunk_MMDX(this);
                 case Chunk_MMID.Magic: return new Chunk_MMID(this);
+                case Chunk_MWMO.Magic: return new Chunk_MWMO(this);
                 default: return new Chunk_Base(this);
             }
         }
