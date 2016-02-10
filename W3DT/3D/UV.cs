@@ -6,10 +6,10 @@ using W3DT.Formats;
 
 namespace W3DT._3D
 {
-    public class UV
+    public struct UV
     {
-        public float u { get; private set; }
-        public float v { get; private set; }
+        public float u;
+        public float v;
 
         public UV(float u, float v)
         {
