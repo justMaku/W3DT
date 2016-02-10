@@ -40,6 +40,9 @@ namespace W3DT.Formats
                 // Ensure we're at the right position for the next chunk.
                 if (!(chunk is IChunkProvider))
                     seekPosition((int)(startSeek + chunk.ChunkSize));
+
+                if (chunk is ADT.Chunk_MCNR)
+                    skip(13); // 0 112 245 18 0 0 0 0 84 245 18 0 ???
             }
         }
 
