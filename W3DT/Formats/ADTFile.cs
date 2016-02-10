@@ -64,6 +64,7 @@ namespace W3DT.Formats
                 case Chunk_MCVT.Magic: return new Chunk_MCVT(this);
                 case Chunk_MCLV.Magic: return new Chunk_MCLV(this);
                 case Chunk_MCCV.Magic: return new Chunk_MCCV(this);
+                case Chunk_MCNR.Magic: return new Chunk_MCNR(this);
                 default: return new Chunk_Base(this);
             }
         }
