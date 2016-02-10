@@ -22,7 +22,7 @@ namespace W3DT._3D
             // 24-bit offset?
             byte[] b = input.readBytes(3);
             temp.offset = BitConverter.ToUInt32(new byte[4] { b[0], b[1], b[2], 0 }, 0);
-            Stuffer.Stuff(temp, input, null, true);
+            Stuffer.Stuff(temp, input, "Doodad", true);
 
             return temp;
         }

@@ -16,7 +16,7 @@ namespace W3DT._3D
         public static GroupInformation Read(FormatBase input)
         {
             GroupInformation temp = new GroupInformation();
-            Stuffer.Stuff(temp, input, null, true);
+            Stuffer.Stuff(temp, input, "GroupInformation", true);
             return temp;
         }
     }

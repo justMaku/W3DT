@@ -24,7 +24,7 @@ namespace W3DT._3D
         public static FogInfo Read(FormatBase input)
         {
             FogInfo temp = new FogInfo();
-            Stuffer.Stuff(temp, input, null, true);
+            Stuffer.Stuff(temp, input, "FogInfo", true);
             return temp;
         }
     }

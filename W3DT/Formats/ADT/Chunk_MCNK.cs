@@ -50,7 +50,7 @@ namespace W3DT.Formats.ADT
             if (file.Type == ADTFileType.ROOT) // Only root has the header.
             {
                 lqTexMap = new UInt32[4]; // Assign a size so the stuffer knows what to do.
-                Stuffer.Stuff(this, file, null, true);
+                Stuffer.Stuff(this, file, GetLogPrefix(), true);
             }
         }
 
