@@ -5,7 +5,7 @@ using System.Text;
 
 namespace W3DT.Formats.ADT
 {
-    public class Chunk_MCRD : Chunk_Base, IChunkSoup
+    public class Chunk_MCRD : Chunk_Base
     {
         // MCRD ADT Chunk
         // MDDF entries
