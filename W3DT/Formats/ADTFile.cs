@@ -60,6 +60,7 @@ namespace W3DT.Formats
                 case Chunk_MWMO.Magic: return new Chunk_MWMO(this);
                 case Chunk_MWID.Magic: return new Chunk_MWID(this);
                 case Chunk_MDDF.Magic: return new Chunk_MDDF(this);
+                case Chunk_MODF.Magic: return new Chunk_MODF(this);
                 default: return new Chunk_Base(this);
             }
         }
