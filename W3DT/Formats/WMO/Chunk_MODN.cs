@@ -13,11 +13,9 @@ namespace W3DT.Formats.WMO
         public const UInt32 Magic = 0x4D4F444E;
         public StringBlock data { get; private set; }
 
-        public Chunk_MODN(WMOFile file) : base(file, "MODN")
+        public Chunk_MODN(WMOFile file) : base(file, "MODN", Magic)
         {
-            ChunkID = Magic;
             data = new StringBlock(file, (int) ChunkSize);
-
             LogWrite("Loaded " + data.count() + " doodad names.");
         }
     }

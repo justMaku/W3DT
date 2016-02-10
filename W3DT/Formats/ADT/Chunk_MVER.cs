@@ -10,9 +10,8 @@ namespace W3DT.Formats.ADT
         public const UInt32 Magic = 0x4D564552;
         public UInt32 Version { get; private set; }
 
-        public Chunk_MVER(ADTFile file) : base(file, "MVER")
+        public Chunk_MVER(ADTFile file) : base(file, "MVER", Magic)
         {
-            ChunkID = Magic;
             Version = file.readUInt32();
 
             // Ensure we have a v18 ADT chunk.

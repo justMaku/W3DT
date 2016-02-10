@@ -14,10 +14,8 @@ namespace W3DT.Formats.WMO
         public const UInt32 Magic = 0x4D464F47;
         public FogInfo[] entries { get; private set; }
 
-        public Chunk_MFOG(WMOFile file) : base(file, "MFOG")
+        public Chunk_MFOG(WMOFile file) : base(file, "MFOG", Magic)
         {
-            ChunkID = Magic;
-
             int entryCount = (int)ChunkSize / 48;
             entries = new FogInfo[entryCount];
 

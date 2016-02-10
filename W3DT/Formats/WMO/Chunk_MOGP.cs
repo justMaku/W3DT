@@ -37,9 +37,8 @@ namespace W3DT.Formats.WMO
 
         private List<Chunk_Base> subChunks;
 
-        public Chunk_MOGP(WMOFile file) : base(file, "MOGP")
+        public Chunk_MOGP(WMOFile file) : base(file, "MOGP", Magic)
         {
-            ChunkID = Magic;
             subChunks = new List<Chunk_Base>();
             Stuffer.Stuff(this, file, GetLogPrefix());
         }

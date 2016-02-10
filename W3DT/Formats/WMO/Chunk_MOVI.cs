@@ -13,10 +13,8 @@ namespace W3DT.Formats.WMO
         public const UInt32 Magic = 0x4D4F5649;
         public FacePosition[] positions { get; private set; }
 
-        public Chunk_MOVI(WMOFile file) : base(file, "MOVI")
+        public Chunk_MOVI(WMOFile file) : base(file, "MOVI", Magic)
         {
-            ChunkID = Magic;
-
             int faceCount = (int)ChunkSize / 6;
             positions = new FacePosition[faceCount];
 

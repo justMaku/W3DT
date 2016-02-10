@@ -14,10 +14,8 @@ namespace W3DT.Formats.WMO
         public const UInt32 Magic = 0x4D4F4E52;
         public Position[] normals { get; private set; }
 
-        public Chunk_MONR(WMOFile file) : base(file, "MONR")
+        public Chunk_MONR(WMOFile file) : base(file, "MONR", Magic)
         {
-            ChunkID = Magic;
-
             int normalCount = (int)ChunkSize / 12;
             normals = new Position[normalCount];
 

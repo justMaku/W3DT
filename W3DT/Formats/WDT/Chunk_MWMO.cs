@@ -11,12 +11,9 @@ namespace W3DT.Formats.WDT
 
         public string fileName { get; private set; }
 
-        public Chunk_MWMO(WDTFile file) : base(file, "MWMO")
+        public Chunk_MWMO(WDTFile file) : base(file, "MWMO", Magic)
         {
-            ChunkID = Magic;
-
             fileName = file.readString(); // Zero-terminated, this should be safe.
-
             LogValue("Map WMO", fileName);
         }
     }

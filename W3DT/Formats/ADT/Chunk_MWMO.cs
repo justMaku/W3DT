@@ -10,9 +10,8 @@ namespace W3DT.Formats.ADT
         public const UInt32 Magic = 0x4D574D4F;
         public StringBlock objects { get; private set; }
 
-        public Chunk_MWMO(ADTFile file) : base(file, "MWMO")
+        public Chunk_MWMO(ADTFile file) : base(file, "MWMO", Magic)
         {
-            ChunkID = Magic;
             objects = new StringBlock(file, (int)ChunkSize);
         }
     }

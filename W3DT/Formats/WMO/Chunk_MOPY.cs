@@ -13,10 +13,8 @@ namespace W3DT.Formats.WMO
         public const UInt32 Magic = 0x4D4F5059;
         public FaceInfo[] faceInfo { get; private set; }
 
-        public Chunk_MOPY(WMOFile file) : base(file, "MOPY")
+        public Chunk_MOPY(WMOFile file) : base(file, "MOPY", Magic)
         {
-            ChunkID = Magic;
-
             int infoCount = (int)ChunkSize / 2;
             faceInfo = new FaceInfo[infoCount];
 

@@ -14,10 +14,8 @@ namespace W3DT.Formats.WMO
         public const UInt32 Magic = 0x4D4F4749;
         public GroupInformation[] groups { get; private set; }
 
-        public Chunk_MOGI(WMOFile file) : base(file, "MOGI")
+        public Chunk_MOGI(WMOFile file) : base(file, "MOGI", Magic)
         {
-            ChunkID = Magic;
-
             int groupCount = (int)ChunkSize / 32;
             groups = new GroupInformation[groupCount];
 

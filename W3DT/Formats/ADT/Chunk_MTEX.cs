@@ -10,9 +10,8 @@ namespace W3DT.Formats.ADT
         public const UInt32 Magic = 0x4D544558;
         public StringBlock textures { get; private set; }
 
-        public Chunk_MTEX(ADTFile file) : base(file, "MTEX")
+        public Chunk_MTEX(ADTFile file) : base(file, "MTEX", Magic)
         {
-            ChunkID = Magic;
             textures = new StringBlock(file, (int)ChunkSize);
         }
     }

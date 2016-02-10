@@ -14,10 +14,8 @@ namespace W3DT.Formats.WMO
         public const UInt32 Magic = 0x4D4F5456;
         public UV[] uvData { get; private set; }
 
-        public Chunk_MOTV(WMOFile file) : base(file, "MOTV")
+        public Chunk_MOTV(WMOFile file) : base(file, "MOTV", Magic)
         {
-            ChunkID = Magic;
-
             int uvCount = (int)ChunkSize / 8;
             uvData = new UV[uvCount];
 

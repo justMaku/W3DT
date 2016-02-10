@@ -29,9 +29,8 @@ namespace W3DT.Formats.WMO
         public Position boundingBoxHigh { get; set; }
         public UInt32 flags { get; set; }
 
-        public Chunk_MOHD(WMOFile file) : base(file, "MOHD")
+        public Chunk_MOHD(WMOFile file) : base(file, "MOHD", Magic)
         {
-            ChunkID = Magic;
             Stuffer.Stuff(this, file, GetLogPrefix());
         }
     }

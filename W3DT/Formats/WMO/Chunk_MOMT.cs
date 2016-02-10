@@ -14,10 +14,8 @@ namespace W3DT.Formats.WMO
         public const UInt32 Magic = 0x4D4F4D54;
         public Material[] materials;
 
-        public Chunk_MOMT(WMOFile file) : base(file, "MOMT")
+        public Chunk_MOMT(WMOFile file) : base(file, "MOMT", Magic)
         {
-            ChunkID = Magic;
-
             int materialCount = (int)ChunkSize / 64;
             materials = new Material[materialCount];
 

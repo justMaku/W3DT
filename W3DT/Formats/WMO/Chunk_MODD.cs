@@ -14,10 +14,8 @@ namespace W3DT.Formats.WMO
         public const UInt32 Magic = 0x4D4F4444;
         public Doodad[] doodads { get; private set; }
 
-        public Chunk_MODD(WMOFile file) : base(file, "MODD")
+        public Chunk_MODD(WMOFile file) : base(file, "MODD", Magic)
         {
-            ChunkID = Magic;
-
             int doodadCount = (int)ChunkSize / 40;
             doodads = new Doodad[doodadCount];
 

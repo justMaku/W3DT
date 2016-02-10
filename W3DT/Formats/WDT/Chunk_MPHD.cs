@@ -12,10 +12,8 @@ namespace W3DT.Formats.WDT
         public UInt32 flags { get; private set; }
         public UInt32 unk1 { get; private set; }
 
-        public Chunk_MPHD(WDTFile file) : base(file, "MPHD")
+        public Chunk_MPHD(WDTFile file) : base(file, "MPHD", Magic)
         {
-            ChunkID = Magic;
-
             flags = file.readUInt32();
             unk1 = file.readUInt32();
             // 4 * 6 bytes of unused data here.

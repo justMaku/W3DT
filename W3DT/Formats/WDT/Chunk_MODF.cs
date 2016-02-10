@@ -20,10 +20,8 @@ namespace W3DT.Formats.WDT
         public UInt16 doodadIndex { get; set; }
         public UInt16 nameSet { get; set; }
 
-        public Chunk_MODF(WDTFile file) : base(file, "MODF")
+        public Chunk_MODF(WDTFile file) : base(file, "MODF", Magic)
         {
-            ChunkID = Magic;
-
             Stuffer.Stuff(this, file, GetLogPrefix());
 
             // There are 2 bytes (UInt16) of padding here, but we should

@@ -11,12 +11,9 @@ namespace W3DT.Formats.WDT
 
         public UInt32 version { get; private set; }
 
-        public Chunk_MVER(WDTFile file) : base(file, "MVER")
+        public Chunk_MVER(WDTFile file) : base(file, "MVER", Magic)
         {
-            ChunkID = Magic;
-
             version = file.readUInt32();
-
             LogValue("version", version);
         }
     }

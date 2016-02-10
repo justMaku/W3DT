@@ -12,10 +12,8 @@ namespace W3DT.Formats.WMO
 
         public const UInt32 Magic = 0x4D4F4C54;
 
-        public Chunk_MOLT(WMOFile file) : base(file, "MOLT")
+        public Chunk_MOLT(WMOFile file) : base(file, "MOLT", Magic)
         {
-            ChunkID = Magic;
-
             int entryCount = (int)ChunkSize / 48;
             LogWrite(entryCount + " lightning entries parsed, but ignored.");
         }

@@ -10,10 +10,8 @@ namespace W3DT.Formats.WDT
         public const UInt32 Magic = 0x4D41494E;
         public bool[,] map { get; private set; }
 
-        public Chunk_MAIN(WDTFile file) : base(file, "MAIN")
+        public Chunk_MAIN(WDTFile file) : base(file, "MAIN", Magic)
         {
-            ChunkID = Magic;
-
             map = new bool[64,64];
             int tileCount = 0;
 

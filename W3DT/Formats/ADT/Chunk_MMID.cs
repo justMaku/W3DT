@@ -10,10 +10,8 @@ namespace W3DT.Formats.ADT
         public const UInt32 Magic = 0x4D4D4944;
         public UInt32[] offsets { get; private set; }
 
-        public Chunk_MMID(ADTFile file) : base(file, "MMID")
+        public Chunk_MMID(ADTFile file) : base(file, "MMID", Magic)
         {
-            ChunkID = Magic;
-
             int offsetCount = (int)ChunkSize / 4;
             offsets = new UInt32[offsetCount];
 

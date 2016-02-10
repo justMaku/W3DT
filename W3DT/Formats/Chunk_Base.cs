@@ -14,13 +14,13 @@ namespace W3DT.Formats
         public UInt32 ChunkSize { get; private set; }
         public UInt32 ChunkID { get; protected set; }
 
-        public Chunk_Base(ChunkedFormatBase file, string chunkName = "????")
+        public Chunk_Base(ChunkedFormatBase file, string chunkName = "????", UInt32 chunkID = 0x0)
         {
             File = file;
             ChunkName = chunkName;
             LogPrefix = file.getFormatName();
 
-            ChunkID = 0x0;
+            ChunkID = chunkID;
             ChunkSize = file.readUInt32();
         }
 
