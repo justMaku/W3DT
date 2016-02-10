@@ -8,17 +8,17 @@ namespace W3DT._3D
 {
     public struct Rotation
     {
-        public float x;
-        public float y;
-        public float z;
-        public float w;
+        public float X;
+        public float Y;
+        public float Z;
+        public float W;
 
         public Rotation(float x, float y, float z, float w)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+            this.W = w;
         }
 
         public static Rotation Read(FormatBase input)
@@ -28,7 +28,7 @@ namespace W3DT._3D
 
         public override string ToString()
         {
-            return string.Format("X: [{0}] Y: [{1}] Z: [{2}] W: [{3}]", x, y, z, w);
+            return string.Format("X: [{0}] Y: [{1}] Z: [{2}] W: [{3}]", X, Y, Z, W);
         }
     }
 }

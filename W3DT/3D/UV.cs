@@ -8,13 +8,13 @@ namespace W3DT._3D
 {
     public struct UV
     {
-        public float u;
-        public float v;
+        public float U;
+        public float V;
 
         public UV(float u, float v)
         {
-            this.u = u;
-            this.v = v;
+            this.U = u;
+            this.V = v;
         }
 
         public static UV Read(FormatBase input)

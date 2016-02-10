@@ -72,7 +72,7 @@ namespace W3DT.Formats
 
                 // UVs
                 foreach (UV uv in mesh.UVs)
-                    obj.WriteLine(string.Format("    vt {0} {1}", uv.u.ToString(FORMAT), uv.v.ToString(FORMAT)));
+                    obj.WriteLine(string.Format("    vt {0} {1}", uv.U.ToString(FORMAT), uv.V.ToString(FORMAT)));
 
                 obj.WriteLine("    # " + mesh.UVCount + " UVs");
                 nl(obj);

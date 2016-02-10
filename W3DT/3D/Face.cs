@@ -49,7 +49,7 @@ namespace W3DT._3D
         {
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, TextureID);
 
-            int[] amb_diff = { colour.a, colour.b, colour.g, colour.a };
+            int[] amb_diff = { colour.A, colour.B, colour.G, colour.A };
             gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT_AND_DIFFUSE, amb_diff);
 
             gl.Begin(OpenGL.GL_TRIANGLES);
@@ -59,7 +59,7 @@ namespace W3DT._3D
                 Position point = points[i];
                 UV uv = uvs[i];
 
-                gl.TexCoord(uv.u, uv.v);
+                gl.TexCoord(uv.U, uv.V);
                 gl.Vertex(point.X, point.Y, point.Z);
             }
 
