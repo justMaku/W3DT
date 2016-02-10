@@ -18,6 +18,9 @@ namespace W3DT.Formats.ADT
 
     public class Chunk_MDDF : Chunk_Base
     {
+        // MDDF AFT Chunk
+        // Spawn information for doodads.
+
         public const UInt32 Magic = 0x4D444446;
         public MDDFEntry[] entries { get; private set; }
 
