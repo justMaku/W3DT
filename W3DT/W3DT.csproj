@@ -101,6 +101,7 @@
     <Compile Include="Events\MapExportDoneArgs.cs" />
     <Compile Include="Formats\ADTFile.cs" />
     <Compile Include="Formats\ADT\Chunk_MCNK.cs" />
+    <Compile Include="Formats\ADT\Chunk_MDDF.cs" />
     <Compile Include="Formats\ADT\Chunk_MMDX.cs" />
     <Compile Include="Formats\ADT\Chunk_MMID.cs" />
     <Compile Include="Formats\ADT\Chunk_MTEX.cs" />
