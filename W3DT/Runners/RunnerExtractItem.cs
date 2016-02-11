@@ -20,6 +20,7 @@ namespace W3DT.Runners
             this.file = file;
 
             runnerID = E_RUNNER_ID;
+            ThreadName += string.Format(" ({0})", runnerID);
             E_RUNNER_ID++;
         }
 

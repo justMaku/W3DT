@@ -11,11 +11,17 @@ namespace W3DT.Runners
         public Thread thread { get; private set; }
         public int state { get; protected set; }
         public RunnerBase previousRunner { get; set; }
+        public string ThreadName { get; protected set; }
+
+        public RunnerBase()
+        {
+            ThreadName = GetType().Name;
+        }
 
         public void Begin()
         {
             thread = new Thread(new ThreadStart(Work));
-            thread.Name = GetType().Name;
+            thread.Name = ThreadName;
             thread.Start();
         }
 
