@@ -100,7 +100,13 @@
     <Compile Include="Events\MapBuildDoneArgs.cs" />
     <Compile Include="Events\MapExportDoneArgs.cs" />
     <Compile Include="Formats\ADTFile.cs" />
+    <Compile Include="Formats\ADT\Chunk_MCCV.cs" />
+    <Compile Include="Formats\ADT\Chunk_MCLV.cs" />
+    <Compile Include="Formats\ADT\Chunk_MCLY.cs" />
     <Compile Include="Formats\ADT\Chunk_MCNK.cs" />
+    <Compile Include="Formats\ADT\Chunk_MCNR.cs" />
+    <Compile Include="Formats\ADT\Chunk_MCRD.cs" />
+    <Compile Include="Formats\ADT\Chunk_MCRW.cs" />
     <Compile Include="Formats\ADT\Chunk_MCVT.cs" />
     <Compile Include="Formats\ADT\Chunk_MDDF.cs" />
     <Compile Include="Formats\ADT\Chunk_MMDX.cs" />
