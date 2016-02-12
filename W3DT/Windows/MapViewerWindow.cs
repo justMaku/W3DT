@@ -219,7 +219,7 @@ namespace W3DT
             e.Graphics.Clear(UI_Map.BackColor);
 
             if (canvas != null)
-                canvas.Draw(e.Graphics, drawOffsetX, drawOffsetY);
+                canvas.Draw(e.Graphics, drawOffsetX, drawOffsetY, UI_Map.Width, UI_Map.Height);
         }
 
         private void UI_ExportButton_Click(object sender, EventArgs e)

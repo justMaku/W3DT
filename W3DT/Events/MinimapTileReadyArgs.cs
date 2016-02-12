@@ -9,11 +9,11 @@ namespace W3DT.Events
 {
     public class MinimapTileReadyArgs : EventArgs
     {
-        public Bitmap Image { get; private set; }
+        public string Image { get; private set; }
         public MapTileXY Position { get; private set; }
         public MapTileBounds Bounds { get; private set; }
 
-        public MinimapTileReadyArgs(MapTileXY position, MapTileBounds bounds, Bitmap image)
+        public MinimapTileReadyArgs(MapTileXY position, MapTileBounds bounds, string image)
         {
             Position = position;
             Bounds = bounds;

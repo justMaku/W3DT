@@ -206,6 +206,7 @@
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
     <Compile Include="Formats\WriterBase.cs" />
     <Compile Include="Helpers\BitmapCanvas.cs" />
+    <Compile Include="Helpers\BitmapCanvasTile.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Logging\Lumbermill.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -96,8 +96,7 @@ namespace W3DT.Runners
                 }
 
                 if (File.Exists(tempPath))
-                    using (BlpFile blp = new BlpFile(File.OpenRead(tempPath)))
-                        EventManager.Trigger_MinimapTileDone(new MinimapTileReadyArgs(position, bounds, blp.GetBitmap(0)));
+                    EventManager.Trigger_MinimapTileDone(new MinimapTileReadyArgs(position, bounds, tempPath));
             }
         }
     }
