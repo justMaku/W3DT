@@ -11,6 +11,7 @@ using System.IO;
 using W3DT.CASC;
 using W3DT.Events;
 using W3DT.Runners;
+using W3DT.Helpers;
 using SereniaBLPLib;
 
 namespace W3DT
@@ -19,19 +20,13 @@ namespace W3DT
     {
         private Explorer explorer;
         private Dictionary<string, List<CASCFile>> maps;
-        private RunnerMapBuilder runner;
-
-        // File extraction
-        private List<ExtractState> requiredFiles;
-        private List<string> paths;
-
-        private static int maxThreads = 15;
-        private Queue<RunnerExtractItem> runnerQueue;
 
         private int tileTotal = 0;
         private int tileDone = 0;
 
-        private Bitmap image;
+        private RunnerBuildMinimap buildRunner;
+        private BitmapCanvas canvas;
+
         private int drawOffsetX = 0;
         private int drawOffsetY = 0;
         private int lastOffsetX = 0;
@@ -53,18 +48,13 @@ namespace W3DT
 
             maps = new Dictionary<string, List<CASCFile>>();
 
-            requiredFiles = new List<ExtractState>();
-            paths = new List<string>();
-            runnerQueue = new Queue<RunnerExtractItem>();
-
             explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, null, null, new string[] { "blp" }, "MVT_N_{0}", true);
             explorer.ExploreHitCallback = OnExploreHit;
             explorer.ExploreDoneCallback = OnExploreDone;
 
             EventManager.MapExportDone += OnMapExportDone;
-            EventManager.MapBuildDone += OnMapBuildDone;
             EventManager.CASCLoadStart += OnCASCLoadStart;
-            EventManager.FileExtractComplete += OnFileExtractComplete;
+            EventManager.MinimapTileDone += OnMinimapTileDone;
             explorer.Initialize();
 
             exportCancelCallback = CancelExport;
@@ -73,22 +63,15 @@ namespace W3DT
         private void OnFileExploreHit(object sender, EventArgs e)
         {
             FileExploreHitArgs args = (FileExploreHitArgs)e;
-            Log.Write("DEBUG EXPLORE: " + args.Entry.FullName);
         }
 
         private void TerminateRunners()
         {
-            // Kill existing map runner if it's already going.
-            if (runner != null)
-                runner.Kill();
-
-            runner = null;
-
-            // Kill extraction runners.
-            foreach (RunnerExtractItem extractRunner in runnerQueue)
-                extractRunner.Kill();
-
-            runnerQueue.Clear();
+            if (buildRunner != null)
+            {
+                buildRunner.Kill();
+                buildRunner = null;
+            }
         }
 
         private void OnExploreHit(CASCFile file)
@@ -124,20 +107,6 @@ namespace W3DT
             Close();
         }
 
-        private void OnMapBuildDone(object sender, EventArgs e)
-        {
-            UI_PreviewStatus.Hide();
-            UI_TileStatus.Hide();
-
-            drawOffsetX = lastOffsetX = 0;
-            drawOffsetY = lastOffsetY = 0;
-
-            MapBuildDoneArgs args = (MapBuildDoneArgs)e;
-            image = args.Data;
-            UI_Map.Invalidate();
-            UI_ExportButton.Show();
-        }
-
         private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode selected = UI_FileList.SelectedNode;
@@ -146,109 +115,65 @@ namespace W3DT
             {
                 // Clean up previous excursions.
                 TerminateRunners(); // Terminate runners that be running.
-                requiredFiles.Clear(); // Clear required file list.
-                paths.Clear(); // Clear paths cache.
-                image = null; // Prevent redrawing the old map.
 
+                if (canvas != null)
+                    canvas.Dispose();
+
+                canvas = null;
+
+                UI_PreviewStatus.Hide();
                 UI_Map.Invalidate();
                 UI_ExportButton.Hide();
+
+                drawOffsetX = lastOffsetX = 0;
+                drawOffsetY = lastOffsetY = 0;
 
                 // Detatch mouse control (this shouldn't ever be an issue, really).
                 isMovingMap = false;
 
                 string mapName = selected.Text;
-                UI_PreviewStatus.Text = string.Format(Constants.MAP_VIEWER_LOADING_MAP, mapName);
-                UI_PreviewStatus.Show();
-
-                foreach (CASCFile file in maps[mapName])
-                {
-                    string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file.FullName);
-                    ExtractState state = new ExtractState(file);
-
-                    if (!File.Exists(tempPath))
-                    {
-                        RunnerExtractItem extractRunner = new RunnerExtractItem(file);
-                        state.TrackerID = extractRunner.runnerID;
-                        state.State = false;
-
-                        runnerQueue.Enqueue(extractRunner);
-                    }
-                    else
-                    {
-                        state.State = true;
-                    }
-
-                    requiredFiles.Add(state);
-                    paths.Add(tempPath);
-                }
-
                 selectedMapName = mapName;
 
-                if (runnerQueue.Count > 0)
-                {
-                    tileDone = 0;
-                    tileTotal = runnerQueue.Count;
+                tileTotal = maps[mapName].Count;
+                tileDone = 0;
+                UI_TileDisplay.Text = string.Format(Constants.MAP_VIEWER_TILE_STATUS, 0, 0);
+                UI_TileDisplay.Show();
 
-                    CheckRunnerQueue();
-                }
-                else
-                {
-                    BeginMapBuild();
-                }
+                buildRunner = new RunnerBuildMinimap(maps[mapName].ToArray());
+                buildRunner.Begin();
             }
         }
 
-        private void CheckRunnerQueue()
+        private void OnMinimapTileDone(object sender, EventArgs e)
         {
-            int max = runnerQueue.Count;
+            MinimapTileReadyArgs args = (MinimapTileReadyArgs)e;
 
-            if (max == 0)
-                return;
-            else if (max > maxThreads)
-                max = maxThreads;
-
-            for (int i = 0; i < max; i++)
-                runnerQueue.Dequeue().Begin();
-        }
-
-        private void BeginMapBuild()
-        {
-            // Minor clean-up here, probably not needed.
-            requiredFiles.Clear();
-
-            runner = new RunnerMapBuilder(paths.ToArray());
-            runner.Begin();
-        }
-
-        private void OnFileExtractComplete(object sender, EventArgs e)
-        {
-            FileExtractCompleteArgs args = (FileExtractCompleteArgs)e;
-
-            ExtractState state = requiredFiles.Where(s => s.TrackerID == args.RunnerID).FirstOrDefault();
-            if (state != null)
+            if (canvas == null)
             {
-                // Note: We don't actually check for success here.
-                // It the tile cannot be extracted, we'll just render nothing in it's place.
+                int sizeX = (args.Bounds.HighX - args.Bounds.LowX) + 1;
+                int sizeY = (args.Bounds.HighY - args.Bounds.LowY) + 1;
 
-                state.State = true;
-
-                tileDone++;
-                UI_TileStatus.Text = string.Format(Constants.MAP_VIEWER_TILE_STATUS, tileDone, tileTotal);
-                UI_TileStatus.Show();
-
-                if (requiredFiles.Any(s => !s.State))
-                    CheckRunnerQueue(); // Poke the next batch.
-                else
-                    BeginMapBuild(); // We've got all the tiles we wanted; build!
+                canvas = new BitmapCanvas(sizeX, sizeY);
             }
+
+            int posX = (args.Position.X - args.Bounds.LowX) * 256;
+            int posY = (args.Position.Y - args.Bounds.LowY) * 256;
+
+            canvas.DrawToCanvas(args.Image, posX, posY);
+            UI_Map.Invalidate();
+
+            tileDone++;
+            if (tileTotal > tileDone)
+                UI_TileDisplay.Text = string.Format(Constants.MAP_VIEWER_TILE_STATUS, tileDone, tileTotal);
+            else
+                UI_TileDisplay.Hide();
         }
 
         private void MapViewerWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Unregister events.
-            EventManager.MapBuildDone -= OnMapBuildDone;
             EventManager.CASCLoadStart -= OnCASCLoadStart;
-            EventManager.FileExtractComplete -= OnFileExtractComplete;
+            EventManager.MinimapTileDone -= OnMinimapTileDone;
 
             CancelExport();
 
@@ -293,8 +218,8 @@ namespace W3DT
         {
             e.Graphics.Clear(UI_Map.BackColor);
 
-            if (image != null)
-                e.Graphics.DrawImage(image, drawOffsetX, drawOffsetY);
+            if (canvas != null)
+                canvas.Draw(e.Graphics, drawOffsetX, drawOffsetY);
         }
 
         private void UI_ExportButton_Click(object sender, EventArgs e)

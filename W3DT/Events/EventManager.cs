@@ -21,6 +21,7 @@ namespace W3DT.Events
         private static EventHandler _ExportBLPtoPNGComplete;
         private static EventHandler _MapBuildDone;
         private static EventHandler _MapExportDone;
+        private static EventHandler _MinimapTileDone;
 
         public static event EventHandler CDNScanDone
         {
@@ -190,6 +191,20 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler MinimapTileDone
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _MinimapTileDone = (EventHandler)Delegate.Combine(_MinimapTileDone, value);
+            }
+
+            remove
+            {
+                _MinimapTileDone = (EventHandler)Delegate.Remove(_MinimapTileDone, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
         {
                 TriggerEvent(_CDNScanDone, args);
@@ -250,6 +265,11 @@ namespace W3DT.Events
         public static void Trigger_MapExportDone(MapExportDoneArgs args)
         {
             TriggerEvent(_MapExportDone, args);
+        }
+
+        public static void Trigger_MinimapTileDone(MinimapTileReadyArgs args)
+        {
+            TriggerEvent(_MinimapTileDone, args);
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)

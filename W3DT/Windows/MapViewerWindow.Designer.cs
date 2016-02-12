@@ -33,11 +33,10 @@
             this.UI_FileCount_Label = new System.Windows.Forms.Label();
             this.UI_FileList = new System.Windows.Forms.TreeView();
             this.UI_FilterTimer = new System.Windows.Forms.Timer(this.components);
+            this.UI_ExportButton = new System.Windows.Forms.Button();
             this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
             this.UI_Map = new W3DT.Controls.DoubleBufferedPanel();
-            this.UI_TileStatus = new W3DT.Controls.StaticTextBox();
-            this.UI_ExportButton = new System.Windows.Forms.Button();
-            this.UI_Map.SuspendLayout();
+            this.UI_TileDisplay = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UI_FileCount_Label
@@ -65,6 +64,18 @@
             // 
             this.UI_FilterTimer.Interval = 1000;
             // 
+            // UI_ExportButton
+            // 
+            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ExportButton.Location = new System.Drawing.Point(948, 653);
+            this.UI_ExportButton.Name = "UI_ExportButton";
+            this.UI_ExportButton.Size = new System.Drawing.Size(115, 23);
+            this.UI_ExportButton.TabIndex = 0;
+            this.UI_ExportButton.Text = "Export Map Terrain";
+            this.UI_ExportButton.UseVisualStyleBackColor = true;
+            this.UI_ExportButton.Visible = false;
+            this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
+            // 
             // UI_PreviewStatus
             // 
             this.UI_PreviewStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -89,8 +100,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UI_Map.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.UI_Map.Controls.Add(this.UI_TileStatus);
-            this.UI_Map.Controls.Add(this.UI_ExportButton);
             this.UI_Map.Location = new System.Drawing.Point(477, 12);
             this.UI_Map.Name = "UI_Map";
             this.UI_Map.Size = new System.Drawing.Size(586, 629);
@@ -100,41 +109,28 @@
             this.UI_Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseMove);
             this.UI_Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseUp);
             // 
-            // UI_TileStatus
+            // UI_TileDisplay
             // 
-            this.UI_TileStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_TileStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.UI_TileStatus.Cursor = System.Windows.Forms.Cursors.Default;
-            this.UI_TileStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UI_TileStatus.ForeColor = System.Drawing.Color.Black;
-            this.UI_TileStatus.Location = new System.Drawing.Point(13, 312);
-            this.UI_TileStatus.MinimumSize = new System.Drawing.Size(0, 36);
-            this.UI_TileStatus.Multiline = true;
-            this.UI_TileStatus.Name = "UI_TileStatus";
-            this.UI_TileStatus.ReadOnly = true;
-            this.UI_TileStatus.Size = new System.Drawing.Size(561, 36);
-            this.UI_TileStatus.TabIndex = 7;
-            this.UI_TileStatus.TabStop = false;
-            this.UI_TileStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // UI_ExportButton
-            // 
-            this.UI_ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_ExportButton.Location = new System.Drawing.Point(462, 597);
-            this.UI_ExportButton.Name = "UI_ExportButton";
-            this.UI_ExportButton.Size = new System.Drawing.Size(115, 23);
-            this.UI_ExportButton.TabIndex = 0;
-            this.UI_ExportButton.Text = "Export Map Terrain";
-            this.UI_ExportButton.UseVisualStyleBackColor = true;
-            this.UI_ExportButton.Visible = false;
-            this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
+            this.UI_TileDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.UI_TileDisplay.AutoSize = true;
+            this.UI_TileDisplay.BackColor = System.Drawing.Color.Transparent;
+            this.UI_TileDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_TileDisplay.Location = new System.Drawing.Point(480, 647);
+            this.UI_TileDisplay.Name = "UI_TileDisplay";
+            this.UI_TileDisplay.Size = new System.Drawing.Size(94, 25);
+            this.UI_TileDisplay.TabIndex = 0;
+            this.UI_TileDisplay.Text = "0/0 Tiles";
+            this.UI_TileDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UI_TileDisplay.Visible = false;
             // 
             // MapViewerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1075, 688);
+            this.Controls.Add(this.UI_TileDisplay);
             this.Controls.Add(this.UI_PreviewStatus);
+            this.Controls.Add(this.UI_ExportButton);
             this.Controls.Add(this.UI_Map);
             this.Controls.Add(this.UI_FileList);
             this.Controls.Add(this.UI_FileCount_Label);
@@ -143,8 +139,6 @@
             this.Name = "MapViewerWindow";
             this.Text = "Map Viewer - W3DT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapViewerWindow_FormClosing);
-            this.UI_Map.ResumeLayout(false);
-            this.UI_Map.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,6 +152,6 @@
         private Controls.StaticTextBox UI_PreviewStatus;
         private System.Windows.Forms.Button UI_ExportButton;
         private System.Windows.Forms.Timer UI_FilterTimer;
-        private Controls.StaticTextBox UI_TileStatus;
+        private System.Windows.Forms.Label UI_TileDisplay;
     }
 }
