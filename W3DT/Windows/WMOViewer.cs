@@ -24,8 +24,9 @@ namespace W3DT
         private Regex ignoreFilter = new Regex(@"(.*)_[0-9]{3}\.wmo$");
         private LoadingWindow loadingWindow;
         private Dictionary<string, List<CASCFile>> groupFiles;
-        private List<ExtractState> requiredFiles;
-        private List<RunnerExtractItem> runners;
+        private int wmoDoneCount;
+        private List<CASCFile> currentFiles;
+        private RunnerExtractItem wmoRunner;
         private WMOFile loadedFile = null;
         private Action cancelCallback;
 
@@ -52,7 +53,6 @@ namespace W3DT
             InitializeComponent();
             groupFiles = new Dictionary<string, List<CASCFile>>();
 
-            runners = new List<RunnerExtractItem>();
             meshes = new List<Mesh>();
 
             EventManager.CASCLoadStart += OnCASCLoadStart;
@@ -91,9 +91,10 @@ namespace W3DT
             loadingWindow.SetSecondLine("Almost done.. hang tight!");
 
             WMOFile root = null;
-            foreach (ExtractState state in requiredFiles)
+            foreach (CASCFile file in currentFiles)
             {
-                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, ((CASCFile)state.File).FullName);
+                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file.FullName);
+
                 if (root == null)
                     root = new WMOFile(tempPath, true);
                 else
@@ -252,16 +253,11 @@ namespace W3DT
 
         private void TerminateRunners()
         {
-            foreach (RunnerExtractItem runner in runners)
-                runner.Kill();
+            if (wmoRunner != null)
+                wmoRunner.Kill();
 
             if (texRunner != null)
-            {
                 texRunner.Kill();
-                texRunner = null;
-            }
-
-            runners.Clear();
         }
 
         private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
@@ -280,31 +276,17 @@ namespace W3DT
                 CASCFile entry = (CASCFile)UI_FileList.SelectedNode.Tag;
                 string rootBase = Path.GetFileNameWithoutExtension(entry.FullName);
 
-                requiredFiles = new List<ExtractState>();
-                requiredFiles.Add(new ExtractState(entry));
+                currentFiles = new List<CASCFile>();
+                currentFiles.Add(entry); // Root file.
 
                 // Collect group files for extraction.
                 if (groupFiles.ContainsKey(rootBase))
                     foreach (CASCFile groupFile in groupFiles[rootBase])
-                        requiredFiles.Add(new ExtractState(groupFile));
+                        currentFiles.Add(groupFile);
 
-
-                foreach (ExtractState target in requiredFiles)
-                {
-                    string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, ((CASCFile) target.File).FullName);
-
-                    if (!File.Exists(tempPath))
-                    {
-                        RunnerExtractItem extract = new RunnerExtractItem(((CASCFile)target.File));
-                        target.TrackerID = extract.runnerID;
-                        extract.Begin();
-                        runners.Add(extract);
-                    }
-                    else
-                    {
-                        target.State = true;
-                    }
-                }
+                wmoDoneCount = 0;
+                wmoRunner = new RunnerExtractItem(currentFiles.ToArray());
+                wmoRunner.Begin();
 
                 loadingWindow = new LoadingWindow("Loading WMO file: " + entry.Name, "No peons were harmed in the making of this software.", true, cancelCallback);
                 loadingWindow.ShowDialog();
@@ -313,12 +295,14 @@ namespace W3DT
 
         private void OnFileExtractComplete(object sender, EventArgs e)
         {
+            if (wmoRunner == null)
+                return;
+
             if (e is FileExtractCompleteArgs)
             {
                 FileExtractCompleteArgs args = (FileExtractCompleteArgs)e;
-                ExtractState match = requiredFiles.FirstOrDefault(f => f.TrackerID == args.RunnerID);
 
-                if (match != null)
+                if (args.RunnerID == wmoRunner.runnerID)
                 {
                     if (!args.Success)
                     {
@@ -326,9 +310,8 @@ namespace W3DT
                         Alert.Show(string.Format("Unable to extract WMO file '{0}'.", args.File.FullName));
                     }
 
-                    match.State = true;
-
-                    if (!requiredFiles.Any(f => !f.State))
+                    wmoDoneCount++;
+                    if (wmoDoneCount == currentFiles.Count)
                         LoadWMOFile();
                 }
             }
