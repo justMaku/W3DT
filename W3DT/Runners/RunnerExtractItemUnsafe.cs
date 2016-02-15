@@ -12,12 +12,12 @@ namespace W3DT.Runners
     {
         private static int E_RUNNER_ID = 1;
 
-        private string file;
+        private string[] files;
         public int runnerID { get; private set; }
 
-        public RunnerExtractItemUnsafe(string file)
+        public RunnerExtractItemUnsafe(params string[] files)
         {
-            this.file = file;
+            this.files = files;
 
             runnerID = E_RUNNER_ID;
             E_RUNNER_ID++;
@@ -25,31 +25,39 @@ namespace W3DT.Runners
 
         public override void Work()
         {
-            bool success = false;
-            Log.Write("Extracting CASC item: " + file);
+            bool ready = Program.IsCASCReady;
 
-            if (Program.IsCASCReady)
+            foreach (string file in files)
             {
-                try
-                {
-                    Program.CASCEngine.SaveFileTo(file, Constants.TEMP_DIRECTORY);
-                    success = true;
-                }
-                catch
-                {
-                    Log.Write("Unable to extract item: " + file);
-                }
-            }
+                bool success = false;
+                Log.Write("Extracting CASC item: " + file);
 
-            EventManager.Trigger_FileExtractComplete(new FileExtractCompleteUnsafeArgs(file, success, runnerID));
+                if (Program.IsCASCReady)
+                {
+                    try
+                    {
+                        Program.CASCEngine.SaveFileTo(file, Constants.TEMP_DIRECTORY);
+                        success = true;
+                    }
+                    catch
+                    {
+                        Log.Write("Unable to extract item: " + file);
+                    }
+                }
+
+                EventManager.Trigger_FileExtractComplete(new FileExtractCompleteUnsafeArgs(file, success, runnerID));
+            }
         }
 
         public new void Kill()
         {
-            string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file);
+            foreach (string file in files)
+            {
+                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file);
 
-            if (File.Exists(tempPath))
-                File.Delete(tempPath);
+                if (File.Exists(tempPath))
+                    File.Delete(tempPath);
+            }
 
             if (thread != null && thread.IsAlive)
                 thread.Abort();
