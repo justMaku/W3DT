@@ -14,10 +14,12 @@ namespace W3DT.Runners
 
         private CASCFile[] files;
         public int runnerID { get; private set; }
+        public bool CacheCheck { get; set; }
 
         public RunnerExtractItem(params CASCFile[] files)
         {
             this.files = files;
+            CacheCheck = false;
 
             runnerID = E_RUNNER_ID;
             ThreadName += string.Format(" ({0})", runnerID);
@@ -37,7 +39,17 @@ namespace W3DT.Runners
                 {
                     try
                     {
-                        Program.CASCEngine.SaveFileTo(file.FullName, Constants.TEMP_DIRECTORY);
+                        if (CacheCheck)
+                        {
+                            string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file.FullName);
+                            if (!File.Exists(tempPath))
+                                Program.CASCEngine.SaveFileTo(file.FullName, Constants.TEMP_DIRECTORY);
+                        }
+                        else
+                        {
+                            Program.CASCEngine.SaveFileTo(file.FullName, Constants.TEMP_DIRECTORY);
+                        }
+
                         success = true;
                     }
                     catch

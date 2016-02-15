@@ -137,6 +137,7 @@ namespace W3DT
             UpdateTexturePrepStatus();
 
             texRunner = new RunnerExtractItemUnsafe(textures);
+            texRunner.CacheCheck = true;
             texRunner.Begin();
         }
 
@@ -286,6 +287,7 @@ namespace W3DT
 
                 wmoDoneCount = 0;
                 wmoRunner = new RunnerExtractItem(currentFiles.ToArray());
+                wmoRunner.CacheCheck = true;
                 wmoRunner.Begin();
 
                 loadingWindow = new LoadingWindow("Loading WMO file: " + entry.Name, "No peons were harmed in the making of this software.", true, cancelCallback);

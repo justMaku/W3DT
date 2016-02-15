@@ -14,10 +14,12 @@ namespace W3DT.Runners
 
         private string[] files;
         public int runnerID { get; private set; }
+        public bool CacheCheck { get; set; }
 
         public RunnerExtractItemUnsafe(params string[] files)
         {
             this.files = files;
+            CacheCheck = false;
 
             runnerID = E_RUNNER_ID;
             E_RUNNER_ID++;
@@ -36,7 +38,17 @@ namespace W3DT.Runners
                 {
                     try
                     {
-                        Program.CASCEngine.SaveFileTo(file, Constants.TEMP_DIRECTORY);
+                        if (CacheCheck)
+                        {
+                            string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file);
+                            if (!File.Exists(tempPath))
+                                Program.CASCEngine.SaveFileTo(file, Constants.TEMP_DIRECTORY);
+                        }
+                        else
+                        {
+                            Program.CASCEngine.SaveFileTo(file, Constants.TEMP_DIRECTORY);
+                        }
+
                         success = true;
                     }
                     catch
