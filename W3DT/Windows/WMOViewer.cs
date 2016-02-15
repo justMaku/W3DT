@@ -30,8 +30,9 @@ namespace W3DT
         private Action cancelCallback;
 
         // Texture prep
-        private List<ExtractState> requiredTex;
-        private List<RunnerExtractItemUnsafe> texRunners;
+        private int texTotal;
+        private int texDone;
+        private RunnerExtractItemUnsafe texRunner;
         private TextureManager texManager;
 
         // 3D View
@@ -52,7 +53,6 @@ namespace W3DT
             groupFiles = new Dictionary<string, List<CASCFile>>();
 
             runners = new List<RunnerExtractItem>();
-            texRunners = new List<RunnerExtractItemUnsafe>();
             meshes = new List<Mesh>();
 
             EventManager.CASCLoadStart += OnCASCLoadStart;
@@ -128,34 +128,20 @@ namespace W3DT
             loadingWindow.SetFirstLine("Extracting WMO textures...");
 
             Chunk_MOTX texChunk = (Chunk_MOTX)loadedFile.getChunk(Chunk_MOTX.Magic);
-            requiredTex = new List<ExtractState>(texChunk.textures.count());
-            foreach (string tex in texChunk.textures.all())
-                requiredTex.Add(new ExtractState(tex));
+            string[] textures = texChunk.textures.all().ToArray();
+
+            texTotal = textures.Length;
+            texDone = 0;
 
             UpdateTexturePrepStatus();
 
-            foreach (ExtractState state in requiredTex)
-            {
-                string file = (string)state.File;
-                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file);
-
-                if (!File.Exists(tempPath))
-                {
-                    RunnerExtractItemUnsafe runner = new RunnerExtractItemUnsafe(file);
-                    state.TrackerID = runner.runnerID;
-                    texRunners.Add(runner);
-                    runner.Begin();
-                }
-                else
-                {
-                    state.State = true;
-                }
-            }
+            texRunner = new RunnerExtractItemUnsafe(textures);
+            texRunner.Begin();
         }
 
         private void UpdateTexturePrepStatus()
         {
-            loadingWindow.SetSecondLine(string.Format("{0} / {1} extracted!", requiredTex.Count(e => e.State), requiredTex.Count));
+            loadingWindow.SetSecondLine(string.Format("{0} / {1} extracted!", texDone, texTotal));
         }
 
         private void CreateWMOMesh()
@@ -269,11 +255,13 @@ namespace W3DT
             foreach (RunnerExtractItem runner in runners)
                 runner.Kill();
 
-            foreach (RunnerExtractItemUnsafe runner in texRunners)
-                runner.Kill();
+            if (texRunner != null)
+            {
+                texRunner.Kill();
+                texRunner = null;
+            }
 
             runners.Clear();
-            texRunners.Clear();
         }
 
         private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
@@ -347,9 +335,8 @@ namespace W3DT
             else if (e is FileExtractCompleteUnsafeArgs)
             {
                 FileExtractCompleteUnsafeArgs args = (FileExtractCompleteUnsafeArgs)e;
-                ExtractState texMatch = requiredTex.FirstOrDefault(f => f.TrackerID == args.RunnerID);
 
-                if (texMatch != null)
+                if (args.RunnerID == texRunner.runnerID)
                 {
                     if (!args.Success)
                     {
@@ -357,9 +344,8 @@ namespace W3DT
                         Alert.Show(string.Format("Unable to extract WMO texture '{0}'.", args.File));
                     }
 
-                    texMatch.State = true;
-
-                    if (!requiredTex.Any(f => !f.State))
+                    texDone++;
+                    if (texDone == texTotal)
                     {
                         try
                         {
