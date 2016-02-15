@@ -96,7 +96,7 @@ namespace W3DT.Runners
                 }
 
                 if (File.Exists(tempPath))
-                    EventManager.Trigger_MinimapTileDone(new MinimapTileReadyArgs(position, bounds, tempPath));
+                    EventManager.Trigger_MinimapTileDone(position, bounds, tempPath);
             }
         }
     }

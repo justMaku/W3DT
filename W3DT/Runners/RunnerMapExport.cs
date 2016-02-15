@@ -89,11 +89,11 @@ namespace W3DT.Runners
                 // ToDo: Push all data into a mesh and export it.
 
                 // Job's done.
-                EventManager.Trigger_MapExportDone(new MapExportDoneArgs(true));
+                EventManager.Trigger_MapExportDone(true);
             }
             catch (Exception e)
             {
-                EventManager.Trigger_MapExportDone(new MapExportDoneArgs(false, e.Message));
+                EventManager.Trigger_MapExportDone(false, e.Message);
             }
         }
 

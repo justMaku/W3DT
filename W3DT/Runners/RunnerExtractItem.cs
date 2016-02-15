@@ -46,7 +46,7 @@ namespace W3DT.Runners
                     }
                 }
 
-                EventManager.Trigger_FileExtractComplete(new FileExtractCompleteArgs(file, success, runnerID));
+                EventManager.Trigger_FileExtractComplete(file, success, runnerID);
             }
         }
 

@@ -47,7 +47,7 @@ namespace W3DT.Runners
                 Log.Write("BLP to PNG export failed: {0}.", e.Message);
             }
 
-            EventManager.Trigger_ExportBLPtoPNGComplete(new ExportBLPtoPNGArgs(success));
+            EventManager.Trigger_ExportBLPtoPNGComplete(success);
         }
     }
 }

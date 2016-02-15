@@ -205,19 +205,19 @@ namespace W3DT.Events
             }
         }
 
-        public static void Trigger_CDNScanDone(CDNScanDoneArgs args)
+        public static void Trigger_CDNScanDone(string bestHost, string hostPath)
         {
-                TriggerEvent(_CDNScanDone, args);
+                TriggerEvent(_CDNScanDone, new CDNScanDoneArgs(bestHost, hostPath));
         }
 
-        public static void Trigger_UpdateDownloadDone(UpdateDownloadDoneArgs args)
+        public static void Trigger_UpdateDownloadDone(bool success)
         {
-            TriggerEvent(_UpdateDownloadDone, args);
+            TriggerEvent(_UpdateDownloadDone, new UpdateDownloadDoneArgs(success));
         }
 
-        public static void Trigger_UpdateCheckDone(UpdateCheckDoneArgs args)
+        public static void Trigger_UpdateCheckDone(LatestReleaseData data)
         {
-            TriggerEvent(_UpdateCheckDone, args);
+            TriggerEvent(_UpdateCheckDone, new UpdateCheckDoneArgs(data));
         }
 
         public static void Trigger_LoadStepDone()
@@ -225,10 +225,10 @@ namespace W3DT.Events
             TriggerEvent(_LoadStepDone, new EventArgs());
         }
 
-        public static void Trigger_CASCLoadDone(CASCLoadDoneArgs args)
+        public static void Trigger_CASCLoadDone(bool success)
         {
             Program.CASC_LOADING = false;
-            TriggerEvent(_CASCLoadDone, args);
+            TriggerEvent(_CASCLoadDone, new CASCLoadDoneArgs(success));
         }
 
         public static void Trigger_CASCLoadStart()
@@ -237,39 +237,49 @@ namespace W3DT.Events
             TriggerEvent(_CASCLoadStart, new EventArgs());
         }
 
-        public static void Trigger_FileExploreHit(FileExploreHitArgs args)
+        public static void Trigger_FileExploreHit(string id, CASC.CASCFile entry)
         {
-            TriggerEvent(_FileExploreHit, args);
+            TriggerEvent(_FileExploreHit, new FileExploreHitArgs(id, entry));
         }
 
-        public static void Trigger_FileExploreDone(FileExploreDoneArgs args)
+        public static void Trigger_FileExploreDone(string id)
         {
-            TriggerEvent(_FileExploreDone, args);
+            TriggerEvent(_FileExploreDone, new FileExploreDoneArgs(id));
         }
 
-        public static void Trigger_FileExtractComplete(FileExtractArgs args)
+        public static void Trigger_FileExtractComplete(bool success, int runnerID)
         {
-            TriggerEvent(_FileExtractComplete, args);
+            TriggerEvent(_FileExtractComplete, new FileExtractArgs(success, runnerID));
         }
 
-        public static void Trigger_ExportBLPtoPNGComplete(ExportBLPtoPNGArgs args)
+        public static void Trigger_FileExtractComplete(CASC.CASCFile file, bool success, int runnerID)
         {
-            TriggerEvent(_ExportBLPtoPNGComplete, args);
+            TriggerEvent(_FileExtractComplete, new FileExtractCompleteArgs(file, success, runnerID));
         }
 
-        public static void Trigger_MapBuildDone(MapBuildDoneArgs args)
+        public static void Trigger_FileExtractUnsafeComplete(string file, bool success, int runnerID)
         {
-            TriggerEvent(_MapBuildDone, args);
+            TriggerEvent(_FileExtractComplete, new FileExtractCompleteUnsafeArgs(file, success, runnerID));
         }
 
-        public static void Trigger_MapExportDone(MapExportDoneArgs args)
+        public static void Trigger_ExportBLPtoPNGComplete(bool success)
         {
-            TriggerEvent(_MapExportDone, args);
+            TriggerEvent(_ExportBLPtoPNGComplete, new ExportBLPtoPNGArgs(success));
         }
 
-        public static void Trigger_MinimapTileDone(MinimapTileReadyArgs args)
+        public static void Trigger_MapBuildDone(System.Drawing.Bitmap bitmap)
         {
-            TriggerEvent(_MinimapTileDone, args);
+            TriggerEvent(_MapBuildDone, new MapBuildDoneArgs(bitmap));
+        }
+
+        public static void Trigger_MapExportDone(bool success, string error = null)
+        {
+            TriggerEvent(_MapExportDone, new MapExportDoneArgs(success, error));
+        }
+
+        public static void Trigger_MinimapTileDone(Runners.MapTileXY position, Runners.MapTileBounds bounds, string image)
+        {
+            TriggerEvent(_MinimapTileDone, new MinimapTileReadyArgs(position, bounds, image));
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)

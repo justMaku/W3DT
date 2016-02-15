@@ -59,7 +59,7 @@ namespace W3DT.Runners
 
         private void Done(bool success)
         {
-            EventManager.Trigger_CASCLoadDone(new CASCLoadDoneArgs(success));
+            EventManager.Trigger_CASCLoadDone(success);
         }
     }
 }

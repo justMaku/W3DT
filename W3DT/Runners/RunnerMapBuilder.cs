@@ -69,7 +69,7 @@ namespace W3DT.Runners
                 }
             }
 
-            EventManager.Trigger_MapBuildDone(new MapBuildDoneArgs(canvas));
+            EventManager.Trigger_MapBuildDone(canvas);
         }
     }
 }

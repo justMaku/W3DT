@@ -69,7 +69,7 @@ namespace W3DT.Runners
             else
                 Log.Write("Failed to find a CDN server. Looks like the Legion will prevail after all.");
 
-            EventManager.Trigger_CDNScanDone(new CDNScanDoneArgs(bestHost, hostPath));
+            EventManager.Trigger_CDNScanDone(bestHost, hostPath);
             Log.Write("CDN scan has finished without error!");
         }
 

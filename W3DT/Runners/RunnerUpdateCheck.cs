@@ -30,7 +30,7 @@ namespace W3DT.Runners
             }
 
             LatestReleaseData data = JsonConvert.DeserializeObject<LatestReleaseData>(raw);
-            EventManager.Trigger_UpdateCheckDone(new UpdateCheckDoneArgs(data));
+            EventManager.Trigger_UpdateCheckDone(data);
         }
     }
 }

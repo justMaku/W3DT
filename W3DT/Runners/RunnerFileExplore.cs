@@ -52,7 +52,7 @@ namespace W3DT.Runners
         {
             Thread.Sleep(500);
             Explore(Program.Root);
-            EventManager.Trigger_FileExploreDone(new FileExploreDoneArgs(id));
+            EventManager.Trigger_FileExploreDone(id);
         }
 
         private void Explore(CASCFolder folder)
@@ -77,7 +77,7 @@ namespace W3DT.Runners
                     if (!MatchesFilter(file.FullName))
                         continue;
 
-                    EventManager.Trigger_FileExploreHit(new FileExploreHitArgs(id, file));
+                    EventManager.Trigger_FileExploreHit(id, file);
                 }
             }
         }
