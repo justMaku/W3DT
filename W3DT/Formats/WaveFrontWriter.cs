@@ -28,7 +28,6 @@ namespace W3DT.Formats
         public WaveFrontWriter(string file, TextureManager texManager = null)
         {
             this.texManager = texManager;
-            string mtlPath = Path.ChangeExtension(file, ".mtl");
 
             UseNormals = true;
             UseUV = true;
@@ -38,6 +37,7 @@ namespace W3DT.Formats
 
             if (UseTextures)
             {
+                string mtlPath = Path.ChangeExtension(file, ".mtl");
                 mtl = new StreamWriter(mtlPath, false);
                 mtlFile = Path.GetFileName(mtlPath);
             }
