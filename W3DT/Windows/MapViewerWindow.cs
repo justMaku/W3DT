@@ -123,7 +123,7 @@ namespace W3DT
 
                 UI_PreviewStatus.Hide();
                 UI_Map.Invalidate();
-                UI_ExportButton.Hide();
+                UI_ExportButton.Show();
 
                 drawOffsetX = lastOffsetX = 0;
                 drawOffsetY = lastOffsetY = 0;
