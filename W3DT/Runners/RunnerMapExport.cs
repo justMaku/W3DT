@@ -6,6 +6,8 @@ using System.IO;
 using W3DT.Events;
 using W3DT.Formats;
 using W3DT.Formats.WDT;
+using W3DT.Formats.ADT;
+using W3DT._3D;
 
 namespace W3DT.Runners
 {
@@ -47,6 +49,10 @@ namespace W3DT.Runners
                 Chunk_MAIN mainChunk = (Chunk_MAIN)headerFile.Chunks.Where(c => c.ChunkID == Chunk_MAIN.Magic).FirstOrDefault();
                 if (mainChunk != null)
                 {
+                    WaveFrontWriter ob = new WaveFrontWriter("test_terrain.obj");
+                    ob.UseTextures = false;
+                    ob.UseNormals = false;
+
                     for (int y = 0; y < 64; y++)
                     {
                         for (int x = 0; x < 64; x++)
@@ -76,6 +82,51 @@ namespace W3DT.Runners
 
                                     ADTFile obj = new ADTFile(objTempPath, ADTFileType.OBJ);
                                     obj.parse();
+
+                                    foreach (Chunk_MCNK soupChunk in adt.getChunksByID(Chunk_MCNK.Magic))
+                                    {
+                                        Chunk_MCVT hmChunk = (Chunk_MCVT)soupChunk.getChunk(Chunk_MCVT.Magic);
+
+                                        Mesh mesh = new Mesh();
+                                        int v = 0;
+
+                                        int ofs = 10;
+                                        for (int sX = 0; sX < 8; sX++)
+                                        {
+                                            for (int sY = 0; sY < 8; sY++)
+                                            {
+                                                int cIndex = ofs - 1;
+                                                int tlIndex = cIndex - 9;
+                                                int blIndex = cIndex + 8;
+
+                                                float tl = hmChunk.vertices[tlIndex];
+                                                float tr = hmChunk.vertices[tlIndex + 1];
+                                                float bl = hmChunk.vertices[blIndex];
+                                                float br = hmChunk.vertices[blIndex + 1];
+                                                float c = hmChunk.vertices[cIndex];
+
+                                                int xD = x * 8;
+                                                int yD = y * 8;
+
+                                                mesh.addVert(new Position(xD + sX, tl, yD + sY)); // + 0
+                                                mesh.addVert(new Position(xD + sX, tr, yD + sY + 1)); // + 1
+                                                mesh.addVert(new Position(xD + sX + 1, bl, yD + sY)); // + 2
+                                                mesh.addVert(new Position(xD + sX + 1, br, yD + sY + 1)); // + 3
+                                                mesh.addVert(new Position(xD + sX + 0.5f, c, yD + sY + 0.5f)); // + 4;
+
+                                                mesh.addFace(v, v + 2, v + 4);
+                                                mesh.addFace(v + 1, v + 3, v + 4);
+                                                mesh.addFace(v, v + 1, v + 4);
+                                                mesh.addFace(v + 2, v + 3, v + 4);
+
+                                                v += 5;
+                                                ofs += 1;
+                                            }
+                                            ofs += 9;
+                                        }
+
+                                        ob.addMesh(mesh);
+                                    }
                                 }
                                 catch (ADTException ex)
                                 {
@@ -84,9 +135,10 @@ namespace W3DT.Runners
                             }
                         }
                     }
-                }
 
-                // ToDo: Push all data into a mesh and export it.
+                    ob.Write();
+                    ob.Close();
+                }
 
                 // Job's done.
                 EventManager.Trigger_MapExportDone(true);

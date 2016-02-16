@@ -47,15 +47,26 @@ namespace W3DT._3D
             Normals.Add(normal);
         }
 
-        public void addFace(uint texID, Colour4 colour, params int[] points)
+        public Face addFace(params int[] points)
         {
-            Face face = new Face(texID, colour);
+            Face face = new Face();
 
             foreach (int point in points)
-                face.addPoint(Verts[point], UVs[point], point);
+                face.addPoint(new Vert(Verts[point], point < UVs.Count ? UVs[point] : null, point));
 
             if (face.PointCount > 0)
                 Faces.Add(face);
+
+            return face;
+        }
+
+        public Face addFace(uint texID, Colour4 colour, params int[] points)
+        {
+            Face face = addFace(points);
+            face.TextureID = texID;
+            face.Colour = colour;
+
+            return face;
         }
 
         public override void Draw(OpenGL gl)

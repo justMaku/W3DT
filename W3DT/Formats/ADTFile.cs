@@ -20,7 +20,7 @@ namespace W3DT.Formats
         public ADTException(string message) : base(message) { }
     }
 
-    public class ADTFile : ChunkedFormatBase
+    public class ADTFile : ChunkedFormatBase, IChunkProvider
     {
         public ADTFileType Type { get; private set; }
         private Chunk_MCNK CurrentSub;
@@ -75,6 +75,25 @@ namespace W3DT.Formats
         public override string getFormatName()
         {
             return "ADT";
+        }
+
+        public Chunk_Base getChunk(UInt32 chunkID)
+        {
+            Chunk_Base chunk = getChunksByID(chunkID).FirstOrDefault();
+            if (chunk == null)
+                throw new ADTException(string.Format("File does not contain chunk 0x{0}.", chunkID.ToString("X")));
+
+            return chunk;
+        }
+
+        public IEnumerable<Chunk_Base> getChunksByID(UInt32 chunkID)
+        {
+            return Chunks.Where(c => c.ChunkID == chunkID);
+        }
+
+        public IEnumerable<Chunk_Base> getChunks()
+        {
+            return Chunks;
         }
     }
 }

@@ -8,26 +8,20 @@ namespace W3DT._3D
 {
     public class Face
     {
-        private Position[] points;
-        private UV[] uvs;
         private short index = 0;
-        private Colour4 colour;
 
-        public int[] Offset { get; private set; }
-        public uint TextureID { get; private set; }
-        public int PointCount { get { return points.Length; } }
+        public Vert[] Verts { get; private set; }
+        public int PointCount { get { return Verts.Length; } }
+        public uint TextureID { get; set; }
+        public Colour4 Colour { get; set; }
 
-        public Face(uint texID, Colour4 colour)
+        public Face()
         {
-            points = new Position[3];
-            uvs = new UV[3];
-            Offset = new int[3];
-
-            TextureID = texID;
-            this.colour = colour;
+            Verts = new Vert[3];
+            Colour = Colour4.White;
         }
 
-        public void addPoint(Position point, UV uv, int offset)
+        public void addPoint(Vert vert)
         {
             if (index == 3)
             {
@@ -35,13 +29,7 @@ namespace W3DT._3D
                 return;
             }
 
-            points[index] = point;
-            uvs[index] = uv;
-
-            // Used to identify the position this face took from the
-            // stack it was produced from. IE index in a WMO group.
-            Offset[index] = offset;
-
+            Verts[index] = vert;
             index++;
         }
 
@@ -49,17 +37,19 @@ namespace W3DT._3D
         {
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, TextureID);
 
-            int[] amb_diff = { colour.A, colour.B, colour.G, colour.A };
+            int[] amb_diff = { Colour.A, Colour.B, Colour.G, Colour.A };
             gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT_AND_DIFFUSE, amb_diff);
 
             gl.Begin(OpenGL.GL_TRIANGLES);
 
             for (int i = 0; i < 3; i++)
             {
-                Position point = points[i];
-                UV uv = uvs[i];
+                Position point = Verts[i].Point;
+                UV uv = Verts[i].UV;
 
-                gl.TexCoord(uv.U, uv.V);
+                if (uv != null)
+                    gl.TexCoord(uv.U, uv.V);
+
                 gl.Vertex(point.X, point.Y, point.Z);
             }
 

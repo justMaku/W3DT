@@ -6,7 +6,7 @@ using W3DT.Formats;
 
 namespace W3DT._3D
 {
-    public struct UV
+    public class UV
     {
         public float U;
         public float V;

@@ -30,5 +30,8 @@ namespace W3DT._3D
         {
             return new Colour4(input.readUInt8(), input.readUInt8(), input.readUInt8(), input.readUInt8());
         }
+
+        public static Colour4 Black = new Colour4(0, 0, 0, 1);
+        public static Colour4 White = new Colour4(255, 255, 255, 1);
     }
 }

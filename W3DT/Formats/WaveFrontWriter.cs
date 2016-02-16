@@ -22,7 +22,6 @@ namespace W3DT.Formats
         private string targetDir;
 
         public bool UseNormals { get; set; }
-        public bool UseUV { get; set; }
         public bool UseTextures { get; set; }
 
         public WaveFrontWriter(string file, TextureManager texManager = null)
@@ -30,7 +29,6 @@ namespace W3DT.Formats
             this.texManager = texManager;
 
             UseNormals = true;
-            UseUV = true;
             UseTextures = true;
 
             obj = new StreamWriter(file, false);
@@ -71,7 +69,7 @@ namespace W3DT.Formats
 
             string faceFormat = "{0}";
 
-            if (UseUV)
+            if (UseTextures)
                 faceFormat += "/{0}";
 
             if (UseNormals)
@@ -94,7 +92,7 @@ namespace W3DT.Formats
                 nl(obj);
 
                 // UVs
-                if (UseUV)
+                if (UseTextures)
                 {
                     foreach (UV uv in mesh.UVs)
                         obj.WriteLine(string.Format("    vt {0} {1}", uv.U.ToString(FORMAT), uv.V.ToString(FORMAT)));
@@ -128,9 +126,9 @@ namespace W3DT.Formats
                         previousTexID = face.TextureID;
                     }
 
-                    int p1 = face.Offset[0] + faceOffset;
-                    int p2 = face.Offset[1] + faceOffset;
-                    int p3 = face.Offset[2] + faceOffset;
+                    int p1 = face.Verts[0].Offset + faceOffset;
+                    int p2 = face.Verts[1].Offset + faceOffset;
+                    int p3 = face.Verts[2].Offset + faceOffset;
 
                     string ofs1 = string.Format(faceFormat, p1);
                     string ofs2 = string.Format(faceFormat, p2);
