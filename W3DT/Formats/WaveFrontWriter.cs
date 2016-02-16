@@ -21,10 +21,16 @@ namespace W3DT.Formats
         private string name;
         private string targetDir;
 
+        public bool UseNormals { get; set; }
+        public bool UseUV { get; set; }
+
         public WaveFrontWriter(string file, TextureManager texManager)
         {
             this.texManager = texManager;
             string mtlPath = Path.ChangeExtension(file, ".mtl");
+
+            UseNormals = true;
+            UseUV = true;
 
             obj = new StreamWriter(file, false);
             mtl = new StreamWriter(mtlPath, false);
@@ -54,6 +60,14 @@ namespace W3DT.Formats
             obj.WriteLine("o " + name);
             nl(obj);
 
+            string faceFormat = "{0}";
+
+            if (UseUV)
+                faceFormat += "/{0}";
+
+            if (UseNormals)
+                faceFormat += "/{0}";
+
             List<string> texList = new List<string>();
             int faceOffset = 1;
             foreach (Mesh mesh in meshes)
@@ -71,18 +85,24 @@ namespace W3DT.Formats
                 nl(obj);
 
                 // UVs
-                foreach (UV uv in mesh.UVs)
-                    obj.WriteLine(string.Format("    vt {0} {1}", uv.U.ToString(FORMAT), uv.V.ToString(FORMAT)));
+                if (UseUV)
+                {
+                    foreach (UV uv in mesh.UVs)
+                        obj.WriteLine(string.Format("    vt {0} {1}", uv.U.ToString(FORMAT), uv.V.ToString(FORMAT)));
 
-                obj.WriteLine("    # " + mesh.UVCount + " UVs");
-                nl(obj);
+                    obj.WriteLine("    # " + mesh.UVCount + " UVs");
+                    nl(obj);
+                }
 
                 // Normals
-                foreach (Position norm in mesh.Normals)
-                    obj.WriteLine(string.Format("    vn {0} {1} {2}", norm.X.ToString(FORMAT), norm.Y.ToString(FORMAT), norm.Z.ToString(FORMAT)));
+                if (UseNormals)
+                {
+                    foreach (Position norm in mesh.Normals)
+                        obj.WriteLine(string.Format("    vn {0} {1} {2}", norm.X.ToString(FORMAT), norm.Y.ToString(FORMAT), norm.Z.ToString(FORMAT)));
 
-                obj.WriteLine("    # " + mesh.NormalCount + " normals");
-                nl(obj);
+                    obj.WriteLine("    # " + mesh.NormalCount + " normals");
+                    nl(obj);
+                }
 
                 // Faces
                 uint previousTexID = 0xFF;
@@ -103,7 +123,11 @@ namespace W3DT.Formats
                     int p2 = face.Offset[1] + faceOffset;
                     int p3 = face.Offset[2] + faceOffset;
 
-                    obj.WriteLine(string.Format("    f {0}/{0}/{0} {1}/{1}/{1} {2}/{2}/{2}", p1, p2, p3));
+                    string ofs1 = string.Format(faceFormat, p1);
+                    string ofs2 = string.Format(faceFormat, p2);
+                    string ofs3 = string.Format(faceFormat, p3);
+
+                    obj.WriteLine(string.Format("    f {0} {1} {2}", ofs1, ofs2, ofs3));
                 }
                 faceOffset += mesh.VertCount;
                 obj.WriteLine("    # " + mesh.FaceCount + " faces");
