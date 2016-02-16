@@ -23,19 +23,25 @@ namespace W3DT.Formats
 
         public bool UseNormals { get; set; }
         public bool UseUV { get; set; }
+        public bool UseTextures { get; set; }
 
-        public WaveFrontWriter(string file, TextureManager texManager)
+        public WaveFrontWriter(string file, TextureManager texManager = null)
         {
             this.texManager = texManager;
             string mtlPath = Path.ChangeExtension(file, ".mtl");
 
             UseNormals = true;
             UseUV = true;
+            UseTextures = true;
 
             obj = new StreamWriter(file, false);
-            mtl = new StreamWriter(mtlPath, false);
 
-            mtlFile = Path.GetFileName(mtlPath);
+            if (UseTextures)
+            {
+                mtl = new StreamWriter(mtlPath, false);
+                mtlFile = Path.GetFileName(mtlPath);
+            }
+
             targetDir = Path.GetDirectoryName(file);
             name = Path.GetFileNameWithoutExtension(file);
 
@@ -53,9 +59,12 @@ namespace W3DT.Formats
             obj.WriteLine("# https://github.com/Kruithne/W3DT/");
             nl(obj);
 
-            // Link material library.
-            obj.WriteLine("mtllib " + mtlFile);
-            nl(obj);
+            if (UseTextures)
+            {
+                // Link material library.
+                obj.WriteLine("mtllib " + mtlFile);
+                nl(obj);
+            }
 
             obj.WriteLine("o " + name);
             nl(obj);
@@ -108,7 +117,7 @@ namespace W3DT.Formats
                 uint previousTexID = 0xFF;
                 foreach (Face face in mesh.Faces)
                 {
-                    if (face.TextureID != previousTexID)
+                    if (UseTextures && face.TextureID != previousTexID)
                     {
                         string texPath = texManager.getFile(face.TextureID);
                         if (!texList.Contains(texPath))
@@ -134,28 +143,34 @@ namespace W3DT.Formats
                 nl(obj);
             }
 
-            foreach (string tex in texList)
+            if (UseTextures)
             {
-                string file = Path.GetFileNameWithoutExtension(tex);
+                foreach (string tex in texList)
+                {
+                    string file = Path.GetFileNameWithoutExtension(tex);
 
-                mtl.WriteLine("newmtl " + file);
-                mtl.WriteLine("illum 2");
-                mtl.WriteLine("Kd 1.0 1.0 1.0");
-                mtl.WriteLine("Ka 0.250000 0.250000 0.250000");
-                mtl.WriteLine("Ks 0.000000 0.000000 0.000000");
-                mtl.WriteLine("Ke 0.000000 0.000000 0.000000");
-                mtl.WriteLine("Ns 0.000000");
-                mtl.WriteLine("map_Kd -s 1 -1 1 " + file + ".png");
-                nl(mtl);
+                    mtl.WriteLine("newmtl " + file);
+                    mtl.WriteLine("illum 2");
+                    mtl.WriteLine("Kd 1.0 1.0 1.0");
+                    mtl.WriteLine("Ka 0.250000 0.250000 0.250000");
+                    mtl.WriteLine("Ks 0.000000 0.000000 0.000000");
+                    mtl.WriteLine("Ke 0.000000 0.000000 0.000000");
+                    mtl.WriteLine("Ns 0.000000");
+                    mtl.WriteLine("map_Kd -s 1 -1 1 " + file + ".png");
+                    nl(mtl);
+                }
+
+                new RunnerExportBLPtoPNG(texList.ToArray(), targetDir).Begin();
             }
-
-            new RunnerExportBLPtoPNG(texList.ToArray(), targetDir).Begin();
         }
 
         public override void Close()
         {
             obj.Close();
-            mtl.Close();
+
+            if (UseTextures)
+                mtl.Close();
+
             meshes.Clear();
         }
     }
