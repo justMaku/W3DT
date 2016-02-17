@@ -110,11 +110,11 @@ namespace W3DT.Runners
                                                 float oX = pX + (sX * ADTFile.TILE_SIZE);
                                                 float oY = pY + (sY * ADTFile.TILE_SIZE);
 
-                                                mesh.addVert(new Position(oX, tl + pZ, oY)); // + 0
-                                                mesh.addVert(new Position(oX, tr + pZ, oY + ADTFile.TILE_SIZE)); // + 1
-                                                mesh.addVert(new Position(oX + ADTFile.TILE_SIZE, bl + pZ, oY)); // + 2
-                                                mesh.addVert(new Position(oX + ADTFile.TILE_SIZE, br + pZ, oY + ADTFile.TILE_SIZE)); // + 3
-                                                mesh.addVert(new Position(oX + (ADTFile.TILE_SIZE / 2), c + pZ, oY + (ADTFile.TILE_SIZE / 2))); // + 4;
+                                                mesh.addVert(new Position(oX, tl + pZ, oY));
+                                                mesh.addVert(new Position(oX, tr + pZ, oY + ADTFile.TILE_SIZE));
+                                                mesh.addVert(new Position(oX + ADTFile.TILE_SIZE, bl + pZ, oY));
+                                                mesh.addVert(new Position(oX + ADTFile.TILE_SIZE, br + pZ, oY + ADTFile.TILE_SIZE));
+                                                mesh.addVert(new Position(oX + (ADTFile.TILE_SIZE / 2), c + pZ, oY + (ADTFile.TILE_SIZE / 2)));
 
                                                 mesh.addFace(v, v + 2, v + 4);
                                                 mesh.addFace(v + 1, v + 3, v + 4);
