@@ -21,15 +21,14 @@ namespace W3DT.Formats
         private string name;
         private string targetDir;
 
-        public bool UseNormals { get; set; }
-        public bool UseTextures { get; set; }
+        public bool UseNormals { get; private set; }
+        public bool UseTextures { get; private set; }
 
-        public WaveFrontWriter(string file, TextureManager texManager = null)
+        public WaveFrontWriter(string file, TextureManager texManager = null, bool textures = true, bool normals = true)
         {
             this.texManager = texManager;
-
-            UseNormals = true;
-            UseTextures = true;
+            UseTextures = textures;
+            UseNormals = normals;
 
             obj = new StreamWriter(file, false);
 

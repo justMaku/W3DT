@@ -49,9 +49,7 @@ namespace W3DT.Runners
                 Chunk_MAIN mainChunk = (Chunk_MAIN)headerFile.Chunks.Where(c => c.ChunkID == Chunk_MAIN.Magic).FirstOrDefault();
                 if (mainChunk != null)
                 {
-                    WaveFrontWriter ob = new WaveFrontWriter("test_terrain.obj");
-                    ob.UseTextures = false;
-                    ob.UseNormals = false;
+                    WaveFrontWriter ob = new WaveFrontWriter("test_terrain.obj", null, false, false);
 
                     for (int y = 0; y < 64; y++)
                     {
