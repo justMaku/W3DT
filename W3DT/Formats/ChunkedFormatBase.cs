@@ -23,12 +23,10 @@ namespace W3DT.Formats
             while (!isEndOfStream() && !isOutOfBounds(seek + 4))
             {
                 int startSeek = seek + 8;
-                //UInt32 chunkID = readUInt32();
                 Chunk_Base chunk = lookupChunk(readUInt32());
 
                 if (chunk.ChunkID != 0x0)
                 {
-                    //Chunks.Add(chunk);
                     storeChunk(chunk);
                 }
                 else
