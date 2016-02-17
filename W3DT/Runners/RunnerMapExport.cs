@@ -49,7 +49,7 @@ namespace W3DT.Runners
                 Chunk_MAIN mainChunk = (Chunk_MAIN)headerFile.Chunks.Where(c => c.ChunkID == Chunk_MAIN.Magic).FirstOrDefault();
                 if (mainChunk != null)
                 {
-                    WaveFrontWriter ob = new WaveFrontWriter("test_terrain.obj", null, false, false);
+                    WaveFrontWriter ob = new WaveFrontWriter("test_terrain.obj", null, false, true);
 
                     for (int y = 0; y < 64; y++)
                     {
@@ -84,6 +84,7 @@ namespace W3DT.Runners
                                     foreach (Chunk_MCNK soupChunk in adt.getChunksByID(Chunk_MCNK.Magic))
                                     {
                                         Chunk_MCVT hmChunk = (Chunk_MCVT)soupChunk.getChunk(Chunk_MCVT.Magic);
+                                        Chunk_MCNR nChunk = (Chunk_MCNR)soupChunk.getChunk(Chunk_MCNR.Magic);
 
                                         Mesh mesh = new Mesh();
                                         int v = 0;
@@ -115,6 +116,12 @@ namespace W3DT.Runners
                                                 mesh.addVert(new Position(oX + ADTFile.TILE_SIZE, bl + pZ, oY));
                                                 mesh.addVert(new Position(oX + ADTFile.TILE_SIZE, br + pZ, oY + ADTFile.TILE_SIZE));
                                                 mesh.addVert(new Position(oX + (ADTFile.TILE_SIZE / 2), c + pZ, oY + (ADTFile.TILE_SIZE / 2)));
+
+                                                mesh.addNormal(nChunk.normals[tlIndex + 1]);
+                                                mesh.addNormal(nChunk.normals[tlIndex]);
+                                                mesh.addNormal(nChunk.normals[blIndex + 1]);
+                                                mesh.addNormal(nChunk.normals[tlIndex]);
+                                                mesh.addNormal(nChunk.normals[cIndex]);
 
                                                 mesh.addFace(v, v + 2, v + 4);
                                                 mesh.addFace(v + 1, v + 3, v + 4);
