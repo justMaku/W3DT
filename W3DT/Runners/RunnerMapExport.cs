@@ -90,6 +90,10 @@ namespace W3DT.Runners
                                         Mesh mesh = new Mesh();
                                         int v = 0;
 
+                                        float pX = soupChunk.position.X;
+                                        float pY = soupChunk.position.Y;
+                                        float pZ = soupChunk.position.Z;
+
                                         int ofs = 10;
                                         for (int sX = 0; sX < 8; sX++)
                                         {
@@ -105,14 +109,14 @@ namespace W3DT.Runners
                                                 float br = hmChunk.vertices[blIndex + 1];
                                                 float c = hmChunk.vertices[cIndex];
 
-                                                int xD = x * 8;
-                                                int yD = y * 8;
+                                                //int xD = x * (8 * 256);
+                                                //int yD = y * (8 * 256);
 
-                                                mesh.addVert(new Position(xD + sX, tl, yD + sY)); // + 0
-                                                mesh.addVert(new Position(xD + sX, tr, yD + sY + 1)); // + 1
-                                                mesh.addVert(new Position(xD + sX + 1, bl, yD + sY)); // + 2
-                                                mesh.addVert(new Position(xD + sX + 1, br, yD + sY + 1)); // + 3
-                                                mesh.addVert(new Position(xD + sX + 0.5f, c, yD + sY + 0.5f)); // + 4;
+                                                mesh.addVert(new Position(pX + sX, tl + pZ, pY + sY)); // + 0
+                                                mesh.addVert(new Position(pX + sX, tr + pZ, pY + sY + 1)); // + 1
+                                                mesh.addVert(new Position(pX + sX + 1, bl + pZ, pY + sY)); // + 2
+                                                mesh.addVert(new Position(pX + sX + 1, br + pZ, pY + sY + 1)); // + 3
+                                                mesh.addVert(new Position(pX + sX + 0.5f, c + pZ, pY + sY + 0.5f)); // + 4;
 
                                                 mesh.addFace(v, v + 2, v + 4);
                                                 mesh.addFace(v + 1, v + 3, v + 4);
