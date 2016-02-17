@@ -93,25 +93,30 @@ namespace W3DT.Runners
                                         float pZ = soupChunk.position.Z;
 
                                         int ofs = 10;
-                                        for (int sX = 0; sX < 8; sX++)
+                                        for (int sX = 8; sX > 0; sX--)
                                         {
-                                            for (int sY = 0; sY < 8; sY++)
+                                            for (int sY = 8; sY > 0; sY--)
                                             {
                                                 int cIndex = ofs - 1;
-                                                int tlIndex = cIndex - 9;
-                                                int blIndex = cIndex + 8;
+                                                int blIndex = cIndex - 9;
+                                                int tlIndex = cIndex + 8;
 
-                                                float tl = hmChunk.vertices[tlIndex];
-                                                float tr = hmChunk.vertices[tlIndex + 1];
-                                                float bl = hmChunk.vertices[blIndex];
-                                                float br = hmChunk.vertices[blIndex + 1];
+                                                float tr = hmChunk.vertices[tlIndex];
+                                                float tl = hmChunk.vertices[tlIndex + 1];
+                                                float br = hmChunk.vertices[blIndex];
+                                                float bl = hmChunk.vertices[blIndex + 1];
                                                 float c = hmChunk.vertices[cIndex];
 
-                                                mesh.addVert(new Position(pX + sX, tl + pZ, pY + sY)); // + 0
-                                                mesh.addVert(new Position(pX + sX, tr + pZ, pY + sY + 1)); // + 1
-                                                mesh.addVert(new Position(pX + sX + 1, bl + pZ, pY + sY)); // + 2
-                                                mesh.addVert(new Position(pX + sX + 1, br + pZ, pY + sY + 1)); // + 3
-                                                mesh.addVert(new Position(pX + sX + 0.5f, c + pZ, pY + sY + 0.5f)); // + 4;
+                                                float SIZE = 4.16675f;
+
+                                                float oX = pX + (sX * SIZE);
+                                                float oY = pY + (sY * SIZE);
+
+                                                mesh.addVert(new Position(oX, tl + pZ, oY)); // + 0
+                                                mesh.addVert(new Position(oX, tr + pZ, oY + SIZE)); // + 1
+                                                mesh.addVert(new Position(oX + SIZE, bl + pZ, oY)); // + 2
+                                                mesh.addVert(new Position(oX + SIZE, br + pZ, oY + SIZE)); // + 3
+                                                mesh.addVert(new Position(oX + (SIZE / 2), c + pZ, oY + (SIZE / 2))); // + 4;
 
                                                 mesh.addFace(v, v + 2, v + 4);
                                                 mesh.addFace(v + 1, v + 3, v + 4);
