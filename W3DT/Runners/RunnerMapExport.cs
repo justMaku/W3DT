@@ -107,16 +107,14 @@ namespace W3DT.Runners
                                                 float bl = hmChunk.vertices[blIndex + 1];
                                                 float c = hmChunk.vertices[cIndex];
 
-                                                float SIZE = 4.16675f;
-
-                                                float oX = pX + (sX * SIZE);
-                                                float oY = pY + (sY * SIZE);
+                                                float oX = pX + (sX * ADTFile.TILE_SIZE);
+                                                float oY = pY + (sY * ADTFile.TILE_SIZE);
 
                                                 mesh.addVert(new Position(oX, tl + pZ, oY)); // + 0
-                                                mesh.addVert(new Position(oX, tr + pZ, oY + SIZE)); // + 1
-                                                mesh.addVert(new Position(oX + SIZE, bl + pZ, oY)); // + 2
-                                                mesh.addVert(new Position(oX + SIZE, br + pZ, oY + SIZE)); // + 3
-                                                mesh.addVert(new Position(oX + (SIZE / 2), c + pZ, oY + (SIZE / 2))); // + 4;
+                                                mesh.addVert(new Position(oX, tr + pZ, oY + ADTFile.TILE_SIZE)); // + 1
+                                                mesh.addVert(new Position(oX + ADTFile.TILE_SIZE, bl + pZ, oY)); // + 2
+                                                mesh.addVert(new Position(oX + ADTFile.TILE_SIZE, br + pZ, oY + ADTFile.TILE_SIZE)); // + 3
+                                                mesh.addVert(new Position(oX + (ADTFile.TILE_SIZE / 2), c + pZ, oY + (ADTFile.TILE_SIZE / 2))); // + 4;
 
                                                 mesh.addFace(v, v + 2, v + 4);
                                                 mesh.addFace(v + 1, v + 3, v + 4);

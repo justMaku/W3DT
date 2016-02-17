@@ -22,6 +22,7 @@ namespace W3DT.Formats
 
     public class ADTFile : ChunkedFormatBase, IChunkProvider
     {
+        public static float TILE_SIZE = 4.16675f;
         public ADTFileType Type { get; private set; }
         private Chunk_MCNK CurrentSub;
 
