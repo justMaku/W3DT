@@ -109,9 +109,6 @@ namespace W3DT.Runners
                                                 float br = hmChunk.vertices[blIndex + 1];
                                                 float c = hmChunk.vertices[cIndex];
 
-                                                //int xD = x * (8 * 256);
-                                                //int yD = y * (8 * 256);
-
                                                 mesh.addVert(new Position(pX + sX, tl + pZ, pY + sY)); // + 0
                                                 mesh.addVert(new Position(pX + sX, tr + pZ, pY + sY + 1)); // + 1
                                                 mesh.addVert(new Position(pX + sX + 1, bl + pZ, pY + sY)); // + 2
