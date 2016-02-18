@@ -20,11 +20,13 @@ namespace W3DT.Runners
     {
         private string mapName;
         private string fileName;
+        private string filePath;
 
         public RunnerMapExport(string mapName, string fileName)
         {
             this.mapName = mapName;
             this.fileName = fileName;
+            this.filePath = Path.GetDirectoryName(filePath);
         }
 
         public override void Work()
@@ -83,6 +85,16 @@ namespace W3DT.Runners
                                     ADTFile obj = new ADTFile(objTempPath, ADTFileType.OBJ);
                                     obj.parse();
 
+                                    // Textures
+                                    Chunk_MTEX texChunk = (Chunk_MTEX)tex.getChunk(Chunk_MTEX.Magic);
+                                    foreach (string texFile in texChunk.textures.all())
+                                    {
+                                        string tempPath = Path.Combine(filePath, texFile);
+                                        if (!File.Exists(tempPath))
+                                            Program.CASCEngine.SaveFileTo(texFile, filePath);
+                                    }
+
+                                    // Terrain
                                     foreach (Chunk_MCNK soupChunk in adt.getChunksByID(Chunk_MCNK.Magic))
                                     {
                                         Chunk_MCVT hmChunk = (Chunk_MCVT)soupChunk.getChunk(Chunk_MCVT.Magic);
