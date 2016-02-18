@@ -252,9 +252,14 @@ namespace W3DT
             CloseLoadingWindow();
 
             if (args.Success)
+            {
                 Alert.Show(string.Format("{0} successfully extracted!", selectedMapName), true);
+            }
             else
+            {
                 Alert.Show(string.Format("Unable to extract {0}!", selectedMapName));
+                Log.Write("Unable to extract {0} -> {1}", selectedMapName, args.Message);
+            }
         }
 
         private void CloseLoadingWindow()
