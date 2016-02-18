@@ -52,7 +52,7 @@ namespace W3DT.Formats
 
         public override void Write()
         {
-            obj.WriteLine("# World of Warcraft WMO exported using W3DT");
+            obj.WriteLine("# 3D data exported from World of Warcraft using W3DT");
             obj.WriteLine("# https://github.com/Kruithne/W3DT/");
             nl(obj);
 
