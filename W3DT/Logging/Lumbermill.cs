@@ -30,7 +30,15 @@ namespace W3DT.Logging
                     {
                         // Write to the log file.
                         writer.WriteLine(string.Format("[{0}] {1}", getTimestamp(), message));
-                        writer.Flush();
+
+                        try
+                        {
+                            writer.Flush();
+                        }
+                        catch (ObjectDisposedException e)
+                        {
+                            // Application probably closed before we could be done.
+                        }
 
                         // Write to the debugger.
                         Debug.WriteLine(message);
