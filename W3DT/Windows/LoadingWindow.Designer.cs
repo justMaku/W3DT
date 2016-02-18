@@ -32,8 +32,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.UI_TextLine1 = new System.Windows.Forms.Label();
             this.UI_TextLine2 = new System.Windows.Forms.Label();
-            this.LoadingEye = new W3DT.Controls.LoadingEye();
             this.UI_CancelButton = new System.Windows.Forms.Button();
+            this.LoadingEye = new W3DT.Controls.LoadingEye();
             this.SuspendLayout();
             // 
             // label1
@@ -66,23 +66,23 @@
             this.UI_TextLine2.TabIndex = 1;
             this.UI_TextLine2.Text = "TextLine2";
             // 
-            // LoadingEye
-            // 
-            this.LoadingEye.Location = new System.Drawing.Point(12, 12);
-            this.LoadingEye.Name = "LoadingEye";
-            this.LoadingEye.Size = new System.Drawing.Size(64, 64);
-            this.LoadingEye.TabIndex = 0;
-            // 
             // UI_CancelButton
             // 
             this.UI_CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_CancelButton.Location = new System.Drawing.Point(380, -12);
+            this.UI_CancelButton.Location = new System.Drawing.Point(381, 57);
             this.UI_CancelButton.Name = "UI_CancelButton";
             this.UI_CancelButton.Size = new System.Drawing.Size(60, 23);
             this.UI_CancelButton.TabIndex = 2;
             this.UI_CancelButton.Text = "Cancel";
             this.UI_CancelButton.UseVisualStyleBackColor = true;
             this.UI_CancelButton.Click += new System.EventHandler(this.UI_CancelButton_Click);
+            // 
+            // LoadingEye
+            // 
+            this.LoadingEye.Location = new System.Drawing.Point(12, 12);
+            this.LoadingEye.Name = "LoadingEye";
+            this.LoadingEye.Size = new System.Drawing.Size(64, 64);
+            this.LoadingEye.TabIndex = 0;
             // 
             // LoadingWindow
             // 
