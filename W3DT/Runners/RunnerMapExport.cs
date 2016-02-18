@@ -26,7 +26,7 @@ namespace W3DT.Runners
         {
             this.mapName = mapName;
             this.fileName = fileName;
-            this.filePath = Path.GetDirectoryName(filePath);
+            this.filePath = Path.GetDirectoryName(fileName);
         }
 
         public override void Work()
