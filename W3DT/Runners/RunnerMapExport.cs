@@ -19,10 +19,12 @@ namespace W3DT.Runners
     public class RunnerMapExport : RunnerBase
     {
         private string mapName;
+        private string fileName;
 
-        public RunnerMapExport(string mapName)
+        public RunnerMapExport(string mapName, string fileName)
         {
             this.mapName = mapName;
+            this.fileName = fileName;
         }
 
         public override void Work()
@@ -49,7 +51,7 @@ namespace W3DT.Runners
                 Chunk_MAIN mainChunk = (Chunk_MAIN)headerFile.Chunks.Where(c => c.ChunkID == Chunk_MAIN.Magic).FirstOrDefault();
                 if (mainChunk != null)
                 {
-                    WaveFrontWriter ob = new WaveFrontWriter("test_terrain.obj", null, false, true);
+                    WaveFrontWriter ob = new WaveFrontWriter(fileName, null, false, true);
 
                     for (int y = 0; y < 64; y++)
                     {

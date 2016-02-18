@@ -231,7 +231,14 @@ namespace W3DT
                 return;
             }
 
-            exportRunner = new RunnerMapExport(selectedMapName);
+            UI_SaveDialog.FileName = selectedMapName + ".obj";
+            if (UI_SaveDialog.ShowDialog() == DialogResult.OK)
+                BeginMapExport(UI_SaveDialog.FileName);
+        }
+
+        private void BeginMapExport(string fileName)
+        {
+            exportRunner = new RunnerMapExport(selectedMapName, fileName);
             exportRunner.Begin();
 
             loadingWindow = new LoadingWindow(string.Format("Exporting {0}...", selectedMapName), "Depending on map size, this may take a while.", true, exportCancelCallback);

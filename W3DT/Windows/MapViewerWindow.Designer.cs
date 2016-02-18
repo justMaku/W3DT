@@ -34,9 +34,10 @@
             this.UI_FileList = new System.Windows.Forms.TreeView();
             this.UI_FilterTimer = new System.Windows.Forms.Timer(this.components);
             this.UI_ExportButton = new System.Windows.Forms.Button();
+            this.UI_TileDisplay = new System.Windows.Forms.Label();
             this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
             this.UI_Map = new W3DT.Controls.DoubleBufferedPanel();
-            this.UI_TileDisplay = new System.Windows.Forms.Label();
+            this.UI_SaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // UI_FileCount_Label
@@ -76,6 +77,20 @@
             this.UI_ExportButton.Visible = false;
             this.UI_ExportButton.Click += new System.EventHandler(this.UI_ExportButton_Click);
             // 
+            // UI_TileDisplay
+            // 
+            this.UI_TileDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.UI_TileDisplay.AutoSize = true;
+            this.UI_TileDisplay.BackColor = System.Drawing.Color.Transparent;
+            this.UI_TileDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UI_TileDisplay.Location = new System.Drawing.Point(480, 647);
+            this.UI_TileDisplay.Name = "UI_TileDisplay";
+            this.UI_TileDisplay.Size = new System.Drawing.Size(94, 25);
+            this.UI_TileDisplay.TabIndex = 0;
+            this.UI_TileDisplay.Text = "0/0 Tiles";
+            this.UI_TileDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UI_TileDisplay.Visible = false;
+            // 
             // UI_PreviewStatus
             // 
             this.UI_PreviewStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -109,19 +124,9 @@
             this.UI_Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseMove);
             this.UI_Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UI_Map_MouseUp);
             // 
-            // UI_TileDisplay
+            // UI_SaveDialog
             // 
-            this.UI_TileDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.UI_TileDisplay.AutoSize = true;
-            this.UI_TileDisplay.BackColor = System.Drawing.Color.Transparent;
-            this.UI_TileDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UI_TileDisplay.Location = new System.Drawing.Point(480, 647);
-            this.UI_TileDisplay.Name = "UI_TileDisplay";
-            this.UI_TileDisplay.Size = new System.Drawing.Size(94, 25);
-            this.UI_TileDisplay.TabIndex = 0;
-            this.UI_TileDisplay.Text = "0/0 Tiles";
-            this.UI_TileDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.UI_TileDisplay.Visible = false;
+            this.UI_SaveDialog.Filter = "WaveFront OBJ (*.obj)|*.obj";
             // 
             // MapViewerWindow
             // 
@@ -153,5 +158,6 @@
         private System.Windows.Forms.Button UI_ExportButton;
         private System.Windows.Forms.Timer UI_FilterTimer;
         private System.Windows.Forms.Label UI_TileDisplay;
+        private System.Windows.Forms.SaveFileDialog UI_SaveDialog;
     }
 }
