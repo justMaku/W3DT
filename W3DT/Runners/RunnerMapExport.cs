@@ -76,6 +76,7 @@ namespace W3DT.Runners
 
                     TextureBox texProvider = new TextureBox();
                     WaveFrontWriter ob = new WaveFrontWriter(fileName, texProvider, true, true);
+                    int meshIndex = 1;
 
                     for (int y = 0; y < 64; y++)
                     {
@@ -150,7 +151,9 @@ namespace W3DT.Runners
                                         // Texture chunks
                                         Chunk_MCLY layers = (Chunk_MCLY)layerChunk.getChunk(Chunk_MCLY.Magic);
 
-                                        Mesh mesh = new Mesh();
+                                        Mesh mesh = new Mesh("Terrain Mesh #" + meshIndex);
+                                        meshIndex++;
+
                                         int v = 0;
 
                                         float pX = soupChunk.position.X;
