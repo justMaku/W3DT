@@ -78,8 +78,12 @@ namespace W3DT
         private void OnExploreHit(CASCFile file)
         {
             string[] parts = file.FullName.Split(new char[] { '/', '\\' });
-            string mapName = parts[2];
 
+            // Ignore noLiquid tiles.
+            if (parts[parts.Length - 1].StartsWith("noLiquid"))
+                return;
+
+            string mapName = parts[2];
             if (!mapName.ToLower().Equals("wmo"))
             {
                 if (!maps.ContainsKey(mapName))
