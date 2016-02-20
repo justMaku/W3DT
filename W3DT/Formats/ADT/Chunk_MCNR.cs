@@ -18,7 +18,12 @@ namespace W3DT.Formats.ADT
         {
             normals = new Position[145];
             for (int i = 0; i < 145; i++)
-                normals[i] = new Position(file.readUInt8() / 127, file.readUInt8() / 127, file.readUInt8() / 127);
+            {
+                byte x = (byte) (file.readUInt8() / 127);
+                byte z = (byte) ((file.readUInt8() / 127) * -1);
+                byte y = (byte) (file.readUInt8() / 127);
+                normals[i] = new Position(x, y, z);
+            }
         }
     }
 }
