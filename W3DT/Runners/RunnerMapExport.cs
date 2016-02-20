@@ -112,13 +112,16 @@ namespace W3DT.Runners
 
                                     // Textures
                                     Chunk_MTEX texChunk = (Chunk_MTEX)tex.getChunk(Chunk_MTEX.Magic);
+
+                                    uint texIndex = 0;
                                     foreach (KeyValuePair<int, string> texture in texChunk.textures.raw())
                                     {
                                         string texFile = texture.Value;
 
                                         // Register texture in the texture provider
-                                        texProvider.addTexture(texture.Key, texFile);
-                                        texMap.Add((uint)texture.Key, (uint)texProvider.LastIndex);
+                                        texProvider.addTexture(-1, texFile); // extID here is not used, pass -1 for filler.
+                                        texMap.Add(texIndex, (uint)texProvider.LastIndex);
+                                        texIndex++;
 
                                         // Export raw BLP and convert to PNG.
                                         string dumpPath = Path.Combine(filePath, Path.GetFileNameWithoutExtension(texFile) + ".png");

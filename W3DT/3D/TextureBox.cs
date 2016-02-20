@@ -8,7 +8,7 @@ namespace W3DT._3D
     public class TextureBox : ITextureProvider
     {
         private Dictionary<int, string> fileMapping;
-        private int index = 1;
+        private int index = 0;
         public int LastIndex { get; private set; }
 
         public TextureBox()
