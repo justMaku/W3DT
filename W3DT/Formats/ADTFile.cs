@@ -69,6 +69,7 @@ namespace W3DT.Formats
                 case Chunk_MCLY.Magic: return new Chunk_MCLY(this);
                 case Chunk_MCRD.Magic: return new Chunk_MCRD(this);
                 case Chunk_MCRW.Magic: return new Chunk_MCRW(this);
+                case Chunk_MCAL.Magic: return new Chunk_MCAL(this);
                 default: return new Chunk_Base(this);
             }
         }
