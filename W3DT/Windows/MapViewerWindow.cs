@@ -26,6 +26,7 @@ namespace W3DT
 
         private RunnerBuildMinimap buildRunner;
         private BitmapCanvas canvas;
+        private uint buildRunnerIndex;
 
         private int drawOffsetX = 0;
         private int drawOffsetY = 0;
@@ -140,6 +141,7 @@ namespace W3DT
                 UI_TileDisplay.Show();
 
                 buildRunner = new RunnerBuildMinimap(maps[mapName].ToArray());
+                buildRunnerIndex = buildRunner.Index;
                 buildRunner.Begin();
             }
         }
@@ -147,6 +149,10 @@ namespace W3DT
         private void OnMinimapTileDone(object sender, EventArgs e)
         {
             MinimapTileReadyArgs args = (MinimapTileReadyArgs)e;
+
+            // Ensure we're using the correct runner.
+            if (args.RunnerIndex != buildRunnerIndex)
+                return;
 
             if (canvas == null)
             {

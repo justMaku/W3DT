@@ -32,13 +32,19 @@ namespace W3DT.Runners
 
     public class RunnerBuildMinimap : RunnerBase
     {
+        private static uint index = 1;
         private static Regex pattern = new Regex(@"^map(\d+)_(\d+)$");
         private CASCFile[] files;
         private MapTileXY[] positions;
+        public uint Index { get; private set; }
 
         public RunnerBuildMinimap(CASCFile[] files)
         {
             this.files = files;
+
+            // Index used to prevent overlap.
+            Index = index;
+            index++;
         }
 
         public override void Work()
@@ -96,7 +102,7 @@ namespace W3DT.Runners
                 }
 
                 if (File.Exists(tempPath))
-                    EventManager.Trigger_MinimapTileDone(position, bounds, tempPath);
+                    EventManager.Trigger_MinimapTileDone(position, bounds, tempPath, Index);
             }
         }
     }

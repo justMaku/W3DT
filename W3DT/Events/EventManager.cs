@@ -277,9 +277,9 @@ namespace W3DT.Events
             TriggerEvent(_MapExportDone, new MapExportDoneArgs(success, error));
         }
 
-        public static void Trigger_MinimapTileDone(Runners.MapTileXY position, Runners.MapTileBounds bounds, string image)
+        public static void Trigger_MinimapTileDone(Runners.MapTileXY position, Runners.MapTileBounds bounds, string image, uint index)
         {
-            TriggerEvent(_MinimapTileDone, new MinimapTileReadyArgs(position, bounds, image));
+            TriggerEvent(_MinimapTileDone, new MinimapTileReadyArgs(position, bounds, image, index));
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)
