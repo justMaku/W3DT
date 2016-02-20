@@ -25,8 +25,8 @@ namespace W3DT._3D
             else
             {
                 fileMapping.Add(index, file);
-                index++;
                 LastIndex = index;
+                index++;
             }
         }
 
