@@ -137,7 +137,6 @@ namespace W3DT.Runners
                                         }
                                     }
 
-                                    //IEnumerable<Chunk_MCNK> rawSoupChunks = adt.getChunksByID(Chunk_MCNK.Magic);
                                     Chunk_MCNK[] soupChunks = adt.getChunksByID(Chunk_MCNK.Magic).Cast<Chunk_MCNK>().ToArray();
                                     Chunk_MCNK[] layerChunks = tex.getChunksByID(Chunk_MCNK.Magic).Cast<Chunk_MCNK>().ToArray();
 
