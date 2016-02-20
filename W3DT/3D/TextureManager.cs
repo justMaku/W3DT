@@ -11,7 +11,7 @@ using SereniaBLPLib;
 
 namespace W3DT._3D
 {
-    public class TextureManager
+    public class TextureManager : ITextureProvider
     {
         private OpenGL gl;
         private Dictionary<int, uint[]> mapping;

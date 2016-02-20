@@ -74,7 +74,9 @@
     <Compile Include="3D\Doodad.cs" />
     <Compile Include="3D\DoodadSet.cs" />
     <Compile Include="3D\Face.cs" />
+    <Compile Include="3D\ITextureProvider.cs" />
     <Compile Include="3D\Mesh.cs" />
+    <Compile Include="3D\TextureBox.cs" />
     <Compile Include="3D\TextureManager.cs" />
     <Compile Include="3D\Vert.cs" />
     <Compile Include="Controls\AwesomeTooltip.cs">

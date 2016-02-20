@@ -11,7 +11,7 @@ namespace W3DT.Formats
     public class WaveFrontWriter : WriterBase
     {
         private const string FORMAT = "0.00000000";
-        private TextureManager texManager;
+        private ITextureProvider texManager;
         private StreamWriter obj;
         private StreamWriter mtl;
 
@@ -24,7 +24,7 @@ namespace W3DT.Formats
         public bool UseNormals { get; private set; }
         public bool UseTextures { get; private set; }
 
-        public WaveFrontWriter(string file, TextureManager texManager = null, bool textures = true, bool normals = true)
+        public WaveFrontWriter(string file, ITextureProvider texManager = null, bool textures = true, bool normals = true)
         {
             this.texManager = texManager;
             UseTextures = textures;

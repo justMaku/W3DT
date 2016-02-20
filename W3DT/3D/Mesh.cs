@@ -60,12 +60,17 @@ namespace W3DT._3D
             return face;
         }
 
-        public Face addFace(uint texID, Colour4 colour, params int[] points)
+        public Face addFace(uint texID, params int[] points)
         {
             Face face = addFace(points);
             face.TextureID = texID;
-            face.Colour = colour;
+            return face;
+        }
 
+        public Face addFace(uint texID, Colour4 colour, params int[] points)
+        {
+            Face face = addFace(texID, points);
+            face.Colour = colour;
             return face;
         }
 
