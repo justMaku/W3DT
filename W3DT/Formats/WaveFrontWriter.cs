@@ -23,12 +23,14 @@ namespace W3DT.Formats
 
         public bool UseNormals { get; private set; }
         public bool UseTextures { get; private set; }
+        public bool ConvertTextures { get; private set; }
 
-        public WaveFrontWriter(string file, ITextureProvider texManager = null, bool textures = true, bool normals = true)
+        public WaveFrontWriter(string file, ITextureProvider texManager = null, bool textures = true, bool normals = true, bool convertTextures = true)
         {
             this.texManager = texManager;
             UseTextures = textures;
             UseNormals = normals;
+            ConvertTextures = convertTextures;
 
             obj = new StreamWriter(file, false);
 
@@ -157,7 +159,8 @@ namespace W3DT.Formats
                     nl(mtl);
                 }
 
-                new RunnerExportBLPtoPNG(texList.ToArray(), targetDir).Begin();
+                if (ConvertTextures)
+                    new RunnerExportBLPtoPNG(texList.ToArray(), targetDir).Begin();
             }
         }
 

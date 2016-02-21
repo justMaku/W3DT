@@ -37,7 +37,7 @@ namespace W3DT.Runners
             LogWrite("Beginning export of {0}...", mapName);
 
             TextureBox texProvider = new TextureBox();
-            WaveFrontWriter ob = new WaveFrontWriter(fileName, texProvider, true, true);
+            WaveFrontWriter ob = new WaveFrontWriter(fileName, texProvider, true, true, false);
 
             try
             {
