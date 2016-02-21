@@ -104,6 +104,7 @@
     <Compile Include="Events\MapExportDoneArgs.cs" />
     <Compile Include="Events\MinimapTileReadyArgs.cs" />
     <Compile Include="Formats\ADTFile.cs" />
+    <Compile Include="Formats\ADT\Chunk_MCAL.cs" />
     <Compile Include="Formats\ADT\Chunk_MCCV.cs" />
     <Compile Include="Formats\ADT\Chunk_MCLV.cs" />
     <Compile Include="Formats\ADT\Chunk_MCLY.cs" />

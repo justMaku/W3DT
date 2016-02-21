@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Drawing;
 using W3DT.Events;
 using W3DT.Formats;
 using W3DT.Formats.WDT;
@@ -52,7 +53,9 @@ namespace W3DT.Runners
 
                 // Ensure we have a MAIN chunk before trying to process terrain.
                 Chunk_MAIN mainChunk = (Chunk_MAIN)headerFile.Chunks.Where(c => c.ChunkID == Chunk_MAIN.Magic).FirstOrDefault();
-                if (mainChunk != null)
+                Chunk_MPHD headerChunk = (Chunk_MPHD)headerFile.Chunks.Where(c => c.ChunkID == Chunk_MPHD.Magic).FirstOrDefault();
+
+                if (mainChunk != null && headerChunk != null)
                 {
                     // Pre-calculate UV mapping for terrain.
                     UV[,,] uvMaps = new UV[8,8,5];
@@ -77,6 +80,11 @@ namespace W3DT.Runners
                     TextureBox texProvider = new TextureBox();
                     WaveFrontWriter ob = new WaveFrontWriter(fileName, texProvider, true, true);
                     int meshIndex = 1;
+
+                    // Create a directory for map data (alpha maps, etc).
+                    string dataDir = Path.Combine(Path.GetDirectoryName(fileName), string.Format("{0}.data", mapName));
+                    if (!Directory.Exists(dataDir))
+                        Directory.CreateDirectory(dataDir);
 
                     for (int y = 0; y < 64; y++)
                     {
@@ -139,6 +147,7 @@ namespace W3DT.Runners
 
                                     Chunk_MCNK[] soupChunks = adt.getChunksByID(Chunk_MCNK.Magic).Cast<Chunk_MCNK>().ToArray();
                                     Chunk_MCNK[] layerChunks = tex.getChunksByID(Chunk_MCNK.Magic).Cast<Chunk_MCNK>().ToArray();
+                                    Chunk_MCAL[] alphaMapChunks = tex.getChunksByID(Chunk_MCAL.Magic).Cast<Chunk_MCAL>().ToArray();
 
                                     // Terrain
                                     for (int i = 0; i < 256; i++)
@@ -152,6 +161,34 @@ namespace W3DT.Runners
 
                                         // Texture chunks
                                         Chunk_MCLY layers = (Chunk_MCLY)layerChunk.getChunk(Chunk_MCLY.Magic);
+
+                                        // Alpha mapping
+                                        Chunk_MCAL alphaMapChunk = alphaMapChunks[i];
+                                        for (int mI = 1; mI < layers.layers.Length; mI++) // First layer never has an alpha map
+                                        {
+                                            byte[,] alphaMap;
+                                            MCLYLayer layer = layers.layers[mI];
+                                            bool headerFlagSet = ((headerChunk.flags & 0x4) == 0x4) || ((headerChunk.flags & 0x80) == 0x80);
+                                            bool layerFlagSet = ((layer.flags & 0x200) == 0x200);
+                                            bool fixAlphaMap = !((soupChunk.flags & 0x200) == 0x200);
+
+                                            if (layerFlagSet)
+                                                alphaMap = alphaMapChunk.parse(Chunk_MCAL.CompressType.COMPRESSED, layer.ofsMCAL);
+                                            else
+                                                alphaMap = alphaMapChunk.parse(headerFlagSet ? Chunk_MCAL.CompressType.UNCOMPRESSED_4096 : Chunk_MCAL.CompressType.UNCOMPRESSED_2048, layer.ofsMCAL, fixAlphaMap);
+
+                                            using (Bitmap bmp = new Bitmap(64, 64))
+                                            {
+                                                for (int drawX = 0; drawX < 64; drawX++)
+                                                    for (int drawY = 0; drawY < 64; drawY++)
+                                                        bmp.SetPixel(drawX, drawY, Color.FromArgb(alphaMap[drawX, drawY], 0, 0, 0));
+
+                                                bmp.Save(Path.Combine(dataDir, string.Format("alpha_map_{0}_{1}.png", i, mI)));
+                                            }
+
+                                            // TEMP: Just the first layers, for testing.
+                                            break;
+                                        }
 
                                         Mesh mesh = new Mesh("Terrain Mesh #" + meshIndex);
                                         meshIndex++;
