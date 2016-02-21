@@ -39,7 +39,8 @@ namespace W3DT.Formats.ADT
                     for (int v = 0; v < val; v++)
                     {
                         if (intOffset == 4096) break; // Map full. Job's done.
-                        alphaMap[intOffset / 4, intOffset % 4] = data[offset];
+                        byte temp = data[offset];
+                        alphaMap[intOffset / 64, intOffset % 64] = temp;
                         intOffset++;
 
                         if (!mode)
@@ -60,10 +61,10 @@ namespace W3DT.Formats.ADT
                     byte a = (byte)(val & 0x0F);
                     byte b = (byte)((val & 0xF) >> 4);
 
-                    alphaMap[intOffset / 4, intOffset % 4] = (byte) (a * 17);
+                    alphaMap[intOffset / 64, intOffset % 64] = (byte) (a * 17);
                     intOffset++;
 
-                    alphaMap[intOffset / 4, intOffset % 4] = (byte)(b * 17);
+                    alphaMap[intOffset / 64, intOffset % 64] = (byte)(b * 17);
                     intOffset++;
 
                     offset++;
