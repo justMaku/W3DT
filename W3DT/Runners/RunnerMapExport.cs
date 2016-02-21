@@ -84,7 +84,9 @@ namespace W3DT.Runners
                     int meshIndex = 1;
 
                     // Create a directory for map data (alpha maps, etc).
-                    string dataDir = Path.Combine(Path.GetDirectoryName(fileName), string.Format("{0}.data", mapName));
+                    string dataDirRaw = string.Format("{0}.data", mapName);
+                    string dataDir = Path.Combine(Path.GetDirectoryName(fileName), dataDirRaw);
+
                     if (!Directory.Exists(dataDir))
                         Directory.CreateDirectory(dataDir);
 
@@ -107,8 +109,6 @@ namespace W3DT.Runners
                                 string texTempPath = Path.Combine(Constants.TEMP_DIRECTORY, texPath);
                                 string objTempPath = Path.Combine(Constants.TEMP_DIRECTORY, objPath);
 
-                                Dictionary<uint, uint> texMap = new Dictionary<uint, uint>();
-
                                 try
                                 {
                                     ADTFile adt = new ADTFile(adtTempPath, ADTFileType.ROOT);
@@ -124,27 +124,19 @@ namespace W3DT.Runners
                                     Chunk_MTEX texChunk = (Chunk_MTEX)tex.getChunk(Chunk_MTEX.Magic);
 
                                     uint texIndex = 0;
+                                    Bitmap[] textureData = new Bitmap[texChunk.textures.count()];
                                     foreach (KeyValuePair<int, string> texture in texChunk.textures.raw())
                                     {
                                         string texFile = texture.Value;
+                                        string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, texFile);
 
-                                        // Register texture in the texture provider
-                                        texProvider.addTexture(-1, texFile); // extID here is not used, pass -1 for filler.
-                                        texMap.Add(texIndex, (uint)texProvider.LastIndex);
+                                        if (!File.Exists(tempPath))
+                                            Program.CASCEngine.SaveFileTo(texFile, Constants.TEMP_DIRECTORY);
+
+                                        using (BlpFile blp = new BlpFile(File.OpenRead(tempPath)))
+                                            textureData[texIndex] = blp.GetBitmap(0);
+
                                         texIndex++;
-
-                                        // Export raw BLP and convert to PNG.
-                                        string dumpPath = Path.Combine(filePath, Path.GetFileNameWithoutExtension(texFile) + ".png");
-                                        if (!File.Exists(dumpPath))
-                                        {
-                                            string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, texFile);
-
-                                            if (!File.Exists(tempPath))
-                                                Program.CASCEngine.SaveFileTo(texFile, Constants.TEMP_DIRECTORY);
-
-                                            using (BlpFile blp = new BlpFile(File.OpenRead(tempPath)))
-                                                blp.GetBitmap(0).Save(dumpPath);
-                                        }
                                     }
 
                                     Chunk_MCNK[] soupChunks = adt.getChunksByID(Chunk_MCNK.Magic).Cast<Chunk_MCNK>().ToArray();
@@ -165,38 +157,71 @@ namespace W3DT.Runners
 
                                         // Alpha mapping
                                         Chunk_MCAL alphaMapChunk = (Chunk_MCAL)layerChunk.getChunk(Chunk_MCAL.Magic);
-                                        for (int mI = 1; mI < layers.layers.Length; mI++) // First layer never has an alpha map
+
+                                        string texFileName = string.Format("baked_{0}.png", i);
+                                        string texFilePath = Path.Combine(dataDir, texFileName);
+
+                                        if (!File.Exists(texFilePath))
                                         {
-                                            byte[,] alphaMap;
-                                            MCLYLayer layer = layers.layers[mI];
-                                            bool headerFlagSet = ((headerChunk.flags & 0x4) == 0x4) || ((headerChunk.flags & 0x80) == 0x80);
-                                            bool layerFlagSet = ((layer.flags & 0x200) == 0x200);
-                                            bool fixAlphaMap = !((soupChunk.flags & 0x200) == 0x200);
-
-                                            if (layerFlagSet)
-                                                alphaMap = alphaMapChunk.parse(Chunk_MCAL.CompressType.COMPRESSED, layer.ofsMCAL);
-                                            else
-                                                alphaMap = alphaMapChunk.parse(headerFlagSet ? Chunk_MCAL.CompressType.UNCOMPRESSED_4096 : Chunk_MCAL.CompressType.UNCOMPRESSED_2048, layer.ofsMCAL, fixAlphaMap);
-
-
-                                            Bitmap bmpAlphaMap = new Bitmap(64, 64);
-                                            for (int drawX = 0; drawX < 64; drawX++)
-                                                for (int drawY = 0; drawY < 64; drawY++)
-                                                    bmpAlphaMap.SetPixel(drawX, drawY, Color.FromArgb(alphaMap[drawX, drawY], 0, 0, 0));
-
-                                            Bitmap bmpTex = new Bitmap(256, 256);
-                                            using (Graphics g = Graphics.FromImage(bmpTex))
+                                            Bitmap bmpBase = new Bitmap(textureData[layers.layers[0].textureID]);
+                                            using (Graphics baseG = Graphics.FromImage(bmpBase))
                                             {
-                                                g.CompositingQuality = CompositingQuality.HighQuality;
-                                                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                                                g.CompositingMode = CompositingMode.SourceCopy; // Over for blending?
-                                                g.DrawImage(bmpAlphaMap, 0, 0, 256, 256);
-                                            }
-                                            bmpTex.Save(Path.Combine(dataDir, string.Format("alpha_map_{0}_{1}.png", i, mI)));
+                                                baseG.CompositingQuality = CompositingQuality.HighQuality;
+                                                baseG.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                                baseG.CompositingMode = CompositingMode.SourceOver;
 
-                                            // TEMP: Just the first layers, for testing.
-                                            break;
+                                                for (int mI = 1; mI < layers.layers.Length; mI++) // First layer never has an alpha map
+                                                {
+                                                    byte[,] alphaMap;
+                                                    MCLYLayer layer = layers.layers[mI];
+                                                    bool headerFlagSet = ((headerChunk.flags & 0x4) == 0x4) || ((headerChunk.flags & 0x80) == 0x80);
+                                                    bool layerFlagSet = ((layer.flags & 0x200) == 0x200);
+                                                    bool fixAlphaMap = !((soupChunk.flags & 0x200) == 0x200);
+
+                                                    if (layerFlagSet)
+                                                        alphaMap = alphaMapChunk.parse(Chunk_MCAL.CompressType.COMPRESSED, layer.ofsMCAL);
+                                                    else
+                                                        alphaMap = alphaMapChunk.parse(headerFlagSet ? Chunk_MCAL.CompressType.UNCOMPRESSED_4096 : Chunk_MCAL.CompressType.UNCOMPRESSED_2048, layer.ofsMCAL, fixAlphaMap);
+
+                                                    Bitmap bmpRawTex = textureData[layer.textureID];
+                                                    Bitmap bmpAlphaMap = new Bitmap(64, 64);
+                                                    for (int drawX = 0; drawX < 64; drawX++)
+                                                        for (int drawY = 0; drawY < 64; drawY++)
+                                                            bmpAlphaMap.SetPixel(drawX, drawY, Color.FromArgb(alphaMap[drawX, drawY], 0, 0, 0));
+
+                                                    Bitmap bmpAlphaMapScaled = new Bitmap(bmpRawTex.Width, bmpRawTex.Height);
+                                                    using (Graphics g = Graphics.FromImage(bmpAlphaMapScaled))
+                                                    {
+                                                        g.CompositingQuality = CompositingQuality.HighQuality;
+                                                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                                        g.CompositingMode = CompositingMode.SourceCopy;
+                                                        g.DrawImage(bmpAlphaMap, 0, 0, bmpRawTex.Width, bmpRawTex.Height);
+                                                    }
+                                                    bmpAlphaMap.Dispose();
+
+                                                    Bitmap bmpTex = new Bitmap(bmpRawTex.Width, bmpRawTex.Height);
+                                                    for (int drawX = 0; drawX < bmpRawTex.Width; drawX++)
+                                                    {
+                                                        for (int drawY = 0; drawY < bmpRawTex.Height; drawY++)
+                                                        {
+                                                            bmpTex.SetPixel(drawX, drawY, Color.FromArgb(
+                                                                bmpAlphaMapScaled.GetPixel(drawX, drawY).A,
+                                                                bmpRawTex.GetPixel(drawX, drawY).R,
+                                                                bmpRawTex.GetPixel(drawX, drawY).G,
+                                                                bmpRawTex.GetPixel(drawX, drawY).B
+                                                            ));
+                                                        }
+                                                    }
+                                                    bmpAlphaMapScaled.Dispose();
+                                                    baseG.DrawImage(bmpTex, 0, 0, bmpBase.Width, bmpBase.Height);
+                                                }
+
+                                                bmpBase.Save(texFilePath);
+                                                bmpBase.Dispose();
+                                            }
                                         }
+
+                                        texProvider.addTexture(-1, texFileName);
 
                                         Mesh mesh = new Mesh("Terrain Mesh #" + meshIndex);
                                         meshIndex++;
@@ -243,19 +268,12 @@ namespace W3DT.Runners
                                                 mesh.addNormal(nChunk.normals[tlIndex]);
                                                 mesh.addNormal(nChunk.normals[cIndex]);
 
-                                                uint texID = 0;
-                                                if (layers.layers.Length > 0)
-                                                {
-                                                    uint mapKey = layers.layers[0].textureID;
-                                                    if (texMap.ContainsKey(mapKey))
-                                                        texID = texMap[mapKey];
-                                                }
-
                                                 // Faces
-                                                mesh.addFace(texID, v, v + 2, v + 4);
-                                                mesh.addFace(texID, v + 1, v + 3, v + 4);
-                                                mesh.addFace(texID, v, v + 1, v + 4);
-                                                mesh.addFace(texID, v + 2, v + 3, v + 4);
+                                                uint texFaceIndex = (uint)texProvider.LastIndex;
+                                                mesh.addFace(texFaceIndex, v, v + 2, v + 4);
+                                                mesh.addFace(texFaceIndex, v + 1, v + 3, v + 4);
+                                                mesh.addFace(texFaceIndex, v, v + 1, v + 4);
+                                                mesh.addFace(texFaceIndex, v + 2, v + 3, v + 4);
 
                                                 v += 5;
                                                 ofs += 1;
