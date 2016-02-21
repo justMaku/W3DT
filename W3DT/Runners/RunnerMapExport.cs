@@ -148,7 +148,6 @@ namespace W3DT.Runners
 
                                     Chunk_MCNK[] soupChunks = adt.getChunksByID(Chunk_MCNK.Magic).Cast<Chunk_MCNK>().ToArray();
                                     Chunk_MCNK[] layerChunks = tex.getChunksByID(Chunk_MCNK.Magic).Cast<Chunk_MCNK>().ToArray();
-                                    //Chunk_MCAL[] alphaMapChunks = tex.getChunksByID(Chunk_MCAL.Magic).Cast<Chunk_MCAL>().ToArray();
 
                                     // Terrain
                                     for (int i = 0; i < 256; i++)
