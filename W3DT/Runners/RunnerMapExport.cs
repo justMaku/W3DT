@@ -35,6 +35,9 @@ namespace W3DT.Runners
         {
             LogWrite("Beginning export of {0}...", mapName);
 
+            TextureBox texProvider = new TextureBox();
+            WaveFrontWriter ob = new WaveFrontWriter(fileName, texProvider, true, true);
+
             try
             {
                 if (!Program.IsCASCReady)
@@ -77,8 +80,6 @@ namespace W3DT.Runners
                         }
                     }
 
-                    TextureBox texProvider = new TextureBox();
-                    WaveFrontWriter ob = new WaveFrontWriter(fileName, texProvider, true, true);
                     int meshIndex = 1;
 
                     // Create a directory for map data (alpha maps, etc).
@@ -276,6 +277,7 @@ namespace W3DT.Runners
             }
             catch (Exception e)
             {
+                ob.Close();
                 EventManager.Trigger_MapExportDone(false, e.Message + e.StackTrace);
             }
         }
