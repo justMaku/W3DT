@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using W3DT.Events;
 using W3DT.Formats;
 using W3DT.Formats.WDT;
@@ -177,14 +178,21 @@ namespace W3DT.Runners
                                             else
                                                 alphaMap = alphaMapChunk.parse(headerFlagSet ? Chunk_MCAL.CompressType.UNCOMPRESSED_4096 : Chunk_MCAL.CompressType.UNCOMPRESSED_2048, layer.ofsMCAL, fixAlphaMap);
 
-                                            using (Bitmap bmp = new Bitmap(64, 64))
-                                            {
-                                                for (int drawX = 0; drawX < 64; drawX++)
-                                                    for (int drawY = 0; drawY < 64; drawY++)
-                                                        bmp.SetPixel(drawX, drawY, Color.FromArgb(alphaMap[drawX, drawY], 0, 0, 0));
 
-                                                bmp.Save(Path.Combine(dataDir, string.Format("alpha_map_{0}_{1}.png", i, mI)));
+                                            Bitmap bmpAlphaMap = new Bitmap(64, 64);
+                                            for (int drawX = 0; drawX < 64; drawX++)
+                                                for (int drawY = 0; drawY < 64; drawY++)
+                                                    bmpAlphaMap.SetPixel(drawX, drawY, Color.FromArgb(alphaMap[drawX, drawY], 0, 0, 0));
+
+                                            Bitmap bmpTex = new Bitmap(256, 256);
+                                            using (Graphics g = Graphics.FromImage(bmpTex))
+                                            {
+                                                g.CompositingQuality = CompositingQuality.HighQuality;
+                                                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                                g.CompositingMode = CompositingMode.SourceCopy; // Over for blending?
+                                                g.DrawImage(bmpAlphaMap, 0, 0, 256, 256);
                                             }
+                                            bmpTex.Save(Path.Combine(dataDir, string.Format("alpha_map_{0}_{1}.png", i, mI)));
 
                                             // TEMP: Just the first layers, for testing.
                                             break;
