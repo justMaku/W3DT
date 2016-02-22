@@ -24,12 +24,22 @@ namespace W3DT.Runners
         private string mapName;
         private string fileName;
         private string filePath;
+        private List<Point> includeOnly;
 
-        public RunnerMapExport(string mapName, string fileName)
+        public RunnerMapExport(string mapName, string fileName, List<Point> includeOnly = null)
         {
             this.mapName = mapName;
             this.fileName = fileName;
             this.filePath = Path.GetDirectoryName(fileName);
+            this.includeOnly = includeOnly;
+        }
+
+        private bool ShouldInclude(int x, int y)
+        {
+            if (includeOnly == null || includeOnly.Count == 0)
+                return true;
+
+            return includeOnly.Contains(new Point(x, y));
         }
 
         public override void Work()
@@ -94,7 +104,7 @@ namespace W3DT.Runners
                     {
                         for (int x = 0; x < 64; x++)
                         {
-                            if (mainChunk.map[x, y])
+                            if (mainChunk.map[x, y] && ShouldInclude(x, y))
                             {
                                 string pathBase = string.Format(@"World\Maps\{0}\{0}_{1}_{2}", mapName, x, y);
                                 string adtPath = pathBase + ".adt";

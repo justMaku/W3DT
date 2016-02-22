@@ -209,8 +209,9 @@
     <Compile Include="Formats\IChunkProvider.cs" />
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
     <Compile Include="Formats\WriterBase.cs" />
-    <Compile Include="Helpers\BitmapCanvas.cs" />
-    <Compile Include="Helpers\BitmapCanvasTile.cs" />
+    <Compile Include="MapViewer\MapCanvas.cs" />
+    <Compile Include="MapViewer\MapCanvasTile.cs" />
+    <Compile Include="MapViewer\Overlay.cs" />
     <Compile Include="Helpers\TreeNodeHelper.cs" />
     <Compile Include="Logging\Lumbermill.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

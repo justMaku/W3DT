@@ -7,11 +7,12 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 using System.IO;
 using W3DT.CASC;
 using W3DT.Events;
 using W3DT.Runners;
-using W3DT.Helpers;
+using W3DT.MapViewer;
 using SereniaBLPLib;
 
 namespace W3DT
@@ -25,7 +26,7 @@ namespace W3DT
         private int tileDone = 0;
 
         private RunnerBuildMinimap buildRunner;
-        private BitmapCanvas canvas;
+        private MapCanvas canvas;
         private uint buildRunnerIndex;
 
         private int drawOffsetX = 0;
@@ -38,16 +39,23 @@ namespace W3DT
         private LoadingWindow loadingWindow;
         private Action exportCancelCallback;
 
+        private Regex mapTilePattern = new Regex(@"(\d+)_(\d+)\.blp$");
+        private Dictionary<string, Point> mapStartPoints;
+
         // Mouse input
         private int mouseStartX;
         private int mouseStartY;
         private bool isMovingMap = false;
+
+        private Overlay overlay;
 
         public MapViewerWindow()
         {
             InitializeComponent();
 
             maps = new Dictionary<string, List<CASCFile>>();
+            mapStartPoints = new Dictionary<string, Point>();
+            overlay = new Overlay(256, 256);
 
             explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, null, null, new string[] { "blp" }, "MVT_N_{0}", true);
             explorer.ExploreHitCallback = OnExploreHit;
@@ -80,7 +88,8 @@ namespace W3DT
             string[] parts = file.FullName.Split(new char[] { '/', '\\' });
 
             // Ignore noLiquid tiles.
-            if (parts[parts.Length - 1].StartsWith("noLiquid"))
+            string fileName = parts[parts.Length - 1];
+            if (fileName.StartsWith("noLiquid"))
                 return;
 
             string mapName = parts[2];
@@ -94,6 +103,32 @@ namespace W3DT
 
                 maps[mapName].Add(file);
                 UpdateSearchState(Constants.SEARCH_STATE_SEARCHING);
+
+                // "Cheap" way to find the map entry point without
+                // reading DBC files. Used by exporter for non-full exports.
+                Point point;
+
+                if (!mapStartPoints.ContainsKey(mapName))
+                {
+                    point = new Point(63, 63);
+                    mapStartPoints.Add(mapName, point);
+                }
+                else
+                {
+                    point = mapStartPoints[mapName];
+                }
+
+                Match match = mapTilePattern.Match(fileName);
+                if (match.Success)
+                {
+                    int lowX = int.Parse(match.Groups[1].Value);
+                    int lowY = int.Parse(match.Groups[2].Value);
+
+                    if (lowX < point.X) point.X = lowX;
+                    if (lowY < point.Y) point.Y = lowY;
+
+                    mapStartPoints[mapName] = point;
+                }
             }
         }
 
@@ -125,6 +160,7 @@ namespace W3DT
                     canvas.Dispose();
 
                 canvas = null;
+                overlay.ClearPoints();
 
                 UI_PreviewStatus.Hide();
                 UI_Map.Invalidate();
@@ -163,7 +199,7 @@ namespace W3DT
                 int sizeX = (args.Bounds.HighX - args.Bounds.LowX) + 1;
                 int sizeY = (args.Bounds.HighY - args.Bounds.LowY) + 1;
 
-                canvas = new BitmapCanvas(sizeX, sizeY);
+                canvas = new MapCanvas(sizeX, sizeY);
             }
 
             int posX = (args.Position.X - args.Bounds.LowX) * 256;
@@ -198,9 +234,23 @@ namespace W3DT
 
         private void UI_Map_MouseDown(object sender, MouseEventArgs e)
         {
-            isMovingMap = true;
-            mouseStartX = e.X;
-            mouseStartY = e.Y;
+            if (Control.ModifierKeys.HasFlag(Keys.Shift))
+            {
+                int pointX = e.Location.X - drawOffsetX;
+                int pointY = e.Location.Y - drawOffsetY;
+
+                pointX -= pointX % 256;
+                pointY -= pointY % 256;
+
+                overlay.ToggleOverlay(new Point(pointX, pointY));
+                UI_Map.Invalidate();
+            }
+            else
+            {
+                isMovingMap = true;
+                mouseStartX = e.X;
+                mouseStartY = e.Y;
+            }
         }
 
         private void UI_Map_MouseUp(object sender, MouseEventArgs e)
@@ -229,7 +279,7 @@ namespace W3DT
             e.Graphics.Clear(UI_Map.BackColor);
 
             if (canvas != null)
-                canvas.Draw(e.Graphics, drawOffsetX, drawOffsetY, UI_Map.Width, UI_Map.Height);
+                canvas.Draw(e.Graphics, drawOffsetX, drawOffsetY, UI_Map.Width, UI_Map.Height, overlay);
         }
 
         private void UI_ExportButton_Click(object sender, EventArgs e)
@@ -248,7 +298,13 @@ namespace W3DT
 
         private void BeginMapExport(string fileName)
         {
-            exportRunner = new RunnerMapExport(selectedMapName, fileName);
+            // Calculate which tiles we want (map viewer -> ADT)
+            List<Point> points = new List<Point>();
+            Point mapPoint = mapStartPoints[selectedMapName];
+            foreach (Point point in overlay.Points)
+                points.Add(new Point(mapPoint.X + (point.X / 256), mapPoint.Y + (point.Y / 256)));
+
+            exportRunner = new RunnerMapExport(selectedMapName, fileName, points);
             exportRunner.Begin();
 
             loadingWindow = new LoadingWindow(string.Format("Exporting {0}...", selectedMapName), "Depending on map size, this may take a while.", true, exportCancelCallback);

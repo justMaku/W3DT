@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace W3DT.Helpers
+namespace W3DT.MapViewer
 {
-    public class BitmapCanvas
+    public class MapCanvas
     {
-        public BitmapCanvasTile[,] Images { get; private set; }
+        public MapCanvasTile[,] Images { get; private set; }
         public int XSize { get; private set; }
         public int YSize { get; private set; }
 
@@ -16,33 +16,35 @@ namespace W3DT.Helpers
         private int TileSize;
         private int CanvasSize;
 
-        public BitmapCanvas(decimal xSize, decimal ySize, decimal maxTiles = 2, int tileSize = 256)
+        public MapCanvas(decimal xSize, decimal ySize, decimal maxTiles = 2, int tileSize = 256)
         {
             XSize = (int)Math.Ceiling((decimal) (xSize / maxTiles));
             YSize = (int)Math.Ceiling((decimal) (ySize / maxTiles));
 
-            Images = new BitmapCanvasTile[XSize, YSize];
+            Images = new MapCanvasTile[XSize, YSize];
 
             CanvasSize = (int) maxTiles * tileSize;
             for (int x = 0; x < XSize; x++)
                 for (int y = 0; y < YSize; y++)
-                    Images[x, y] = new BitmapCanvasTile((int)maxTiles, tileSize);
+                    Images[x, y] = new MapCanvasTile((int)maxTiles, tileSize);
 
             MaxTiles = (int) maxTiles;
             TileSize = tileSize;
         }
 
-        public void Draw(Graphics g, int offsetX, int offsetY, int width, int height)
+        public void Draw(Graphics g, int offsetX, int offsetY, int width, int height, Overlay overlay)
         {
             Rectangle bounds = new Rectangle(0, 0, width, height);
             for (int x = 0; x < XSize; x++)
             {
                 for (int y = 0; y < YSize; y++)
                 {
-                    BitmapCanvasTile tile = Images[x, y];
+                    MapCanvasTile tile = Images[x, y];
 
-                    int drawX = (x * CanvasSize) + offsetX;
-                    int drawY = (y * CanvasSize) + offsetY;
+                    int tileX = (x * CanvasSize);
+                    int tileY = (y * CanvasSize);
+                    int drawX = tileX + offsetX;
+                    int drawY = tileY + offsetY;
 
                     Point topLeft = new Point(drawX, drawY);
                     Point bottomLeft = new Point(drawX, drawY + CanvasSize);
@@ -52,14 +54,30 @@ namespace W3DT.Helpers
                     tile.Active = (bounds.Contains(topLeft) || bounds.Contains(bottomLeft) || bounds.Contains(topRight) || bounds.Contains(bottomRight));
 
                     if (tile.Active)
+                    {
                         tile.Draw(g, (x * CanvasSize) + offsetX, (y * CanvasSize) + offsetY);
+
+                        // Overlay
+                        for (int tX = 0; tX < MaxTiles; tX++)
+                        {
+                            for (int tY = 0; tY < MaxTiles; tY++)
+                            {
+                                int ofsTileX = TileSize * tX;
+                                int ofsTileY = TileSize * tY;
+
+                                Point tilePoint = new Point(tileX + ofsTileX, tileY + ofsTileY);
+                                if (overlay.ShouldDrawOverlay(tilePoint))
+                                    g.DrawImage(overlay.Image, drawX + ofsTileX, drawY + ofsTileY);
+                            }
+                        }
+                    }
                 }
             }
         }
 
         public void DrawToCanvas(string image, int x, int y)
         {
-            BitmapCanvasTile tile = GetCanvas(x, y);
+            MapCanvasTile tile = GetCanvas(x, y);
 
             int drawX = x - ((int)Math.Floor((decimal)(x / CanvasSize)) * CanvasSize);
             int drawY = y - ((int)Math.Floor((decimal)(y / CanvasSize)) * CanvasSize);
@@ -67,7 +85,7 @@ namespace W3DT.Helpers
             tile.AddTile(image, drawX, drawY);
         }
 
-        private BitmapCanvasTile GetCanvas(decimal x, decimal y)
+        private MapCanvasTile GetCanvas(decimal x, decimal y)
         {
             decimal cX = x / (decimal)CanvasSize;
             decimal cY = y / (decimal)CanvasSize;
@@ -77,7 +95,7 @@ namespace W3DT.Helpers
 
         public void Dispose()
         {
-            foreach (BitmapCanvasTile tile in Images)
+            foreach (MapCanvasTile tile in Images)
                 tile.Dispose();
         }
     }

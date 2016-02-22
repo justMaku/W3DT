@@ -6,16 +6,15 @@ using System.Drawing;
 using System.IO;
 using SereniaBLPLib;
 
-namespace W3DT.Helpers
+namespace W3DT.MapViewer
 {
-    public class BitmapCanvasTile
+    public class MapCanvasTile
     {
         private class SubTile
         {
             public string File;
             public int DrawX;
             public int DrawY;
-            //public Bitmap Image = null;
 
             public SubTile(string image, int drawX, int drawY)
             {
@@ -31,7 +30,7 @@ namespace W3DT.Helpers
         private Bitmap image;
         private List<SubTile> tiles;
 
-        public BitmapCanvasTile(int maxTiles, int tileSize)
+        public MapCanvasTile(int maxTiles, int tileSize)
         {
             tiles = new List<SubTile>();
             canvasSize = maxTiles * tileSize;
