@@ -169,7 +169,7 @@ namespace W3DT.Runners
                                         // Alpha mapping
                                         Chunk_MCAL alphaMapChunk = (Chunk_MCAL)layerChunk.getChunk(Chunk_MCAL.Magic);
 
-                                        string texFileName = string.Format("baked_{0}.png", i);
+                                        string texFileName = string.Format("baked_{0}_{1}_{2}.png", x, y, i);
                                         string texFilePath = Path.Combine(dataDir, texFileName);
 
                                         if (!File.Exists(texFilePath))
