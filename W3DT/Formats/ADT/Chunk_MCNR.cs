@@ -19,9 +19,17 @@ namespace W3DT.Formats.ADT
             normals = new Position[145];
             for (int i = 0; i < 145; i++)
             {
-                byte x = (byte) (file.readUInt8() / 127);
-                byte z = (byte) ((file.readUInt8() / 127) * -1);
-                byte y = (byte) (file.readUInt8() / 127);
+                float x = file.readUInt8() / 127;
+                float z = file.readUInt8() / 127;
+                float y = file.readUInt8() / 127;
+
+                // Super-hacky fix? This does not seem right, but it prevents lighting issues?
+                if (y == 1.0 && z == 0.0)
+                {
+                    z = 1.0f;
+                    y = 0.0f;
+                }
+
                 normals[i] = new Position(x, y, z);
             }
         }

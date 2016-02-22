@@ -217,9 +217,9 @@ namespace W3DT.Runners
                                                             // Hacky fix to flip the texture.
                                                             // Remove this if we fix the terrain read-order.
                                                             int sourceX = (bmpRawTex.Width - 1) - drawX;
-                                                            int sourceY = (bmpRawTex.Height - 1) - drawY;
+                                                            //int sourceY = (bmpRawTex.Height - 1) - drawY;
 
-                                                            bmpTex.SetPixel(sourceX, sourceY, Color.FromArgb(
+                                                            bmpTex.SetPixel(sourceX, drawY, Color.FromArgb(
                                                                 bmpAlphaMapScaled.GetPixel(drawX, drawY).A,
                                                                 bmpRawTex.GetPixel(drawX, drawY).R,
                                                                 bmpRawTex.GetPixel(drawX, drawY).G,
@@ -244,22 +244,22 @@ namespace W3DT.Runners
                                         int v = 0;
 
                                         float pX = soupChunk.position.X;
-                                        float pY = soupChunk.position.Y;
+                                        float pY = -soupChunk.position.Y;
                                         float pZ = soupChunk.position.Z;
 
                                         int ofs = 10;
                                         for (int sX = 8; sX > 0; sX--)
                                         {
-                                            for (int sY = 8; sY > 0; sY--)
+                                            for (int sY = 1; sY < 9; sY++)
                                             {
                                                 int cIndex = ofs - 1;
                                                 int blIndex = cIndex - 9;
                                                 int tlIndex = cIndex + 8;
 
-                                                float tr = hmChunk.vertices[tlIndex];
-                                                float tl = hmChunk.vertices[tlIndex + 1];
-                                                float br = hmChunk.vertices[blIndex];
-                                                float bl = hmChunk.vertices[blIndex + 1];
+                                                float tr = hmChunk.vertices[tlIndex + 1];
+                                                float tl = hmChunk.vertices[tlIndex];
+                                                float br = hmChunk.vertices[blIndex + 1];
+                                                float bl = hmChunk.vertices[blIndex];
                                                 float c = hmChunk.vertices[cIndex];
 
                                                 float oX = pX + (sX * ADTFile.TILE_SIZE);
@@ -277,10 +277,10 @@ namespace W3DT.Runners
                                                 mesh.addVert(new Position(oX + (ADTFile.TILE_SIZE / 2), c + pZ, oY + (ADTFile.TILE_SIZE / 2)));
 
                                                 // Normals
+                                                mesh.addNormal(nChunk.normals[tlIndex]);
                                                 mesh.addNormal(nChunk.normals[tlIndex + 1]);
-                                                mesh.addNormal(nChunk.normals[tlIndex]);
+                                                mesh.addNormal(nChunk.normals[blIndex]);
                                                 mesh.addNormal(nChunk.normals[blIndex + 1]);
-                                                mesh.addNormal(nChunk.normals[tlIndex]);
                                                 mesh.addNormal(nChunk.normals[cIndex]);
 
                                                 // Faces
