@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using W3DT.Events;
 using W3DT.Formats;
 using W3DT.Formats.WDT;
@@ -175,7 +176,9 @@ namespace W3DT.Runners
                                         {
                                             Bitmap bmpBase = new Bitmap(textureData[layers.layers[0].textureID]);
                                             using (Graphics baseG = Graphics.FromImage(bmpBase))
+                                            using (ImageAttributes att = new ImageAttributes())
                                             {
+                                                att.SetWrapMode(WrapMode.TileFlipXY);
                                                 baseG.CompositingQuality = CompositingQuality.HighQuality;
                                                 baseG.InterpolationMode = InterpolationMode.HighQualityBicubic;
                                                 baseG.CompositingMode = CompositingMode.SourceOver;
@@ -189,7 +192,7 @@ namespace W3DT.Runners
                                                     bool fixAlphaMap = !((soupChunk.flags & 0x200) == 0x200);
 
                                                     if (layerFlagSet)
-                                                        alphaMap = alphaMapChunk.parse(Chunk_MCAL.CompressType.COMPRESSED, layer.ofsMCAL);
+                                                        alphaMap = alphaMapChunk.parse(Chunk_MCAL.CompressType.COMPRESSED, layer.ofsMCAL, fixAlphaMap);
                                                     else
                                                         alphaMap = alphaMapChunk.parse(headerFlagSet ? Chunk_MCAL.CompressType.UNCOMPRESSED_4096 : Chunk_MCAL.CompressType.UNCOMPRESSED_2048, layer.ofsMCAL, fixAlphaMap);
 
@@ -205,7 +208,7 @@ namespace W3DT.Runners
                                                         g.CompositingQuality = CompositingQuality.HighQuality;
                                                         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                                                         g.CompositingMode = CompositingMode.SourceCopy;
-                                                        g.DrawImage(bmpAlphaMap, 0, 0, bmpRawTex.Width, bmpRawTex.Height);
+                                                        g.DrawImage(bmpAlphaMap, new Rectangle(0, 0, bmpAlphaMapScaled.Width, bmpAlphaMapScaled.Height), 0, 0, bmpAlphaMap.Width, bmpAlphaMap.Height, GraphicsUnit.Pixel, att);
                                                     }
                                                     bmpAlphaMap.Dispose();
 

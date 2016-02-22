@@ -22,7 +22,7 @@ namespace W3DT.Formats.ADT
             data = file.readBytes((int)ChunkSize);
         }
 
-        public byte[,] parse(CompressType compress, uint offset, bool fixAlphaMap = false)
+        public byte[,] parse(CompressType compress, uint offset, bool fixAlphaMap = true)
         {
             byte[,] alphaMap = new byte[64, 64];
             if (compress == CompressType.COMPRESSED)
@@ -69,15 +69,6 @@ namespace W3DT.Formats.ADT
 
                     offset++;
                 }
-
-                if (fixAlphaMap)
-                {
-                    for (int i = 0; i < 64; i++)
-                    {
-                        alphaMap[i, 63] = alphaMap[i, 62];
-                        alphaMap[63, i] = alphaMap[62, i];
-                    }
-                }
             }
             else if (compress == CompressType.UNCOMPRESSED_4096)
             {
@@ -89,6 +80,15 @@ namespace W3DT.Formats.ADT
                         alphaMap[x, y] = data[offset];
                         offset++;
                     }
+                }
+            }
+
+            if (fixAlphaMap)
+            {
+                for (int i = 0; i < 64; i++)
+                {
+                    alphaMap[i, 63] = alphaMap[i, 62];
+                    alphaMap[63, i] = alphaMap[62, i];
                 }
             }
 
