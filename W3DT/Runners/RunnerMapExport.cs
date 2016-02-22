@@ -236,7 +236,7 @@ namespace W3DT.Runners
                                             }
                                         }
 
-                                        texProvider.addTexture(-1, texFileName);
+                                        texProvider.addTexture(-1, Path.Combine(dataDirRaw, texFileName));
 
                                         Mesh mesh = new Mesh("Terrain Mesh #" + meshIndex);
                                         meshIndex++;

@@ -147,6 +147,7 @@ namespace W3DT.Formats
                 foreach (string tex in texList)
                 {
                     string file = Path.GetFileNameWithoutExtension(tex);
+                    string filePath = ConvertTextures ? file + ".png" : tex;
 
                     mtl.WriteLine("newmtl " + file);
                     mtl.WriteLine("illum 2");
@@ -155,7 +156,7 @@ namespace W3DT.Formats
                     mtl.WriteLine("Ks 0.000000 0.000000 0.000000");
                     mtl.WriteLine("Ke 0.000000 0.000000 0.000000");
                     mtl.WriteLine("Ns 0.000000");
-                    mtl.WriteLine("map_Kd -s 1 -1 1 " + file + ".png");
+                    mtl.WriteLine("map_Kd -s 1 -1 1 " + filePath);
                     nl(mtl);
                 }
 
