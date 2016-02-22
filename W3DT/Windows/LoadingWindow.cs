@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using W3DT.Events;
 
 namespace W3DT
 {
@@ -22,6 +23,14 @@ namespace W3DT
             UI_CancelButton.Visible = cancelButton;
             if (cancelButton)
                 callback = cancelCallback;
+
+            EventManager.LoadingPrompt += OnLoadingPrompt;
+        }
+
+        private void OnLoadingPrompt(object sender, EventArgs e)
+        {
+            LoadingPromptArgs args = (LoadingPromptArgs)e;
+            SetSecondLine(args.Message);
         }
 
         public void SetFirstLine(string text)
@@ -40,6 +49,11 @@ namespace W3DT
                 callback();
 
             Close();
+        }
+
+        private void LoadingWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            EventManager.LoadingPrompt -= OnLoadingPrompt;
         }
     }
 }

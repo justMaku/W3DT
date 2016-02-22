@@ -100,6 +100,7 @@
     <Compile Include="Events\ExportBLPtoPNGArgs.cs" />
     <Compile Include="Events\FileExtractArgs.cs" />
     <Compile Include="Events\FileExtractCompleteUnsafeArgs.cs" />
+    <Compile Include="Events\LoadingPromptArgs.cs" />
     <Compile Include="Events\MapBuildDoneArgs.cs" />
     <Compile Include="Events\MapExportDoneArgs.cs" />
     <Compile Include="Events\MinimapTileReadyArgs.cs" />

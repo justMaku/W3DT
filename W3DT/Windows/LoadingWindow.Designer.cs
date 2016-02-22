@@ -69,7 +69,7 @@
             // UI_CancelButton
             // 
             this.UI_CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UI_CancelButton.Location = new System.Drawing.Point(381, 57);
+            this.UI_CancelButton.Location = new System.Drawing.Point(381, 35);
             this.UI_CancelButton.Name = "UI_CancelButton";
             this.UI_CancelButton.Size = new System.Drawing.Size(60, 23);
             this.UI_CancelButton.TabIndex = 2;
@@ -101,6 +101,7 @@
             this.Name = "LoadingWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Important stuff is being done, hold on...";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoadingWindow_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -22,6 +22,7 @@ namespace W3DT.Events
         private static EventHandler _MapBuildDone;
         private static EventHandler _MapExportDone;
         private static EventHandler _MinimapTileDone;
+        private static EventHandler _LoadingPrompt;
 
         public static event EventHandler CDNScanDone
         {
@@ -205,6 +206,20 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler LoadingPrompt
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _LoadingPrompt = (EventHandler)Delegate.Combine(_LoadingPrompt, value);
+            }
+
+            remove
+            {
+                _LoadingPrompt = (EventHandler)Delegate.Remove(_LoadingPrompt, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(string bestHost, string hostPath)
         {
                 TriggerEvent(_CDNScanDone, new CDNScanDoneArgs(bestHost, hostPath));
@@ -280,6 +295,11 @@ namespace W3DT.Events
         public static void Trigger_MinimapTileDone(Runners.MapTileXY position, Runners.MapTileBounds bounds, string image, uint index)
         {
             TriggerEvent(_MinimapTileDone, new MinimapTileReadyArgs(position, bounds, image, index));
+        }
+
+        public static void Trigger_LoadingPrompt(string message)
+        {
+            TriggerEvent(_LoadingPrompt, new LoadingPromptArgs(message));
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)
