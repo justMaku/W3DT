@@ -291,9 +291,23 @@ namespace W3DT
                 return;
             }
 
-            UI_SaveDialog.FileName = selectedMapName + ".obj";
-            if (UI_SaveDialog.ShowDialog() == DialogResult.OK)
-                BeginMapExport(UI_SaveDialog.FileName);
+            int exportSize = overlay.Points.Count > 0 ? overlay.Points.Count : maps[selectedMapName].Count;
+            //bool confirm = true;
+            string message = null;
+
+            if (exportSize >= 100)
+                message = Constants.MAP_VIEWER_WARNING_INSANE;
+            else if (exportSize >= 10)
+                message = Constants.MAP_VIEWER_WARNING_LARGE;
+            else if (exportSize >= 4)
+                message = Constants.MAP_VIEWER_WARNING;
+
+            if (message == null || MessageBox.Show(message, Constants.MAP_VIEWER_WARNING_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                UI_SaveDialog.FileName = selectedMapName + ".obj";
+                if (UI_SaveDialog.ShowDialog() == DialogResult.OK)
+                    BeginMapExport(UI_SaveDialog.FileName);
+            }
         }
 
         private void BeginMapExport(string fileName)

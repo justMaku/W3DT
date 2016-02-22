@@ -8,6 +8,7 @@ namespace W3DT
 {
     static class Constants
     {
+        public static readonly string DOUBLE_NEWLINE = Environment.NewLine + Environment.NewLine;
         // Updating //
         public static readonly string WEB_USER_AGENT = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)";
         public static readonly string UPDATE_REPO_URL = @"https://api.github.com/repos/Kruithne/W3DT/releases/latest";
@@ -54,6 +55,10 @@ namespace W3DT
 
         // Map Viewer //
         public static readonly string MAP_VIEWER_TILE_STATUS = "{0}/{1} Tiles";
+        public static readonly string MAP_VIEWER_WARNING_TITLE = "Woah!";
+        public static readonly string MAP_VIEWER_WARNING = string.Format("Warning!{0}You've selected to render and export a fairly large area of terrain. This may take a while, and depending on environment quality, may use a lot of disk space.{0}Are you sure you want to do this?", DOUBLE_NEWLINE);
+        public static readonly string MAP_VIEWER_WARNING_LARGE = string.Format("WARNING!{0}You've selected to render and export a VERY large area of terrain. This is going to take a LOT of time and will use up a LOT of disk space.{0}Are you sure you want to do this?", DOUBLE_NEWLINE);
+        public static readonly string MAP_VIEWER_WARNING_INSANE = string.Format("HOLY CRUMBS, SLOW DOWN THERE!{0}You've bravely selected to render and export an INSANELY LARGE area of terrain. This is going to take an INCREDIBLE amount of time and use stupid amounts of disk space.{0}Are you absolutely sure this is the fate you choose?", DOUBLE_NEWLINE);
         
         // External //
         public static readonly string FINAL_BOSS_URL = "http://finalboss.tv/";

@@ -38,6 +38,7 @@
             this.UI_PreviewStatus = new W3DT.Controls.StaticTextBox();
             this.UI_Map = new W3DT.Controls.DoubleBufferedPanel();
             this.UI_SaveDialog = new System.Windows.Forms.SaveFileDialog();
+            this.UI_ExportTip = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UI_FileCount_Label
@@ -128,11 +129,22 @@
             // 
             this.UI_SaveDialog.Filter = "WaveFront OBJ (*.obj)|*.obj";
             // 
+            // UI_ExportTip
+            // 
+            this.UI_ExportTip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ExportTip.AutoSize = true;
+            this.UI_ExportTip.Location = new System.Drawing.Point(676, 658);
+            this.UI_ExportTip.Name = "UI_ExportTip";
+            this.UI_ExportTip.Size = new System.Drawing.Size(266, 13);
+            this.UI_ExportTip.TabIndex = 9;
+            this.UI_ExportTip.Text = "Tip: Shift-click on the map to select areas for exporting.";
+            // 
             // MapViewerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1075, 688);
+            this.Controls.Add(this.UI_ExportTip);
             this.Controls.Add(this.UI_TileDisplay);
             this.Controls.Add(this.UI_PreviewStatus);
             this.Controls.Add(this.UI_ExportButton);
@@ -159,5 +171,6 @@
         private System.Windows.Forms.Timer UI_FilterTimer;
         private System.Windows.Forms.Label UI_TileDisplay;
         private System.Windows.Forms.SaveFileDialog UI_SaveDialog;
+        private System.Windows.Forms.Label UI_ExportTip;
     }
 }
