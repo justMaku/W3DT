@@ -204,7 +204,12 @@ namespace W3DT.Runners
                                                     {
                                                         for (int drawY = 0; drawY < bmpRawTex.Height; drawY++)
                                                         {
-                                                            bmpTex.SetPixel(drawX, drawY, Color.FromArgb(
+                                                            // Hacky fix to flip the texture.
+                                                            // Remove this if we fix the terrain read-order.
+                                                            int sourceX = (bmpRawTex.Width - 1) - drawX;
+                                                            int sourceY = (bmpRawTex.Height - 1) - drawY;
+
+                                                            bmpTex.SetPixel(sourceX, sourceY, Color.FromArgb(
                                                                 bmpAlphaMapScaled.GetPixel(drawX, drawY).A,
                                                                 bmpRawTex.GetPixel(drawX, drawY).R,
                                                                 bmpRawTex.GetPixel(drawX, drawY).G,
