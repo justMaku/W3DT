@@ -60,11 +60,11 @@ namespace W3DT.Formats.ADT
             LogWrite(string.Format("Added sub-chunk {0}; {1} in pool", chunk.GetType().Name, Chunks.Count));
         }
 
-        public Chunk_Base getChunk(UInt32 chunkID)
+        public Chunk_Base getChunk(UInt32 chunkID, bool error = true)
         {
             Chunk_Base chunk = getChunksByID(chunkID).FirstOrDefault();
 
-            if (chunk == null)
+            if (chunk == null && error)
                 throw new ADTException(string.Format("Chunk does not contain sub-chunk 0x{0}", chunkID.ToString("X")));
 
             return chunk;

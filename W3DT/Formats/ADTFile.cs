@@ -79,10 +79,10 @@ namespace W3DT.Formats
             return "ADT";
         }
 
-        public Chunk_Base getChunk(UInt32 chunkID)
+        public Chunk_Base getChunk(UInt32 chunkID, bool error = true)
         {
             Chunk_Base chunk = getChunksByID(chunkID).FirstOrDefault();
-            if (chunk == null)
+            if (chunk == null && error)
                 throw new ADTException(string.Format("File does not contain chunk 0x{0}.", chunkID.ToString("X")));
 
             return chunk;

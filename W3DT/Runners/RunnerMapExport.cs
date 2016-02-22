@@ -167,7 +167,7 @@ namespace W3DT.Runners
                                         Chunk_MCLY layers = (Chunk_MCLY)layerChunk.getChunk(Chunk_MCLY.Magic);
 
                                         // Alpha mapping
-                                        Chunk_MCAL alphaMapChunk = (Chunk_MCAL)layerChunk.getChunk(Chunk_MCAL.Magic);
+                                        Chunk_MCAL alphaMapChunk = (Chunk_MCAL)layerChunk.getChunk(Chunk_MCAL.Magic, false);
 
                                         string texFileName = string.Format("baked_{0}_{1}_{2}.png", x, y, i);
                                         string texFilePath = Path.Combine(dataDir, texFileName);

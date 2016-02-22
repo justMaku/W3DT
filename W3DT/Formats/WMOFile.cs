@@ -127,10 +127,10 @@ namespace W3DT.Formats
                 groupFiles.Clear();
         }
 
-        public Chunk_Base getChunk(UInt32 chunkID)
+        public Chunk_Base getChunk(UInt32 chunkID, bool error = true)
         {
             Chunk_Base chunk = getChunksByID(chunkID).FirstOrDefault();
-            if (chunk == null)
+            if (chunk == null && error)
                 throw new WMOException(string.Format("File does not contain chunk 0x{0}.", chunkID.ToString("X")));
 
             return chunk;
