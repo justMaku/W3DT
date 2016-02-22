@@ -59,7 +59,7 @@ namespace W3DT.Formats.ADT
                 {
                     byte val = data[offset];
                     byte a = (byte)(val & 0x0F);
-                    byte b = (byte)((val & 0xF) >> 4);
+                    byte b = (byte)((val & 0xF0) >> 4);
 
                     alphaMap[intOffset / 64, intOffset % 64] = (byte) (a * 17);
                     intOffset++;
