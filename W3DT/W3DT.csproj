@@ -79,24 +79,13 @@
     <Compile Include="3D\TextureBox.cs" />
     <Compile Include="3D\TextureManager.cs" />
     <Compile Include="3D\Vert.cs" />
-    <Compile Include="Controls\AwesomeTooltip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\AwesomeTooltip.Designer.cs">
-      <DependentUpon>AwesomeTooltip.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\DoubleBufferedPanel.Designer.cs">
       <DependentUpon>DoubleBufferedPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MainFormButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\MainFormButton.Designer.cs">
-      <DependentUpon>MainFormButton.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\MainButton.cs" />
     <Compile Include="Events\ExportBLPtoPNGArgs.cs" />
     <Compile Include="Events\FileExtractArgs.cs" />
     <Compile Include="Events\FileExtractCompleteUnsafeArgs.cs" />
@@ -330,9 +319,6 @@
     <Compile Include="Windows\SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Controls\AwesomeTooltip.resx">
-      <DependentUpon>AwesomeTooltip.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Windows\ArtExplorerWindow.resx">
       <DependentUpon>ArtExplorerWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -388,6 +374,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="inv_hammer_20.ico" />
+    <None Include="Resources\cat_boat.png" />
+    <None Include="Resources\latest_text.png" />
+    <None Include="Resources\latest_changes.png" />
     <None Include="Resources\UI-Tooltip-R.png" />
     <None Include="Resources\UI-Tooltip-T.png" />
     <None Include="Resources\UI-Tooltip-TL.png" />

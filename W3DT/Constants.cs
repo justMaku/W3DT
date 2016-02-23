@@ -42,6 +42,20 @@ namespace W3DT
         public static readonly string DIRECTORY_PLACEHOLDER = "<Select World of Warcraft installation directory>";
         public static readonly string WOW_BUILD_FILE = ".build.info";
 
+        // Main Form Buttons //
+        public static readonly MainButton[] MAIN_FORM_BUTTONS = new MainButton[] {
+            new MainButton(W3DT.Properties.Resources.achievement_character_human_female, null, "Model Viewer", "View/export characters and creatures from the game. Characters can be customized, equipped with items and even imported from the armory."),
+            new MainButton(W3DT.Properties.Resources.inv_hammer_20__1_, typeof(WMOViewer), "WMO Viewer", "WMO objects are large 3D objects that often contain numerous other smaller objects (doodads). Buildings and caves are two common examples of WMO objects."),
+            new MainButton(W3DT.Properties.Resources.inv_drink_03, null, "Object (Doodad) Viewer", "Doodads are small objects generally used for clutter and furnishing both interior and exterior envionrments."),
+            new MainButton(W3DT.Properties.Resources.inv_misc_map03, typeof(MapViewerWindow), "Map Viewer", "Browse all maps available in the game using a minimap-based tool and export them in full 3D!"),
+            new MainButton(W3DT.Properties.Resources.trade_archaeology_delicatemusicbox, typeof(MusicExplorerWindow), "Music/Sound Player", "Listen and export any of the sound/music files located within the game client. The language of dialog will depend on your game version (or remote locale in the settings)."),
+            new MainButton(W3DT.Properties.Resources.inv_inscription_scroll, typeof(ArtExplorerWindow), "Artwork Viewer", "Browse all of the artwork and texture files available within the game client."),
+            new MainButton(W3DT.Properties.Resources.inv_misc_book_09, null, "Spellbook", "Browse and export spells from within the game; magical!"),
+            new MainButton(W3DT.Properties.Resources.inv_misc_punchcards_blue, typeof(DBCViewer), "DBC/DB2 Viewer", "DBC/DB2 files are client databases that contain various data for the game, mostly strings of localized information; This tool allows you to browse through them."),
+            new MainButton(W3DT.Properties.Resources.inv_misc_enggizmos_30, typeof(SettingsForm), "Settings", "Adjust how W3DT works to your liking!"),
+            new MainButton(W3DT.Properties.Resources.inv_misc_questionmark, null, "Support/Information", "Details on how to get support for W3DT along with some information about the application and it's development.")
+        };
+
         // Settings labels //
         public static readonly string CURRENT_VERSION_STRING = "Current Version: {0}";
         public static readonly string CDN_HOST_STRING = "Remote CDN Host: {0}";

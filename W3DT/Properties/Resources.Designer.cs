@@ -83,6 +83,16 @@ namespace W3DT.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cat_boat {
+            get {
+                object obj = ResourceManager.GetObject("cat_boat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fast46 {
             get {
                 object obj = ResourceManager.GetObject("fast46", resourceCulture);
@@ -186,6 +196,16 @@ namespace W3DT.Properties {
         internal static System.Drawing.Bitmap inv_misc_questionmark {
             get {
                 object obj = ResourceManager.GetObject("inv_misc_questionmark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap latest_text {
+            get {
+                object obj = ResourceManager.GetObject("latest_text", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
