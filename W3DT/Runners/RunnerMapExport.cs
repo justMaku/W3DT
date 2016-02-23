@@ -101,7 +101,7 @@ namespace W3DT.Runners
                     int meshIndex = 1;
 
                     // Create a directory for map data (alpha maps, etc).
-                    string dataDirRaw = string.Format("{0}.data", mapName);
+                    string dataDirRaw = string.Format("{0}.data", Path.GetFileNameWithoutExtension(fileName));
                     string dataDir = Path.Combine(Path.GetDirectoryName(fileName), dataDirRaw);
 
                     if (!Directory.Exists(dataDir))
