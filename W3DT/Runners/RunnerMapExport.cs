@@ -6,11 +6,13 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Security.Cryptography;
 using W3DT.Events;
 using W3DT.Formats;
 using W3DT.Formats.WDT;
 using W3DT.Formats.ADT;
 using W3DT._3D;
+using W3DT.CASC;
 using SereniaBLPLib;
 
 namespace W3DT.Runners
@@ -107,6 +109,8 @@ namespace W3DT.Runners
                     if (!Directory.Exists(dataDir))
                         Directory.CreateDirectory(dataDir);
 
+                    Dictionary<byte[], uint> texCache = new Dictionary<byte[], uint>(new ByteArrayComparer());
+
                     for (int y = 0; y < 64; y++)
                     {
                         for (int x = 0; x < 64; x++)
@@ -179,6 +183,7 @@ namespace W3DT.Runners
                                         string texFilePath = Path.Combine(dataDir, texFileName);
 
                                         EventManager.Trigger_LoadingPrompt(string.Format("Rendering tile {0} at {1},{2}...", i, x, y));
+                                        uint texFaceIndex = 0;
 
                                         if (!File.Exists(texFilePath))
                                         {
@@ -242,12 +247,32 @@ namespace W3DT.Runners
                                                     baseG.DrawImage(bmpTex, 0, 0, bmpBase.Width, bmpBase.Height);
                                                 }
 
-                                                bmpBase.Save(texFilePath);
+                                                using (MemoryStream str = new MemoryStream())
+                                                using (MD5 md5 = MD5.Create())
+                                                {
+                                                    bmpBase.Save(str, ImageFormat.Png);
+                                                    byte[] raw = md5.ComputeHash(str.ToArray());
+                                                    uint cacheID;
+
+                                                    if (texCache.TryGetValue(raw, out cacheID))
+                                                    {
+                                                        // Cache found, use that instead.
+                                                        texFaceIndex = cacheID;
+                                                    }
+                                                    else
+                                                    {
+                                                        // No cache found, store new.
+                                                        bmpBase.Save(texFilePath);
+                                                        texProvider.addTexture(-1, Path.Combine(dataDirRaw, texFileName));
+                                                        cacheID = (uint)texProvider.LastIndex;
+
+                                                        texFaceIndex = cacheID;
+                                                        texCache.Add(raw, cacheID);
+                                                    }
+                                                }
                                                 bmpBase.Dispose();
                                             }
                                         }
-
-                                        texProvider.addTexture(-1, Path.Combine(dataDirRaw, texFileName));
 
                                         Mesh mesh = new Mesh("Terrain Mesh #" + meshIndex);
                                         meshIndex++;
@@ -295,7 +320,6 @@ namespace W3DT.Runners
                                                 mesh.addNormal(nChunk.normals[cIndex]);
 
                                                 // Faces
-                                                uint texFaceIndex = (uint)texProvider.LastIndex;
                                                 mesh.addFace(texFaceIndex, v, v + 2, v + 4);
                                                 mesh.addFace(texFaceIndex, v + 1, v + 3, v + 4);
                                                 mesh.addFace(texFaceIndex, v, v + 1, v + 4);
