@@ -319,6 +319,8 @@ namespace W3DT.Runners
                         }
                     }
 
+                    EventManager.Trigger_LoadingPrompt("Writing terrain data to file...");
+
                     ob.Write();
                     ob.Close();
                 }
