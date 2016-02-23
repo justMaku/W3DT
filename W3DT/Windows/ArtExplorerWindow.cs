@@ -184,6 +184,7 @@ namespace W3DT
                     format = ImageFormat.Bmp;
 
                 currentImage.Save(UI_DialogSave.FileName, format);
+                UI_FileList.Focus();
             }
         }
 
