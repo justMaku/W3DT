@@ -26,6 +26,7 @@ namespace W3DT.Runners
         private string fileName;
         private string filePath;
         private List<Point> includeOnly;
+        private Bitmap blank;
 
         public RunnerMapExport(string mapName, string fileName, List<Point> includeOnly = null)
         {
@@ -33,6 +34,11 @@ namespace W3DT.Runners
             this.fileName = fileName;
             this.filePath = Path.GetDirectoryName(fileName);
             this.includeOnly = includeOnly;
+
+            // Blank texture to default back to.
+            blank = new Bitmap(256, 256);
+            using (Graphics g = Graphics.FromImage(blank))
+                g.FillRectangle(Brushes.White, 0, 0, 256, 256);
         }
 
         private bool ShouldInclude(int x, int y)
@@ -176,7 +182,7 @@ namespace W3DT.Runners
 
                                         if (!File.Exists(texFilePath))
                                         {
-                                            Bitmap bmpBase = new Bitmap(textureData[layers.layers[0].textureID]);
+                                            Bitmap bmpBase = new Bitmap(layers.layers.Length > 0 ? textureData[layers.layers[0].textureID] : blank);
                                             using (Graphics baseG = Graphics.FromImage(bmpBase))
                                             using (ImageAttributes att = new ImageAttributes())
                                             {
