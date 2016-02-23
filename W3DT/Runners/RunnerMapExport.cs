@@ -343,7 +343,7 @@ namespace W3DT.Runners
                         }
                     }
 
-                    EventManager.Trigger_LoadingPrompt("Reticulating splines...");
+                    EventManager.Trigger_LoadingPrompt(new Random().Next(100) == 42 ? "Reticulating splines..." : "Writing terrain data to file...");
 
                     ob.Write();
                     ob.Close();
