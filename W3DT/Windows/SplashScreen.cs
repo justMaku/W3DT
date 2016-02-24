@@ -126,6 +126,9 @@ namespace W3DT
                             // Local version is out-of-date, lets fix that.
                             isUpdating = true;
                             new RunnerDownloadUpdate(data.assets[0].browser_download_url).Begin();
+
+                            UI_FirstRunText.Text = string.Format("Updating W3DT ({0} -> {1})...", localVersion, remoteVersion);
+                            UI_FirstRunText.Show();
                         }
                         else
                         {
