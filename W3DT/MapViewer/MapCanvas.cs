@@ -12,7 +12,7 @@ namespace W3DT.MapViewer
         public int XSize { get; private set; }
         public int YSize { get; private set; }
 
-        private int MaxTiles;
+        public int MaxTiles { get; private set; }
         private int TileSize;
         private int CanvasSize;
 

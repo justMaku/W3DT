@@ -23,6 +23,7 @@ namespace W3DT.Events
         private static EventHandler _MapExportDone;
         private static EventHandler _MinimapTileDone;
         private static EventHandler _LoadingPrompt;
+        private static EventHandler _MapExportDone2D;
 
         public static event EventHandler CDNScanDone
         {
@@ -220,6 +221,20 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler MapExportDone2D
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _MapExportDone2D = (EventHandler)Delegate.Combine(_MapExportDone2D, value);
+            }
+
+            remove
+            {
+                _MapExportDone2D = (EventHandler)Delegate.Remove(_MapExportDone2D, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(string bestHost, string hostPath)
         {
                 TriggerEvent(_CDNScanDone, new CDNScanDoneArgs(bestHost, hostPath));
@@ -300,6 +315,11 @@ namespace W3DT.Events
         public static void Trigger_LoadingPrompt(string message)
         {
             TriggerEvent(_LoadingPrompt, new LoadingPromptArgs(message));
+        }
+
+        public static void Trigger_MapExportDone2D()
+        {
+            TriggerEvent(_MapExportDone2D, new EventArgs());
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)

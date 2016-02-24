@@ -10,7 +10,7 @@ namespace W3DT.MapViewer
 {
     public class MapCanvasTile
     {
-        private class SubTile
+        public class SubTile : IComparable<SubTile>
         {
             public string File;
             public int DrawX;
@@ -22,13 +22,26 @@ namespace W3DT.MapViewer
                 DrawX = drawX;
                 DrawY = drawY;
             }
+
+            public int CompareTo(SubTile that)
+            {
+                if (this.DrawX == that.DrawX)
+                {
+                    if (this.DrawY == that.DrawY)
+                        return 0;
+
+                    return this.DrawY < that.DrawY ? -1 : 1;
+                }
+
+                return this.DrawX < that.DrawX ? -1 : 1;
+            }
         }
 
         private bool _active = false;
         private int canvasSize;
         private int tileSize;
         private Bitmap image;
-        private List<SubTile> tiles;
+        public List<SubTile> tiles { get; private set; }
 
         public MapCanvasTile(int maxTiles, int tileSize)
         {

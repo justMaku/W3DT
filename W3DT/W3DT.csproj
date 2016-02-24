@@ -45,6 +45,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="pngcs">
+      <HintPath>..\lib\pngcs.dll</HintPath>
+    </Reference>
     <Reference Include="SereniaBLPLib">
       <HintPath>..\lib\SereniaBLPLib.dll</HintPath>
     </Reference>
@@ -212,6 +215,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Runners\RunnerBuildMinimap.cs" />
+    <Compile Include="Runners\RunnerExport2DMap.cs" />
     <Compile Include="Runners\RunnerExportBLPtoPNG.cs" />
     <Compile Include="Runners\RunnerExtractItem.cs" />
     <Compile Include="Runners\RunnerExtractItemUnsafe.cs" />

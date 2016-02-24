@@ -38,6 +38,10 @@ namespace W3DT
         private RunnerMapExport exportRunner;
         private LoadingWindow loadingWindow;
         private Action exportCancelCallback;
+        
+        // 2D Export
+        private RunnerExport2DMap imageExportRunner;
+        private Action imageExportCancelCallback;
 
         private Regex mapTilePattern = new Regex(@"(\d+)_(\d+)\.blp$");
         private Dictionary<string, Point> mapStartPoints;
@@ -62,11 +66,18 @@ namespace W3DT
             explorer.ExploreDoneCallback = OnExploreDone;
 
             EventManager.MapExportDone += OnMapExportDone;
+            EventManager.MapExportDone2D += OnMapExportDone2D;
             EventManager.CASCLoadStart += OnCASCLoadStart;
             EventManager.MinimapTileDone += OnMinimapTileDone;
             explorer.Initialize();
 
             exportCancelCallback = CancelExport;
+            imageExportCancelCallback = Cancel2DExport;
+        }
+
+        private void OnMapExportDone2D(object sender, EventArgs e)
+        {
+            Cancel2DExport();
         }
 
         private void OnFileExploreHit(object sender, EventArgs e)
@@ -164,7 +175,9 @@ namespace W3DT
 
                 UI_PreviewStatus.Hide();
                 UI_Map.Invalidate();
-                UI_ExportButton.Show();
+
+                UI_ExportButton.Enabled = true;
+                UI_ExportImageButton.Enabled = true;
 
                 drawOffsetX = lastOffsetX = 0;
                 drawOffsetY = lastOffsetY = 0;
@@ -179,6 +192,7 @@ namespace W3DT
                 tileDone = 0;
                 UI_TileDisplay.Text = string.Format(Constants.MAP_VIEWER_TILE_STATUS, 0, 0);
                 UI_TileDisplay.Show();
+                UI_ExportTip.Hide();
 
                 buildRunner = new RunnerBuildMinimap(maps[mapName].ToArray());
                 buildRunnerIndex = buildRunner.Index;
@@ -210,9 +224,14 @@ namespace W3DT
 
             tileDone++;
             if (tileTotal > tileDone)
+            {
                 UI_TileDisplay.Text = string.Format(Constants.MAP_VIEWER_TILE_STATUS, tileDone, tileTotal);
+            }
             else
+            {
                 UI_TileDisplay.Hide();
+                UI_ExportTip.Show();
+            }
         }
 
         private void MapViewerWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -220,6 +239,7 @@ namespace W3DT
             // Unregister events.
             EventManager.CASCLoadStart -= OnCASCLoadStart;
             EventManager.MinimapTileDone -= OnMinimapTileDone;
+            EventManager.MapExportDone2D -= OnMapExportDone2D;
 
             CancelExport();
 
@@ -287,7 +307,7 @@ namespace W3DT
             // Ensure we actually have a map selected.
             if (selectedMapName == null)
             {
-                UI_ExportButton.Hide();
+                UI_ExportButton.Enabled = false;
                 return;
             }
 
@@ -305,6 +325,7 @@ namespace W3DT
             if (message == null || MessageBox.Show(message, Constants.MAP_VIEWER_WARNING_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 UI_SaveDialog.FileName = selectedMapName + ".obj";
+                UI_SaveDialog.Filter = "WaveFront OBJ (*.obj)|*.obj";
                 if (UI_SaveDialog.ShowDialog() == DialogResult.OK)
                     BeginMapExport(UI_SaveDialog.FileName);
             }
@@ -361,6 +382,38 @@ namespace W3DT
             {
                 exportRunner.Kill();
                 exportRunner = null;
+            }
+        }
+
+        private void UI_ExportImageButton_Click(object sender, EventArgs e)
+        {
+            if (selectedMapName == null)
+            {
+                UI_ExportImageButton.Enabled = false;
+                return;
+            }
+
+            UI_SaveDialog.Filter = "Portal Network Graphics (*.png)|*.png";
+            UI_SaveDialog.FileName = selectedMapName + ".png";
+
+            if (UI_SaveDialog.ShowDialog() == DialogResult.OK)
+            {
+                imageExportRunner = new RunnerExport2DMap(UI_SaveDialog.FileName, canvas);
+                imageExportRunner.Begin();
+
+                loadingWindow = new LoadingWindow(string.Format("Exporting {0} as a 2D image...", selectedMapName), "This probably won't take too long!", true, imageExportCancelCallback);
+                loadingWindow.ShowDialog();
+            }
+        }
+
+        private void Cancel2DExport()
+        {
+            CloseLoadingWindow();
+
+            if (imageExportRunner != null)
+            {
+                imageExportRunner.Kill();
+                imageExportRunner = null;
             }
         }
     }
