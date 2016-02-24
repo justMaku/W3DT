@@ -238,6 +238,7 @@ namespace W3DT
         {
             // Unregister events.
             EventManager.CASCLoadStart -= OnCASCLoadStart;
+            EventManager.MapExportDone -= OnMapExportDone;
             EventManager.MinimapTileDone -= OnMinimapTileDone;
             EventManager.MapExportDone2D -= OnMapExportDone2D;
 
