@@ -122,6 +122,8 @@ namespace W3DT
 
             if (!((CASCLoadDoneArgs)e).Success)
                 throw new Exception("CASC engine blew up.");
+
+            UI_RemoteVersion_Field.Enabled = Program.Settings.UseRemote;
         }
 
         private void UI_AutomaticUpdates_CheckedChanged(object sender, EventArgs e)
