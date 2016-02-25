@@ -252,7 +252,7 @@ namespace W3DT.CASC
 
         public void LoadListFile(string path)
         {
-            if (LoadPreHashedListFile("listfile.bin", path))
+            if (LoadPreHashedListFile(Constants.LIST_FILE_BIN, path))
                 return;
 
             if (!File.Exists(path))
@@ -263,7 +263,7 @@ namespace W3DT.CASC
             Dictionary<string, Dictionary<ulong, string>> dirData = new Dictionary<string, Dictionary<ulong, string>>(StringComparer.OrdinalIgnoreCase);
             dirData[""] = new Dictionary<ulong, string>();
 
-            using (var fs = new FileStream("listfile.bin", FileMode.Create))
+            using (var fs = new FileStream(Constants.LIST_FILE_BIN, FileMode.Create))
             using (var bw = new BinaryWriter(fs))
             using (var sr = new StreamReader(path))
             {
@@ -313,7 +313,7 @@ namespace W3DT.CASC
                 Log.Write("CASC: Loaded {0} valid file names", CASCFile.FileNames.Count);
             }
 
-            File.SetLastWriteTime("listfile.bin", File.GetLastWriteTime(path));
+            File.SetLastWriteTime(Constants.LIST_FILE_BIN, File.GetLastWriteTime(path));
         }
 
         protected CASCFolder CreateStorageTree()

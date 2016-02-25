@@ -38,6 +38,7 @@ namespace W3DT
         public static readonly string SETTINGS_FILE = "settings.json";
         public static readonly string LOG_FILE = "session.log";
         public static readonly string LIST_FILE = "listfile";
+        public static readonly string LIST_FILE_BIN = "listfile.bin";
         public static readonly string DEV_ASSET_DIR = "../../../assets/";
 
         public static readonly string TEMP_DIRECTORY = "temp";
