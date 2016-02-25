@@ -9,7 +9,6 @@ using System.Drawing.Imaging;
 using System.Security.Cryptography;
 using W3DT.Events;
 using W3DT.Formats;
-using W3DT.Formats.WDT;
 using W3DT.Formats.ADT;
 using W3DT._3D;
 using W3DT.CASC;
@@ -69,14 +68,14 @@ namespace W3DT.Runners
                 WDTFile headerFile = new WDTFile(Path.Combine(Constants.TEMP_DIRECTORY, wdtPath));
                 headerFile.parse();
 
-                if (!headerFile.Chunks.Any(c => c.ChunkID == Chunk_MPHD.Magic))
+                if (!headerFile.Chunks.Any(c => c.ChunkID == Formats.WDT.Chunk_MPHD.Magic))
                     throw new MapExportException("Invalid map header (WDT)");
 
                 // ToDo: Check if world WMO exists and load it.
 
                 // Ensure we have a MAIN chunk before trying to process terrain.
-                Chunk_MAIN mainChunk = (Chunk_MAIN)headerFile.Chunks.Where(c => c.ChunkID == Chunk_MAIN.Magic).FirstOrDefault();
-                Chunk_MPHD headerChunk = (Chunk_MPHD)headerFile.Chunks.Where(c => c.ChunkID == Chunk_MPHD.Magic).FirstOrDefault();
+                Formats.WDT.Chunk_MAIN mainChunk = (Formats.WDT.Chunk_MAIN)headerFile.Chunks.Where(c => c.ChunkID == Formats.WDT.Chunk_MAIN.Magic).FirstOrDefault();
+                Formats.WDT.Chunk_MPHD headerChunk = (Formats.WDT.Chunk_MPHD)headerFile.Chunks.Where(c => c.ChunkID == Formats.WDT.Chunk_MPHD.Magic).FirstOrDefault();
 
                 if (mainChunk != null && headerChunk != null)
                 {
@@ -101,6 +100,7 @@ namespace W3DT.Runners
                     }
 
                     int meshIndex = 1;
+                    int wmoIndex = 1;
 
                     // Create a directory for map data (alpha maps, etc).
                     string dataDirRaw = string.Format("{0}.data", Path.GetFileNameWithoutExtension(fileName));
@@ -332,6 +332,125 @@ namespace W3DT.Runners
                                         }
 
                                         ob.addMesh(mesh);
+                                    }
+
+                                    // Parse WMO objects that appear in the world.
+                                    EventManager.Trigger_LoadingPrompt("Constructing buildings...");
+
+                                    Chunk_MWID wmoIndexChunk = (Chunk_MWID)obj.getChunk(Chunk_MWID.Magic, false);
+                                    Chunk_MWMO wmoModelChunk = (Chunk_MWMO)obj.getChunk(Chunk_MWMO.Magic, false);
+                                    Chunk_MODF wmoRefChunk = (Chunk_MODF)obj.getChunk(Chunk_MODF.Magic, false);
+
+                                    if (wmoIndexChunk != null && wmoModelChunk != null && wmoRefChunk != null)
+                                    {
+                                        foreach (Chunk_MODF.MODFEntry entry in wmoRefChunk.entries)
+                                        {
+                                            string wmoModel = wmoModelChunk.objects.get((int)wmoIndexChunk.offsets[entry.entry]);
+                                            List<CASCFile> groupSearch = CASCSearch.Search(Path.Combine(Path.GetDirectoryName(wmoModel), Path.GetFileNameWithoutExtension(wmoModel)), CASCSearch.SearchType.STARTS_WITH);
+
+                                            if (groupSearch.Count > 0)
+                                            {
+                                                // Set-up root/group files for the WMO.
+                                                WMOFile wmo = null;
+                                                List<WMOFile> groupFiles = new List<WMOFile>(groupSearch.Count - 1);
+                                                string rootName = Path.GetFileName(wmoModel).ToLower();
+
+                                                foreach (CASCFile file in groupSearch)
+                                                {
+                                                    Program.CASCEngine.SaveFileTo(file.FullName, Constants.TEMP_DIRECTORY);
+                                                    string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file.FullName);
+
+                                                    if (file.FullName.ToLower().EndsWith(rootName))
+                                                        wmo = new WMOFile(tempPath, true);
+                                                    else
+                                                        groupFiles.Add(new WMOFile(tempPath, false));
+                                                }
+
+                                                foreach (WMOFile groupFile in groupFiles)
+                                                    wmo.addGroupFile(groupFile);
+
+                                                groupFiles.Clear();
+                                                wmo.parse();
+
+                                                // Export/register textures needed for this WMO.
+                                                Formats.WMO.Chunk_MOTX wmoTexChunk = (Formats.WMO.Chunk_MOTX)wmo.getChunk(Formats.WMO.Chunk_MOTX.Magic);
+                                                Dictionary<int, int> wmoTexMap = new Dictionary<int, int>();
+
+                                                foreach (KeyValuePair<int, string> node in wmoTexChunk.textures.raw())
+                                                {
+                                                    string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, node.Value);
+                                                    string dumpPath = Path.Combine(Path.GetDirectoryName(node.Value), Path.GetFileNameWithoutExtension(node.Value) + ".png");
+
+                                                    // Extract
+                                                    if (!File.Exists(tempPath))
+                                                        Program.CASCEngine.SaveFileTo(node.Value, Constants.TEMP_DIRECTORY);
+
+                                                    // Convert
+                                                    using (BlpFile blp = new BlpFile(File.OpenRead(tempPath)))
+                                                    using (Bitmap bmp = blp.GetBitmap(0))
+                                                    {
+                                                        string dumpLoc = Path.Combine(dataDir, dumpPath);
+                                                        Directory.CreateDirectory(Path.GetDirectoryName(dumpLoc));
+                                                        bmp.Save(dumpLoc);
+                                                    }
+
+                                                    // Register
+                                                    texProvider.addTexture(-1, Path.Combine(dataDirRaw, dumpPath));
+                                                    wmoTexMap.Add(node.Key, texProvider.LastIndex);
+                                                }
+
+                                                Formats.WMO.Chunk_MOGN wmoNameChunk = (Formats.WMO.Chunk_MOGN)wmo.getChunk(Formats.WMO.Chunk_MOGN.Magic);
+                                                Formats.WMO.Chunk_MOMT wmoMatChunk = (Formats.WMO.Chunk_MOMT)wmo.getChunk(Formats.WMO.Chunk_MOMT.Magic);
+
+                                                foreach (Chunk_Base rawChunk in wmo.getChunksByID(Formats.WMO.Chunk_MOGP.Magic))
+                                                {
+                                                    Formats.WMO.Chunk_MOGP chunk = (Formats.WMO.Chunk_MOGP)rawChunk;
+                                                    string meshName = wmoNameChunk.data.get((int)chunk.groupNameIndex);
+
+                                                    // Skip antiportals.
+                                                    if (meshName.ToLower().Equals("antiportal"))
+                                                        continue;
+
+                                                    Mesh mesh = new Mesh(string.Format("WMO{0}_{1}", wmoIndex, meshName));
+
+                                                    // Populate mesh with vertices.
+                                                    Formats.WMO.Chunk_MOVT vertChunk = (Formats.WMO.Chunk_MOVT)chunk.getChunk(Formats.WMO.Chunk_MOVT.Magic);
+                                                    foreach (Position vertPos in vertChunk.vertices)
+                                                        mesh.addVert(new Position(entry.position.X + vertPos.X, entry.position.Y + vertPos.Y, entry.position.Z + vertPos.Z));
+
+                                                    // Populate mesh with UVs.
+                                                    Formats.WMO.Chunk_MOTV uvChunk = (Formats.WMO.Chunk_MOTV)chunk.getChunk(Formats.WMO.Chunk_MOTV.Magic);
+                                                    foreach (UV uv in uvChunk.uvData)
+                                                        mesh.addUV(uv);
+
+                                                    // Populate mesh with normals.
+                                                    Formats.WMO.Chunk_MONR normChunk = (Formats.WMO.Chunk_MONR)chunk.getChunk(Formats.WMO.Chunk_MONR.Magic);
+                                                    foreach (Position norm in normChunk.normals)
+                                                        mesh.addNormal(norm);
+
+                                                    // Populate mesh with triangles (faces).
+                                                    Formats.WMO.Chunk_MOVI faceChunk = (Formats.WMO.Chunk_MOVI)chunk.getChunk(Formats.WMO.Chunk_MOVI.Magic);
+                                                    Formats.WMO.Chunk_MOPY faceMatChunk = (Formats.WMO.Chunk_MOPY)chunk.getChunk(Formats.WMO.Chunk_MOPY.Magic);
+
+                                                    for (int i = 0; i < faceChunk.positions.Length; i++)
+                                                    {
+                                                        Formats.WMO.FacePosition position = faceChunk.positions[i];
+                                                        Formats.WMO.FaceInfo info = faceMatChunk.faceInfo[i];
+
+                                                        if (info.materialID != 0xFF) // 0xFF (255) identifies a collision face.
+                                                        {
+                                                            Material mat = wmoMatChunk.materials[info.materialID];
+                                                            uint texID = (uint)wmoTexMap[(int)mat.texture1.offset];
+
+                                                            mesh.addFace(texID, mat.texture2.colour, position.point1, position.point2, position.point3);
+                                                        }
+                                                    }
+
+                                                    Log.Write("CreateWMOMesh (ADT): " + mesh.ToAdvancedString());
+                                                    ob.addMesh(mesh);
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 catch (ADTException ex)

@@ -84,6 +84,7 @@
     <Compile Include="3D\TextureBox.cs" />
     <Compile Include="3D\TextureManager.cs" />
     <Compile Include="3D\Vert.cs" />
+    <Compile Include="CASC\CASCSearch.cs" />
     <Compile Include="Controls\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>

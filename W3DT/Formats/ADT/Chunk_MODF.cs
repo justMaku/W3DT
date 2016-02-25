@@ -6,22 +6,22 @@ using W3DT._3D;
 
 namespace W3DT.Formats.ADT
 {
-    public struct MODFEntry
-    {
-        public UInt32 entry;
-        public UInt32 uniqueID;
-        public Position position;
-        public Rotation rotation;
-        public Position lowerBound;
-        public Position upperBound;
-        public UInt16 flags;
-        public UInt16 doodadSet;
-        public UInt16 nameSet;
-        public UInt16 unk; // Legion?
-    }
-
     public class Chunk_MODF : Chunk_Base
     {
+        public struct MODFEntry
+        {
+            public UInt32 entry;
+            public UInt32 uniqueID;
+            public Position position;
+            public Position rotation; // Using Rotation over Position due to lack of W value.
+            public Position lowerBound;
+            public Position upperBound;
+            public UInt16 flags;
+            public UInt16 doodadSet;
+            public UInt16 nameSet;
+            public UInt16 unk; // Legion?
+        }
+
         // MODF ADT Chunk
         // Information for WMO spawns on the tile.
 
@@ -38,8 +38,12 @@ namespace W3DT.Formats.ADT
                 MODFEntry entry = new MODFEntry();
                 entry.entry = file.readUInt32();
                 entry.uniqueID = file.readUInt32();
-                entry.position = Position.Read(file);
-                entry.rotation = Rotation.Read(file);
+
+                float x = Constants.WOW_ADT_MAP_MAX - file.readFloat();
+                float z = file.readFloat() - Constants.WOW_ADT_MAP_MAX;
+
+                entry.position = new Position(z, file.readFloat(), x);
+                entry.rotation = Position.Read(file);
                 entry.lowerBound = Position.Read(file);
                 entry.upperBound = Position.Read(file);
                 entry.flags = file.readUInt16();

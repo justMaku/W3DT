@@ -43,6 +43,11 @@ namespace W3DT.Formats
             return data.ContainsKey(offset) ? data[offset] : null;
         }
 
+        public string getBase(int offset)
+        {
+            return offset < data.Count ? data.Values.ElementAt(offset) : null;
+        }
+
         public IEnumerable<string> all()
         {
             return data.Values;

@@ -28,6 +28,9 @@ namespace W3DT
 
         //public static readonly WoWVersion DEFAULT_VERSION = WOW_VERSIONS[0];
 
+        public static readonly float WOW_ADT_TILE_SIZE = 533.333333333f;
+        public static readonly float WOW_ADT_MAP_MAX = WOW_ADT_TILE_SIZE * 32;
+
         // Base Stuff //
         public static readonly string LOAD_FLAVOR_FILE = "load_flavor";
         public static readonly string LOADING_DEFAULT = "Loading...";
