@@ -23,7 +23,7 @@ namespace W3DT
         {
             InitializeComponent();
 
-            explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTime, UI_FileCount_Label, UI_FileList, new string[] { "m2" }, "M2_V_{0}", true);
+            explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTime, UI_FileCount_Label, UI_FileList, new string[] { "m2", "mdx" }, "M2_V_{0}", true);
             explorer.rootFolders = new string[] { "character", "creature" };
             explorer.Initialize();
 
