@@ -98,7 +98,7 @@ namespace W3DT.Runners
                     EventManager.Trigger_FileExploreHit(id, file);
                 }
 
-                Thread.Sleep(10);
+                Thread.Sleep(2);
             }
         }
 
