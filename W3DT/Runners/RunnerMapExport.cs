@@ -182,7 +182,7 @@ namespace W3DT.Runners
                                         string texFileName = string.Format("baked_{0}_{1}_{2}.png", x, y, i);
                                         string texFilePath = Path.Combine(dataDir, texFileName);
 
-                                        EventManager.Trigger_LoadingPrompt(string.Format("Rendering tile {0} at {1},{2}...", i, x, y));
+                                        EventManager.Trigger_LoadingPrompt(string.Format("Rendering tile {0} at {1},{2}...", i + 1, x, y));
                                         uint texFaceIndex = 0;
 
                                         if (!File.Exists(texFilePath))
