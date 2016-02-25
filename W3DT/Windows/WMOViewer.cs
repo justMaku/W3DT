@@ -38,6 +38,7 @@ namespace W3DT
 
         // 3D View
         private float rotationY = 0.0f;
+        private float prevRotY = 0.0f;
         //private float rotationZ = 0.0f;
         private float zoom = 1.0f;
         private bool autoRotate = true;
@@ -447,8 +448,7 @@ namespace W3DT
                 int diffX = e.X - mouseStartX;
                 int diffY = e.Y - mouseStartY;
 
-                rotationY += diffX >= 0 ? 0.25f : -0.25f;
-                //rotationZ += diffY >= 0 ? 0.25f : -0.25f;
+                rotationY = prevRotY + (diffX * 0.25f);
 
                 autoRotate = false;
             }
@@ -457,6 +457,7 @@ namespace W3DT
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
         {
             isMouseRotating = false;
+            prevRotY = rotationY;
         }
 
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
