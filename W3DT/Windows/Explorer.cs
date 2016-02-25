@@ -30,6 +30,8 @@ namespace W3DT
         private string currentScanID;
         private string hardFilter = null;
 
+        public string[] rootFolders;
+
         private bool splitIntoDirectories;
         private bool filterHasChanged;
 
@@ -101,7 +103,7 @@ namespace W3DT
                     filter = fieldText.ToLower();
             }
 
-            runner = new RunnerFileExplore(currentScanID, extensions, filter);
+            runner = new RunnerFileExplore(currentScanID, extensions, filter, rootFolders);
             runner.Begin();
         }
 

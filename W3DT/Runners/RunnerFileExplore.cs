@@ -23,12 +23,14 @@ namespace W3DT.Runners
         private string filter;
         private FilterType filterType = FilterType.CONTAINS;
         private string[] extensions;
+        private string[] rootFolders;
 
-        public RunnerFileExplore(string id, string[] extensions, string filter = null)
+        public RunnerFileExplore(string id, string[] extensions, string filter = null, string[] rootFolders = null)
         {
             this.id = id;
             this.filter = filter;
             this.extensions = extensions;
+            this.rootFolders = rootFolders;
 
             // Pre-compile the filter parameters.
             if (filter != null)
@@ -51,7 +53,23 @@ namespace W3DT.Runners
         public override void Work()
         {
             Thread.Sleep(500);
-            Explore(Program.Root);
+
+            if (rootFolders != null && rootFolders.Length > 0)
+            {
+                foreach (KeyValuePair<string, ICASCEntry> node in Program.Root.Entries)
+                {
+                    ICASCEntry entry = node.Value;
+                    string name = entry.Name.ToLower();
+
+                    if (entry is CASCFolder && rootFolders.Any(n => n.ToLower().Equals(name)))
+                        Explore((CASCFolder)entry);
+                }
+            }
+            else
+            {
+                Explore(Program.Root);
+            }
+
             EventManager.Trigger_FileExploreDone(id);
         }
 
