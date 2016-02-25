@@ -123,6 +123,7 @@
     <Compile Include="Formats\IChunkedFormat.cs" />
     <Compile Include="Formats\IFormat.cs" />
     <Compile Include="Formats\IWriter.cs" />
+    <Compile Include="Formats\M2File.cs" />
     <Compile Include="Formats\WaveFrontWriter.cs" />
     <Compile Include="Formats\WDTFile.cs" />
     <Compile Include="Formats\WDT\Chunk_MAIN.cs" />

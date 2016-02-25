@@ -80,6 +80,7 @@
             this.UI_FileList.Name = "UI_FileList";
             this.UI_FileList.Size = new System.Drawing.Size(315, 579);
             this.UI_FileList.TabIndex = 6;
+            this.UI_FileList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.UI_FileList_AfterSelect);
             // 
             // UI_FilterOverlay
             // 
@@ -112,6 +113,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ModelViewer";
             this.Text = "Model Viewer - Warcraft 3D Toolkit";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ModelViewer_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
