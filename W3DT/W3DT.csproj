@@ -288,6 +288,12 @@
     <Compile Include="Runners\RunnerInitializeCASC.cs" />
     <Compile Include="Runners\RunnerList.cs" />
     <Compile Include="Runners\RunnerUpdateCheck.cs" />
+    <Compile Include="Windows\ModelViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ModelViewer.Designer.cs">
+      <DependentUpon>ModelViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\MusicExplorerWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -345,6 +351,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ModelViewer.resx">
+      <DependentUpon>ModelViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\MusicExplorerWindow.resx">
       <DependentUpon>MusicExplorerWindow.cs</DependentUpon>

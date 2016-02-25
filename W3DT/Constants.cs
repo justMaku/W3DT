@@ -47,7 +47,7 @@ namespace W3DT
 
         // Main Form Buttons //
         public static readonly MainButton[] MAIN_FORM_BUTTONS = new MainButton[] {
-            new MainButton(W3DT.Properties.Resources.achievement_character_human_female, null, "Model Viewer", "View/export characters and creatures from the game. Characters can be customized, equipped with items and even imported from the armory."),
+            new MainButton(W3DT.Properties.Resources.achievement_character_human_female, typeof(ModelViewer), "Model Viewer", "View/export characters and creatures from the game. Characters can be customized, equipped with items and even imported from the armory."),
             new MainButton(W3DT.Properties.Resources.inv_hammer_20__1_, typeof(WMOViewer), "WMO Viewer", "WMO objects are large 3D objects that often contain numerous other smaller objects (doodads). Buildings and caves are two common examples of WMO objects."),
             new MainButton(W3DT.Properties.Resources.inv_drink_03, null, "Object (Doodad) Viewer", "Doodads are small objects generally used for clutter and furnishing both interior and exterior envionrments."),
             new MainButton(W3DT.Properties.Resources.inv_misc_map03, typeof(MapViewerWindow), "Map Viewer", "Browse all maps available in the game using a minimap-based tool and export them in full 3D!"),
