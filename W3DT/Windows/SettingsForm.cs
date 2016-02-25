@@ -99,6 +99,10 @@ namespace W3DT
 
         private void RebootCASC()
         {
+            // Delete compiled listfile cache.
+            if (File.Exists(Constants.LIST_FILE_BIN))
+                File.Delete(Constants.LIST_FILE_BIN);
+
             ShouldRebootCASC = false;
             EventManager.CASCLoadDone += OnCASCLoadDone;
             new RunnerInitializeCASC().Begin();
