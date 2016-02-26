@@ -29,7 +29,6 @@ namespace W3DT
             InitializeComponent();
             explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTimer, UI_FileCount_Label, UI_FileList, new string[] { "blp" }, "AEW_N_{0}", true);
 
-            UI_AutoLoadPreview_Field.Checked = Program.Settings.AutoShowArtworkPreview;
             EventManager.CASCLoadStart += OnCASCLoadStart;
             EventManager.FileExtractComplete += OnFileExtractComplete;
 
@@ -90,12 +89,6 @@ namespace W3DT
             explorer.Dispose();
         }
 
-        private void UI_AutoLoadPreview_Field_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.Settings.AutoShowArtworkPreview = UI_AutoLoadPreview_Field.Checked;
-            Program.Settings.Persist();
-        }
-
         private void LoadSelectedImage()
         {
             TreeNode selected = UI_FileList.SelectedNode;
@@ -133,25 +126,7 @@ namespace W3DT
             TreeNode selected = UI_FileList.SelectedNode;
 
             if (selected != null && selected.Tag is CASCFile)
-            {
-                if (Program.Settings.AutoShowArtworkPreview)
-                {
-                    LoadSelectedImage();
-                }
-                else
-                {
-                    if (extractRunner != null)
-                    {
-                        extractRunner.Kill();
-                        extractRunner = null;
-                    }
-
-                    ClearImagePreview();
-
-                    UI_PreviewStatus.Text = "Click to load preview...";
-                    UI_PreviewStatus.Show();
-                }
-            }
+                LoadSelectedImage();
         }
 
         private void ClearImagePreview()
@@ -161,12 +136,6 @@ namespace W3DT
             currentImage = null;
             currentImageName = null;
             UI_ExportButton.Hide();
-        }
-
-        private void UI_PreviewStatus_Click(object sender, EventArgs e)
-        {
-            if (!Program.Settings.AutoShowArtworkPreview && extractRunner == null)
-                LoadSelectedImage();
         }
 
         private void UI_ExportButton_Click(object sender, EventArgs e)

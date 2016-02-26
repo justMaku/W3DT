@@ -20,7 +20,6 @@ namespace W3DT.JSONContainers
         public int SoundPlayerVolume { get; set; }
         public string FileLocale { get; set; }
         public bool AllowMultipleSoundPlayers { get; set; }
-        public bool AutoShowArtworkPreview { get; set; }
         public bool FirstTime { get; set; }
 
         public Settings()
@@ -36,7 +35,6 @@ namespace W3DT.JSONContainers
             SoundPlayerVolume = 100;
             FileLocale = Locale.Default.ID;
             AllowMultipleSoundPlayers = false;
-            AutoShowArtworkPreview = false;
             FirstTime = true;
         }
 
