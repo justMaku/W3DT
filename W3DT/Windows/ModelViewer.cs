@@ -126,6 +126,7 @@ namespace W3DT
         {
             CancelLoad();
             EventManager.FileExtractComplete -= EventManager_FileExtractComplete;
+            EventManager.CASCLoadStart -= EventManager_CASCLoadStart;
             TerminateRunners();
         }
     }
