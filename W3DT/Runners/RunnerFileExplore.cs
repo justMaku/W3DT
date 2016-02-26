@@ -124,7 +124,7 @@ namespace W3DT.Runners
         private bool IsValidExtension(CASCFile file)
         {
             foreach (string extension in extensions)
-                if (file.Name.EndsWith(extension))
+                if (file.Name.ToLower().EndsWith(extension))
                     return true;
 
             return false;
