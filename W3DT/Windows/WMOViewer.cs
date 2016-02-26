@@ -305,7 +305,7 @@ namespace W3DT
             {
                 FileExtractCompleteArgs args = (FileExtractCompleteArgs)e;
 
-                if (args.RunnerID == wmoRunner.runnerID)
+                if (wmoRunner != null && args.RunnerID == wmoRunner.runnerID)
                 {
                     if (!args.Success)
                     {
