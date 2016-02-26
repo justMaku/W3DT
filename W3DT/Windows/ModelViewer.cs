@@ -22,11 +22,15 @@ namespace W3DT
     {
         private Explorer explorer;
 
-        private RunnerExtractItem runner;
+        private RunnerExtractItemUnsafe runner;
         private LoadingWindow loadingWindow;
         private Action cancelCallback;
 
         private string selectedFileName;
+        private Regex skinPattern = new Regex(@"\.m2$", RegexOptions.IgnoreCase);
+
+        string extractSkinFile = null;
+        string extractModelFile = null;
 
         // 3D View
         private float rotationY = 0.0f;
@@ -84,34 +88,46 @@ namespace W3DT
 
         private void EventManager_FileExtractComplete(object sender, EventArgs e)
         {
-            FileExtractCompleteArgs args = (FileExtractCompleteArgs)e;
+            if (!(e is FileExtractCompleteUnsafeArgs))
+                return;
+
+            FileExtractCompleteUnsafeArgs args = (FileExtractCompleteUnsafeArgs)e;
 
             if (runner != null && args.RunnerID == runner.runnerID)
             {
-                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, args.File.FullName);
+                if (args.File.ToLower().EndsWith(".skin"))
+                    extractSkinFile = args.File;
+                else
+                    extractModelFile = args.File;
 
-                try
+                if (extractSkinFile != null && extractModelFile != null)
                 {
-                    if (File.Exists(tempPath))
+                    string modelTempPath = Path.Combine(Constants.TEMP_DIRECTORY, extractModelFile);
+                    string skinTempPath = Path.Combine(Constants.TEMP_DIRECTORY, extractSkinFile);
+
+                    try
                     {
-                        M2File model = new M2File(tempPath);
+                        if (!File.Exists(modelTempPath))
+                            throw new M2Exception(string.Format("Extracted model file {0} does not exist.", modelTempPath));
+
+                        if (!File.Exists(skinTempPath))
+                            throw new M2Exception(string.Format("Extract skin file {0} does not exist.", skinTempPath));
+
+                        M2File model = new M2File(modelTempPath, new M2SkinFile(skinTempPath));
                         model.parse();
 
                         Log.Write("ModelViewer: Loaded {0} M2 data.", model.Name);
 
-                        // ToDo: Download textures.
-                        // ToDo: Compile M2 data into a mesh and render it.
+                        meshes.Add(model.ToMesh());
                     }
-                    else
+                    catch (M2Exception ex)
                     {
-                        throw new M2Exception("Extracted file does not exist: " + tempPath);
+                        Alert.Show(string.Format("Sorry, an error prevented {0} from being opened!", selectedFileName));
+                        Log.Write("Unable to extract M2 file: " + ex.Message);
+                        Log.Write(ex.StackTrace);
                     }
-                }
-                catch (M2Exception ex)
-                {
-                    Alert.Show(string.Format("Sorry, an error prevented {0} from being opened!", selectedFileName));
-                    Log.Write("Unable to extract M2 file: " + ex.Message);
-                    Log.Write(ex.StackTrace);
+
+                    CloseLoadingWindow();
                 }
             }
         }
@@ -130,12 +146,16 @@ namespace W3DT
                 CASCFile file = (CASCFile)node.Tag;
                 TerminateRunners();
 
-                loadingWindow = new LoadingWindow(string.Format("Loading {0} model...", selectedFileName), "Extracting from data source...", true, cancelCallback);
-                loadingWindow.ShowDialog();
+                extractModelFile = null;
+                extractSkinFile = null;
 
                 selectedFileName = file.Name;
-                runner = new RunnerExtractItem(file);
+                string skinFile = skinPattern.Replace(file.FullName, "00.skin");
+                runner = new RunnerExtractItemUnsafe(file.FullName, skinFile);
                 runner.Begin();
+
+                loadingWindow = new LoadingWindow(string.Format("Loading {0} model...", Path.GetFileNameWithoutExtension(selectedFileName)), "Extracting from data source...", true, cancelCallback);
+                loadingWindow.ShowDialog();
             }
         }
 
@@ -145,7 +165,6 @@ namespace W3DT
             EventManager.FileExtractComplete -= EventManager_FileExtractComplete;
             EventManager.CASCLoadStart -= EventManager_CASCLoadStart;
             EventManager.ModelViewerBackgroundChanged -= EventManager_ModelViewerBackgroundChanged;
-            TerminateRunners();
         }
 
         private void updateViewerBackground(Color backColour)

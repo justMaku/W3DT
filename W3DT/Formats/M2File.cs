@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using W3DT._3D;
 
 namespace W3DT.Formats
 {
@@ -18,11 +19,24 @@ namespace W3DT.Formats
 
         public uint Version { get; private set; }
         public string Name { get; private set; }
+        public uint Flags { get; private set; }
+        public Position[] Verts { get; private set; }
+        public Position[] Normals { get; private set; }
+        public UV[] UV1 { get; private set; }
+        public UV[] UV2 { get; private set; }
 
-        public M2File(string file) : base(file) { }
+        private M2SkinFile skin;
+
+        public M2File(string file, M2SkinFile skin) : base(file)
+        {
+            this.skin = skin;
+        }
 
         public override void parse()
         {
+            Log.Write("Parsing model file {0} with skin {1}...", BaseName, skin.BaseName);
+            skin.parse(); // Parse the given skin file.
+
             int ofs = 0;
             uint magic = readUInt32();
 
@@ -68,9 +82,66 @@ namespace W3DT.Formats
             Version = readUInt32();
             int iName = (int)readUInt32(); // Contains trailing 0-byte.
             int ofsName = (int)readUInt32();
+            Flags = readUInt32();
+            int nGlobalSeq = (int)readUInt32();
+            int ofsGlobalSeq = (int)readUInt32();
+            int nAnims = (int)readUInt32();
+            int ofsAnims = (int)readUInt32();
+            int nAnimLookup = (int)readUInt32();
+            int ofsAnimLookup = (int)readUInt32();
+            int nBones = (int)readUInt32();
+            int ofsBones = (int)readUInt32();
+            int nKeyBoneLookup = (int)readUInt32();
+            int ofsKeyBoneLookup = (int)readUInt32();
+            int nVerts = (int)readUInt32();
+            int ofsVerts = (int)readUInt32();
 
             seekPosition(ofs + ofsName);
             Name = readString(iName - 1);
+
+            // Verts
+            Verts = new Position[nVerts];
+            Normals = new Position[nVerts];
+            UV1 = new UV[nVerts];
+            UV2 = new UV[nVerts];
+
+            seekPosition(ofs + ofsVerts);
+            for (int i = 0; i < nVerts; i++)
+            {
+                float x = readFloat();
+                float z = readFloat() * - 1;
+                float y = readFloat();
+
+                Verts[i] = new Position(x, y, z);
+                uint boneWeight = readUInt32(); // 4 * byte
+                uint boneIndices = readUInt32(); // 4 * byte
+                Normals[i] = Position.Read(this);
+                UV1[i] = UV.Read(this);
+                UV2[i] = UV.Read(this);
+            }
+        }
+
+        public Mesh ToMesh()
+        {
+            Mesh mesh = new Mesh(Name);
+
+            // Verts, normals, UV.
+            for (int i = 0; i < Verts.Length; i++)
+            {
+                mesh.addVert(Verts[i]);
+                mesh.addNormal(Normals[i]);
+                mesh.addUV(UV1[i]);
+            }
+
+            // Faces (triangles)
+            int ofs = 0;
+            for (int i = 0; i < skin.TrianglePoints.Length / 3; i++)
+            {
+                mesh.addFace(skin.TrianglePoints[ofs], skin.TrianglePoints[ofs + 1], skin.TrianglePoints[ofs + 2]);
+                ofs += 3;
+            }
+
+            return mesh;
         }
     }
 }
