@@ -36,6 +36,7 @@ namespace W3DT
 
             cancelCallback = CancelLoad;
             EventManager.FileExtractComplete += EventManager_FileExtractComplete;
+            EventManager.CASCLoadStart += EventManager_CASCLoadStart;
         }
 
         private void TerminateRunners()
@@ -96,6 +97,13 @@ namespace W3DT
                     Log.Write(ex.StackTrace);
                 }
             }
+        }
+
+        private void EventManager_CASCLoadStart(object sender, EventArgs e)
+        {
+            // CASC is being reloaded, abandon ship.
+            CancelLoad();
+            Close();
         }
 
         private void UI_FileList_AfterSelect(object sender, TreeViewEventArgs e)
