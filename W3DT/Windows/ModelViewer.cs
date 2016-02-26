@@ -102,7 +102,6 @@ namespace W3DT
         private void EventManager_CASCLoadStart(object sender, EventArgs e)
         {
             // CASC is being reloaded, abandon ship.
-            CancelLoad();
             Close();
         }
 
@@ -125,6 +124,7 @@ namespace W3DT
 
         private void ModelViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
+            CancelLoad();
             EventManager.FileExtractComplete -= EventManager_FileExtractComplete;
             TerminateRunners();
         }
