@@ -19,13 +19,16 @@ namespace W3DT
         private LoadingWindow loadingWindow;
         public bool ShouldRebootCASC = false;
         private bool loaded = false;
+        private bool preventLocaleReload = false;
 
         public SettingsForm()
         {
             InitializeComponent();
-            LoadSettings();
+            UpdateRemoteVersionsField();
             UpdateInfo();
             PopulateLocaleList();
+
+            UI_AutomaticUpdates.Checked = Program.Settings.AutomaticUpdates;
 
             loaded = true;
         }
@@ -51,10 +54,9 @@ namespace W3DT
             }
         }
 
-        private void LoadSettings()
+        private void UpdateRemoteVersionsField()
         {
-            UI_AutomaticUpdates.Checked = Program.Settings.AutomaticUpdates;
-
+            preventLocaleReload = true;
             if (Program.Settings.UseRemote)
             {
                 ComboBox field = UI_RemoteVersion_Field;
@@ -68,12 +70,13 @@ namespace W3DT
 
                     if (defaultVersion != null && defaultVersion.Equals(version))
                         field.SelectedIndex = field.Items.IndexOf(version);
-                }                
+                }
             }
             else
             {
                 UI_RemoteVersion_Field.Enabled = false;
             }
+            preventLocaleReload = false;
         }
 
         private void UI_SaveButton_Click(object sender, EventArgs e)
@@ -123,7 +126,7 @@ namespace W3DT
             if (!((CASCLoadDoneArgs)e).Success)
                 throw new Exception("CASC engine blew up.");
 
-            UI_RemoteVersion_Field.Enabled = Program.Settings.UseRemote;
+            UpdateRemoteVersionsField();
         }
 
         private void UI_AutomaticUpdates_CheckedChanged(object sender, EventArgs e)
@@ -134,6 +137,9 @@ namespace W3DT
 
         private void UI_RemoteVersion_Field_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (preventLocaleReload)
+                return;
+
             object selected = UI_RemoteVersion_Field.SelectedItem;
 
             if (selected != null && selected is WoWVersion)
