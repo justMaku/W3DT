@@ -58,6 +58,7 @@ namespace W3DT
 
             EventManager.CASCLoadStart += OnCASCLoadStart;
             EventManager.FileExtractComplete += OnFileExtractComplete;
+            EventManager.ModelViewerBackgroundChanged += EventManager_ModelViewerBackgroundChanged;
 
             explorer = new Explorer(this, UI_FilterField, UI_FilterOverlay, UI_FilterTime, UI_FileCount_Label, UI_FileList, new string[] { "wmo" }, "WMO_V_{0}", true);
             explorer.IgnoreFilter = ignoreFilter;
@@ -248,6 +249,7 @@ namespace W3DT
         {
             EventManager.FileExtractComplete -= OnFileExtractComplete;
             EventManager.CASCLoadStart -= OnCASCLoadStart;
+            EventManager.ModelViewerBackgroundChanged -= EventManager_ModelViewerBackgroundChanged;
 
             CancelExtraction();
             explorer.Dispose();
@@ -493,10 +495,15 @@ namespace W3DT
             UI_ColourDialog.Color = Color.FromArgb(Program.Settings.ModelViewerBackgroundColour);
             if (UI_ColourDialog.ShowDialog() == DialogResult.OK)
             {
-                updateViewerBackground(UI_ColourDialog.Color);
+                EventManager.Trigger_ModelViewerBackgroundChanged(UI_ColourDialog.Color);
                 Program.Settings.ModelViewerBackgroundColour = UI_ColourDialog.Color.ToArgb();
                 Program.Settings.Persist();
             }
+        }
+
+        private void EventManager_ModelViewerBackgroundChanged(object sender, EventArgs e)
+        {
+            updateViewerBackground(((ModelViewerBackgroundChangedArgs)e).Colour);
         }
     }
 }

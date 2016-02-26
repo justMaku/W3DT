@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Drawing;
 using W3DT.JSONContainers;
 
 namespace W3DT.Events
@@ -24,6 +25,7 @@ namespace W3DT.Events
         private static EventHandler _MinimapTileDone;
         private static EventHandler _LoadingPrompt;
         private static EventHandler _MapExportDone2D;
+        private static EventHandler _ModelViewerBackgroundChanged;
 
         public static event EventHandler CDNScanDone
         {
@@ -235,6 +237,20 @@ namespace W3DT.Events
             }
         }
 
+        public static event EventHandler ModelViewerBackgroundChanged
+        {
+            add
+            {
+                TargetCheck(value.Target);
+                _ModelViewerBackgroundChanged = (EventHandler)Delegate.Combine(_ModelViewerBackgroundChanged, value);
+            }
+
+            remove
+            {
+                _ModelViewerBackgroundChanged = (EventHandler)Delegate.Remove(_ModelViewerBackgroundChanged, value);
+            }
+        }
+
         public static void Trigger_CDNScanDone(string bestHost, string hostPath)
         {
                 TriggerEvent(_CDNScanDone, new CDNScanDoneArgs(bestHost, hostPath));
@@ -320,6 +336,11 @@ namespace W3DT.Events
         public static void Trigger_MapExportDone2D()
         {
             TriggerEvent(_MapExportDone2D, new EventArgs());
+        }
+
+        public static void Trigger_ModelViewerBackgroundChanged(Color colour)
+        {
+            TriggerEvent(_ModelViewerBackgroundChanged, new ModelViewerBackgroundChangedArgs(colour));
         }
 
         private static void TriggerEvent(EventHandler handler, EventArgs args)

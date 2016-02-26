@@ -53,6 +53,7 @@ namespace W3DT
             cancelCallback = CancelLoad;
             EventManager.FileExtractComplete += EventManager_FileExtractComplete;
             EventManager.CASCLoadStart += EventManager_CASCLoadStart;
+            EventManager.ModelViewerBackgroundChanged += EventManager_ModelViewerBackgroundChanged;
         }
 
         private void TerminateRunners()
@@ -143,6 +144,7 @@ namespace W3DT
             CancelLoad();
             EventManager.FileExtractComplete -= EventManager_FileExtractComplete;
             EventManager.CASCLoadStart -= EventManager_CASCLoadStart;
+            EventManager.ModelViewerBackgroundChanged -= EventManager_ModelViewerBackgroundChanged;
             TerminateRunners();
         }
 
@@ -250,10 +252,15 @@ namespace W3DT
             UI_ColourDialog.Color = Color.FromArgb(Program.Settings.ModelViewerBackgroundColour);
             if (UI_ColourDialog.ShowDialog() == DialogResult.OK)
             {
-                updateViewerBackground(UI_ColourDialog.Color);
+                EventManager.Trigger_ModelViewerBackgroundChanged(UI_ColourDialog.Color);
                 Program.Settings.ModelViewerBackgroundColour = UI_ColourDialog.Color.ToArgb();
                 Program.Settings.Persist();
             }
+        }
+
+        private void EventManager_ModelViewerBackgroundChanged(object sender, EventArgs e)
+        {
+            updateViewerBackground(((ModelViewerBackgroundChangedArgs)e).Colour);
         }
     }
 }

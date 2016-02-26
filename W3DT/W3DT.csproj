@@ -99,6 +99,7 @@
     <Compile Include="Events\MapBuildDoneArgs.cs" />
     <Compile Include="Events\MapExportDoneArgs.cs" />
     <Compile Include="Events\MinimapTileReadyArgs.cs" />
+    <Compile Include="Events\ModelViewerBackgroundChangedArgs.cs" />
     <Compile Include="Formats\ADTFile.cs" />
     <Compile Include="Formats\ADT\Chunk_MCAL.cs" />
     <Compile Include="Formats\ADT\Chunk_MCCV.cs" />
