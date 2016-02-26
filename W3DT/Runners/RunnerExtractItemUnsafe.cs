@@ -65,11 +65,11 @@ namespace W3DT.Runners
         {
             foreach (string file in files)
             {
-            string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file);
+                string tempPath = Path.Combine(Constants.TEMP_DIRECTORY, file);
 
-            if (File.Exists(tempPath))
-                File.Delete(tempPath);
-                }
+                if (File.Exists(tempPath))
+                    File.Delete(tempPath);
+            }
 
             if (thread != null && thread.IsAlive)
                 thread.Abort();
