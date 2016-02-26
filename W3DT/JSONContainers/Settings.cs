@@ -21,6 +21,7 @@ namespace W3DT.JSONContainers
         public string FileLocale { get; set; }
         public bool AllowMultipleSoundPlayers { get; set; }
         public bool FirstTime { get; set; }
+        public int ModelViewerBackgroundColour { get; set; }
 
         public Settings()
         {
@@ -36,6 +37,7 @@ namespace W3DT.JSONContainers
             FileLocale = Locale.Default.ID;
             AllowMultipleSoundPlayers = false;
             FirstTime = true;
+            ModelViewerBackgroundColour = -3680008;
         }
 
         public void Persist(string file)

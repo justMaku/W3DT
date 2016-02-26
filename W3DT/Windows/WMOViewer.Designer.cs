@@ -39,6 +39,8 @@
             this.UI_MeshList = new System.Windows.Forms.CheckedListBox();
             this.UI_ExportObjButton = new System.Windows.Forms.Button();
             this.UI_ExportSaveDialog = new System.Windows.Forms.SaveFileDialog();
+            this.UI_ColourDialog = new System.Windows.Forms.ColorDialog();
+            this.UI_ColourChangeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -138,6 +140,24 @@
             // 
             this.UI_ExportSaveDialog.Filter = "WaveFront OBJ (*.obj)|*.obj";
             // 
+            // UI_ColourDialog
+            // 
+            this.UI_ColourDialog.FullOpen = true;
+            // 
+            // UI_ColourChangeButton
+            // 
+            this.UI_ColourChangeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ColourChangeButton.Image = global::W3DT.Properties.Resources.paint;
+            this.UI_ColourChangeButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.UI_ColourChangeButton.Location = new System.Drawing.Point(1094, 564);
+            this.UI_ColourChangeButton.Name = "UI_ColourChangeButton";
+            this.UI_ColourChangeButton.Size = new System.Drawing.Size(34, 23);
+            this.UI_ColourChangeButton.TabIndex = 9;
+            this.UI_ColourChangeButton.UseVisualStyleBackColor = true;
+            this.UI_ColourChangeButton.Click += new System.EventHandler(this.UI_ColourChangeButton_Click);
+            // 
             // WMOViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -150,6 +170,7 @@
             this.Controls.Add(this.UI_FileCount_Label);
             this.Controls.Add(this.UI_FileList);
             this.Controls.Add(this.openGLControl);
+            this.Controls.Add(this.UI_ColourChangeButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WMOViewer";
             this.Text = "Warcraft 3D Toolkit";
@@ -171,6 +192,8 @@
         private System.Windows.Forms.CheckedListBox UI_MeshList;
         private System.Windows.Forms.Button UI_ExportObjButton;
         private System.Windows.Forms.SaveFileDialog UI_ExportSaveDialog;
+        private System.Windows.Forms.ColorDialog UI_ColourDialog;
+        private System.Windows.Forms.Button UI_ColourChangeButton;
     }
 }
 

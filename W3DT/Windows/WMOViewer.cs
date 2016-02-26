@@ -423,6 +423,15 @@ namespace W3DT
                 rotationY += 3.0f;
         }
 
+        private void updateViewerBackground(Color backColour)
+        {
+            float r = (float)backColour.R / 255f;
+            float g = (float)backColour.G / 255f;
+            float b = (float)backColour.B / 255f;
+
+            openGLControl.OpenGL.ClearColor(r, g, b, 1);
+        }
+
         private void openGLControl_OpenGLInitialized(object sender, EventArgs e)
         {
             updateCamera();
@@ -432,8 +441,7 @@ namespace W3DT
             gl.Enable(OpenGL.GL_CULL_FACE);
             gl.Enable(OpenGL.GL_DEPTH_TEST);
 
-            //  Set the clear color.
-            gl.ClearColor(1, 1, 1, 1);
+            updateViewerBackground(Color.FromArgb(Program.Settings.ModelViewerBackgroundColour));
         }
 
         private void openGLControl_Resized(object sender, EventArgs e)
@@ -478,6 +486,17 @@ namespace W3DT
             gl.LookAt(50, 20, 50, 0, 0, 0, 0, 1, 0);
 
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
+        }
+
+        private void UI_ColourChangeButton_Click(object sender, EventArgs e)
+        {
+            UI_ColourDialog.Color = Color.FromArgb(Program.Settings.ModelViewerBackgroundColour);
+            if (UI_ColourDialog.ShowDialog() == DialogResult.OK)
+            {
+                updateViewerBackground(UI_ColourDialog.Color);
+                Program.Settings.ModelViewerBackgroundColour = UI_ColourDialog.Color.ToArgb();
+                Program.Settings.Persist();
+            }
         }
     }
 }

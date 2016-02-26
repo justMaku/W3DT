@@ -391,6 +391,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="inv_hammer_20.ico" />
+    <None Include="Resources\paint.png" />
     <None Include="Resources\cat_boat.png" />
     <None Include="Resources\latest_text.png" />
     <None Include="Resources\latest_changes.png" />
