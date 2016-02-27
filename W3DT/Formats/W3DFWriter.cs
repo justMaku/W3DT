@@ -37,6 +37,8 @@ namespace W3DT.Formats
             foreach (Mesh mesh in meshes)
             {
                 writer.Write(MESH_MAGIC);
+                writer.Write(mesh.Name);
+
                 writer.Write((uint)3); // Temp
 
                 // Verts
