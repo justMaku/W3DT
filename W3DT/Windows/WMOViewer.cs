@@ -416,10 +416,8 @@ namespace W3DT
 
             // Auto-correct rotation values to keep them sane.
             if (rotationY > 360f) rotationY -= 360f; else if (rotationY < -360f) rotationY += 360f;
-            //if (rotationZ > 360f) rotationZ -= 360f; else if (rotationZ < -360f) rotationZ += 360f;
 
             gl.Rotate(rotationY, 0.0f, 1.0f, 0.0f); // Rotate Y
-            //gl.Rotate(rotationZ, 0.0f, 0.0f, 1.0f); // Rotate Z
 
             gl.Enable(OpenGL.GL_TEXTURE_2D);
             foreach (Mesh mesh in meshes)
