@@ -44,6 +44,13 @@ namespace W3DT
         private bool autoRotate = true;
         private List<Mesh> meshes;
 
+        // Pan
+        private float ofsPanY = 0f;
+        private float ofsPanX = 0f;
+        private float ofsPanYPrev = 0f;
+        private float ofsPanXPrev = 0f;
+        private bool isMousePanning = false;
+
         // Mouse position cache for 3D rotation
         private int mouseStartX = 0;
         private int mouseStartY = 0;
@@ -462,19 +469,41 @@ namespace W3DT
 
                 autoRotate = false;
             }
+            else if (isMousePanning)
+            {
+                int diffX = e.X - mouseStartX;
+                int diffY = e.Y - mouseStartY;
+
+                ofsPanX = ofsPanXPrev + (diffX * 0.25f);
+                ofsPanY = ofsPanYPrev + (diffY * 0.25f);
+                updateCamera();
+            }
         }
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
         {
-            isMouseRotating = false;
-            prevRotY = rotationY;
+            if (isMouseRotating)
+            {
+                isMouseRotating = false;
+                prevRotY = rotationY;
+            }
+            else if (isMousePanning)
+            {
+                ofsPanXPrev = ofsPanX;
+                ofsPanYPrev = ofsPanY;
+                isMousePanning = false;
+            }
         }
 
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {
             mouseStartX = e.X;
             mouseStartY = e.Y;
-            isMouseRotating = true;
+
+            if (e.Button == MouseButtons.Right)
+                isMousePanning = true;
+            else
+                isMouseRotating = true;
         }
 
         private void updateCamera()
@@ -485,7 +514,7 @@ namespace W3DT
             gl.LoadIdentity();
 
             gl.Perspective(60.0f * zoom, (double)openGLControl.Width / (double)openGLControl.Height, 0.01, 900.0);
-            gl.LookAt(50, 20, 50, 0, 0, 0, 0, 1, 0);
+            gl.LookAt(50, 20 + ofsPanY, ofsPanX, 0, ofsPanY, ofsPanX, 0, 1, 0);
 
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
         }
