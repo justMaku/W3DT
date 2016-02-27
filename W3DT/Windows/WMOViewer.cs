@@ -366,6 +366,7 @@ namespace W3DT
 
         private void UI_ExportObjButton_Click(object sender, EventArgs e)
         {
+            UI_ExportSaveDialog.Filter = "WaveFront OBJ (*.obj)|*.obj";
             UI_ExportSaveDialog.FileName = Path.GetFileNameWithoutExtension(loadedFile.BaseName) + ".obj";
             if (UI_ExportSaveDialog.ShowDialog() == DialogResult.OK)
             {
@@ -528,6 +529,22 @@ namespace W3DT
         private void EventManager_ModelViewerBackgroundChanged(object sender, EventArgs e)
         {
             updateViewerBackground(((ModelViewerBackgroundChangedArgs)e).Colour);
+        }
+
+        private void UI_ExportW3DFButton_Click(object sender, EventArgs e)
+        {
+            UI_ExportSaveDialog.Filter = "Warcraft 3D File (*.w3df)|*.w3df";
+            UI_ExportSaveDialog.FileName = Path.GetFileNameWithoutExtension(loadedFile.BaseName) + ".w3df";
+            if (UI_ExportSaveDialog.ShowDialog() == DialogResult.OK)
+            {
+                W3DFWriter writer = new W3DFWriter(UI_ExportSaveDialog.FileName, meshes.Where(m => m.ShouldRender));
+
+                writer.Write();
+                writer.Close();
+
+                //loadingWindow = new LoadingWindow("Exporting WMO as W3DF...", "*Distant echoes of murloc chanting*");
+                //loadingWindow.ShowDialog();
+            }
         }
     }
 }

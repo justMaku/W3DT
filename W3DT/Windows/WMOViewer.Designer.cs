@@ -41,6 +41,7 @@
             this.UI_ExportSaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.UI_ColourDialog = new System.Windows.Forms.ColorDialog();
             this.UI_ColourChangeButton = new System.Windows.Forms.Button();
+            this.UI_ExportW3DFButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -157,11 +158,23 @@
             this.UI_ColourChangeButton.UseVisualStyleBackColor = true;
             this.UI_ColourChangeButton.Click += new System.EventHandler(this.UI_ColourChangeButton_Click);
             // 
+            // UI_ExportW3DFButton
+            // 
+            this.UI_ExportW3DFButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.UI_ExportW3DFButton.Location = new System.Drawing.Point(1111, 351);
+            this.UI_ExportW3DFButton.Name = "UI_ExportW3DFButton";
+            this.UI_ExportW3DFButton.Size = new System.Drawing.Size(160, 23);
+            this.UI_ExportW3DFButton.TabIndex = 8;
+            this.UI_ExportW3DFButton.Text = "Export selected as W3DF";
+            this.UI_ExportW3DFButton.UseVisualStyleBackColor = true;
+            this.UI_ExportW3DFButton.Click += new System.EventHandler(this.UI_ExportW3DFButton_Click);
+            // 
             // WMOViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 634);
+            this.Controls.Add(this.UI_ExportW3DFButton);
             this.Controls.Add(this.UI_ExportObjButton);
             this.Controls.Add(this.UI_MeshList);
             this.Controls.Add(this.UI_FilterOverlay);
@@ -193,6 +206,7 @@
         private System.Windows.Forms.SaveFileDialog UI_ExportSaveDialog;
         private System.Windows.Forms.ColorDialog UI_ColourDialog;
         private System.Windows.Forms.Button UI_ColourChangeButton;
+        private System.Windows.Forms.Button UI_ExportW3DFButton;
     }
 }
 
