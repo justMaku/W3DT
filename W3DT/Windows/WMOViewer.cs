@@ -40,7 +40,7 @@ namespace W3DT
         private float rotationY = 0.0f;
         private float prevRotY = 0.0f;
         //private float rotationZ = 0.0f;
-        private float zoom = 1.0f;
+        private float zoom = 0f;
         private bool autoRotate = true;
         private List<Mesh> meshes;
 
@@ -401,10 +401,7 @@ namespace W3DT
             if (autoRotate)
                 autoRotate = false;
 
-            zoom += e.Delta >= 0 ? -0.15f : 0.15f;
-            if (zoom < 0.01f)
-                zoom = 0.01f;
-
+            zoom += e.Delta >= 0 ? -1.25f : 1.25f;
             updateCamera();
         }
 
@@ -511,8 +508,8 @@ namespace W3DT
             gl.MatrixMode(OpenGL.GL_PROJECTION);
             gl.LoadIdentity();
 
-            gl.Perspective(60.0f * zoom, (double)openGLControl.Width / (double)openGLControl.Height, 0.01, 900.0);
-            gl.LookAt(50, 20 + ofsPanY, ofsPanX, 0, ofsPanY, ofsPanX, 0, 1, 0);
+            gl.Perspective(60.0f, (double)openGLControl.Width / (double)openGLControl.Height, 0.01, 900.0);
+            gl.LookAt(50 + zoom, 20 + ofsPanY, ofsPanX, zoom, ofsPanY, ofsPanX, 0, 1, 0);
 
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
         }
