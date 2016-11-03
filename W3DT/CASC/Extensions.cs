@@ -71,6 +71,16 @@ namespace W3DT.CASC
             return BitConverter.ToString(data).Replace("-", string.Empty);
         }
 
+        public static unsafe string ToHexString(this MD5Hash key)
+        {
+            byte[] array = new byte[16];
+
+            fixed (byte* aptr = array)
+                *(MD5Hash*)aptr = key;
+
+            return array.ToHexString();
+        }
+
         public static bool EqualsTo(this byte[] hash, byte[] other)
         {
             if (hash.Length != other.Length)
@@ -79,6 +89,50 @@ namespace W3DT.CASC
                 if (hash[i] != other[i])
                     return false;
             return true;
+        }
+
+        public static unsafe bool EqualsTo(this MD5Hash key, MD5Hash other)
+        {
+            for (int i = 0; i < 2; ++i)
+            {
+                ulong keyPart = *(ulong*)(key.Value + i * 8);
+                ulong otherPart = *(ulong*)(other.Value + i * 8);
+
+                if (keyPart != otherPart)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static unsafe bool EqualsTo(this MD5Hash key, byte[] array)
+        {
+            if (array.Length != 16)
+                return false;
+
+            MD5Hash other;
+
+            fixed (byte* ptr = array)
+                other = *(MD5Hash*)ptr;
+
+            for (int i = 0; i < 2; ++i)
+            {
+                ulong keyPart = *(ulong*)(key.Value + i * 8);
+                ulong otherPart = *(ulong*)(other.Value + i * 8);
+
+                if (keyPart != otherPart)
+                    return false;
+            }
+            return true;
+        }
+
+        public static unsafe MD5Hash ToMD5(this byte[] array)
+        {
+            if (array.Length != 16)
+                throw new ArgumentException("Bytes != 16");
+
+            fixed (byte* ptr = array)
+                return *(MD5Hash*)ptr;
         }
 
         public static bool EqualsToIgnoreLength(this byte[] array, byte[] other)
