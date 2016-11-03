@@ -537,7 +537,7 @@ namespace W3DT
             UI_ExportSaveDialog.FileName = Path.GetFileNameWithoutExtension(loadedFile.BaseName) + ".w3df";
             if (UI_ExportSaveDialog.ShowDialog() == DialogResult.OK)
             {
-                W3DFWriter writer = new W3DFWriter(UI_ExportSaveDialog.FileName, meshes.Where(m => m.ShouldRender));
+                W3DFWriter writer = new W3DFWriter(UI_ExportSaveDialog.FileName, meshes.Where(m => m.ShouldRender), texManager);
 
                 writer.Write();
                 writer.Close();

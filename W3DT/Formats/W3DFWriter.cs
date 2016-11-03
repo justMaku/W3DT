@@ -15,18 +15,22 @@ namespace W3DT.Formats
         private static uint VERT_MAGIC = 0x54524556;
         private static uint NORM_MAGIC = 0x4D524F4E;
         private static uint FACE_MAGIC = 0x45434146;
+        private static uint UV_MAGIC = 0x56555854;
+        private static uint TEX_MAGIC = 0x58455446;
 
         //private StreamWriter writer;
         private BinaryWriter writer;
         private IEnumerable<Mesh> meshes;
+        private TextureManager texProvider;
 
-        public W3DFWriter(string file, IEnumerable<Mesh> meshes)
+        public W3DFWriter(string file, IEnumerable<Mesh> meshes, TextureManager texProvider)
         {
             if (File.Exists(file))
                 File.Delete(file);
 
             writer = new BinaryWriter(File.OpenWrite(file));
             this.meshes = meshes;
+            this.texProvider = texProvider;
         }
 
         public override void Write()
@@ -39,7 +43,7 @@ namespace W3DT.Formats
                 writer.Write(MESH_MAGIC);
                 writer.Write(mesh.Name);
 
-                writer.Write((uint)3); // Temp
+                writer.Write((uint)5); // Temp
 
                 // Verts
                 writer.Write(VERT_MAGIC);
@@ -61,6 +65,17 @@ namespace W3DT.Formats
                     writer.Write(norm.Z);
                 }
 
+                // UV
+                writer.Write(UV_MAGIC);
+                writer.Write((uint)(mesh.UVCount * (sizeof(float) * 2)));
+                foreach (UV uv in mesh.UVs)
+                {
+                    writer.Write(uv.U);
+                    writer.Write(uv.V);
+                }
+
+                List<string> textures = new List<string>();
+
                 // Faces
                 writer.Write(FACE_MAGIC);
                 writer.Write((uint)(mesh.FaceCount * (sizeof(int) * 3)));
@@ -69,7 +84,22 @@ namespace W3DT.Formats
                     writer.Write((uint)face.Verts[0].Offset);
                     writer.Write((uint)face.Verts[1].Offset);
                     writer.Write((uint)face.Verts[2].Offset);
+
+                    writer.Write((byte)1); // Hard-code 1 layer for now.
+                    string tex = texProvider.getFile(face.TextureID);
+
+                    if (!textures.Contains(tex))
+                        textures.Add(tex);
+
+                    writer.Write(textures.IndexOf(tex));
                 }
+
+                // Texture list
+                writer.Write(TEX_MAGIC);
+                writer.Write(textures.Count);
+
+                foreach (string texture in textures)
+                    writer.Write(Path.GetFileName(texture));
             }
         }
 
