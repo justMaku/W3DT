@@ -121,6 +121,13 @@
     <Compile Include="Formats\ADT\IChunkSoup.cs" />
     <Compile Include="Formats\ChunkedFormatBase.cs" />
     <Compile Include="Formats\Chunk_Base.cs" />
+    <Compile Include="Formats\DB2\DB2_Meta.cs" />
+    <Compile Include="Formats\DB2\DB2_Reader.cs" />
+    <Compile Include="Formats\DB2\DB2_Row.cs" />
+    <Compile Include="Formats\DB3\DB3_Reader.cs" />
+    <Compile Include="Formats\DB3\DB3_Row.cs" />
+    <Compile Include="Formats\DB5\DB5_Row.cs" />
+    <Compile Include="Formats\DB5\DB5_Reader.cs" />
     <Compile Include="Formats\IChunkedFormat.cs" />
     <Compile Include="Formats\IFormat.cs" />
     <Compile Include="Formats\IWriter.cs" />
@@ -209,6 +216,8 @@
     <Compile Include="Formats\IChunkProvider.cs" />
     <Compile Include="Formats\WMO\IChunkSoup.cs" />
     <Compile Include="Formats\WriterBase.cs" />
+    <Compile Include="Hashing\MD5\MD5Hash.cs" />
+    <Compile Include="Hashing\MD5\MD5HashComparer.cs" />
     <Compile Include="MapViewer\MapCanvas.cs" />
     <Compile Include="MapViewer\MapCanvasTile.cs" />
     <Compile Include="MapViewer\Overlay.cs" />
