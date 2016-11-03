@@ -47,6 +47,11 @@ namespace W3DT.CASC
         NoCompression = 0x80000000 // sounds have this flag
     }
 
+    public unsafe struct MD5Hash
+    {
+        public fixed byte Value[16];
+    }
+
     public class RootBlock
     {
         public static RootBlock Empty = new RootBlock() { ContentFlags = ContentFlags.None, LocaleFlags = LocaleFlags.All };
