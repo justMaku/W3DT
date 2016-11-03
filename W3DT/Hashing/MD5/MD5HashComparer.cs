@@ -14,7 +14,7 @@ namespace W3DT.Hashing.MD5
         public unsafe bool Equals(MD5Hash a, MD5Hash b)
         {
             for (int i = 0; i < 16; i++)
-                if (a.Value[i] != y.Value[i])
+                if (a.Value[i] != b.Value[i])
                     return false;
 
             return true;
