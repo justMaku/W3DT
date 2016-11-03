@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using W3DT.Hashing.MD5;
 
 namespace W3DT.CASC
 {
