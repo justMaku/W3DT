@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using W3DT.Hashing.MD5;
 
 namespace W3DT.CASC
 {
     class LocalIndexHandler
     {
-        private static readonly ByteArrayComparer comparer = new ByteArrayComparer();
-        private readonly Dictionary<byte[], IndexEntry> LocalIndexData = new Dictionary<byte[], IndexEntry>(comparer);
-
-        public int Count
-        {
-            get { return LocalIndexData.Count; }
-        }
+        private static readonly MD5HashComparer comparer = new MD5HashComparer();
+        private Dictionary<MD5Hash, IndexEntry> LocalIndexData = new Dictionary<MD5Hash, IndexEntry>(comparer);
+        public int Count => LocalIndexData.Count;
 
         private LocalIndexHandler() {}
 
@@ -53,7 +50,7 @@ namespace W3DT.CASC
                 for (int i = 0; i < numBlocks; i++)
                 {
                     IndexEntry info = new IndexEntry();
-                    byte[] key = br.ReadBytes(9);
+                    MD5Hash key = br.Read<MD5Hash>();
                     byte indexHigh = br.ReadByte();
                     int indexLow = br.ReadInt32BE();
 
@@ -88,12 +85,13 @@ namespace W3DT.CASC
             return latestIdx;
         }
 
-        public IndexEntry GetIndexInfo(byte[] key)
+        public unsafe IndexEntry GetIndexInfo(MD5Hash key)
         {
-            byte[] temp = key.Copy(9);
+            ulong* ptr = (ulong*)&key;
+            ptr[1] &= 0xFf;
 
             IndexEntry result;
-            if (!LocalIndexData.TryGetValue(temp, out result))
+            if (!LocalIndexData.TryGetValue(key, out result))
                 Log.Write("CASC: Missing index {0}", key.ToHexString());
 
             return result;
@@ -101,7 +99,8 @@ namespace W3DT.CASC
 
         public void Clear()
         {
-            LocalIndexData.Clear();
+            LocalIndexData?.Clear();
+            LocalIndexData = null;
         }
     }
 }

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using W3DT.Hashing;
+using W3DT.Hashing.MD5;
 
 namespace W3DT.CASC
 {
     public class InstallEntry
     {
         public string Name;
-        public byte[] MD5;
+        public MD5Hash MD5;
         public int Size;
 
         public List<InstallTag> Tags;
@@ -24,13 +25,9 @@ namespace W3DT.CASC
 
     public class InstallHandler
     {
-        private readonly List<InstallEntry> InstallData = new List<InstallEntry>();
+        private List<InstallEntry> InstallData = new List<InstallEntry>();
         private static readonly Jenkins96 Hasher = new Jenkins96();
-
-        public int Count
-        {
-            get { return InstallData.Count; }
-        }
+        public int Count => InstallData.Count;
 
         public InstallHandler(BinaryReader stream)
         {
@@ -40,8 +37,7 @@ namespace W3DT.CASC
             byte b2 = stream.ReadByte();
             short numTags = stream.ReadInt16BE();
             int numFiles = stream.ReadInt32BE();
-
-            int numMaskBytes = numFiles / 8 + (numFiles % 8 > 0 ? 1 : 0);
+            int numMaskBytes = (numFiles + 7) / 8;
 
             List<InstallTag> Tags = new List<InstallTag>();
 
@@ -57,7 +53,6 @@ namespace W3DT.CASC
                     bits[j] = (byte)((bits[j] * 0x0202020202 & 0x010884422010) % 1023);
 
                 tag.Bits = new BitArray(bits);
-
                 Tags.Add(tag);
             }
 
@@ -65,7 +60,7 @@ namespace W3DT.CASC
             {
                 InstallEntry entry = new InstallEntry();
                 entry.Name = stream.ReadCString();
-                entry.MD5 = stream.ReadBytes(16);
+                entry.MD5 = stream.Read<MD5Hash>();
                 entry.Size = stream.ReadInt32BE();
 
                 InstallData.Add(entry);
@@ -113,6 +108,7 @@ namespace W3DT.CASC
         public void Clear()
         {
             InstallData.Clear();
+            InstallData = null;
         }
     }
 }

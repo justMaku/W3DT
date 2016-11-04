@@ -10,34 +10,31 @@ namespace W3DT.CASC
     {
         Dictionary<string, List<string>> Data = new Dictionary<string, List<string>>();
 
-        public KeyValueConfig(Stream stream)
+        public static KeyValueConfig ReadKeyValueConfig(Stream stream)
         {
-            Log.Write("KeyValueConfig {");
-            using (var reader = new StreamReader(stream))
+            return ReadKeyValueConfig(new StreamReader(stream));
+        }
+
+        public static KeyValueConfig ReadKeyValueConfig(TextReader reader)
+        {
+            var result = new KeyValueConfig();
+            string line;
+
+            while ((line = reader.ReadLine()) != null)
             {
-                string line;
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#"))
+                    continue;
 
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (line.StartsWith("#") || line.Length == 0) // Skip comments and blank lines.
-                        continue;
+                string[] tokens = line.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    string[] tokens = line.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                if (tokens.Length != 2)
+                    throw new Exception("KeyValueConfig: Invalid length, expected 2.");
 
-                    if (tokens.Length != 2)
-                        throw new CASCException("Malformed token length.");
-
-                    var values = tokens[1].Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    var valuesList = new List<string>();
-                    valuesList.AddRange(values);
-
-                    string token = tokens[0].Trim();
-                    Data.Add(token, valuesList);
-
-                    Log.Write("    {0} -> {1}", token, string.Join(",", valuesList));
-                }
+                var values = tokens[1].Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var valuesList = values.ToList();
+                result.Data.Add(tokens[0].Trim(), valuesList);
             }
-            Log.Write("} KeyValueConfig");
+            return result;
         }
 
         public List<string> this[string key]

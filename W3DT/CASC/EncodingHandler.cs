@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using W3DT.Hashing.MD5;
 
 namespace W3DT.CASC
 {
     public class EncodingEntry
     {
         public int Size;
-        public byte[] Key;
+        public MD5Hash Key;
     }
 
     public class EncodingHandler
     {
-        private static readonly ByteArrayComparer comparer = new ByteArrayComparer();
-        private readonly Dictionary<byte[], EncodingEntry> EncodingData = new Dictionary<byte[], EncodingEntry>(comparer);
+        private static readonly MD5HashComparer comparer = new MD5HashComparer();
+        private Dictionary<MD5Hash, EncodingEntry> EncodingData = new Dictionary<MD5Hash, EncodingEntry>(comparer);
 
         private const int CHUNK_SIZE = 4096;
-
-        public int Count
-        {
-            get { return EncodingData.Count; }
-        }
+        public int Count => EncodingData.Count;
 
         public EncodingHandler(BinaryReader stream)
         {
@@ -36,13 +33,8 @@ namespace W3DT.CASC
             byte b4 = stream.ReadByte();
             int stringBlockSize = stream.ReadInt32BE();
 
-            string[] strings = Encoding.ASCII.GetString(stream.ReadBytes(stringBlockSize)).Split(new[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < numEntriesA; ++i)
-            {
-                byte[] firstHash = stream.ReadBytes(16);
-                byte[] blockHash = stream.ReadBytes(16);
-            }
+            stream.Skip(stringBlockSize);
+            stream.Skip(numEntriesA * 32);
 
             long chunkStart = stream.BaseStream.Position;
 
@@ -53,7 +45,7 @@ namespace W3DT.CASC
                 while ((keysCount = stream.ReadUInt16()) != 0)
                 {
                     int fileSize = stream.ReadInt32BE();
-                    byte[] md5 = stream.ReadBytes(16);
+                    MD5Hash hash = stream.Read<MD5Hash>();
 
                     EncodingEntry entry = new EncodingEntry();
                     entry.Size = fileSize;
@@ -61,16 +53,16 @@ namespace W3DT.CASC
                     // how do we handle multiple keys?
                     for (int ki = 0; ki < keysCount; ++ki)
                     {
-                        byte[] key = stream.ReadBytes(16);
+                        MD5Hash key = stream.Read<MD5Hash>();
 
                         // use first key for now
                         if (ki == 0)
                             entry.Key = key;
                         else
-                            Log.Write("Multiple encoding keys for MD5 hash {0} -> {1}", md5.ToHexString(), key.ToHexString());
+                            Log.Write("Multiple encoding keys for MD5 hash {0} -> {1}", hash.ToHexString(), key.ToHexString());
                     }
 
-                    EncodingData.Add(md5, entry);
+                    EncodingData.Add(hash, entry);
                 }
 
                 // each chunk is 4096 bytes, and zero padding at the end
@@ -103,7 +95,7 @@ namespace W3DT.CASC
             }
         }
 
-        public IEnumerable<KeyValuePair<byte[], EncodingEntry>> Entries
+        public IEnumerable<KeyValuePair<MD5Hash, EncodingEntry>> Entries
         {
             get
             {
@@ -112,16 +104,15 @@ namespace W3DT.CASC
             }
         }
 
-        public EncodingEntry GetEntry(byte[] md5)
+        public bool GetEntry(MD5Hash hash, out EncodingEntry entry)
         {
-            EncodingEntry result;
-            EncodingData.TryGetValue(md5, out result);
-            return result;
+            return EncodingData.TryGetValue(hash, out entry);
         }
 
         public void Clear()
         {
             EncodingData.Clear();
+            EncodingData = null;
         }
     }
 }

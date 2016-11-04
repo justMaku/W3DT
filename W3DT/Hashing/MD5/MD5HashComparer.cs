@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace W3DT.Hashing.MD5
 {
-    class MD5HashComparer
+    class MD5HashComparer : IEqualityComparer<MD5Hash>
     {
         const uint Prime32 = 16777619;
         const uint Offset32 = 2166136261;

@@ -127,10 +127,19 @@ namespace W3DT.CASC
             return true;
         }
 
+        public static unsafe bool IsZeroed(this MD5Hash key)
+        {
+            for (var i = 0; i < 16; ++i)
+                if (key.Value[i] != 0)
+                    return false;
+
+            return true;
+        }
+
         public static unsafe MD5Hash ToMD5(this byte[] array)
         {
             if (array.Length != 16)
-                throw new ArgumentException("Bytes != 16");
+                throw new ArgumentException("array size != 16");
 
             fixed (byte* ptr = array)
                 return *(MD5Hash*)ptr;
@@ -170,6 +179,21 @@ namespace W3DT.CASC
             }
 
             return sb.ToString();
+        }
+
+        public static void ExtractToFile(this Stream input, string path, string name)
+        {
+            string fullPath = Path.Combine(path, name);
+            string directory = Path.GetDirectoryName(fullPath);
+
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            using (var fileStream = File.Open(fullPath, FileMode.Create))
+            {
+                input.Position = 0;
+                input.CopyTo(fileStream);
+            }
         }
     }
 

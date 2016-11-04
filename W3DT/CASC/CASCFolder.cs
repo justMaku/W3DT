@@ -7,27 +7,17 @@ namespace W3DT.CASC
 {
     public class CASCFolder : ICASCEntry
     {
-        private string _name;
-        private ulong _hash;
-
+        private string name;
         public Dictionary<string, ICASCEntry> Entries { get; set; }
 
         public CASCFolder(string name)
         {
             Entries = new Dictionary<string, ICASCEntry>(StringComparer.OrdinalIgnoreCase);
-            _name = name;
-            _hash = 0;
+            this.name = name;
         }
 
-        public string Name
-        {
-            get { return _name; }
-        }
-
-        public ulong Hash
-        {
-            get { return _hash; }
-        }
+        public string Name => name;
+        public ulong Hash => 0;
 
         public ICASCEntry GetEntry(string name)
         {
@@ -41,46 +31,44 @@ namespace W3DT.CASC
             return Name;
         }
 
-        public IEnumerable<CASCFile> GetFiles(IEnumerable<int> selection = null, bool recursive = true)
+        public IEnumerable<CASCFile> GetFiles(IEnumerable<ICASCEntry> entries, IEnumerable<int> selection = null, bool recursive = true)
         {
             if (selection != null)
             {
                 foreach (int index in selection)
                 {
-                    var entry = Entries.ElementAt(index);
+                    var entry = entries.ElementAt(index);
 
-                    if (entry.Value is CASCFile)
+                    if (entry is CASCFile)
                     {
-                        yield return entry.Value as CASCFile;
+                        yield return entry as CASCFile;
                     }
                     else
                     {
                         if (recursive)
                         {
-                            foreach (var file in (entry.Value as CASCFolder).GetFiles())
-                            {
+                            var folder = entry as CASCFolder;
+                            foreach (var file in GetFiles(folder.Entries.Select(kv => kv.Value)))
                                 yield return file;
-                            }
                         }
                     }
                 }
             }
             else
             {
-                foreach (var entry in Entries)
+                foreach (var entry in entries)
                 {
-                    if (entry.Value is CASCFile)
+                    if (entry is CASCFile)
                     {
-                        yield return entry.Value as CASCFile;
+                        yield return entry as CASCFile;
                     }
                     else
                     {
                         if (recursive)
                         {
-                            foreach (var file in (entry.Value as CASCFolder).GetFiles())
-                            {
+                            var folder = entry as CASCFolder;
+                            foreach (var file in GetFiles(folder.Entries.Select(kv => kv.Value)))
                                 yield return file;
-                            }
                         }
                     }
                 }

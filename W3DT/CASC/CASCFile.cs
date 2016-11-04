@@ -15,10 +15,8 @@ namespace W3DT.CASC
             this.hash = hash;
         }
 
-        public string Name
-        {
-            get { return Path.GetFileName(FullName); }
-        }
+        public String Name => Path.GetFileName(FullName);
+        public ulong Hash => hash;
 
         public string FullName
         {
@@ -26,19 +24,10 @@ namespace W3DT.CASC
             set { FileNames[hash] = value; }
         }
 
-        public ulong Hash
-        {
-            get { return hash; }
-        }
-
         public int GetSize(CASCEngine casc)
         {
-            var encoding = casc.GetEncodingEntry(hash);
-
-            if (encoding != null)
-                return encoding.Size;
-
-            return 0;
+            EncodingEntry entry;
+            return casc.GetEncodingEntry(hash, out entry) ? entry.Size : 0;
         }
 
         public override string ToString()
@@ -65,8 +54,10 @@ namespace W3DT.CASC
                     {
                         var e1 = casc.RootHandler.GetEntries(Hash);
                         var e2 = casc.RootHandler.GetEntries(other.Hash);
-                        var flags1 = e1.Any() ? e1.First().Block.LocaleFlags : LocaleFlags.None;
-                        var flags2 = e2.Any() ? e2.First().Block.LocaleFlags : LocaleFlags.None;
+
+                        var flags1 = e1.Any() ? e1.First().LocaleFlags : LocaleFlags.None;
+                        var flags2 = e2.Any() ? e2.First().LocaleFlags : LocaleFlags.None;
+
                         result = flags1.CompareTo(flags2);
                     }
                     break;
@@ -74,8 +65,10 @@ namespace W3DT.CASC
                     {
                         var e1 = casc.RootHandler.GetEntries(Hash);
                         var e2 = casc.RootHandler.GetEntries(other.Hash);
-                        var flags1 = e1.Any() ? e1.First().Block.ContentFlags : ContentFlags.None;
-                        var flags2 = e2.Any() ? e2.First().Block.ContentFlags : ContentFlags.None;
+
+                        var flags1 = e1.Any() ? e1.First().ContentFlags : ContentFlags.None;
+                        var flags2 = e2.Any() ? e2.First().ContentFlags : ContentFlags.None;
+
                         result = flags1.CompareTo(flags2);
                     }
                     break;

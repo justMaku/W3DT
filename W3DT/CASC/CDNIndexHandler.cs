@@ -2,22 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using W3DT.Hashing.MD5;
 
 namespace W3DT.CASC
 {
     public class CDNIndexHandler
     {
-        private static readonly ByteArrayComparer comparer = new ByteArrayComparer();
-        private readonly Dictionary<byte[], IndexEntry> CDNIndexData = new Dictionary<byte[], IndexEntry>(comparer);
+        private static readonly MD5HashComparer comparer = new MD5HashComparer();
+        private Dictionary<MD5Hash, IndexEntry> CDNIndexData = new Dictionary<MD5Hash, IndexEntry>(comparer);
 
         private SyncDownloader downloader;
         private CASCConfig CASCConfig;
         public static CDNCache Cache = new CDNCache("cache");
 
-        public int Count
-        {
-            get { return CDNIndexData.Count; }
-        }
+        public int Count => CDNIndexData.Count;
 
         private CDNIndexHandler(CASCConfig cascConfig)
         {
@@ -55,15 +53,16 @@ namespace W3DT.CASC
 
                 for (int j = 0; j < count; ++j)
                 {
-                    byte[] key = br.ReadBytes(16);
+                    MD5Hash key = br.Read<MD5Hash>();
 
                     if (key.IsZeroed()) // wtf?
-                        key = br.ReadBytes(16);
+                        key = br.Read<MD5Hash>();
 
                     if (key.IsZeroed()) // wtf?
                         throw new Exception("key.IsZeroed()");
 
                     IndexEntry entry = new IndexEntry();
+
                     entry.Index = i;
                     entry.Size = br.ReadInt32BE();
                     entry.Offset = br.ReadInt32BE();
@@ -142,7 +141,7 @@ namespace W3DT.CASC
             }
         }
 
-        public Stream OpenDataFileDirect(byte[] key)
+        public Stream OpenDataFileDirect(MD5Hash key)
         {
             var keyStr = key.ToHexString().ToLower();
 
@@ -182,7 +181,7 @@ namespace W3DT.CASC
             }
         }
 
-        public IndexEntry GetIndexInfo(byte[] key)
+        public IndexEntry GetIndexInfo(MD5Hash key)
         {
             IndexEntry result;
 
@@ -195,6 +194,10 @@ namespace W3DT.CASC
         public void Clear()
         {
             CDNIndexData.Clear();
+            CDNIndexData = null;
+
+            CASCConfig = null;
+            downloader = null;
         }
     }
 }

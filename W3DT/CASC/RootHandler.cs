@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using W3DT.Hashing;
+using W3DT.Hashing.MD5;
+using W3DT.Formats.DB5;
 
 namespace W3DT.CASC
 {
@@ -47,45 +49,28 @@ namespace W3DT.CASC
         NoCompression = 0x80000000 // sounds have this flag
     }
 
-    public unsafe struct MD5Hash
+    public struct RootEntry
     {
-        public fixed byte Value[16];
-    }
-
-    public class RootBlock
-    {
-        public static RootBlock Empty = new RootBlock() { ContentFlags = ContentFlags.None, LocaleFlags = LocaleFlags.All };
+        public MD5Hash MD5;
         public ContentFlags ContentFlags;
         public LocaleFlags LocaleFlags;
     }
 
-    public class RootEntry
-    {
-        public RootBlock Block;
-        public int FileDataId;
-        public byte[] MD5;
-
-        public override string ToString()
-        {
-            return string.Format("RootBlock: {0:X8} {1:X8}, File: {2:X8} {3}", Block.ContentFlags, Block.LocaleFlags, FileDataId, MD5.ToHexString());
-        }
-    }
-
     public class RootHandler
     {
-        public readonly MultiDictionary<ulong, RootEntry> RootData = new MultiDictionary<ulong, RootEntry>();
-        private readonly Dictionary<int, ulong> FileDataStore = new Dictionary<int, ulong>();
-        private readonly Dictionary<ulong, int> FileDataStoreReverse = new Dictionary<ulong, int>();
-        private readonly HashSet<ulong> UnknownFiles = new HashSet<ulong>();
+        public MultiDictionary<ulong, RootEntry> RootData = new MultiDictionary<ulong, RootEntry>();
+        private Dictionary<int, ulong> FileDataStore = new Dictionary<int, ulong>();
+        private Dictionary<ulong, int> FileDataStoreReverse = new Dictionary<ulong, int>();
+        private Dictionary<ulong, bool> UnknownFiles = new Dictionary<ulong, bool>();
 
         protected CASCFolder Root;
 
         protected readonly Jenkins96 Hasher = new Jenkins96();
 
-        public int Count { get { return RootData.Count; } }
-        public int CountTotal { get { return RootData.Sum(re => re.Value.Count); } }
+        public int Count => RootData.Count;
+        public int CountTotal => RootData.Sum(re => re.Value.Count);
+        public int CountUnknown { get { return UnknownFiles.Count; } }
         public int CountSelect { get; protected set; }
-        public int CountUnknown { get; protected set; }
 
         public LocaleFlags Locale { get; protected set; }
         public ContentFlags Content { get; protected set; }
@@ -98,65 +83,62 @@ namespace W3DT.CASC
             {
                 int count = stream.ReadInt32();
 
-                RootBlock block = new RootBlock();
-                block.ContentFlags = (ContentFlags)stream.ReadUInt32();
-                block.LocaleFlags = (LocaleFlags)stream.ReadUInt32();
+                ContentFlags contentFlags = (ContentFlags)stream.ReadUInt32();
+                LocaleFlags localeFlags = (LocaleFlags)stream.ReadUInt32();
 
-                if (block.LocaleFlags == LocaleFlags.None)
-                    throw new Exception("block.LocaleFlags == LocaleFlags.None");
+                if (localeFlags == LocaleFlags.None)
+                    throw new Exception("localeFlags == LocaleFlags.None");
 
-                if (block.ContentFlags != ContentFlags.None && (block.ContentFlags & (ContentFlags.LowViolence | ContentFlags.NoCompression)) == 0)
-                    throw new Exception("block.ContentFlags != ContentFlags.None");
+                if (contentFlags != ContentFlags.None && (contentFlags & (ContentFlags.LowViolence | ContentFlags.NoCompression)) == 0)
+                    throw new Exception("contentFlags != ContentFlags.None");
 
                 RootEntry[] entries = new RootEntry[count];
-
+                int[] fileDataIDs = new int[count];
                 int fileDataIndex = 0;
 
                 for (var i = 0; i < count; ++i)
                 {
-                    entries[i] = new RootEntry();
-                    entries[i].Block = block;
-                    entries[i].FileDataId = fileDataIndex + stream.ReadInt32();
+                    entries[i].LocaleFlags = localeFlags;
+                    entries[i].ContentFlags = contentFlags;
 
-                    fileDataIndex = entries[i].FileDataId + 1;
+                    fileDataIDs[i] = fileDataIndex + (int)stream.ReadUInt32();
+                    fileDataIndex = fileDataIDs[i] + 1;
                 }
 
                 for (var i = 0; i < count; ++i)
                 {
-                    entries[i].MD5 = stream.ReadBytes(16);
+                    entries[i].MD5 = stream.Read<MD5Hash>();
                     ulong hash = stream.ReadUInt64();
+
                     RootData.Add(hash, entries[i]);
 
-                    if (FileDataStore.ContainsKey(entries[i].FileDataId))
-                    {
-                        if (FileDataStore[entries[i].FileDataId] == hash)
-                        {
-                            // Skip duplicates.
-                            continue;
-                        }
-                        else
-                        {
-                            Log.Write("Multiple hashes for FileDataID {0}?", entries[i].FileDataId);
-                            continue;
-                        }
-                    }
+                    ulong hash2;
+                    int fileDataID = fileDataIDs[i];
 
-                    FileDataStore.Add(entries[i].FileDataId, hash);
-                    FileDataStoreReverse.Add(hash, entries[i].FileDataId);
+                    if (FileDataStore.TryGetValue(fileDataID, out hash2) && hash2 != hash)
+                        Log.Write("CASC: Hash collision for file ID {0}", fileDataID);
+
+                    FileDataStore.Add(fileDataID, hash);
+                    FileDataStoreReverse.Add(hash, fileDataID);
                 }
             }
         }
 
         public IEnumerable<RootEntry> GetAllEntriesByFileDataId(int fileDataId)
         {
-            ulong hash;
-            FileDataStore.TryGetValue(fileDataId, out hash);
-            return GetAllEntries(hash);
+            return GetAllEntries(GetHashByFileDataId(fileDataId));
+        }
+
+        public IEnumerable<KeyValuePair<ulong, RootEntry>> GetAllEntries()
+        {
+            foreach (var set in RootData)
+                foreach (var entry in set.Value)
+                    yield return new KeyValuePair<ulong, RootEntry>(set.Key, entry);
         }
 
         public IEnumerable<RootEntry> GetAllEntries(ulong hash)
         {
-            HashSet<RootEntry> result;
+            List<RootEntry> result;
             RootData.TryGetValue(hash, out result);
 
             if (result == null)
@@ -168,30 +150,26 @@ namespace W3DT.CASC
 
         public IEnumerable<RootEntry> GetEntriesByFileDataId(int fileDataId)
         {
-            ulong hash;
-            FileDataStore.TryGetValue(fileDataId, out hash);
-            return GetEntries(hash);
+            return GetEntries(GetHashByFileDataId(fileDataId));
         }
 
-        // Returns only entries that match current locale and content flags
         public IEnumerable<RootEntry> GetEntries(ulong hash)
         {
             var rootInfos = GetAllEntries(hash);
 
-            if (rootInfos == null)
+            if (!rootInfos.Any())
                 yield break;
 
-            var rootInfosLocale = rootInfos.Where(re => (re.Block.LocaleFlags & Locale) != 0);
-
-            if (rootInfosLocale.Count() > 1)
+            var rootLocale = rootInfos.Where(re => (re.LocaleFlags & Locale) != 0);
+            if (rootLocale.Count() > 1)
             {
-                var rootInfosLocaleAndContent = rootInfosLocale.Where(re => (re.Block.ContentFlags == Content));
+                var rootLocaleContent = rootLocale.Where(re => (re.ContentFlags == Content));
 
-                if (rootInfosLocaleAndContent.Any())
-                    rootInfosLocale = rootInfosLocaleAndContent;
+                if (rootLocaleContent.Any())
+                    rootLocale = rootLocaleContent;
             }
 
-            foreach (var entry in rootInfosLocale)
+            foreach (var entry in rootLocale)
                 yield return entry;
         }
 
@@ -211,9 +189,7 @@ namespace W3DT.CASC
 
         public int GetFileDataIdByName(string name)
         {
-            int fid;
-            FileDataStoreReverse.TryGetValue(Hasher.ComputeHash(name), out fid);
-            return fid;
+            return GetFileDataIdByHash(Hasher.ComputeHash(name));
         }
 
         private bool LoadPreHashedListFile(string binaryPath, string pathText)
@@ -261,6 +237,33 @@ namespace W3DT.CASC
             return true;
         }
 
+        public void LoadFileDataComplete(CASCEngine casc)
+        {
+            string dbFileDataComplete = "DBFilesClient\\FileDataComplete.db2";
+            if (!casc.FileExists(dbFileDataComplete))
+                return;
+
+            Log.Write("CASC: Loading entries from FileDataComplete (DB2)");
+
+            using (var stream = casc.OpenFile(dbFileDataComplete))
+            {
+                DB5_Reader db = new DB5_Reader(stream);
+                foreach (var row in db)
+                {
+                    string path = row.Value.GetField<string>(0);
+                    string name = row.Value.GetField<string>(1);
+
+                    string fullName = path + name;
+                    ulong fileHash = Hasher.ComputeHash(fullName);
+
+                    if (!RootData.ContainsKey(fileHash))
+                        continue;
+
+                    CASCFile.FileNames[fileHash] = fullName;
+                }
+            }
+        }
+
         public void LoadListFile(string path)
         {
             if (LoadPreHashedListFile(Constants.LIST_FILE_BIN, path))
@@ -297,27 +300,27 @@ namespace W3DT.CASC
                         string key = file.Substring(0, dirSepIndex);
 
                         if (!dirData.ContainsKey(key))
-                        {
                             dirData[key] = new Dictionary<ulong, string>();
-                        }
 
                         dirData[key][fileHash] = file.Substring(dirSepIndex + 1);
                     }
                     else
+                    {
                         dirData[""][fileHash] = file;
+                    }
                 }
 
-                bw.Write(dirData.Count); // count of dirs
+                bw.Write(dirData.Count); // Count of directories.
 
                 foreach (var dir in dirData)
                 {
-                    bw.Write(dir.Key); // dir name
-                    bw.Write(dirData[dir.Key].Count); // count of files in dir
+                    bw.Write(dir.Key); // Directory name.
+                    bw.Write(dirData[dir.Key].Count); // File count.
 
                     foreach (var fh in dirData[dir.Key])
                     {
-                        bw.Write(fh.Key); // file name hash
-                        bw.Write(fh.Value); // file name (without dir name)
+                        bw.Write(fh.Key); // File name hash.
+                        bw.Write(fh.Value); // File name.
                     }
                 }
 
@@ -332,37 +335,30 @@ namespace W3DT.CASC
             var root = new CASCFolder("root");
 
             CountSelect = 0;
-
-            // Cleanup fake names for unknown files
-            CountUnknown = 0;
-
-            foreach (var unkFile in UnknownFiles)
-                CASCFile.FileNames.Remove(unkFile);
+            UnknownFiles.Clear();
 
             // Create new tree based on specified locale
             foreach (var rootEntry in RootData)
             {
-                var rootInfosLocale = rootEntry.Value.Where(re => (re.Block.LocaleFlags & Locale) != 0);
+                var rootLocale = rootEntry.Value.Where(re => (re.LocaleFlags & Locale) != 0);
 
-                if (rootInfosLocale.Count() > 1)
+                if (rootLocale.Count() > 1)
                 {
-                    var rootInfosLocaleAndContent = rootInfosLocale.Where(re => (re.Block.ContentFlags == Content));
+                    var rootLocaleContent = rootLocale.Where(re => (re.ContentFlags == Content));
 
-                    if (rootInfosLocaleAndContent.Any())
-                        rootInfosLocale = rootInfosLocaleAndContent;
+                    if (rootLocaleContent.Any())
+                        rootLocale = rootLocaleContent;
                 }
 
-                if (!rootInfosLocale.Any())
+                if (!rootLocale.Any())
                     continue;
 
                 string file;
 
                 if (!CASCFile.FileNames.TryGetValue(rootEntry.Key, out file))
                 {
-                    file = "unknown\\" + rootEntry.Key.ToString("X16") + "_" + rootEntry.Value.First().FileDataId;
-
-                    CountUnknown++;
-                    UnknownFiles.Add(rootEntry.Key);
+                    file = "unknown\\" + rootEntry.Key.ToString("X16") + "_" + GetFileDataIdByHash(rootEntry.Key);
+                    UnknownFiles[rootEntry.Key] = true;
                 }
 
                 CreateSubTree(root, rootEntry.Key, file);
@@ -409,52 +405,62 @@ namespace W3DT.CASC
 
         public void MergeInstall(InstallHandler install)
         {
+            if (install == null)
+                return;
+
             foreach (var entry in install.GetEntries())
                 CreateSubTree(Root, Hasher.ComputeHash(entry.Name), entry.Name);
         }
 
         public CASCFolder SetFlags(LocaleFlags locale, ContentFlags content, bool createTree = true)
         {
-            if (Locale != locale || Content != content)
-            {
-                Locale = locale;
-                Content = content;
+            Locale = locale;
+            Content = content;
 
-                if (createTree)
-                    Root = CreateStorageTree();
-            }
+            if (createTree)
+                Root = CreateStorageTree();
 
             return Root;
         }
 
         public bool IsUnknownFile(ulong hash)
         {
-            return UnknownFiles.Contains(hash);
+            return UnknownFiles.ContainsKey(hash);
         }
 
         public void Clear()
         {
             RootData.Clear();
-            FileDataStore.Clear();
-            FileDataStoreReverse.Clear();
-            UnknownFiles.Clear();
+            RootData = null;
 
-            if (Root != null)
-                Root.Entries.Clear();
+            FileDataStore.Clear();
+            FileDataStore = null;
+
+            FileDataStoreReverse.Clear();
+            FileDataStoreReverse = null;
+
+            UnknownFiles.Clear();
+            UnknownFiles = null;
+
+            Root?.Entries.Clear();
+            Root = null;
 
             CASCFile.FileNames.Clear();
         }
 
         public void Dump()
         {
-            foreach (var fd in RootData.OrderBy(r => r.Value.First().FileDataId))
+            foreach (var fd in RootData.OrderBy(r => GetFileDataIdByHash(r.Key)))
             {
                 string name;
 
                 if (!CASCFile.FileNames.TryGetValue(fd.Key, out name))
                     name = fd.Key.ToString("X16");
 
-                Log.Write("{0:D7} {1:X16} {2} {3}", fd.Value.First().FileDataId, fd.Key, string.Join(",", fd.Value.Select(r => r.Block.LocaleFlags.ToString())), name);
+                Log.Write("{0:D7} {1:X16} {2} {3}", GetFileDataIdByHash(fd.Key), fd.Key, fd.Value.Aggregate(LocaleFlags.None, (a, b) => a | b.LocaleFlags), name);
+
+                foreach (var entry in fd.Value)
+                    Log.Write("\t{0} - {1} - {2}", entry.MD5.ToHexString(), entry.LocaleFlags, entry.ContentFlags);
             }
         }
     }
