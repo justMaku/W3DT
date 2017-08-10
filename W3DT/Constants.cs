@@ -13,8 +13,8 @@ namespace W3DT
 
         // CDN // 
         public static string[] CDN_REGIONS = new string[] { "us", "eu" };
-        public static string CDN_VERSION_URL { get { return @"http://{0}.patch.battle.net/" + Program.Settings.RemoteClientVersion.UrlTag + "/versions"; } }
-        public static string CDN_CONFIG_URL { get { return @"http://{0}.patch.battle.net/" + Program.Settings.RemoteClientVersion.UrlTag + "/cdns"; } }
+        public static string CDN_VERSION_URL { get { return @"http://{0}.patch.battle.net:1119/" + Program.Settings.RemoteClientVersion.UrlTag + "/versions"; } }
+        public static string CDN_CONFIG_URL { get { return @"http://{0}.patch.battle.net:1119/" + Program.Settings.RemoteClientVersion.UrlTag + "/cdns"; } }
 
         // CDN Versions //
         public static readonly WoWVersion[] WOW_VERSIONS = new WoWVersion[] {

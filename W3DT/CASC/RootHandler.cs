@@ -42,6 +42,8 @@ namespace W3DT.CASC
         F00000001 = 0x1,
         F00000002 = 0x2,
         F00000004 = 0x4,
+        F00000008 = 0x8, // added in 7.2.0.23436
+        F00000010 = 0x10, // added in 7.2.0.23436
         LowViolence = 0x80, // many models have this flag
         F10000000 = 0x10000000,
         F20000000 = 0x20000000, // added in 21737
@@ -89,7 +91,7 @@ namespace W3DT.CASC
                 if (localeFlags == LocaleFlags.None)
                     throw new Exception("localeFlags == LocaleFlags.None");
 
-                if (contentFlags != ContentFlags.None && (contentFlags & (ContentFlags.LowViolence | ContentFlags.NoCompression)) == 0)
+                if (contentFlags != ContentFlags.None && (contentFlags & (ContentFlags.F00000008 | ContentFlags.F00000010 | ContentFlags.LowViolence | ContentFlags.NoCompression | ContentFlags.F20000000)) == 0)
                     throw new Exception("contentFlags != ContentFlags.None");
 
                 RootEntry[] entries = new RootEntry[count];
@@ -115,8 +117,13 @@ namespace W3DT.CASC
                     ulong hash2;
                     int fileDataID = fileDataIDs[i];
 
-                    if (FileDataStore.TryGetValue(fileDataID, out hash2) && hash2 != hash)
-                        Log.Write("CASC: Hash collision for file ID {0}", fileDataID);
+                    if (FileDataStore.TryGetValue(fileDataID, out hash2))
+                    {
+                        if (hash2 != hash)
+                            Log.Write("CASC: Hash collision for file ID {0}", fileDataID);
+
+                        continue;
+                    }
 
                     FileDataStore.Add(fileDataID, hash);
                     FileDataStoreReverse.Add(hash, fileDataID);
@@ -235,33 +242,6 @@ namespace W3DT.CASC
             }
 
             return true;
-        }
-
-        public void LoadFileDataComplete(CASCEngine casc)
-        {
-            string dbFileDataComplete = "DBFilesClient\\FileDataComplete.db2";
-            if (!casc.FileExists(dbFileDataComplete))
-                return;
-
-            Log.Write("CASC: Loading entries from FileDataComplete (DB2)");
-
-            using (var stream = casc.OpenFile(dbFileDataComplete))
-            {
-                DB5_Reader db = new DB5_Reader(stream);
-                foreach (var row in db)
-                {
-                    string path = row.Value.GetField<string>(0);
-                    string name = row.Value.GetField<string>(1);
-
-                    string fullName = path + name;
-                    ulong fileHash = Hasher.ComputeHash(fullName);
-
-                    if (!RootData.ContainsKey(fileHash))
-                        continue;
-
-                    CASCFile.FileNames[fileHash] = fullName;
-                }
-            }
         }
 
         public void LoadListFile(string path)

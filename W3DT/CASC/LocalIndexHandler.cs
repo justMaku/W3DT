@@ -30,7 +30,7 @@ namespace W3DT.CASC
             return handler;
         }
 
-        private void ParseIndex(string idx)
+        private unsafe void ParseIndex(string idx)
         {
             using (var fs = new FileStream(idx, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var br = new BinaryReader(fs))
@@ -50,7 +50,13 @@ namespace W3DT.CASC
                 for (int i = 0; i < numBlocks; i++)
                 {
                     IndexEntry info = new IndexEntry();
-                    MD5Hash key = br.Read<MD5Hash>();
+                    byte[] keyBytes = br.ReadBytes(9);
+                    Array.Resize(ref keyBytes, 16);
+
+                    MD5Hash key;
+                    fixed (byte* ptr = keyBytes)
+                        key = *(MD5Hash*)ptr;
+
                     byte indexHigh = br.ReadByte();
                     int indexLow = br.ReadInt32BE();
 

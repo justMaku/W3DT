@@ -73,16 +73,17 @@ namespace W3DT.CASC
                 }
             }
 
-            string cdnKey = config.VersionsData[config.versionIndex]["CDNConfig"];
+            string cdnKey = config.VersionsData[config.versionIndex]["CDNConfig"].ToLower();
             using (Stream stream = CDNIndexHandler.OpenConfigFileDirect(config, cdnKey))
                 config.CDNConfig = KeyValueConfig.ReadKeyValueConfig(stream);
 
             config.ActiveBuild = 0;
             config.Builds = new List<KeyValueConfig>();
 
-            using (Stream stream = CDNIndexHandler.OpenConfigFileDirect(config, config.VersionsData[config.versionIndex]["BuildConfig"]))
+            string buildKey = config.VersionsData[config.versionIndex]["BuildConfig"].ToLower();
+            using (Stream stream = CDNIndexHandler.OpenConfigFileDirect(config, buildKey))
             {
-                var buildConfig = KeyValueConfig.ReadKeyValueConfig(stream);
+                KeyValueConfig buildConfig = KeyValueConfig.ReadKeyValueConfig(stream);
                 config.Builds.Add(buildConfig);
             }
 
@@ -140,7 +141,7 @@ namespace W3DT.CASC
         public MD5Hash DownloadMD5 => Builds[ActiveBuild]["download"][0].ToByteArray().ToMD5();
         public MD5Hash InstallMD5 => Builds[ActiveBuild]["install"][0].ToByteArray().ToMD5();
         public MD5Hash EncodingMD5 => Builds[ActiveBuild]["encoding"][0].ToByteArray().ToMD5();
-        public MD5Hash EncodingKey => Builds[ActiveBuild]["encoding"][0].ToByteArray().ToMD5();
+        public MD5Hash EncodingKey => Builds[ActiveBuild]["encoding"][1].ToByteArray().ToMD5();
         public MD5Hash PartialPriorityMD5 => Builds[ActiveBuild]["partial-priority"][0].ToByteArray().ToMD5();
         public MD5Hash PatchKey => Builds[ActiveBuild]["patch"][0].ToByteArray().ToMD5();
 

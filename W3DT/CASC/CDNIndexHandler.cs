@@ -153,6 +153,7 @@ namespace W3DT.CASC
             if (stream != null)
                 return stream;
 
+            Log.Write(url);
             return downloader.OpenFile(url);
         }
 
