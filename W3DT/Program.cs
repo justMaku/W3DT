@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using System.Security.Cryptography;
-using System.Runtime.InteropServices;
-using System.Drawing.Text;
-using System.Drawing;
 using Newtonsoft.Json;
 using W3DT.JSONContainers;
 using W3DT.CASC;

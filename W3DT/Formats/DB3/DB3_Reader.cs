@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using W3DT.CASC;
 
 namespace W3DT.Formats.DB3

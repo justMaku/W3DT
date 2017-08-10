@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using W3DT.Hashing.MD5;
 
 namespace W3DT.CASC

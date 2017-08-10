@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace W3DT.Formats.ADT
+﻿namespace W3DT.Formats.ADT
 {
     public class Chunk_MCAL : Chunk_Base, IChunkSoup
     {

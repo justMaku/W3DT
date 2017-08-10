@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SharpGL;
+﻿using SharpGL;
 
 namespace W3DT._3D
 {

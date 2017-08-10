@@ -3,7 +3,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using W3DT.Hashing.MD5;
 
 namespace W3DT.CASC

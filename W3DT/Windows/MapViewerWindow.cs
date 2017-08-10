@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using System.IO;
 using W3DT.CASC;
 using W3DT.Events;
 using W3DT.Runners;
 using W3DT.MapViewer;
-using SereniaBLPLib;
 
 namespace W3DT
 {
