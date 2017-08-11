@@ -54,7 +54,7 @@ namespace W3DT
             mapStartPoints = new Dictionary<string, Point>();
             overlay = new Overlay(256, 256);
 
-            explorer = new Explorer(this, "^World\\Minimaps\\", null, UI_FilterTimer, null, null, new string[] { "blp" }, "MVT_N_{0}", true);
+            explorer = new Explorer(this, "^World/Minimaps/", null, UI_FilterTimer, null, null, new string[] { "blp" }, "MVT_N_{0}", true);
             explorer.ExploreHitCallback = OnExploreHit;
             explorer.ExploreDoneCallback = OnExploreDone;
 
