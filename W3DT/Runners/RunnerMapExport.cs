@@ -473,6 +473,7 @@ namespace W3DT.Runners
             catch (Exception e)
             {
                 ob.Close();
+                LogWrite("Unable to complete map extraction due to exception: {0}", e.Message);
                 EventManager.Trigger_MapExportDone(false, e.Message + e.StackTrace);
             }
         }
